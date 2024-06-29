@@ -11,13 +11,15 @@ type RcdFindingScreenProps = StackScreenProps<
 >;
 
 // 여기에서 백엔드에서 요청 보내고 결과 나오면 다음 페이지로 이동
-function RcdFindingScreen({navigation}: RcdFindingScreenProps) {
+function RcdFindingScreen({route, navigation}: RcdFindingScreenProps) {
+  const params = route.params.props;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 백엔드 요청 및 3초 딜레이를 동시에 처리
         const [data] = await Promise.all([
-          getSongs(),
+          getSongs(params),
           new Promise(resolve => setTimeout(resolve, 3000)),
         ]);
 

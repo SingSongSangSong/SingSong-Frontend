@@ -10,3 +10,11 @@ export interface Song {
 export interface SongsResponse {
   songs: Song[];
 }
+
+export interface Props {
+  energy: number;
+  electronic: number;
+  brightness: number;
+  speed: number;
+  danceability: number;
+}

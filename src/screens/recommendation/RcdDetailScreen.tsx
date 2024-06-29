@@ -37,7 +37,15 @@ function RcdDetailScreen({navigation}: RcdDetailScreenProps) {
     setBrightness(tempBrightness);
     setSpeed(tempSpeed);
     setDanceability(tempDanceability);
-    navigation.navigate(rcdNavigations.RCD_FINDING);
+    navigation.navigate(rcdNavigations.RCD_FINDING, {
+      props: {
+        energy: tempEnergy,
+        electronic: tempElectronic,
+        brightness: tempBrightness,
+        speed: tempSpeed,
+        danceability: tempDanceability,
+      },
+    });
   };
 
   return (

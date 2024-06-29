@@ -12,7 +12,7 @@ type RcdHomeScreenProps = StackScreenProps<
 function RcdHomeScreen({navigation}: RcdHomeScreenProps) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>텍스트</Text>
+      <Text>싱송생송 노래 추천</Text>
       <Button
         title="START"
         onPress={() => navigation.navigate(rcdNavigations.RCD_DETAIL)}></Button>

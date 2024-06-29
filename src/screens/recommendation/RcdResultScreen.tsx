@@ -11,6 +11,7 @@ import {rcdStackParamList} from '../../navigation/RcdStackNavigator';
 import rcdNavigations from '../../constants/RcdConstants';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Song} from '../../types/songs';
+import usePropertyStore from '../../store/usePropertyStore';
 
 type RcdResultScreenProps = StackScreenProps<
   rcdStackParamList,
@@ -20,8 +21,14 @@ type RcdResultScreenProps = StackScreenProps<
 //결과 나오고 만족하는지, 불만족하는지 나누고 불만족한다면 다시 조건 받을건지, 그냥 새로고침할건지 분기 필요
 function RcdResultScreen({route, navigation}: RcdResultScreenProps) {
   const songList = route.params.songs;
+  const reset = usePropertyStore(state => state.reset);
   //배열 안에 딕셔너리 형태로 있음
-  console.log(songList);
+  // console.log(songList);
+
+  const handleResetProperty = () => {
+    reset();
+    navigation.navigate(rcdNavigations.RCD_HOME);
+  };
 
   const renderItem = ({item}: {item: Song}) => (
     <View style={styles.item}>
@@ -39,8 +46,9 @@ function RcdResultScreen({route, navigation}: RcdResultScreenProps) {
         renderItem={renderItem}
       />
       <Button
-        title="다시"
-        onPress={() => navigation.navigate(rcdNavigations.RCD_HOME)}></Button>
+        title="점수 변경"
+        onPress={() => navigation.navigate(rcdNavigations.RCD_DETAIL)}></Button>
+      <Button title="종료" onPress={handleResetProperty}></Button>
     </SafeAreaView>
   );
 }

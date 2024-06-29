@@ -11,29 +11,37 @@ interface PropertyState {
   setSpeed: (speed: number) => void;
   danceability: number | 5;
   setDanceability: (danceability: number) => void;
+  reset: () => void;
 }
 
-const usePropertyStore = create<PropertyState>(set => ({
-  energy: 5,
-  setEnergy: (energy: number) => {
-    set(state => ({...state, energy}));
-  },
-  electronic: 5,
-  setElectronic: (electronic: number) => {
-    set(state => ({...state, electronic}));
-  },
-  brightness: 5,
-  setBrightness: (brightness: number) => {
-    set(state => ({...state, brightness}));
-  },
-  speed: 5,
-  setSpeed: (speed: number) => {
-    set(state => ({...state, speed}));
-  },
-  danceability: 5,
-  setDanceability: (danceability: number) => {
-    set(state => ({...state, danceability}));
-  },
-}));
+const usePropertyStore = create<PropertyState>(set => {
+  const defaultState = {
+    energy: 5,
+    electronic: 5,
+    brightness: 5,
+    speed: 5,
+    danceability: 5,
+  };
+
+  return {
+    ...defaultState,
+    setEnergy: (energy: number) => {
+      set(state => ({...state, energy}));
+    },
+    setElectronic: (electronic: number) => {
+      set(state => ({...state, electronic}));
+    },
+    setBrightness: (brightness: number) => {
+      set(state => ({...state, brightness}));
+    },
+    setSpeed: (speed: number) => {
+      set(state => ({...state, speed}));
+    },
+    setDanceability: (danceability: number) => {
+      set(state => ({...state, danceability}));
+    },
+    reset: () => set(defaultState),
+  };
+});
 
 export default usePropertyStore;

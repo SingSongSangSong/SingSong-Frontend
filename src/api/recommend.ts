@@ -1,11 +1,9 @@
 import axios from 'axios';
-import usePropertyStore from '../store/usePropertyStore';
-import {SongsResponse} from '../types/songs';
+import {Props, SongsResponse} from '../types/songs';
 
 // songs
-const getSongs = async (): Promise<SongsResponse> => {
-  const {energy, electronic, brightness, speed, danceability} =
-    usePropertyStore.getState();
+const getSongs = async (props: Props): Promise<SongsResponse> => {
+  const {energy, electronic, brightness, speed, danceability} = props;
 
   const transformedData = {
     danceability: danceability / 10,

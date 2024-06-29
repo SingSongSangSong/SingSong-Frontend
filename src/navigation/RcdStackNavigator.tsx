@@ -6,12 +6,14 @@ import RcdHomeScreen from '../screens/recommendation/RcdHomeScreen';
 import RcdDetailScreen from '../screens/recommendation/RcdDetailScreen';
 import RcdFindingScreen from '../screens/recommendation/RcdFindingScreen';
 import RcdResultScreen from '../screens/recommendation/RcdResultScreen';
-import {Song} from '../types/songs';
+import {Props, Song} from '../types/songs';
 
 export type rcdStackParamList = {
   [rcdNavigations.RCD_HOME]: undefined;
   [rcdNavigations.RCD_DETAIL]: undefined;
-  [rcdNavigations.RCD_FINDING]: undefined;
+  [rcdNavigations.RCD_FINDING]: {
+    props: Props;
+  };
   [rcdNavigations.RCD_RESULT]: {songs: Song[]};
 };
 
@@ -19,7 +21,10 @@ function RcdStackNavigator() {
   const Stack = createStackNavigator<rcdStackParamList>();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name={rcdNavigations.RCD_HOME} component={RcdHomeScreen} />
       <Stack.Screen
         name={rcdNavigations.RCD_DETAIL}
