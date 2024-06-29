@@ -20,6 +20,4 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
   );
 }
 
-// const styles = StyleSheet.create({});
-
 export default AuthHomeScreen;

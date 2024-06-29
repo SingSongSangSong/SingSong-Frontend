@@ -1,10 +1,12 @@
-import {Button, SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import React, {useState} from 'react';
 import rcdNavigations from '../../constants/RcdConstants';
 import {rcdStackParamList} from '../../navigation/RcdStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
 import usePropertyStore from '../../store/usePropertyStore';
-import Slider from '@react-native-community/slider';
+import CustomButton from '../../components/CustomButton';
+import tw from 'twrnc';
+import CustomSlider from '../../components/CustomSlider';
 
 type RcdDetailScreenProps = StackScreenProps<
   rcdStackParamList,
@@ -50,54 +52,32 @@ function RcdDetailScreen({navigation}: RcdDetailScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>분야별 나의 맞춤 점수를 조절해주세요</Text>
-      <Text>Energy: {tempEnergy}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
+      <Text style={tw`font-bold text-[4] pb-10`}>
+        분야별 나의 맞춤 점수를 조절해주세요
+      </Text>
+      <CustomSlider
         value={tempEnergy}
-        onValueChange={setTempEnergy}
+        setValue={setTempEnergy}
+        label="에너지"
       />
-      <Text>Electronic: {tempElectronic}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
+      <CustomSlider
         value={tempElectronic}
-        onValueChange={setTempElectronic}
+        setValue={setTempElectronic}
+        label="어쿠스틱"
       />
-      <Text>Brightness: {tempBrightness}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
+      <CustomSlider
         value={tempBrightness}
-        onValueChange={setTempBrightness}
+        setValue={setTempBrightness}
+        label="밝음"
       />
-      <Text>Speed: {tempSpeed}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
-        value={tempSpeed}
-        onValueChange={setTempSpeed}
-      />
-      <Text>Danceability: {tempDanceability}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
+      <CustomSlider value={tempSpeed} setValue={setTempSpeed} label="스피드" />
+      <CustomSlider
         value={tempDanceability}
-        onValueChange={setTempDanceability}
+        setValue={setTempDanceability}
+        label="댄스"
       />
 
-      <Button title="다음" onPress={handleFindResult}></Button>
+      <CustomButton title="NEXT" onPress={handleFindResult} width={100} />
     </SafeAreaView>
   );
 }
@@ -108,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+    backgroundColor: 'white',
   },
   slider: {
     width: '80%',

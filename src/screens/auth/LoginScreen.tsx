@@ -9,6 +9,4 @@ function LoginScreen() {
   );
 }
 
-// const styles = StyleSheet.create({});
-
 export default LoginScreen;

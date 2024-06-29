@@ -14,7 +14,7 @@ export type rcdStackParamList = {
   [rcdNavigations.RCD_FINDING]: {
     props: Props;
   };
-  [rcdNavigations.RCD_RESULT]: {songs: Song[]};
+  [rcdNavigations.RCD_RESULT]: {songs: Song[]; tags: string[]};
 };
 
 function RcdStackNavigator() {
@@ -41,7 +41,5 @@ function RcdStackNavigator() {
     </Stack.Navigator>
   );
 }
-
-// const styles = StyleSheet.create({});
 
 export default RcdStackNavigator;

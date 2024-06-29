@@ -1,7 +1,8 @@
 import axios from 'axios';
-import {Props, SongsResponse} from '../types/songs';
+import {Props, TagsResponse} from '../types/songs';
 
-const getSongs = async (props: Props): Promise<SongsResponse> => {
+// songs
+const getTags = async (props: Props): Promise<TagsResponse> => {
   const {energy, electronic, brightness, speed, danceability} = props;
 
   const transformedData = {
@@ -12,12 +13,12 @@ const getSongs = async (props: Props): Promise<SongsResponse> => {
     tempo: speed / 10,
   };
 
-  const {data} = await axios.post<SongsResponse>(
-    'http://localhost:8000/api/v1/similarity',
+  const {data} = await axios.post<TagsResponse>(
+    'http://localhost:8000/api/v1/tags',
     transformedData,
   );
 
   return data;
 };
 
-export default getSongs;
+export default getTags;

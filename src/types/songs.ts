@@ -18,3 +18,7 @@ export interface Props {
   speed: number;
   danceability: number;
 }
+
+export interface TagsResponse {
+  tags: string[];
+}
