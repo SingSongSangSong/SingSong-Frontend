@@ -1,11 +1,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import RcdStackNavigator from './src/navigation/RcdStackNavigator';
+import MainStackNavigator from './src/navigation/MainStackNavigator';
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <RcdStackNavigator />
+      <MainStackNavigator />
     </NavigationContainer>
   );
 }

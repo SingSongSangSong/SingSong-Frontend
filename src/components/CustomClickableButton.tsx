@@ -1,23 +1,23 @@
 import React from 'react';
-import {Pressable, Text, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
 
-interface CustomButtonProps {
-  title: string;
+interface CustomTagButtonProps {
+  tag: string;
+  color: string;
   onPress: () => void;
-  width: number; // width를 선택적으로 받도록 설정
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({title, onPress, width}) => {
+const CustomTagButton: React.FC<CustomTagButtonProps> = ({tag, onPress}) => {
   return (
-    <Pressable style={[styles.container, {width}]} onPress={onPress}>
-      <Text style={styles.title}>{title}</Text>
+    <Pressable style={[styles.container]} onPress={onPress}>
+      <Text>{tag}</Text>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: 'yellow',
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 30,
@@ -33,5 +33,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default CustomButton;
+export default CustomTagButton;

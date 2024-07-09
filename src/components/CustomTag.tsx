@@ -24,7 +24,7 @@ const CustomTag: React.FC<CustomTagProps> = ({tag, index}) => {
 const styles = StyleSheet.create({
   tagContainer: {
     marginHorizontal: 5,
-    marginVertical: 30,
+    marginVertical: 5,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 10,

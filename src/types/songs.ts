@@ -1,10 +1,9 @@
 export interface Song {
+  song_number: number;
   song_name: string;
   singer_name: string;
   preview_url: string | null;
-  duration_ms: number | null;
-  album_name: string;
-  similarity: number | null;
+  tags: string[];
 }
 
 export interface SongsResponse {
@@ -20,5 +19,13 @@ export interface Props {
 }
 
 export interface TagsResponse {
+  tags: string[];
+}
+
+export interface TagProps {
+  tag: string;
+}
+export interface SongWithTagsProps {
+  songNumber: number;
   tags: string[];
 }
