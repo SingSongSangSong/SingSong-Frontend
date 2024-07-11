@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {rcdStackParamList} from '../../navigation/RcdStackNavigator';
@@ -18,6 +19,8 @@ import CustomTag from '../../components/CustomTag';
 import CustomButton from '../../components/CustomButton';
 import getInitSongs from '../../api/getInitSongs';
 import useRecommendStore from '../../store/useRecommendStore';
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type RcdHomeScreenProps = StackScreenProps<
   rcdStackParamList,
@@ -27,10 +30,18 @@ type RcdHomeScreenProps = StackScreenProps<
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const tag = route.params; //초기 태그 (ex. 고음지르기)
   const [songLst, setSongLst] = useState<Song[]>([]);
-  const [tags, setTags] = useState<string[]>([tag.tag]); //tagLst 초기화
+  const [tags, setTags] = useState<string[]>([tag.tag]); //tagLst 초기화 , 얘가 굳이 필요할까?
   const [loading, setLoading] = useState(true);
   // const [draggedSong, setDraggedSong] = useState<Song | null>(null);
-  const {selectedSong, setSelectedSong, reset} = useRecommendStore();
+  const {
+    selectedSong,
+    setSelectedSong,
+    selectedTag,
+    setSelectedTag,
+    storedSong,
+    setStoredSong,
+    reset,
+  } = useRecommendStore();
   // const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -68,32 +79,65 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   };
 
   const handleSongPress = (item: Song) => {
-    setSelectedSong(item);
+    setSelectedSong(item); //노래가 없다가 생기거나, 노래가 바뀌었음
+    const updatedTags = [...selectedTag, ...item.tags]; //노래가 다른게 선택되면, 태그는 더해짐
+    setSelectedTag(updatedTags);
+    console.log(item.tags);
   };
 
   const handleTagRemove = (index: number) => {
-    if (selectedSong) {
-      const updatedTags = selectedSong.tags.filter((_, i) => i !== index);
-      setSelectedSong({...selectedSong, tags: updatedTags});
+    if (selectedTag) {
+      const updatedTags = selectedTag.filter((_, i) => i !== index);
+      setSelectedTag(updatedTags); //태그 삭제
     }
   };
 
   const handleApplyTag = () => {
+    //나중에 song_number 없이도 요청 보낼 수 있도록 수정
     // fetchUpdatedData(draggedSong.song_number, tags);
     if (selectedSong) {
-      fetchUpdatedData(selectedSong.song_number, selectedSong.tags);
+      fetchUpdatedData(selectedSong.song_number, selectedTag); //현재 태그 보내기
+      console.log(selectedTag);
     } else {
       // setShowPopup(true); // 노래가 선택되지 않은 경우 팝업 메시지 표시
       // setTimeout(() => setShowPopup(false), 3000); // 3초 후 팝업 메시지 숨기기
-      console.log('error...rr..');
+      Toast.show({
+        type: 'info',
+        position: 'bottom',
+        text1: '노래가 선택되지 않았습니다.',
+        text2: '노래를 선택한 후 다시 시도해주세요.',
+        visibilityTime: 1000,
+        bottomOffset: 100,
+      });
     }
+  };
+
+  const toggleStored = (songId: number, song: Song) => {
+    const isStored = storedSong && songId in storedSong ? false : true; // 있으면 false, 삭제하자. 없으면 true, 추가하자.
+    console.log(isStored);
+    console.log(storedSong);
+    setStoredSong(songId, song, isStored);
   };
 
   const renderItem = ({item}: {item: Song}) => (
     <TouchableOpacity onPress={() => handleSongPress(item)}>
-      <View style={tw`bg-gray-800 m-2 border rounded-lg`}>
-        <Text style={tw`text-white`}>{item.song_name}</Text>
-        <Text style={tw`text-white`}>{item.singer_name}</Text>
+      <View
+        style={tw`flex-row justify-between items-center bg-gray-800 m-2 border rounded-lg p-3`}>
+        <View>
+          <Text style={tw`text-white`}>{item.song_name}</Text>
+          <Text style={tw`text-white`}>{item.singer_name}</Text>
+        </View>
+        <TouchableOpacity onPress={() => toggleStored(item.song_number, item)}>
+          <Icon
+            name="star"
+            size={24}
+            color={
+              storedSong && item.song_number in storedSong
+                ? '#FFD700'
+                : '#D3D3D3'
+            }
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -120,40 +164,44 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
             />
           )}
         </View>
-        <View style={tw`w-full p-4 bg-gray-100 h-[50%]`}>
+        <View
+          style={tw`w-full p-4 bg-gray-100 h-[50%] items-center justify-center`}>
           <Text style={tw`text-center`}>Drag Here</Text>
-          {selectedSong ? (
-            <View style={tw`w-full bg-pink-200 p-4 mt-4 rounded-lg`}>
-              <Text style={tw`text-lg font-bold`}>
-                {selectedSong.song_name}
-              </Text>
-              <Text style={tw`text-base mb-2`}>{selectedSong.singer_name}</Text>
-              <View style={tw`flex-row flex-wrap`}>
-                {selectedSong.tags.map((tg, index) => (
-                  <View key={index} style={tw`mb-1`}>
-                    <CustomRemovableTag
-                      tag={tg}
-                      index={index}
-                      onRemove={handleTagRemove}
-                    />
-                  </View>
-                ))}
+          <View style={tw`w-full bg-pink-200 p-4 mt-4 rounded-lg`}>
+            {selectedSong ? (
+              <View>
+                <Text style={tw`text-lg font-bold`}>
+                  {selectedSong.song_name}
+                </Text>
+                <Text style={tw`text-base mb-2`}>
+                  {selectedSong.singer_name}
+                </Text>
               </View>
-              <CustomButton title="적용" onPress={handleApplyTag} width={200} />
-            </View>
-          ) : (
-            <View style={tw`w-full mt-4`}>
-              <Text style={tw`text-center text-gray-500`}>
-                노래를 클릭해보세요
-              </Text>
-            </View>
-          )}
+            ) : (
+              <Text style={tw`text-lg font-bold`}>노래를 클릭해보세요</Text>
+            )}
+          </View>
+          <SafeAreaView style={tw`flex-1`}>
+            <ScrollView contentContainerStyle={tw`flex-wrap flex-row p-2 mt-2`}>
+              {selectedTag.map((tg, index) => (
+                <View key={index} style={tw`mb-1 mr-1`}>
+                  <CustomRemovableTag
+                    tag={tg}
+                    index={index}
+                    onRemove={handleTagRemove}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </SafeAreaView>
+          <CustomButton title="적용" onPress={handleApplyTag} width={200} />
         </View>
       </View>
     </SafeAreaView>
   );
 }
 
+//drag 하다가 실패~~
 // const styles = StyleSheet.create({
 // container: {
 //   flex: 1,

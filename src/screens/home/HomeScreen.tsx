@@ -3,6 +3,10 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {Text, View} from 'react-native';
 import {MainStackParamList} from '../../navigation/MainStackNavigator';
 import mainNavigations from '../../constants/MainConstants';
+import CustomTextButton from '../../components/CustomTextButton';
+import playlistNavigations from '../../constants/playlistConstants';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import tw from 'twrnc';
 import CustomTagButton from '../../components/CustomClickableButton';
 
 type HomeScreenProps = StackScreenProps<
@@ -11,6 +15,10 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
+  const onSwipeRight = () => {
+    console.log('Swipe!!');
+    navigation.navigate(playlistNavigations.PLAYLIST);
+  };
   const tagLst = [
     '고음 지르기',
     '그시절 띵곡',
@@ -27,16 +35,31 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
   };
 
   return (
-    <View>
-      <Text> 싱송생송만의 노래 추천을 받아보세요</Text>
+    <GestureRecognizer
+      onSwipeLeft={onSwipeRight}
+      config={{
+        velocityThreshold: 0.5,
+        directionalOffsetThreshold: 80,
+      }}
+      style={tw`flex-1 bg-black`}>
+      <View>
+        <View style={tw`items-end`}>
+          <CustomTextButton
+            title="플레이리스트"
+            onPress={() => navigation.navigate(playlistNavigations.PLAYLIST)}
+          />
+        </View>
 
-      {tagLst.map(tag => (
-        <CustomTagButton
-          tag={tag}
-          color="black"
-          onPress={() => handlePress(tag)}
-        />
-      ))}
-    </View>
+        <Text style={tw`text-white`}> 싱송생송만의 노래 추천을 받아보세요</Text>
+
+        {tagLst.map(tag => (
+          <CustomTagButton
+            tag={tag}
+            color="black"
+            onPress={() => handlePress(tag)}
+          />
+        ))}
+      </View>
+    </GestureRecognizer>
   );
 }

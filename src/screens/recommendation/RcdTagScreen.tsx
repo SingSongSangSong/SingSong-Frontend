@@ -8,8 +8,8 @@ import CustomRemovableTag from '../../components/CustomRemovableTag';
 import CustomClickableTag from '../../components/CustomClickableTag';
 
 function RcdTagScreen() {
-  const [tags, setTags] = useState<string[]>([]);
-  const {selectedSong, setSelectedSong} = useRecommendStore();
+  const [tags, setTags] = useState<string[]>([]); //목록을 보여주는태그들
+  const {selectedSong, selectedTag, setSelectedTag} = useRecommendStore();
 
   useEffect(() => {
     fetchgetTagData();
@@ -17,7 +17,7 @@ function RcdTagScreen() {
 
   const fetchgetTagData = async () => {
     try {
-      const tagData: TagsResponse = await getTags();
+      const tagData: TagsResponse = await getTags(); //api로부터 받아온 태그 리스트
       setTags(tagData.tags);
       console.log(tagData.tags); // tags 대신 tagData.tags를 출력
     } catch (error) {
@@ -26,17 +26,13 @@ function RcdTagScreen() {
   };
 
   const handleTagRemove = (index: number) => {
-    if (selectedSong) {
-      const updatedTags = selectedSong.tags.filter((_, i) => i !== index);
-      setSelectedSong({...selectedSong, tags: updatedTags});
-    }
+    const updatedTags = selectedTag.filter((_, i) => i !== index);
+    setSelectedTag(updatedTags);
   };
 
   const handleTagAdd = (tag: string) => {
-    if (selectedSong) {
-      const updatedTags = [...selectedSong.tags, tag];
-      setSelectedSong({...selectedSong, tags: updatedTags});
-    }
+    const updatedTags = [...selectedTag, tag];
+    setSelectedTag(updatedTags);
   };
 
   return (
@@ -53,14 +49,27 @@ function RcdTagScreen() {
           </View>
         ))}
       </View>
-      <View style={tw`w-full p-4 bg-gray-100 h-[50%]`}>
+      <View style={tw`w-full p-2 bg-gray-100 h-[50%]`}>
         <Text style={tw`text-center`}>Drag Here</Text>
-        {selectedSong ? (
-          <View style={tw`w-full bg-pink-200 p-4 mt-4 rounded-lg`}>
-            <Text style={tw`text-lg font-bold`}>{selectedSong.song_name}</Text>
-            <Text style={tw`text-base mb-2`}>{selectedSong.singer_name}</Text>
-            <View style={tw`flex-row flex-wrap`}>
-              {selectedSong.tags.map((tg, index) => (
+        <View style={tw`w-full rounded-lg bg-white h-15`}>
+          {selectedSong ? (
+            <View>
+              <Text style={tw`text-lg font-bold`}>
+                {selectedSong.song_name}
+              </Text>
+              <Text style={tw`text-base mb-2`}>{selectedSong.singer_name}</Text>
+            </View>
+          ) : (
+            <Text style={tw`text-center text-gray-500`}>곡 없음</Text>
+          )}
+        </View>
+        {selectedTag.length != 0 ? ( //태그가 있으면 보여주기
+          <View style={tw`flex-row flex-wrap`}>
+            {selectedTag.map(
+              (
+                tg,
+                index, //selectedTag로 변경 , song이랑 tag를 따로 관리하자
+              ) => (
                 <View key={index} style={tw`mb-1`}>
                   <CustomRemovableTag
                     tag={tg}
@@ -68,13 +77,13 @@ function RcdTagScreen() {
                     onRemove={handleTagRemove}
                   />
                 </View>
-              ))}
-            </View>
+              ),
+            )}
           </View>
         ) : (
           <View style={tw`w-full mt-4`}>
             <Text style={tw`text-center text-gray-500`}>
-              노래를 클릭해보세요
+              원하는 태그를 선택하여 맞춤 노래를 추천받아보세요.
             </Text>
           </View>
         )}

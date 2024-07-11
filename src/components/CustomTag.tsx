@@ -23,15 +23,15 @@ const CustomTag: React.FC<CustomTagProps> = ({tag, index}) => {
 
 const styles = StyleSheet.create({
   tagContainer: {
-    marginHorizontal: 5,
-    marginVertical: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    marginHorizontal: 2,
+    marginVertical: 2,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
     borderRadius: 10,
   },
   tagText: {
     color: 'black',
-    fontSize: 10,
+    fontSize: 8,
   },
 });
 
