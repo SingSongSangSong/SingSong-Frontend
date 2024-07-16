@@ -1,8 +1,8 @@
 import {Button, SafeAreaView, Text} from 'react-native';
 import React from 'react';
-import {AuthStackParamList} from '../../navigation/AuthStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
-import authNavigations from '../../constants/AuthConstants';
+import {authNavigations} from '../../constants';
+import {AuthStackParamList} from '../../types';
 
 type AuthHomeScreenProps = StackScreenProps<
   AuthStackParamList,
@@ -15,7 +15,8 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
       <Text>텍스트</Text>
       <Button
         title="START"
-        onPress={() => navigation.navigate(authNavigations.LOGIN)}></Button>
+        onPress={() => navigation.navigate(authNavigations.LOGIN)}
+      />
     </SafeAreaView>
   );
 }

@@ -1,7 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import MainStackNavigator from './src/navigation/MainStackNavigator';
+import MainStackNavigator from './src/navigations/stack/MainStackNavigator';
 import Toast from 'react-native-toast-message';
+import {QueryClientProvider} from '@tanstack/react-query';
+import queryClient from './src/api/queryClient';
 // import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import playlistNavigations from './src/constants/playlistConstants';
 // import GestureRecognizer from 'react-native-swipe-gestures';
@@ -11,10 +13,12 @@ function App(): React.JSX.Element {
   //   navigation.navigate(playlistNavigations.PLAYLIST);
   // };
   return (
-    <NavigationContainer>
-      <MainStackNavigator />
-      <Toast />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <MainStackNavigator />
+        <Toast />
+      </NavigationContainer>
+    </QueryClientProvider>
     //   <GestureHandlerRootView style={{flex: 1}}>
     //   <GestureRecognizer
     //     onSwipeRight={state => onSwipeRight(navigation)}

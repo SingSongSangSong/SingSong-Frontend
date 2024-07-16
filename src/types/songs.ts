@@ -1,31 +1,26 @@
-export interface Song {
+interface Song {
   song_number: number;
   song_name: string;
   singer_name: string;
-  preview_url: string | null;
   tags: string[];
 }
 
-export interface SongsResponse {
+interface SongsResponse {
   songs: Song[];
 }
 
-export interface Props {
-  energy: number;
-  electronic: number;
-  brightness: number;
-  speed: number;
-  danceability: number;
-}
-
-export interface TagsResponse {
+interface TagsResponse {
   tags: string[];
 }
 
-export interface TagProps {
+interface TagProps {
   tag: string;
 }
-export interface SongWithTagsProps {
+
+interface SongWithTagsProps {
   songNumber: number;
-  tags: string[];
+  songTags: string[];
+  additionTags: string[];
 }
+
+export type {Song, SongsResponse, TagsResponse, TagProps, SongWithTagsProps};

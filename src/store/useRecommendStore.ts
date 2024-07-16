@@ -5,8 +5,10 @@ interface recommendState {
   selectedSong: Song | null;
   setSelectedSong: (song: Song) => void;
   reset: () => void;
-  selectedTag: string[] | [];
-  setSelectedTag: (tag: string[]) => void;
+  selectedSongTag: string[] | [];
+  setSelectedSongTag: (tag: string[]) => void;
+  selectedAdditionTag: string[] | [];
+  setSelectedAdditionTag: (tag: string[]) => void;
   storedSong: {[key: number]: Song} | null;
   setStoredSong: (songId: number, song: Song, isStored: boolean) => void;
 }
@@ -14,11 +16,13 @@ interface recommendState {
 const useRecommendStore = create<recommendState>(set => {
   const defaultState = {
     selectedSong: null,
-    selectedTag: [],
+    selectedSongTag: [],
+    selectedAdditionTag: [],
   };
   const initState = {
     selectedSong: null,
-    selectedTag: [],
+    selectedSongTag: [],
+    selectedAdditionTag: [],
     storedSong: {},
   };
 
@@ -27,8 +31,11 @@ const useRecommendStore = create<recommendState>(set => {
     setSelectedSong: (song: Song) => {
       set(state => ({...state, selectedSong: song}));
     },
-    setSelectedTag: (tag: string[]) => {
-      set(state => ({...state, selectedTag: tag}));
+    setSelectedSongTag: (tag: string[]) => {
+      set(state => ({...state, selectedSongTag: tag}));
+    },
+    setSelectedAdditionTag: (tag: string[]) => {
+      set(state => ({...state, selectedAdditionTag: tag}));
     },
     setStoredSong: (songId: number, song: Song, isStored: boolean) =>
       set(state => {

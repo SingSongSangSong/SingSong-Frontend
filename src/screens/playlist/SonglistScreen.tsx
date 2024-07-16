@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {FlatList, Text, View} from 'react-native';
-import {MainStackParamList} from '../../navigation/MainStackNavigator';
-import playlistNavigations from '../../constants/playlistConstants';
+import {Image, View} from 'react-native';
 import tw from 'twrnc';
-import useSonglistStore from '../../store/useSonglistStore';
-import {Song} from '../../types/songs';
+import {MainStackParamList} from '../../types';
+import {playlistNavigations} from '../../constants';
+import useSonglist from '../../hooks/useSonglist';
+import {Songlist} from '../../components';
 
 type SonglistScreenProps = StackScreenProps<
   MainStackParamList,
@@ -14,32 +14,19 @@ type SonglistScreenProps = StackScreenProps<
 
 function SonglistScreen({route, navigation}: SonglistScreenProps) {
   const {playlistId} = route.params; //초기 태그 (ex. 고음지르기)
-  const {songlist, setSonglist} = useSonglistStore();
-  const songData = songlist && songlist[playlistId] ? songlist[playlistId] : {};
-  const allSongs: Song[] = songData ? Object.values(songData) : [];
-
-  // useEffect(() => {
-  //   console.log('playlistId:', playlistId);
-  //   console.log('songlist', songlist);
-  //   console.log(songData);
-  //   console.log(allSongs);
-  // });
-
-  const renderItem = ({item}: {item: Song}) => (
-    <View style={tw`p-4 bg-gray-900 mb-2 rounded-lg`}>
-      <Text style={tw`text-white font-bold`}>{item.song_name}</Text>
-      <Text style={tw`text-white`}>{item.singer_name}</Text>
-    </View>
-  );
+  const songlistHandler = useSonglist(playlistId);
 
   return (
-    <View>
-      <Text>songlist screen</Text>
-      <FlatList
-        data={allSongs}
-        renderItem={renderItem}
-        // keyExtractor={item => item.song_number}
-      />
+    <View style={tw`w-full h-full bg-[#151515]`}>
+      <View style={tw`w-full justify-center items-center my-4`}>
+        <Image
+          source={{
+            uri: 'https://t2.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/8fXh/image/dCyJyeNJ50BMG489LQg9cokHUpk.jpg',
+          }}
+          style={tw`w-50 h-50 rounded-xl`}
+        />
+      </View>
+      <Songlist songlistData={songlistHandler.songs} onSongPress={() => {}} />
     </View>
   );
 }

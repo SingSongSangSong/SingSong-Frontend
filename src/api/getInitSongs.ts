@@ -1,20 +1,14 @@
-import axios from 'axios';
 import {SongsResponse, TagsResponse} from '../types/songs';
+import axiosInstance from './axios';
 
-// songs
-const getSongs = async (props: TagsResponse): Promise<SongsResponse> => {
-  //taglist로 보내주기
+const getInitSongs = async (props: TagsResponse): Promise<SongsResponse> => {
   const {tags} = props;
-
-  const sendData = {tags: tags};
-
-  const {data} = await axios.post<SongsResponse>(
-    //'http://localhost:8000/api/v1/tags',
-    'http://10.0.2.2:8000/api/v1/recommendation/ssss',
-    sendData,
-  );
-
+  console.log('waiting init song...', tags);
+  const {data} = await axiosInstance.post('/api/v1/recommendation/ssss', {
+    tags: tags,
+  });
+  console.log(data);
   return data;
 };
 
-export default getSongs;
+export default getInitSongs;

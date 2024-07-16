@@ -1,38 +1,22 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {MainStackParamList} from '../../navigation/MainStackNavigator';
-import mainNavigations from '../../constants/MainConstants';
-import playlistNavigations from '../../constants/playlistConstants';
-import CustomPlaylist from '../../components/CustomPlaylist';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
+import {Playlist} from '../../components';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import usePlaylistStore from '../../store/usePlaylistStore';
 import tw from 'twrnc';
+import {MainStackParamList} from '../../types';
+import {mainNavigations, playlistNavigations} from '../../constants';
+import usePlaylist from '../../hooks/usePlaylist';
 
 type PlaylistScreenProps = StackScreenProps<
   MainStackParamList,
   typeof playlistNavigations.PLAYLIST
 >;
 
-interface PlaylistItem {
-  id: string;
-  name: string;
-  length: string;
-}
-
 export default function PlaylistScreen({navigation}: PlaylistScreenProps) {
-  const {playlist, setPlaylist} = usePlaylistStore();
-
-  const playlistData: PlaylistItem[] = Object.entries(playlist).map(
-    ([id, value]) => ({
-      id,
-      name: value.playlistName,
-      length: value.playlistLen,
-    }),
-  );
+  const playlistHandler = usePlaylist();
 
   const onSwipeRight = () => {
-    console.log('Swipe!!');
     navigation.navigate(mainNavigations.HOME);
   };
 
@@ -41,15 +25,7 @@ export default function PlaylistScreen({navigation}: PlaylistScreenProps) {
     navigation.navigate(playlistNavigations.SONGLIST, {playlistId}); // 'TargetScreen'은 라우팅하려는 페이지 이름입니다.
   };
 
-  const renderItem = ({item}: {item: PlaylistItem}) => (
-    <View style={tw`m-2`}>
-      <CustomPlaylist
-        playlistName={item.name}
-        playlistLen={item.length}
-        onPress={() => handlePlayPress(item.id)}
-      />
-    </View>
-  );
+  const buttonCatalog = ['My', 'Shared', 'Liked', 'Subscribed'];
 
   return (
     <GestureRecognizer
@@ -58,30 +34,24 @@ export default function PlaylistScreen({navigation}: PlaylistScreenProps) {
         velocityThreshold: 0.5,
         directionalOffsetThreshold: 80,
       }}
-      style={styles.container}>
-      <SafeAreaView style={tw`h-full w-full`}>
-        <Text>hi~~</Text>
-        <View style={tw`w-full h-full bg-gray-900`}>
-          <FlatList
-            data={playlistData}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
+      style={tw`flex-1 justify-center items-center`}>
+      <SafeAreaView style={tw`h-full w-full  bg-[#151515]`}>
+        <View style={tw`flex-row p-3 border-b border-white items-center`}>
+          {buttonCatalog.map((buttonName, index) => (
+            <Pressable
+              key={index}
+              style={tw`p-2 rounded-xl items-center mr-4 border border-white`}>
+              <Text style={tw`font-bold text-white text-sm`}>{buttonName}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={tw`w-full h-full mt-5 mb-10`}>
+          <Playlist
+            playlistData={playlistHandler.playlistData}
+            onPlayPress={handlePlayPress}
           />
         </View>
       </SafeAreaView>
     </GestureRecognizer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-});
