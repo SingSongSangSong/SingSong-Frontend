@@ -19,6 +19,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "@tanstack/react-query": "^5.51.1",
     "axios": "^1.7.2",
+    "fs": "^0.0.1-security",
     "react": "18.2.0",
     "react-native": "0.74.2",
     "react-native-gesture-handler": "^2.17.1",

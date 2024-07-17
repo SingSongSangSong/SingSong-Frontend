@@ -1,0 +1,450 @@
+{
+  "저음노래": {
+    "songs": [
+      {
+        "song_number": 22809,
+        "song_name": "Photograph",
+        "singer_name": "Ed Sheeran",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 8589,
+        "song_name": "너를보내고",
+        "singer_name": "윤도현밴드",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 62054,
+        "song_name": "다시 사랑한다 말할까",
+        "singer_name": "김동률",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 1209,
+        "song_name": "어쩌다마주친그대",
+        "singer_name": "송골매",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 22698,
+        "song_name": "Let Her Go",
+        "singer_name": "Passenger",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 10418,
+        "song_name": "바람이 불어오는 곳",
+        "singer_name": "김광석",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 10062,
+        "song_name": "챔피언",
+        "singer_name": "싸이",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 3777,
+        "song_name": "너에게 난 나에게 넌",
+        "singer_name": "자전거탄풍경",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 24322,
+        "song_name": "Blurry",
+        "singer_name": "빈지노(Feat.Dbo)(Prod. By PEEJAY)",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      },
+      {
+        "song_number": 24870,
+        "song_name": "Clocks",
+        "singer_name": "Coldplay",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      }
+    ]
+  },
+  "고음노래": {
+    "songs": [
+      {
+        "song_number": 62506,
+        "song_name": "My Way(돈꽃OST)",
+        "singer_name": "이수",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 22204,
+        "song_name": "Someone Like You",
+        "singer_name": "Adele",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 62491,
+        "song_name": "나의 사춘기에게",
+        "singer_name": "볼빨간사춘기",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 35884,
+        "song_name": "바람기억",
+        "singer_name": "나얼",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 1842,
+        "song_name": "붉은노을",
+        "singer_name": "이문세",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 42920,
+        "song_name": "어디에도(20th edition)",
+        "singer_name": "MC THE MAX",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 62627,
+        "song_name": "180도",
+        "singer_name": "벤(Ben)",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 1209,
+        "song_name": "어쩌다마주친그대",
+        "singer_name": "송골매",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 10418,
+        "song_name": "바람이 불어오는 곳",
+        "singer_name": "김광석",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 22698,
+        "song_name": "Let Her Go",
+        "singer_name": "Passenger",
+        "tags": ["저음노래"]
+      }
+    ]
+  },
+  "헤어졌을때": {
+    "songs": [
+      {
+        "song_number": 98565,
+        "song_name": "If You Were Me(미스터션샤인OST)",
+        "singer_name": "벤(Ben)",
+        "tags": ["헤어졌을때", "썸", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 16790,
+        "song_name": "별(미녀는괴로워OST)",
+        "singer_name": "유미",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 17826,
+        "song_name": "Lost",
+        "singer_name": "박효신",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 99857,
+        "song_name": "Cosmos(일단뜨겁게청소하라OST)",
+        "singer_name": "허각",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 24870,
+        "song_name": "Clocks",
+        "singer_name": "Coldplay",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      },
+      {
+        "song_number": 24322,
+        "song_name": "Blurry",
+        "singer_name": "빈지노(Feat.Dbo)(Prod. By PEEJAY)",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      },
+      {
+        "song_number": 22299,
+        "song_name": "Set Fire To The Rain",
+        "singer_name": "Adele",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 19628,
+        "song_name": "지우개",
+        "singer_name": "MC몽",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 13869,
+        "song_name": "혼자라도",
+        "singer_name": "에픽하이(Feat.클래지콰이)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 19484,
+        "song_name": "우산",
+        "singer_name": "에픽하이(Feat.윤하)",
+        "tags": ["신남과잔잔사이"]
+      }
+    ]
+  },
+  "썸": {
+    "songs": [
+      {
+        "song_number": 62506,
+        "song_name": "My Way(돈꽃OST)",
+        "singer_name": "이수",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 22204,
+        "song_name": "Someone Like You",
+        "singer_name": "Adele",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 62491,
+        "song_name": "나의 사춘기에게",
+        "singer_name": "볼빨간사춘기",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 35884,
+        "song_name": "바람기억",
+        "singer_name": "나얼",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 1842,
+        "song_name": "붉은노을",
+        "singer_name": "이문세",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 42920,
+        "song_name": "어디에도(20th edition)",
+        "singer_name": "MC THE MAX",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 62627,
+        "song_name": "180도",
+        "singer_name": "벤(Ben)",
+        "tags": ["고음노래"]
+      },
+      {
+        "song_number": 10062,
+        "song_name": "챔피언",
+        "singer_name": "싸이",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 1209,
+        "song_name": "어쩌다마주친그대",
+        "singer_name": "송골매",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 22698,
+        "song_name": "Let Her Go",
+        "singer_name": "Passenger",
+        "tags": ["저음노래"]
+      }
+    ]
+  },
+  "댄스중독": {
+    "songs": [
+      {
+        "song_number": 86701,
+        "song_name": "해야(HEYA)",
+        "singer_name": "IVE(아이브)",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 64323,
+        "song_name": "Drama",
+        "singer_name": "에스파(aespa)",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 59042,
+        "song_name": "아름다운밤이야",
+        "singer_name": "비스트",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 64300,
+        "song_name": "Candy",
+        "singer_name": "NCT DREAM",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 38787,
+        "song_name": "HER",
+        "singer_name": "블락비",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 30449,
+        "song_name": "슈퍼맨",
+        "singer_name": "노라조",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 36590,
+        "song_name": "Man In Love(남자가사랑할때)",
+        "singer_name": "인피니트",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 34203,
+        "song_name": "내꺼하자",
+        "singer_name": "인피니트",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 48636,
+        "song_name": "봄날",
+        "singer_name": "BTS",
+        "tags": ["댄스본능"]
+      },
+      {
+        "song_number": 31308,
+        "song_name": "사랑의배터리",
+        "singer_name": "홍진영",
+        "tags": ["댄스본능"]
+      }
+    ]
+  },
+  "신남과잔잔사이": {
+    "songs": [
+      {
+        "song_number": 22269,
+        "song_name": "Without You",
+        "singer_name": "David Guetta(Feat.Usher)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 19484,
+        "song_name": "우산",
+        "singer_name": "에픽하이(Feat.윤하)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 80200,
+        "song_name": "It's My Life(슬기로운의사생활시즌2 OST)",
+        "singer_name": "T(윤미래)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 64220,
+        "song_name": "OMG",
+        "singer_name": "NewJeans",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 17972,
+        "song_name": "Ballerino",
+        "singer_name": "리쌍(Feat.알리)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 19628,
+        "song_name": "지우개",
+        "singer_name": "MC몽",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 13869,
+        "song_name": "혼자라도",
+        "singer_name": "에픽하이(Feat.클래지콰이)",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 22299,
+        "song_name": "Set Fire To The Rain",
+        "singer_name": "Adele",
+        "tags": ["신남과잔잔사이"]
+      },
+      {
+        "song_number": 24870,
+        "song_name": "Clocks",
+        "singer_name": "Coldplay",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      },
+      {
+        "song_number": 24322,
+        "song_name": "Blurry",
+        "singer_name": "빈지노(Feat.Dbo)(Prod. By PEEJAY)",
+        "tags": ["신남과잔잔사이", "저음노래"]
+      }
+    ]
+  },
+  "쉬어가는노래": {
+    "songs": [
+      {
+        "song_number": 16266,
+        "song_name": "세월",
+        "singer_name": "이문세",
+        "tags": ["쉬어가는노래"]
+      },
+      {
+        "song_number": 22435,
+        "song_name": "When I Was Your Man",
+        "singer_name": "Bruno Mars",
+        "tags": ["쉬어가는노래"]
+      },
+      {
+        "song_number": 17826,
+        "song_name": "Lost",
+        "singer_name": "박효신",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 99857,
+        "song_name": "Cosmos(일단뜨겁게청소하라OST)",
+        "singer_name": "허각",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 16790,
+        "song_name": "별(미녀는괴로워OST)",
+        "singer_name": "유미",
+        "tags": ["헤어졌을때", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 98565,
+        "song_name": "If You Were Me(미스터션샤인OST)",
+        "singer_name": "벤(Ben)",
+        "tags": ["헤어졌을때", "썸", "쉬어가는노래", "고음노래"]
+      },
+      {
+        "song_number": 1209,
+        "song_name": "어쩌다마주친그대",
+        "singer_name": "송골매",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 10062,
+        "song_name": "챔피언",
+        "singer_name": "싸이",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 3777,
+        "song_name": "너에게 난 나에게 넌",
+        "singer_name": "자전거탄풍경",
+        "tags": ["저음노래"]
+      },
+      {
+        "song_number": 62054,
+        "song_name": "다시 사랑한다 말할까",
+        "singer_name": "김동률",
+        "tags": ["저음노래"]
+      }
+    ]
+  }
+}

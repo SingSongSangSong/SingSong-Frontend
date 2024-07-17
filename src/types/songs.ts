@@ -9,6 +9,10 @@ interface SongsResponse {
   songs: Song[];
 }
 
+interface previewSongs {
+  [tag: string]: SongsResponse;
+}
+
 interface TagsResponse {
   tags: string[];
 }
@@ -23,4 +27,11 @@ interface SongWithTagsProps {
   additionTags: string[];
 }
 
-export type {Song, SongsResponse, TagsResponse, TagProps, SongWithTagsProps};
+export type {
+  Song,
+  SongsResponse,
+  previewSongs,
+  TagsResponse,
+  TagProps,
+  SongWithTagsProps,
+};

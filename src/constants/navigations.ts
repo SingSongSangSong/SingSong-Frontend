@@ -20,4 +20,28 @@ const authNavigations = {
   LOGIN: 'Login',
 } as const;
 
-export {authNavigations, rcdNavigations, playlistNavigations, mainNavigations};
+const mainTabNavigations = {
+  HOME: 'Home',
+  COMMUNITY: 'Community',
+  KEEP: 'Keep',
+} as const;
+
+const appStackNavigations = {
+  MAIN: 'Main',
+  SPLASH: 'Splash',
+} as const;
+
+const homeStackNavigations = {
+  RCD_HOME: 'RcdHome',
+  RCD_DETAIL: 'RcdDetail',
+} as const;
+
+export {
+  authNavigations,
+  rcdNavigations,
+  playlistNavigations,
+  mainNavigations,
+  mainTabNavigations,
+  appStackNavigations,
+  homeStackNavigations,
+};

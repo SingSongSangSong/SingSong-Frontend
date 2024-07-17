@@ -27,7 +27,7 @@ const SonglistItem: React.FC<SonglistItemProps> = ({
     <View style={tw`w-full`}>
       <TouchableOpacity onPress={onPress} style={tw`w-full`}>
         <View
-          style={tw`flex-row justify-between items-center bg-gray-400 m-3 rounded-lg p-3`}>
+          style={tw`flex-row justify-between items-center bg-gray-400 m-1 rounded-lg p-1`}>
           <View style={tw`flex-row h-full items-center justify-center`}>
             <Text style={tw`font-bold text-sm text-black mr-4`}>
               {songNumber}

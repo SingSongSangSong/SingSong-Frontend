@@ -5,6 +5,7 @@ export * from './list/Songlist';
 export * from './list/Folderlist';
 export * from './list/Keeplist';
 export * from './list/Taglist';
+export * from './list/Previewlist';
 export * from './card/SongCard';
 export * from './message/MsgBox';
 export * from './tag/ClickableTag';

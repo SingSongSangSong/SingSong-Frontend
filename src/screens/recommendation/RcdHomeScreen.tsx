@@ -6,18 +6,32 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {StackScreenProps} from '@react-navigation/stack';
-import {rcdNavigations} from '../../constants';
+import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {rcdTabParamList} from '../../types';
+import {HomeStackParamList} from '../../types';
 import useTag from '../../hooks/useTag';
 import useSong from '../../hooks/useSong';
 import {CustomButton, CustomTag, ShowTag, SongInfo} from '../../components';
+import {RouteProp} from '@react-navigation/native';
+import {homeStackNavigations} from '../../constants';
 
-type RcdHomeScreenProps = StackScreenProps<
-  rcdTabParamList,
-  typeof rcdNavigations.RCD_HOME
->;
+// type RcdHomeScreenProps = StackScreenProps<
+//   HomeStackParamList,
+//   typeof homeStackNavigations.HOME
+// >;
+// type HomeStackParamList = {
+//   Home: {tag: any};
+//   Recommendation: undefined;
+//   // 다른 스크린이 있을 경우 여기에 추가
+// };
+
+type RcdHomeScreenProps = {
+  route: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>;
+  navigation: StackNavigationProp<
+    HomeStackParamList,
+    typeof homeStackNavigations.RCD_DETAIL
+  >;
+};
 
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리

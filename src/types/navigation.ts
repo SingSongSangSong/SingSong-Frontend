@@ -1,6 +1,9 @@
 import {
+  appStackNavigations,
   authNavigations,
+  homeStackNavigations,
   mainNavigations,
+  mainTabNavigations,
   playlistNavigations,
   rcdNavigations,
 } from '../constants';
@@ -18,11 +21,33 @@ type MainStackParamList = {
   [playlistNavigations.SONGLIST]: {playlistId: string};
 };
 
-type rcdTabParamList = {
+type RcdTabParamList = {
   [rcdNavigations.RCD_TAG]: undefined;
   [rcdNavigations.RCD_HOME]: {tag: string};
 
   [rcdNavigations.RCD_KEEP]: undefined;
 };
 
-export type {AuthStackParamList, MainStackParamList, rcdTabParamList};
+type MainTabParamList = {
+  [mainTabNavigations.COMMUNITY]: undefined;
+  [mainTabNavigations.HOME]: undefined;
+  [mainTabNavigations.KEEP]: undefined;
+};
+
+type AppStackParamList = {
+  [appStackNavigations.SPLASH]: undefined;
+  [appStackNavigations.MAIN]: undefined;
+};
+
+type HomeStackParamList = {
+  [homeStackNavigations.RCD_HOME]: undefined;
+  [homeStackNavigations.RCD_DETAIL]: {tag: string};
+};
+export type {
+  AuthStackParamList,
+  MainStackParamList,
+  RcdTabParamList,
+  MainTabParamList,
+  AppStackParamList,
+  HomeStackParamList,
+};

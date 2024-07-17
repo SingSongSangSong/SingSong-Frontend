@@ -5,9 +5,9 @@ import LoginScreen from '../../screens/auth/LoginScreen';
 import {authNavigations} from '../../constants';
 import {AuthStackParamList} from '../../types';
 
-function AuthStackNavigator() {
-  const Stack = createStackNavigator<AuthStackParamList>();
+const Stack = createStackNavigator<AuthStackParamList>();
 
+function AuthStackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen

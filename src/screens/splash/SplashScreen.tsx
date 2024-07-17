@@ -3,18 +3,18 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {View} from 'react-native';
 import tw from 'twrnc';
 import LogoIcon from '../../assets/logo.svg';
-import {MainStackParamList} from '../../types';
-import {mainNavigations} from '../../constants';
+import {AppStackParamList} from '../../types';
+import {appStackNavigations} from '../../constants';
 
 type SplashScreenProps = StackScreenProps<
-  MainStackParamList,
-  typeof mainNavigations.SPLASH
+  AppStackParamList,
+  typeof appStackNavigations.SPLASH
 >;
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace(mainNavigations.HOME);
+      navigation.replace(appStackNavigations.MAIN);
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigation]);

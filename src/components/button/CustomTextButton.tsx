@@ -5,18 +5,18 @@ import ArrowRightIcon from '../../assets/arrowRight.svg';
 
 interface CustomTextButtonProps {
   title: string;
-  onPress: () => void;
+  onPress: (title: string) => void;
 }
 
 const CustomTextButton = ({title, onPress}: CustomTextButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={onPress}
-      style={tw`px-4 py-4 flex-row justify-center items-center`}>
+      onPress={() => onPress(title)}
+      style={tw`px-4 py-4 flex-row items-center`}>
       <Text style={tw`text-white text-sm font-semibold pr-1`}>{title}</Text>
       <ArrowRightIcon width={32} height={32} />
     </TouchableOpacity>
   );
 };
 
-export default CustomTextButton;
+export {CustomTextButton};
