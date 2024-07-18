@@ -3,12 +3,22 @@ import uuid from 'react-native-uuid';
 import useRecommendStore from '../store/useRecommendStore';
 import usePlaylistStore from '../store/usePlaylistStore';
 import useSonglistStore from '../store/useSonglistStore';
+import {buttonItem} from '../types';
 
 const useKeep = () => {
   const {storedSong, setStoredSong} = useRecommendStore();
   const {playlist, setPlaylist} = usePlaylistStore();
   const {songlist, setSonglist} = useSonglistStore();
   const [modalVisible, setModalVisible] = useState(false);
+
+  const buttonNames = ['전체', '최근', '인기', '신나는', '재밌는'];
+
+  const buttonItems: buttonItem[] = buttonNames.map(name => ({
+    name,
+    onPress: () => {
+      console.log(`${name} 버튼이 눌렸습니다.`);
+    },
+  }));
 
   const handleStoredPlaylist = () => {
     const id = String(uuid.v4());
@@ -31,6 +41,7 @@ const useKeep = () => {
 
   return {
     storedSong,
+    buttonItems,
     modalVisible,
     handleStoredPlaylist,
     handleCloseModal,

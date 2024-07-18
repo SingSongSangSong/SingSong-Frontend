@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {appStackNavigations} from '../../constants';
 import SplashScreen from '../../screens/\bsplash/SplashScreen';
 import MainTabNavigator from '../tab/MainTabNavigator';
@@ -9,7 +9,11 @@ const Stack = createStackNavigator<AppStackParamList>();
 
 function AppStackNavigator() {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        ...TransitionPresets.FadeFromBottomAndroid, // iOS 스타일의 슬라이드 애니메이션
+      }}>
       <Stack.Screen
         name={appStackNavigations.SPLASH}
         component={SplashScreen}

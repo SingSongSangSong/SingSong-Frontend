@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
@@ -17,7 +17,11 @@ function HomeStackNavigator({route}: HomeStackNavigatorProps) {
   const tag = route?.params?.tag ?? 'defaultTag';
 
   return (
-    <Stack.Navigator initialRouteName={homeStackNavigations.RCD_HOME}>
+    <Stack.Navigator
+      initialRouteName={homeStackNavigations.RCD_HOME}
+      screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
+      }}>
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
         component={HomeScreen}
@@ -27,6 +31,18 @@ function HomeStackNavigator({route}: HomeStackNavigatorProps) {
         name={homeStackNavigations.RCD_DETAIL}
         component={RcdHomeScreen}
         initialParams={{tag}} // 기본값 설정
+        options={({route}) => ({
+          headerShown: true,
+          headerTitle: route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
       />
     </Stack.Navigator>
   );

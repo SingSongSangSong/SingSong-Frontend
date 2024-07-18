@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
-import FolderIcon from '../../assets/folder.svg';
+import FolderIcon from '../../assets/svg/folder.svg';
 
 type FolderItem = {
   id: string;

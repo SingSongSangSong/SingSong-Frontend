@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import tw from 'twrnc';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import PlayIcon from '../../assets/play.svg';
+import PlayIcon from '../../assets/svg/play.svg';
 
 interface PlaylistItemProps {
   playlistName: string;

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {View} from 'react-native';
 import tw from 'twrnc';
-import LogoIcon from '../../assets/logo.svg';
+import LogoIcon from '../../assets/svg/logo.svg';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations} from '../../constants';
 
