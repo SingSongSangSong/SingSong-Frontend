@@ -1,27 +1,19 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import tw from 'twrnc';
-import {designatedColor} from '../../constants';
 
-interface SonglistItemProps {
+interface KeeplistItemProps {
   songNumber: number;
   songName: string;
   singerName: string;
   onPress: () => void;
-  showKeepIcon: boolean;
-  onToggleStored: () => void;
-  keepColor: (typeof designatedColor)[keyof typeof designatedColor];
 }
 
-const SonglistItem: React.FC<SonglistItemProps> = ({
+const KeeplistItem: React.FC<KeeplistItemProps> = ({
   songNumber,
   songName,
   singerName,
   onPress,
-  showKeepIcon,
-  onToggleStored,
-  keepColor = designatedColor.KEEP_EMPTY,
 }) => {
   return (
     <View style={tw`w-full`}>
@@ -37,15 +29,10 @@ const SonglistItem: React.FC<SonglistItemProps> = ({
               <Text style={tw`text-black`}>{singerName}</Text>
             </View>
           </View>
-          {showKeepIcon && (
-            <TouchableOpacity onPress={onToggleStored}>
-              <Icon name="star" size={24} color={keepColor} />
-            </TouchableOpacity>
-          )}
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-export {SonglistItem};
+export {KeeplistItem};

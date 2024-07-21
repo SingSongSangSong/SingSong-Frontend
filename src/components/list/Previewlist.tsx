@@ -2,9 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
 import {SongsResponse} from '../../types';
-import {SonglistItem} from './SonglistItem';
-import {designatedColor} from '../../constants';
-import {CustomTextButton} from '..';
+import {AddTextButton, PreviewlistItem} from '..';
 
 interface PreviewlistProps {
   tag: string;
@@ -21,17 +19,13 @@ const Previewlist: React.FC<PreviewlistProps> = ({
 }) => {
   return (
     <View>
-      <CustomTextButton title={tag} onPress={onArrowPress} />
+      <AddTextButton title={tag} onPress={onArrowPress} isCenter={false} />
 
       {data.songs.map((song, index) => (
-        <SonglistItem
+        <PreviewlistItem
           songNumber={song.song_number}
           songName={song.song_name}
           singerName={song.singer_name}
-          onPress={() => {}}
-          showKeepIcon={false}
-          onToggleStored={() => {}}
-          keepColor={designatedColor.KEEP_EMPTY}
         />
       ))}
     </View>

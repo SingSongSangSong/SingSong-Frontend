@@ -14,6 +14,8 @@ const randomColor = [
 const designatedColor = {
   KEEP_FILLED: '#FFD700',
   KEEP_EMPTY: '#D3D3D3',
+  GREEN: '#1DB954',
+  DARK_GRAY: '#B3B3B3',
 } as const;
 
 export {randomColor, designatedColor};

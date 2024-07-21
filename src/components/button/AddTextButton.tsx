@@ -1,37 +1,29 @@
-// components/AddToPlaylistButton.tsx
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 import tw from 'twrnc';
-import PlusIcon from '../../assets/plus.svg';
-import {MsgBox} from '../../components'; // Assuming MsgBox is already a component
+import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
-type AddToPlaylistButtonProps = {
+interface AddTextButtonProps {
   title: string;
-  onPress: () => void;
-  modalVisible: boolean;
-  onCloseModal: () => void;
-};
+  onPress: (title: string) => void;
+  isCenter: boolean;
+}
 
-const AddTextButton: React.FC<AddToPlaylistButtonProps> = ({
+const AddTextButton = ({
   title,
   onPress,
-  modalVisible,
-  onCloseModal,
-}) => {
+  isCenter = false,
+}: AddTextButtonProps) => {
   return (
-    <View style={tw`flex-row justify-center m-3`}>
-      <TouchableOpacity
-        style={tw`p-2 flex-row justify-center items-center`}
-        onPress={onPress}>
-        <PlusIcon width={16} height={16} />
-        <Text style={tw`text-white font-bold text-sm ml-2`}>{title}</Text>
-      </TouchableOpacity>
-      <MsgBox
-        visible={modalVisible}
-        message={`${title}에 추가되었습니다.`}
-        onClose={onCloseModal}
-      />
-    </View>
+    <TouchableOpacity
+      onPress={() => onPress(title)}
+      style={[
+        tw`px-4 py-4 flex-row items-center`,
+        isCenter && tw`justify-center items-center`,
+      ]}>
+      <Text style={tw`text-white text-sm font-semibold pr-1`}>{title}</Text>
+      <ArrowRightIcon width={32} height={32} />
+    </TouchableOpacity>
   );
 };
 

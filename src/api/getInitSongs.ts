@@ -10,11 +10,6 @@ const getInitSongs = async (props: TagsResponse): Promise<SongsResponse> => {
   });
   console.log(data);
 
-  //save tag songs
-  // const jsonFilePath = `../assets/data/${tags[0]}.json`;
-  // await fs.writeFile(jsonFilePath, JSON.stringify(data, null, 2));
-  // console.log(`Data has been saved to ${jsonFilePath} in JSON format.`);
-
   return data;
 };
 

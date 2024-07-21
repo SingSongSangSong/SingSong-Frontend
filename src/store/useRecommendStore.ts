@@ -9,8 +9,6 @@ interface recommendState {
   setSelectedSongTag: (tag: string[]) => void;
   selectedAdditionTag: string[] | [];
   setSelectedAdditionTag: (tag: string[]) => void;
-  storedSong: {[key: number]: Song} | null;
-  setStoredSong: (songId: number, song: Song, isStored: boolean) => void;
 }
 
 const useRecommendStore = create<recommendState>(set => {
@@ -37,17 +35,6 @@ const useRecommendStore = create<recommendState>(set => {
     setSelectedAdditionTag: (tag: string[]) => {
       set(state => ({...state, selectedAdditionTag: tag}));
     },
-    setStoredSong: (songId: number, song: Song, isStored: boolean) =>
-      set(state => {
-        const updatedSongs = {...state.storedSong};
-        if (isStored) {
-          console.log(songId);
-          updatedSongs[songId] = song;
-        } else {
-          delete updatedSongs[songId];
-        }
-        return {...state, storedSong: updatedSongs};
-      }),
 
     reset: () => set(defaultState),
   };

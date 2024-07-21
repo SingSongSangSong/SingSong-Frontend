@@ -6,19 +6,15 @@ import {Song} from '../../types';
 
 interface SonglistProps {
   songlistData: Song[];
-  onSongPress: () => void;
 }
 
-const Songlist: React.FC<SonglistProps> = ({songlistData, onSongPress}) => {
+const Songlist: React.FC<SonglistProps> = ({songlistData}) => {
   const renderItem = ({item}: {item: Song}) => (
     <View style={tw`m-2`}>
       <SonglistItem
         songNumber={item.song_number}
         songName={item.song_name}
         singerName={item.singer_name}
-        onPress={() => {}}
-        showKeepIcon={false}
-        onToggleStored={() => {}}
       />
     </View>
   );

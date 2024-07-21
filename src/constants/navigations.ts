@@ -1,18 +1,6 @@
-const mainNavigations = {
-  SPLASH: 'Splash',
-  HOME: 'Home',
-  RECOMMENDATION: 'Recommendation',
-} as const;
-
 const playlistNavigations = {
   PLAYLIST: 'Playlist',
   SONGLIST: 'Songlist',
-} as const;
-
-const rcdNavigations = {
-  RCD_HOME: 'RcdHome',
-  RCD_TAG: 'Tag',
-  RCD_KEEP: 'Keep',
 } as const;
 
 const authNavigations = {
@@ -22,7 +10,7 @@ const authNavigations = {
 
 const mainTabNavigations = {
   HOME: 'Home',
-  COMMUNITY: 'Community',
+  PLAYGROUND: 'Playground',
   KEEP: 'Keep',
 } as const;
 
@@ -36,12 +24,16 @@ const homeStackNavigations = {
   RCD_DETAIL: 'RcdDetail',
 } as const;
 
+const keepStackNavigations = {
+  PLAYLIST: 'Playlist',
+  SONGLIST: 'Songlist',
+} as const;
+
 export {
   authNavigations,
-  rcdNavigations,
   playlistNavigations,
-  mainNavigations,
   mainTabNavigations,
   appStackNavigations,
   homeStackNavigations,
+  keepStackNavigations,
 };
