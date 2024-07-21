@@ -2,6 +2,7 @@ import {
   appStackNavigations,
   authNavigations,
   homeStackNavigations,
+  keepStackNavigations,
   mainTabNavigations,
 } from '../constants';
 
@@ -25,9 +26,15 @@ type HomeStackParamList = {
   [homeStackNavigations.RCD_HOME]: undefined;
   [homeStackNavigations.RCD_DETAIL]: {tag: string};
 };
+
+type KeepStackParamList = {
+  [keepStackNavigations.PLAYLIST]: undefined;
+  [keepStackNavigations.SONGLIST]: {playlistId: string; songCount: number};
+};
 export type {
   AuthStackParamList,
   MainTabParamList,
   AppStackParamList,
   HomeStackParamList,
+  KeepStackParamList,
 };

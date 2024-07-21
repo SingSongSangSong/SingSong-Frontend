@@ -3,12 +3,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {mainTabNavigations} from '../../constants';
 import {MainTabParamList} from '../../types';
 import PlaygroundScreen from '../../screens/playground/PlaygroundScreen';
-import KeepScreen from '../../screens/keep/KeepScreen';
 import HomeStackNavigator from '../stack/HomeStackNavigator';
 import HomeIcon from '../../assets/svg/recommendation.svg';
 import PlaygroundIcon from '../../assets/svg/play.svg';
 import StarIcon from '../../assets/svg/star.svg';
 import {SvgProps} from 'react-native-svg';
+import KeepStackNavigator from '../stack/KeepStackNavigator';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -53,7 +53,10 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
-      <Tab.Screen name={mainTabNavigations.KEEP} component={KeepScreen} />
+      <Tab.Screen
+        name={mainTabNavigations.KEEP}
+        component={KeepStackNavigator}
+      />
     </Tab.Navigator>
   );
 };

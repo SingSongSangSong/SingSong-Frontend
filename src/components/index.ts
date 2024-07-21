@@ -1,5 +1,6 @@
 export * from './item/PlaylistItem';
 export * from './list/Playlist';
+export * from './item/RcdSonglistItem';
 export * from './item/SonglistItem';
 export * from './list/Songlist';
 export * from './item/KeeplistItem';

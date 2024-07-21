@@ -24,10 +24,16 @@ const homeStackNavigations = {
   RCD_DETAIL: 'RcdDetail',
 } as const;
 
+const keepStackNavigations = {
+  PLAYLIST: 'Playlist',
+  SONGLIST: 'Songlist',
+} as const;
+
 export {
   authNavigations,
   playlistNavigations,
   mainTabNavigations,
   appStackNavigations,
   homeStackNavigations,
+  keepStackNavigations,
 };

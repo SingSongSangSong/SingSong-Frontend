@@ -1,112 +1,47 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {designatedColor} from '../../constants';
+import React from 'react';
+import {View, Text, Image} from 'react-native';
 import tw from 'twrnc';
+import {designatedColor} from '../../constants';
 
 interface SonglistItemProps {
   songNumber: number;
   songName: string;
   singerName: string;
-  onAddPress: () => void;
-  onRemovePress: () => void;
-  showKeepIcon: boolean;
-  onToggleStored: () => void;
-  keepColor: (typeof designatedColor)[keyof typeof designatedColor];
 }
 
-const SonglistItem: React.FC<SonglistItemProps> = ({
+const SonglistItem = ({
   songNumber,
   songName,
   singerName,
-  onAddPress,
-  onRemovePress,
-  showKeepIcon,
-  onToggleStored,
-  keepColor = designatedColor.KEEP_EMPTY,
-}) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const handlePress = () => {
-    setIsPressed(!isPressed);
-    if (onAddPress && !isPressed) {
-      console.log('add');
-      onAddPress();
-    } else if (onRemovePress && isPressed) {
-      console.log('remove');
-      onRemovePress();
-    }
-  };
-
+}: SonglistItemProps) => {
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <View
-        style={[
-          styles.innerContainer,
-          isPressed && styles.innerContainerPressed,
-        ]}>
-        <View style={styles.textContainer}>
-          <Text style={[styles.songNumber, isPressed && styles.textPressed]}>
-            {songNumber}
-          </Text>
-          <View>
-            <Text style={[styles.songName, isPressed && styles.textPressed]}>
-              {songName}
+    <View>
+      <View style={tw`flex-row`}>
+        {/* <View style={tw`h-[20] w-[20] bg-[#C7E3BE]`} /> */}
+        <Image
+          source={{
+            uri: 'https://t2.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/8fXh/image/dCyJyeNJ50BMG489LQg9cokHUpk.jpg',
+          }}
+          // style={styles.image}
+          style={tw`w-12 h-12 rounded-sm`}
+        />
+        <View style={tw`h-full ml-4`}>
+          <View style={tw`flex-row`}>
+            <Text
+              style={tw`text-white text-sm mr-2 text-[${designatedColor.GREEN}] items-center justify-center font-bold`}>
+              {songNumber}
             </Text>
-            <Text style={[styles.singerName, isPressed && styles.textPressed]}>
-              {singerName}
-            </Text>
+            <Text style={tw`text-white text-sm`}>{songName}</Text>
           </View>
+
+          <Text
+            style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}]`}>
+            {singerName}
+          </Text>
         </View>
-        {showKeepIcon && (
-          <TouchableOpacity onPress={onToggleStored} style={tw`p-4`}>
-            <Icon name="star" size={24} color={keepColor} />
-          </TouchableOpacity>
-        )}
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  innerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: 4,
-    padding: 5,
-    borderRadius: 8,
-    borderColor: 'white',
-    borderWidth: 1,
-    backgroundColor: 'black',
-  },
-  innerContainerPressed: {
-    backgroundColor: '#CCCCCC',
-  },
-  textContainer: {
-    flexDirection: 'row',
-    height: '100%',
-    alignItems: 'center',
-  },
-  songNumber: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: 'white',
-    marginRight: 12,
-  },
-  songName: {
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  singerName: {
-    color: 'white',
-  },
-  textPressed: {
-    color: 'black',
-  },
-});
 
 export {SonglistItem};

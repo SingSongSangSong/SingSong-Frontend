@@ -2,9 +2,10 @@ import React from 'react';
 import {useState} from 'react';
 import useRecommendStore from '../store/useRecommendStore';
 import {Song} from '../types';
-import {SonglistItem} from '../components';
+import {RcdSonglistItem} from '../components';
 import getInitSongs from '../api/getInitSongs';
 import getSongs from '../api/getSongs';
+import usePlaylistStore from '../store/usePlaylistStore';
 
 const useSong = (initTag: string[]) => {
   //song number를 선택을 하는데, 만약에 선
@@ -14,11 +15,17 @@ const useSong = (initTag: string[]) => {
   const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
   const [loading, setLoading] = useState(true); //노래가 안왔을 때의 로딩, 아니면 토스처럼 컴포넌트를 흐릿하게 보여줄까?
 
-  const {storedSong, setStoredSong, reset} = useRecommendStore();
+  const {reset} = useRecommendStore();
+  const {addSongToPlaylist, removeSongFromPlaylist} = usePlaylistStore();
 
-  const toggleStored = (songId: number, song: Song) => {
-    const isStored = storedSong && songId in storedSong ? false : true; // 있으면 false, 삭제하자. 없으면 true, 추가하자.
-    setStoredSong(songId, song, isStored); //keep할 데이터 저장
+  const toggleAddStored = (songId: number, song: Song) => {
+    // const isStored = storedSong && songId in storedSong ? false : true; // 있으면 false, 삭제하자. 없으면 true, 추가하자.
+    // setStoredSong(songId, song, isStored); //keep할 데이터 저장
+    addSongToPlaylist('최근 추가한 노래', song);
+  };
+
+  const toggleRemoveStored = (songId: number, song: Song) => {
+    removeSongFromPlaylist('최근 추가한 노래', songId);
   };
 
   //처음 노래 받아오는 함수
@@ -92,25 +99,18 @@ const useSong = (initTag: string[]) => {
   };
 
   const handleSonglist = ({item}: {item: Song}) => (
-    <SonglistItem
+    <RcdSonglistItem
       songNumber={item.song_number}
       songName={item.song_name}
       singerName={item.singer_name}
       onAddPress={() => handleAddPressSong(item.song_number)}
       onRemovePress={() => handleRemovePressSong(item.song_number)}
       showKeepIcon={true}
-      onToggleStored={() => toggleStored(item.song_number, item)}
-      keepColor={decideColor(item.song_number)}
+      onToggleAddStored={() => toggleAddStored(item.song_number, item)}
+      onToggleRemoveStored={() => toggleRemoveStored(item.song_number, item)}
+      // keepColor={decideColor(item.song_number)}
     />
   );
-
-  const decideColor = (song_number: number) => {
-    if (storedSong && song_number in storedSong) {
-      return '#FFD700';
-    } else {
-      return '#D3D3D3';
-    }
-  };
 
   return {
     loading,

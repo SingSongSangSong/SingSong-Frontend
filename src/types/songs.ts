@@ -27,6 +27,11 @@ interface SongWithTagsProps {
   additionTags: string[];
 }
 
+interface PlaylistInfo {
+  playlistName: string;
+  songCount: number;
+}
+
 export type {
   Song,
   SongsResponse,
@@ -34,4 +39,5 @@ export type {
   TagsResponse,
   TagProps,
   SongWithTagsProps,
+  PlaylistInfo,
 };
