@@ -49,6 +49,7 @@ const useKeep = () => {
   // }
 
   return {
+    playlists,
     buttonItems,
     handleFolderPress,
     getSonglist,

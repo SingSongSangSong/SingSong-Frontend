@@ -1,7 +1,7 @@
 interface Song {
-  song_number: number;
-  song_name: string;
-  singer_name: string;
+  songNumber: number;
+  songName: string;
+  singerName: string;
   tags: string[];
 }
 
@@ -13,18 +13,32 @@ interface previewSongs {
   [tag: string]: SongsResponse;
 }
 
-interface TagsResponse {
+// interface TagsResponse {
+//   tags: string[];
+// }
+
+interface TagProps {
   tags: string[];
 }
 
-interface TagProps {
+interface SongWithTagsProps {
+  songs: Song[];
   tag: string;
 }
 
-interface SongWithTagsProps {
-  songNumber: number;
-  songTags: string[];
-  additionTags: string[];
+interface RecommendTagsResponse {
+  data: SongWithTagsProps[];
+  message: string;
+}
+
+interface RecommendResponse {
+  data: Song[];
+  message: string;
+}
+
+interface TagsResponse {
+  data: string[];
+  message: string;
 }
 
 interface PlaylistInfo {
@@ -37,6 +51,8 @@ export type {
   SongsResponse,
   previewSongs,
   TagsResponse,
+  RecommendTagsResponse,
+  RecommendResponse,
   TagProps,
   SongWithTagsProps,
   PlaylistInfo,

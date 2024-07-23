@@ -37,7 +37,6 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
     if (keepColor == designatedColor.KEEP_EMPTY) {
       onToggleAddStored();
     } else {
-      console.log(keepColor);
       onToggleRemoveStored();
     }
 
@@ -51,10 +50,8 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
   const handlePress = () => {
     setIsPressed(!isPressed);
     if (onAddPress && !isPressed) {
-      console.log('add');
       onAddPress();
     } else if (onRemovePress && isPressed) {
-      console.log('remove');
       onRemovePress();
     }
   };

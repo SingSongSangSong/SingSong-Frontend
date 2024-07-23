@@ -13,6 +13,7 @@ const Playlist: React.FC<PlaylistProps> = ({playlistData, onPlayPress}) => {
   const renderItem = ({item}: {item: PlaylistInfo}) => (
     <View style={tw`m-2`}>
       <PlaylistItem
+        key={item.playlistName}
         playlistName={item.playlistName}
         playlistLen={item.songCount}
         onPress={() => onPlayPress(item.playlistName, item.songCount)}

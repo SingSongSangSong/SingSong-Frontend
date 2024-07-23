@@ -1,29 +1,3 @@
-// import {create} from 'zustand';
-// import {Song} from '../types';
-
-// interface playlistState {
-//   playlist: {playlistName: string; playlistLen: string} | {};
-//   setPlaylist: (playlistName: string, songList: Song[]) => void;
-// }
-
-// const usePlaylistStore = create<playlistState>(set => {
-//   const initState = {
-//     playlist: {},
-//   };
-
-//   return {
-//     ...initState,
-//     setPlaylist: (playlistName: string, playlistLen: string) =>
-//       set(state => {
-//         const updatedPlaylist = {...state.playlist};
-//         updatedPlaylist[playlistId] = {playlistName, playlistLen};
-//         return {...state, playlist: updatedPlaylist};
-//       }),
-//   };
-// });
-
-// export default usePlaylistStore;
-
 import {create} from 'zustand';
 import {PlaylistInfo, Song} from '../types';
 
@@ -55,9 +29,7 @@ const usePlaylistStore = create<PlaylistState>((set, get) => {
       set(state => {
         const playlist = state.playlists[playlistName] || [];
         // Check if the song already exists in the playlist
-        const songExists = playlist.some(
-          s => s.song_number === song.song_number,
-        );
+        const songExists = playlist.some(s => s.songNumber === song.songNumber);
         if (!songExists) {
           return {
             playlists: {
@@ -78,9 +50,7 @@ const usePlaylistStore = create<PlaylistState>((set, get) => {
         return {
           playlists: {
             ...state.playlists,
-            [playlistName]: playlist.filter(
-              song => song.song_number !== songId,
-            ),
+            [playlistName]: playlist.filter(song => song.songNumber !== songId),
           },
         };
       }),

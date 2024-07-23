@@ -12,7 +12,7 @@ type SonglistScreenProps = StackScreenProps<
   typeof keepStackNavigations.SONGLIST
 >;
 
-function SonglistScreen({route, navigation}: SonglistScreenProps) {
+function SonglistScreen({route}: SonglistScreenProps) {
   const {playlistId, songCount} = route.params; //초기 태그 (ex. 고음지르기)
   // const songlistHandler = useSonglist(playlistId);
   const playlistHandler = useKeep();

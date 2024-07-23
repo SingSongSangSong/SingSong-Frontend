@@ -27,6 +27,7 @@ const homeStackNavigations = {
 const keepStackNavigations = {
   PLAYLIST: 'Playlist',
   SONGLIST: 'Songlist',
+  SONGLIST_EDIT: 'SonglistEdit',
 } as const;
 
 export {
