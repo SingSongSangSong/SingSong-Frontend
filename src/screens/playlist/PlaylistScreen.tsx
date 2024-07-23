@@ -4,7 +4,7 @@ import {SafeAreaView, View} from 'react-native';
 import {ButtonBar, Playlist} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
-import {keepStackNavigations} from '../../constants';
+import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 
 type PlaylistScreenProps = StackScreenProps<
@@ -16,11 +16,11 @@ export default function PlaylistScreen({navigation}: PlaylistScreenProps) {
   const keepHandler = useKeep();
 
   const handlePlayPress = (playlistId: string, songCount: number) => {
-    navigation.navigate(keepStackNavigations.SONGLIST, {playlistId, songCount}); // 'TargetScreen'은 라우팅하려는 페이지 이름입니다.
+    navigation.navigate(keepStackNavigations.SONGLIST, {playlistId, songCount});
   };
 
   return (
-    <SafeAreaView style={tw`h-full w-full  bg-[#151515]`}>
+    <SafeAreaView style={tw`h-full w-full  bg-[${designatedColor.BACKGROUND}]`}>
       <View>
         <ButtonBar buttonItems={keepHandler.buttonItems} />
       </View>

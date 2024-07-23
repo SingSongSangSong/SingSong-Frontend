@@ -1,17 +1,17 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import tw from 'twrnc';
-import {SonglistItem} from '..';
 import {Song} from '../../types';
+import {SonglistEditItem} from '../item/SonglistEditItem';
 
-interface SonglistProps {
+interface SonglistEditProps {
   songlistData: Song[];
 }
 
-const Songlist: React.FC<SonglistProps> = ({songlistData}) => {
+const SonglistEdit: React.FC<SonglistEditProps> = ({songlistData}) => {
   const renderItem = ({item}: {item: Song}) => (
     <View style={tw`m-2`}>
-      <SonglistItem
+      <SonglistEditItem
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
@@ -24,4 +24,4 @@ const Songlist: React.FC<SonglistProps> = ({songlistData}) => {
   );
 };
 
-export {Songlist};
+export {SonglistEdit};

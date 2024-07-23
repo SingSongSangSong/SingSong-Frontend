@@ -5,6 +5,7 @@ import tw from 'twrnc';
 import LogoIcon from '../../assets/svg/logo.svg';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations} from '../../constants';
+import useFetchData from '../../hooks/useFetchData';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -12,12 +13,15 @@ type SplashScreenProps = StackScreenProps<
 >;
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
+  const fetchDataHandler = useFetchData();
+
   useEffect(() => {
+    fetchDataHandler.fetchData();
     const timer = setTimeout(() => {
       navigation.replace(appStackNavigations.MAIN);
     }, 2000);
     return () => clearTimeout(timer);
-  }, [navigation]);
+  }, []);
 
   return (
     <View style={tw`w-full h-full bg-black items-center`}>

@@ -30,6 +30,7 @@ type HomeStackParamList = {
 type KeepStackParamList = {
   [keepStackNavigations.PLAYLIST]: undefined;
   [keepStackNavigations.SONGLIST]: {playlistId: string; songCount: number};
+  [keepStackNavigations.SONGLIST_EDIT]: {playlistId: string};
 };
 export type {
   AuthStackParamList,
