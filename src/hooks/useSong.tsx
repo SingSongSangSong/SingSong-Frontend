@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useState} from 'react';
 import useRecommendStore from '../store/useRecommendStore';
 import {Song} from '../types';
@@ -21,9 +21,17 @@ const useSong = (initTag: string[]) => {
   const {addSongToPlaylist, removeSongFromPlaylist} = usePlaylistStore();
 
   const [isEnabled, setIsEnabled] = useState(false);
+  const previousIsEnabled = useRef(isEnabled);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const handleModeChange = () => setIsEnabled(previousState => !previousState);
+
+  useEffect(() => {
+    if (previousIsEnabled.current && !isEnabled) {
+      setShowData(songLst);
+    }
+    previousIsEnabled.current = isEnabled;
+  }, [isEnabled]);
 
   const toggleAddStored = (songId: number, song: Song) => {
     addSongToPlaylist('최근 추가한 노래', song);
@@ -53,12 +61,14 @@ const useSong = (initTag: string[]) => {
 
   const fetchApplyNewData = async () => {
     try {
+      console.log(songNumberLst);
       setLoading(true);
       const [songData] = await Promise.all([postRecommend(songNumberLst)]);
       const tempData = songData.data;
       setRecommendSongResults(tempData);
       setShowData(tempData);
       setLoading(false);
+      setSongNumberLst([]);
     } catch (error) {
       console.error('Error fetching songs:', error);
     }
@@ -82,7 +92,7 @@ const useSong = (initTag: string[]) => {
   };
 
   const handleAddPressSong = (songNumber: number) => {
-    if (songNumberLst.length == 0) {
+    if (songNumberLst.length == 0 && !isEnabled) {
       handleModeChange();
     }
     setSongNumberLst(prevList => {
@@ -93,15 +103,20 @@ const useSong = (initTag: string[]) => {
   };
 
   const handleRemovePressSong = (songNumber: number) => {
+    // if (songNumberLst.length == 1) {
+    //   handleModeChange();
+    // }
     setSongNumberLst(prevList => {
       const updatedList = prevList.filter(num => num !== songNumber);
       changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출
+
       return updatedList;
     });
   };
 
   const handleSonglist = ({item}: {item: Song}) => (
     <RcdSonglistItem
+      key={item.songNumber}
       songNumber={item.songNumber}
       songName={item.songName}
       singerName={item.singerName}

@@ -64,7 +64,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
                 contentContainerStyle={tw`flex-grow`}
               />
               <AddTextButton
-                title={songHandler.buttonTitle}
+                title={songHandler.isEnabled ? '탐색하기' : '새로고침'}
                 onPress={songHandler.handlePressButton}
                 isCenter={true}
               />
