@@ -49,13 +49,6 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
         <View style={tw`flex-1 h-[50%]`}>
           {!songHandler.loading && (
             <>
-              {/* <View
-                style={tw`flex-row flex-wrap m-2 justify-center items-center`}>
-                <CustomTag tag={initTag} index={0} />
-                <Text style={tw`text-white ml-2 font-bold text-sm`}>
-                  와 관련된 노래 리스트에요
-                </Text>
-              </View> */}
               <FlatList
                 data={songHandler.showData}
                 keyExtractor={(item, index) => index.toString()}

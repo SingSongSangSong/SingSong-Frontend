@@ -1,11 +1,15 @@
-// import {useState} from 'react';
-// import uuid from 'react-native-uuid';
-import usePlaylistStore from '../store/usePlaylistStore';
+import {useState} from 'react';
+// import usePlaylistStore from '../store/usePlaylistStore';
 import {buttonItem} from '../types';
+import {Alert} from 'react-native';
+import useKeepListStore from '../store/useKeepStore';
 
 const useKeep = () => {
   // const playlists = usePlaylistStore(state => state.playlists);
-  const {playlists, getPlaylistInfo} = usePlaylistStore();
+  // const {playlists, getPlaylistInfo} = usePlaylistStore();
+  const {keepList, removeSongFromKeep} = useKeepListStore();
+  const [removedSong, setRemovedSong] = useState<number[]>([]);
+  // const {removeSongFromPlaylist} = usePlaylistStore();
 
   // const [modalVisible, setModalVisible] = useState(false);
 
@@ -25,23 +29,49 @@ const useKeep = () => {
     },
   }));
 
-  // const handleStoredPlaylist = () => {
-  //   const id = String(uuid.v4());
-  //   const shortId = id.slice(-7);
-  //   const songCount = String(storedSong ? Object.keys(storedSong).length : 0);
-  //   setPlaylist(id, `recommendation_result_${shortId}`, songCount);
-  //   if (storedSong) {
-  //     setSonglist(id, storedSong); //songid와 song객체 묶음
-  //     setModalVisible(true);
-  //   }
-  // };
-
   const handleFolderPress = (id: string) => {
     console.log('폴더 클릭', id);
   }; //폴더 로직 추가 구현 필요
 
-  const getSonglist = (playlistName: string) => {
-    return playlists[playlistName];
+  // const getSonglist = (playlistName: string) => {
+  //   return playlists[playlistName];
+  // };
+
+  const handleRemoveButton = () => {
+    Alert.alert(
+      '삭제',
+      '정말로 삭제하시겠습니까?',
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {
+          text: '삭제',
+          onPress: () => {
+            setRemovedSong([]);
+            removedSong.map(song => {
+              removeSongFromKeep(song);
+            });
+          },
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
+  };
+
+  const handleInCircleButton = (songNumber: number) => {
+    setRemovedSong(prevState => {
+      if (!prevState.includes(songNumber)) {
+        return [...prevState, songNumber];
+      }
+      return prevState;
+    });
+  };
+
+  const handleOutCircleButton = (songNumber: number) => {
+    setRemovedSong(prevState => prevState.filter(num => num !== songNumber));
   };
 
   // const getPlaylistSongCount = (playlistId: string) => {
@@ -49,11 +79,15 @@ const useKeep = () => {
   // }
 
   return {
-    playlists,
+    keepList,
+    removedSong,
     buttonItems,
     handleFolderPress,
-    getSonglist,
-    getPlaylistInfo,
+    handleRemoveButton,
+    handleInCircleButton,
+    handleOutCircleButton,
+    // getSonglist,
+    // getPlaylistInfo,
   };
 };
 

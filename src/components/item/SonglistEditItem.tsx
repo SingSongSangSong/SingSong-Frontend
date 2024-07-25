@@ -8,18 +8,25 @@ interface SonglistEditItemProps {
   songNumber: number;
   songName: string;
   singerName: string;
+  onPressIn: (songNumber: number) => void;
+  onPressOut: (songNumber: number) => void;
 }
 
 const SonglistEditItem = ({
   songNumber,
   songName,
   singerName,
+  onPressIn,
+  onPressOut,
 }: SonglistEditItemProps) => {
   return (
     <View>
       <View style={tw`flex-row`}>
         <View style={tw`mr-4 justify-center items-center`}>
-          <CircleButton onPress={() => {}} />
+          <CircleButton
+            onPressIn={() => onPressIn(songNumber)}
+            onPressOut={() => onPressOut(songNumber)}
+          />
         </View>
 
         <Image

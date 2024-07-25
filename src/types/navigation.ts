@@ -28,9 +28,8 @@ type HomeStackParamList = {
 };
 
 type KeepStackParamList = {
-  [keepStackNavigations.PLAYLIST]: undefined;
-  [keepStackNavigations.SONGLIST]: {playlistId: string; songCount: number};
-  [keepStackNavigations.SONGLIST_EDIT]: {playlistId: string};
+  [keepStackNavigations.KEEP]: undefined;
+  [keepStackNavigations.KEEP_EDIT]: undefined;
 };
 export type {
   AuthStackParamList,
