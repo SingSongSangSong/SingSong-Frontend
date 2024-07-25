@@ -3,9 +3,9 @@ import {useState} from 'react';
 import useRecommendStore from '../store/useRecommendStore';
 import {Song} from '../types';
 import {RcdSonglistItem} from '../components';
-import usePlaylistStore from '../store/usePlaylistStore';
 import useDataStore from '../store/useDataStore';
 import postRecommend from '../api/postReccomend';
+import useKeepListStore from '../store/useKeepStore';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
@@ -18,7 +18,7 @@ const useSong = (initTag: string[]) => {
     useDataStore();
 
   const {reset} = useRecommendStore();
-  const {addSongToPlaylist, removeSongFromPlaylist} = usePlaylistStore();
+  const {addSongToKeep, removeSongFromKeep} = useKeepListStore();
 
   const [isEnabled, setIsEnabled] = useState(false);
   const previousIsEnabled = useRef(isEnabled);
@@ -31,14 +31,14 @@ const useSong = (initTag: string[]) => {
       setShowData(songLst);
     }
     previousIsEnabled.current = isEnabled;
-  }, [isEnabled]);
+  }, [isEnabled, songLst]);
 
   const toggleAddStored = (songId: number, song: Song) => {
-    addSongToPlaylist('최근 추가한 노래', song);
+    addSongToKeep(song);
   };
 
   const toggleRemoveStored = (songId: number) => {
-    removeSongFromPlaylist('최근 추가한 노래', songId);
+    removeSongFromKeep(songId);
   };
 
   //처음 노래 받아오는 함수
@@ -103,9 +103,6 @@ const useSong = (initTag: string[]) => {
   };
 
   const handleRemovePressSong = (songNumber: number) => {
-    // if (songNumberLst.length == 1) {
-    //   handleModeChange();
-    // }
     setSongNumberLst(prevList => {
       const updatedList = prevList.filter(num => num !== songNumber);
       changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출

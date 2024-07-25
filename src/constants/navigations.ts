@@ -20,14 +20,13 @@ const appStackNavigations = {
 } as const;
 
 const homeStackNavigations = {
-  RCD_HOME: 'RcdHome',
-  RCD_DETAIL: 'RcdDetail',
+  RCD_HOME: '_RcdHome',
+  RCD_DETAIL: '_RcdDetail',
 } as const;
 
 const keepStackNavigations = {
-  PLAYLIST: 'Playlist',
-  SONGLIST: 'Songlist',
-  SONGLIST_EDIT: 'SonglistEdit',
+  KEEP: '_Keep',
+  KEEP_EDIT: '_KeepEdit',
 } as const;
 
 export {

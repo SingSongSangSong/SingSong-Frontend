@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {designatedColor} from '../../constants';
 import tw from 'twrnc';
+import useKeepListStore from '../../store/useKeepStore';
 
 interface RcdSonglistItemProps {
   songNumber: number;
@@ -13,8 +14,6 @@ interface RcdSonglistItemProps {
   showKeepIcon: boolean;
   onToggleAddStored: () => void;
   onToggleRemoveStored: () => void;
-  // keepColor: (typeof designatedColor)[keyof typeof designatedColor];
-  // keepColor: string;
 }
 
 const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
@@ -32,6 +31,18 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
   const [keepColor, setKeepColor] = useState<string>(
     designatedColor.KEEP_EMPTY,
   ); // 초기 색상을 설정
+  const {keepList} = useKeepListStore();
+  const isStored = keepList.some(
+    keepSong => keepSong.songNumber === songNumber,
+  );
+
+  useEffect(() => {
+    if (isStored) {
+      setKeepColor(designatedColor.KEEP_FILLED);
+    } else {
+      setKeepColor(designatedColor.KEEP_EMPTY);
+    }
+  }, [isStored]);
 
   const handleToggleStored = () => {
     if (keepColor == designatedColor.KEEP_EMPTY) {

@@ -1,18 +1,23 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // 아이콘 라이브러리
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {designatedColor} from '../../constants';
 
 interface CircleButtonProps {
-  onPress: () => void;
+  onPressIn: () => void;
+  onPressOut: () => void;
 }
 
-const CircleButton = ({onPress}: CircleButtonProps) => {
+const CircleButton = ({onPressIn, onPressOut}: CircleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePress = () => {
     setIsPressed(!isPressed);
-    onPress();
+    if (!isPressed) {
+      onPressIn();
+    } else {
+      onPressOut();
+    }
   };
 
   return (
@@ -34,12 +39,12 @@ const styles = StyleSheet.create({
     height: 18,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: designatedColor.DARK_GRAY, // 기본 회색 테두리
+    borderColor: designatedColor.DARK_GRAY,
     justifyContent: 'center',
     alignItems: 'center',
   },
   circlePressed: {
-    backgroundColor: '#4CAF50', // 초록색 배경색
+    backgroundColor: '#4CAF50',
   },
 });
 

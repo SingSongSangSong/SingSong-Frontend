@@ -13,10 +13,6 @@ interface previewSongs {
   [tag: string]: SongsResponse;
 }
 
-// interface TagsResponse {
-//   tags: string[];
-// }
-
 interface TagProps {
   tags: string[];
 }
