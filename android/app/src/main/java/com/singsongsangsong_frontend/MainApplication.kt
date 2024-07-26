@@ -10,6 +10,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
+// import com.lugg.RNCConfig.RNCConfigPackage;
 // import com.facebook.react.bridge.JSIModulePackage; // 추가
 // import com.swmansion.reanimated.ReanimatedJSIModulePackage; // 추가
 
@@ -21,6 +22,7 @@ class MainApplication : Application(), ReactApplication {
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
               // add(MyReactNativePackage())
+              // add(RNCConfigPackage())
             }
 
         override fun getJSMainModuleName(): String = "index"

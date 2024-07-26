@@ -3,7 +3,6 @@ import {Pressable, Text, StyleSheet} from 'react-native';
 
 interface CustomButtonProps {
   title: string;
-  color: string;
   onPress: () => void;
   style: 'filled' | 'outlined';
 }

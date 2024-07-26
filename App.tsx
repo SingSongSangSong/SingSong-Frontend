@@ -17,10 +17,12 @@ function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        {/* <MainTabNavigator /> */}
         <AppStackNavigator />
         <Toast />
       </NavigationContainer>
+      {/* <NavigationContainer>
+        <AuthStackNavigator />
+      </NavigationContainer> */}
     </QueryClientProvider>
     //   <GestureHandlerRootView style={{flex: 1}}>
     //   <GestureRecognizer
