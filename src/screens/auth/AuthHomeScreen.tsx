@@ -3,7 +3,7 @@ import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {authNavigations} from '../../constants';
 import {AuthStackParamList} from '../../types';
-import {login} from '@react-native-kakao/user';
+import {login, logout} from '@react-native-kakao/user';
 
 type AuthHomeScreenProps = StackScreenProps<
   AuthStackParamList,
@@ -27,9 +27,20 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
       // Alert.alert('Login Failed', err.message);
     }
   };
+
+  const handleKakaoLogout = async () => {
+    try {
+      const result = await logout();
+      console.log('Logout Result:', result);
+    } catch (err) {
+      console.error('Logout Failed', err);
+    }
+  };
+
   return (
     <SafeAreaView>
       <Text>텍스트</Text>
+      <Button title="LOGOUT" onPress={() => handleKakaoLogout()} />
       <Button title="START" onPress={() => handleKakaoLogin()} />
     </SafeAreaView>
   );

@@ -17,8 +17,9 @@ import {name as appName} from './app.json';
 import React from 'react';
 import './gesture-handler';
 import {initializeKakaoSDK} from '@react-native-kakao/core';
+import Config from 'react-native-config';
 
-initializeKakaoSDK('2de29a7b3583418860f9e5705cca20cf');
+initializeKakaoSDK(Config.KAKAO_API_KEY);
 
 const RootApp = () => (
   // <GestureHandlerRootView style={{flex: 1}}>
