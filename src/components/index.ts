@@ -24,6 +24,7 @@ export * from './button/NavButton';
 export * from './button/CircleButton';
 export * from './button/PlusButton';
 export * from './button/RemoveButton';
+export * from './button/LargeButton';
 export * from './slider/CustomSlider';
 export * from './info/SongInfo';
 export * from './bar/ButtonBar';

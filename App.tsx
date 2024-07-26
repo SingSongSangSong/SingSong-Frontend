@@ -6,7 +6,6 @@ import {QueryClientProvider} from '@tanstack/react-query';
 import queryClient from './src/api/queryClient';
 // import MainTabNavigator from './src/navigations/tab/MainTabNavigator';
 import AppStackNavigator from './src/navigations/stack/AppStackNavigator';
-import AuthStackNavigator from './src/navigations/stack/AuthStackNavigator';
 // import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import playlistNavigations from './src/constants/playlistConstants';
 // import GestureRecognizer from 'react-native-swipe-gestures';
@@ -17,13 +16,13 @@ function App(): React.JSX.Element {
   // };
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <NavigationContainer>
+      <NavigationContainer>
         <AppStackNavigator />
         <Toast />
-      </NavigationContainer> */}
-      <NavigationContainer>
-        <AuthStackNavigator />
       </NavigationContainer>
+      {/* <NavigationContainer>
+        <AuthStackNavigator />
+      </NavigationContainer> */}
     </QueryClientProvider>
     //   <GestureHandlerRootView style={{flex: 1}}>
     //   <GestureRecognizer

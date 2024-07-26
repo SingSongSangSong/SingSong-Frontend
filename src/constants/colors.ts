@@ -18,6 +18,7 @@ const designatedColor = {
   DARK_GRAY: '#B3B3B3',
   BACKGROUND: '#151515',
   RED: '#EE4E4E',
+  KAKAO_YELLOW: '#FEE500',
 } as const;
 
 export {randomColor, designatedColor};
