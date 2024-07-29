@@ -9,7 +9,8 @@ interface DataState {
   setTags: (tags: string[]) => void;
   setTagWithSongs: (tag: string, songs: Song[]) => void;
   setRecommendSongResults: (songs: Song[]) => void;
-  getSliceSongs: (tag: string) => Song[]; //인덱스별로 노래 슬라이싱해서 보내기
+  getSliceSongs: (tag: string) => {songs: Song[]; isRefreshed: boolean}; //인덱스별로 노래 슬라이싱해서 보내기
+  updateRefreshData: (tag: string, songs: Song[]) => void;
   setIndexLst: (tag: string, index: number) => void;
   resetIndexLst: (tag: string) => void;
 }
@@ -58,7 +59,7 @@ const useDataStore = create<DataState>((set, get) => {
 
       // 노래 개수가 10개보다 작으면 있는 노래를 있는 그대로 반환
       if (songs.length <= 10) {
-        return songs;
+        return {songs: songs, isRefreshed: true};
       }
 
       // 인덱스가 songlist 길이보다 크면 처음으로 돌아감
@@ -77,7 +78,13 @@ const useDataStore = create<DataState>((set, get) => {
       const newIndex = (actualIndex + 10) % songs.length;
       state.setIndexLst(tag, newIndex);
 
-      return slicedSongs;
+      // 현재 인덱스와 남은 곡 수를 비교하여 shouldFetchMore 결정
+      const isRefreshed = songs.length - newIndex < 20;
+
+      return {
+        songs: slicedSongs,
+        isRefreshed: isRefreshed,
+      };
     },
 
     setIndexLst: (tag: string, index: number) =>
@@ -100,6 +107,22 @@ const useDataStore = create<DataState>((set, get) => {
       set(() => ({
         recommendSongResults: songs,
       })),
+
+    updateRefreshData: (tag: string, newSongs: Song[]) => {
+      // 현재 상태의 기존 노래 목록을 가져옴
+      const existingSongs = get().tagWithSongs[tag] || [];
+
+      // 새로운 노래들을 기존 목록에 추가
+      const updatedSongs = [...existingSongs, ...newSongs];
+
+      // 상태 업데이트
+      set(state => ({
+        tagWithSongs: {
+          ...state.tagWithSongs,
+          [tag]: updatedSongs,
+        },
+      }));
+    },
   };
 });
 

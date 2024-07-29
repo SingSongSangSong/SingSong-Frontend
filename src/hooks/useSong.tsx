@@ -4,8 +4,8 @@ import useRecommendStore from '../store/useRecommendStore';
 import {Song} from '../types';
 import {RcdSonglistItem} from '../components';
 import useDataStore from '../store/useDataStore';
-import postRecommend from '../api/postReccomend';
 import useKeepListStore from '../store/useKeepStore';
+import postRefresh from '../api/postRefresh';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
@@ -14,8 +14,7 @@ const useSong = (initTag: string[]) => {
   const [songLst, setSongLst] = useState<Song[]>([]); //songlist를 렌더링하기 위함
   const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
   const [loading, setLoading] = useState(true); //노래가 안왔을 때의 로딩, 아니면 토스처럼 컴포넌트를 흐릿하게 보여줄까?
-  const {setRecommendSongResults, getSliceSongs, resetIndexLst} =
-    useDataStore();
+  const {getSliceSongs, resetIndexLst, updateRefreshData} = useDataStore();
 
   const {reset} = useRecommendStore();
   const {addSongToKeep, removeSongFromKeep} = useKeepListStore();
@@ -42,12 +41,69 @@ const useSong = (initTag: string[]) => {
   };
 
   //처음 노래 받아오는 함수
-  const fetchInitData = async () => {
+  // const fetchInitData = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const tempData = getSliceSongs(tags);
+  //     setSongLst(tempData); //songLst 설정
+  //     setShowData(tempData);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching songs:', error);
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const fetchRefreshData = () => {
+  //   fetchInitData(); //새로 고침시 다시 똑같이 반복
+  // };
+
+  // const fetchApplyNewData = async () => {
+  //   try {
+  //     console.log(songNumberLst);
+  //     setLoading(true);
+  //     const [songData] = await Promise.all([postRecommend(songNumberLst)]);
+  //     const tempData = songData.data;
+  //     setRecommendSongResults(tempData);
+  //     setShowData(tempData);
+  //     setLoading(false);
+  //     setSongNumberLst([]);
+  //   } catch (error) {
+  //     console.error('Error fetching songs:', error);
+  //   }
+  // };
+
+  // const handlePressButton = () => {
+  //   if (songNumberLst.length == 0) {
+  //     //없을 경우
+  //     return fetchRefreshData();
+  //   } else {
+  //     //노래가 있을 경우
+  //     return fetchApplyNewData();
+  //   }
+  // };
+
+  const handlePressButton = async () => {
     try {
       setLoading(true);
-      const tempData = getSliceSongs(tags);
-      setSongLst(tempData); //songLst 설정
-      setShowData(tempData);
+      const {songs, isRefreshed} = getSliceSongs(tags);
+
+      if (isRefreshed) {
+        // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        postRefresh(tags)
+          .then(response => {
+            // postRefresh가 성공하면 데이터 갱신
+            const songData = response.data;
+            updateRefreshData(tags, songData);
+          })
+          .catch(error => {
+            // 에러 처리
+            console.error('Error refreshing data:', error);
+          });
+      }
+
+      setSongLst(songs); //songLst 설정
+      setShowData(songs);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching songs:', error);
@@ -55,34 +111,6 @@ const useSong = (initTag: string[]) => {
     }
   };
 
-  const fetchRefreshData = () => {
-    fetchInitData(); //새로 고침시 다시 똑같이 반복
-  };
-
-  const fetchApplyNewData = async () => {
-    try {
-      console.log(songNumberLst);
-      setLoading(true);
-      const [songData] = await Promise.all([postRecommend(songNumberLst)]);
-      const tempData = songData.data;
-      setRecommendSongResults(tempData);
-      setShowData(tempData);
-      setLoading(false);
-      setSongNumberLst([]);
-    } catch (error) {
-      console.error('Error fetching songs:', error);
-    }
-  };
-
-  const handlePressButton = () => {
-    if (songNumberLst.length == 0) {
-      //없을 경우
-      return fetchRefreshData();
-    } else {
-      //노래가 있을 경우
-      return fetchApplyNewData();
-    }
-  };
   const changeButtonTitle = (updatedList: number[]) => {
     if (updatedList.length == 0) {
       setButtonTitle('새로고침');
@@ -130,7 +158,6 @@ const useSong = (initTag: string[]) => {
     songLst,
     showData,
     buttonTitle,
-    fetchInitData,
     handleSonglist,
     handlePressButton,
     reset,
