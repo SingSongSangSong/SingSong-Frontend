@@ -4,7 +4,7 @@ import axiosInstance from './axios';
 const postRecommendTags = async (tags: TagProps) => {
   try {
     const response = await axiosInstance.post<RecommendTagsResponse>(
-      '/recommend/tags',
+      '/recommend/home',
       tags,
     );
     console.log('data for recommend song response', response.data);

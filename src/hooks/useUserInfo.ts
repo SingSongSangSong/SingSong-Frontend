@@ -1,4 +1,4 @@
-import {login, logout} from '@react-native-kakao/user';
+import {login, logout, me} from '@react-native-kakao/user';
 import {useState} from 'react';
 
 const useUserInfo = () => {
@@ -14,6 +14,8 @@ const useUserInfo = () => {
       // 로그인 성공 후 사용자 프로필 가져오기
       // const profile = await getProfile();
       // console.log('Profile:', profile);
+      const profile = await me();
+      console.log('Profile', profile);
 
       // Alert.alert('Login Success', `Welcome ${profile.nickname}`);
     } catch (err) {
