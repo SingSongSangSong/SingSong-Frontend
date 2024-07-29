@@ -1,7 +1,5 @@
 import {RecommendTagsResponse, TagProps} from '../../types';
-import axiosInstances from '../axios';
-
-const {axiosInstance} = axiosInstances();
+import axiosInstance from '../axiosIns';
 
 const postRcdHome = async (tags: TagProps) => {
   try {

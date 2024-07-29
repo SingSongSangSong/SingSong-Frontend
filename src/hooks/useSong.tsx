@@ -5,7 +5,7 @@ import {Song} from '../types';
 import {RcdSonglistItem} from '../components';
 import useDataStore from '../store/useDataStore';
 import useKeepListStore from '../store/useKeepStore';
-import postRefresh from '../api/recommendation/postRcdRefresh';
+import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
@@ -90,7 +90,7 @@ const useSong = (initTag: string[]) => {
 
       if (isRefreshed) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        postRefresh(tags)
+        postRcdRefresh(tags)
           .then(response => {
             // postRefresh가 성공하면 데이터 갱신
             const songData = response.data;

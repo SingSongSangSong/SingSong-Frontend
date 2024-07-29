@@ -20,26 +20,31 @@ function App(): React.JSX.Element {
         <AppStackNavigator />
         <Toast />
       </NavigationContainer>
-      {/* <NavigationContainer>
-        <AuthStackNavigator />
-      </NavigationContainer> */}
     </QueryClientProvider>
-    //   <GestureHandlerRootView style={{flex: 1}}>
-    //   <GestureRecognizer
-    //     onSwipeRight={state => onSwipeRight(navigation)}
-    //     config={{
-    //       velocityThreshold: 0.3,
-    //       directionalOffsetThreshold: 80,
-    //     }}
-    //     style={{
-    //       flex: 1,
-    //     }}>
-    //     <NavigationContainer>
-    //       <MainStackNavigator />
-    //     </NavigationContainer>
-    //   </GestureRecognizer>
-    // </GestureHandlerRootView>
   );
 }
 
 export default App;
+
+// <QueryClientProvider client={queryClient}>
+{
+  /* <NavigationContainer>
+        <AuthStackNavigator />
+      </NavigationContainer> */
+}
+// </QueryClientProvider>
+//   <GestureHandlerRootView style={{flex: 1}}>
+//   <GestureRecognizer
+//     onSwipeRight={state => onSwipeRight(navigation)}
+//     config={{
+//       velocityThreshold: 0.3,
+//       directionalOffsetThreshold: 80,
+//     }}
+//     style={{
+//       flex: 1,
+//     }}>
+//     <NavigationContainer>
+//       <MainStackNavigator />
+//     </NavigationContainer>
+//   </GestureRecognizer>
+// </GestureHandlerRootView>

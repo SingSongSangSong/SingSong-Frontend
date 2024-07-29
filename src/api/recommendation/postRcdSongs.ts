@@ -1,7 +1,5 @@
 import {RecommendResponse} from '../../types';
-import axiosInstances from '../axios';
-
-const {axiosInstance} = axiosInstances();
+import axiosInstance from '../axiosIns';
 
 const postRcdSongs = async (songs: number[]) => {
   try {

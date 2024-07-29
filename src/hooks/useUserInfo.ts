@@ -1,12 +1,12 @@
 import {login, logout, me} from '@react-native-kakao/user';
 import {useState} from 'react';
 import postLogin from '../api/user/postUserLogin';
-import useTokenStore from '../store/useTokenStore';
+import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
-  const {getSecureValue, setSecureValue, isValidToken} = useTokenStore();
+  const {getSecureValue, setSecureValue, isValidToken} = TokenStore();
 
   const getAccessToken = async (): Promise<boolean> => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);

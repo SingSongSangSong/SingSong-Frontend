@@ -1,7 +1,5 @@
 import {LoginResponse, LoginResult} from '../../types';
-import axiosInstances from '../axios';
-
-const {axiosInstance} = axiosInstances();
+import axiosInstance from '../axiosIns';
 
 const postUserLogin = async (results: LoginResult) => {
   try {

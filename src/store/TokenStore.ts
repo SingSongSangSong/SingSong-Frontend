@@ -3,7 +3,7 @@ import * as Keychain from 'react-native-keychain';
 import postReissue from '../api/user/postUserReissue';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
-const useTokenStore = () => {
+const TokenStore = () => {
   // get
   async function getSecureValue(key: string): Promise<string> {
     const result = await Keychain.getInternetCredentials(key);
@@ -44,13 +44,21 @@ const useTokenStore = () => {
     }
   };
 
+  const getAccessToken = async () => {
+    isValidToken(); //만료된 토큰인지 검사
+    const accessToken = await getSecureValue(ACCESS_TOKEN);
+
+    return accessToken;
+  };
+
   return {
     getSecureValue,
     setSecureValue,
     removeSecureValue,
     isExpiredToken,
     isValidToken,
+    getAccessToken,
   };
 };
 
-export default useTokenStore;
+export default TokenStore;

@@ -1,12 +1,20 @@
+import TokenStore from '../../store/TokenStore';
 import {RecommendResponse} from '../../types';
-import axiosInstances from '../axios';
+import axiosInstance from '../axiosIns';
 
-const {axiosAuthInstance} = axiosInstances();
 const postRcdRefresh = async (tag: string) => {
   try {
-    const response = await axiosAuthInstance.post<RecommendResponse>(
+    const {getAccessToken} = TokenStore();
+    const token = await getAccessToken();
+    const response = await axiosInstance.post<RecommendResponse>(
       '/recommend/refresh',
       {tag: tag},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      },
     );
     console.log('data for recommend song refresh response', response.data);
     return response.data;

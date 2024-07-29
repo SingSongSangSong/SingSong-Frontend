@@ -1,7 +1,5 @@
 import {LoginResponse} from '../../types';
-import axiosInstances from '../axios';
-
-const {axiosInstance} = axiosInstances();
+import axiosInstance from '../axiosIns';
 
 const postUserReissue = async (accessToken: string, refreshToken: string) => {
   try {
