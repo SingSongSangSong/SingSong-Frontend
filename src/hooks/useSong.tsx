@@ -5,7 +5,7 @@ import {Song} from '../types';
 import {RcdSonglistItem} from '../components';
 import useDataStore from '../store/useDataStore';
 import useKeepListStore from '../store/useKeepStore';
-import postRefresh from '../api/postRefresh';
+import postRefresh from '../api/recommendation/postRcdRefresh';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함

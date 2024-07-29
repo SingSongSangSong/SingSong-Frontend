@@ -4,6 +4,7 @@ import {appStackNavigations} from '../../constants';
 import SplashScreen from '../../screens/\bsplash/SplashScreen';
 import MainTabNavigator from '../tab/MainTabNavigator';
 import {AppStackParamList} from '../../types';
+import LoginScreen from '../../screens/auth/LoginScreen';
 
 const Stack = createStackNavigator<AppStackParamList>();
 
@@ -22,6 +23,7 @@ function AppStackNavigator() {
         name={appStackNavigations.MAIN}
         component={MainTabNavigator}
       />
+      <Stack.Screen name={appStackNavigations.LOGIN} component={LoginScreen} />
     </Stack.Navigator>
   );
 }

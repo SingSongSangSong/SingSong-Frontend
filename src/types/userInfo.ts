@@ -28,4 +28,9 @@ type LoginResponse = {
   message: string;
 };
 
-export type {LoginResult, LoginResponse};
+type Tokens = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type {LoginResult, LoginResponse, Tokens};
