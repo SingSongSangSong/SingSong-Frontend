@@ -20,6 +20,7 @@ type MainTabParamList = {
 type AppStackParamList = {
   [appStackNavigations.SPLASH]: undefined;
   [appStackNavigations.MAIN]: undefined;
+  [appStackNavigations.LOGIN]: undefined;
 };
 
 type HomeStackParamList = {

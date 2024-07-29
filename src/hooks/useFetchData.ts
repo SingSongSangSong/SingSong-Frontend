@@ -1,7 +1,7 @@
 import {RecommendTagsResponse, SongWithTagsProps} from '../types';
-import getTags from '../api/getTags';
-import postRecommendTags from '../api/postRecommendTags';
+import getTags from '../api/tags/getTags';
 import useDataStore from '../store/useDataStore';
+import postRecommendTags from '../api/recommendation/postRcdHome';
 
 const useFetchData = () => {
   const {tags, setTags, tagWithSongs, setTagWithSongs} = useDataStore();

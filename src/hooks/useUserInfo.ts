@@ -1,9 +1,21 @@
 import {login, logout, me} from '@react-native-kakao/user';
 import {useState} from 'react';
-import postLogin from '../api/postLogin';
+import postLogin from '../api/user/postUserLogin';
+import TokenStore from '../store/TokenStore';
+import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
+  const {getSecureValue, setSecureValue, isValidToken} = TokenStore();
+
+  const getAccessToken = async (): Promise<boolean> => {
+    const accessToken = await getSecureValue(ACCESS_TOKEN);
+    if (!accessToken) {
+      return false;
+    }
+    isValidToken();
+    return true;
+  };
 
   const handleKakaoLogin = async () => {
     try {
@@ -11,13 +23,13 @@ const useUserInfo = () => {
       setIsLoggedProcess(!isLoggedProcess); //true
       const result = await login();
       console.log('Login Result:', result);
-      const data = await postLogin(result);
+      const data = await postLogin(result); //accessToken 받기, 설정해야됨
       console.log(data);
+      //설정하기
+      setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+      setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
 
       setIsLoggedProcess(!isLoggedProcess); //false
-      // 로그인 성공 후 사용자 프로필 가져오기
-      // const profile = await getProfile();
-      // console.log('Profile:', profile);
       const profile = await me();
       console.log('Profile', profile);
 
@@ -40,6 +52,8 @@ const useUserInfo = () => {
   return {
     isLoggedProcess,
     handleKakaoLogin,
+    handleKakaoLogout,
+    getAccessToken,
   };
 };
 

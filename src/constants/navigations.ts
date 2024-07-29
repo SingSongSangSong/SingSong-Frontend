@@ -17,6 +17,7 @@ const mainTabNavigations = {
 const appStackNavigations = {
   MAIN: 'Main',
   SPLASH: 'Splash',
+  LOGIN: 'Login',
 } as const;
 
 const homeStackNavigations = {

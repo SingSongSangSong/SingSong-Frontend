@@ -1,5 +1,5 @@
-import {TagsResponse} from '../types';
-import axiosInstance from './axios';
+import {TagsResponse} from '../../types';
+import axiosInstance from '../axiosIns';
 
 const getTags = async () => {
   try {
