@@ -1,5 +1,6 @@
 import {login, logout, me} from '@react-native-kakao/user';
 import {useState} from 'react';
+import postLogin from '../api/postLogin';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
@@ -10,6 +11,9 @@ const useUserInfo = () => {
       setIsLoggedProcess(!isLoggedProcess); //true
       const result = await login();
       console.log('Login Result:', result);
+      const data = await postLogin(result);
+      console.log(data);
+
       setIsLoggedProcess(!isLoggedProcess); //false
       // 로그인 성공 후 사용자 프로필 가져오기
       // const profile = await getProfile();

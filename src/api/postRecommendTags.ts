@@ -10,7 +10,7 @@ const postRecommendTags = async (tags: TagProps) => {
     console.log('data for recommend song response', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching recommend tags:', error);
     throw error;
   }
 };

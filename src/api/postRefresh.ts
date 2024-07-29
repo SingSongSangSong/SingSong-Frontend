@@ -10,7 +10,7 @@ const postRefresh = async (tag: string) => {
     console.log('data for recommend song refresh response', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching refresh:', error);
     throw error;
   }
 };

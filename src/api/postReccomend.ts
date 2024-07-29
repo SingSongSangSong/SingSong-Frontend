@@ -9,7 +9,7 @@ const postRecommend = async (songs: number[]) => {
     console.log('data for recommend updated song response', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching recommend:', error);
     throw error;
   }
 };
