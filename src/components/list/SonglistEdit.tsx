@@ -8,12 +8,16 @@ interface SonglistEditProps {
   songlistData: KeepSong[];
   onPressIn: (songNumber: number) => void;
   onPressOut: (songNumber: number) => void;
+  isAllSelected: boolean; // 추가된 prop
+  isAllDeleted: boolean;
 }
 
 const SonglistEdit: React.FC<SonglistEditProps> = ({
   songlistData,
   onPressIn,
   onPressOut,
+  isAllSelected,
+  isAllDeleted,
 }) => {
   const renderItem = ({item}: {item: KeepSong}) => (
     <View style={tw`m-2`}>
@@ -24,6 +28,8 @@ const SonglistEdit: React.FC<SonglistEditProps> = ({
         singerName={item.singerName}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
+        isAllSelected={isAllSelected}
+        isAllDeleted={isAllDeleted}
       />
     </View>
   );

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {designatedColor} from '../../constants';
@@ -6,17 +6,37 @@ import {designatedColor} from '../../constants';
 interface CircleButtonProps {
   onPressIn: () => void;
   onPressOut: () => void;
+  isSelected: boolean;
+  isDeleted: boolean;
 }
 
-const CircleButton = ({onPressIn, onPressOut}: CircleButtonProps) => {
+const CircleButton = ({
+  onPressIn,
+  onPressOut,
+  isSelected,
+  isDeleted,
+}: CircleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
+
+  useEffect(() => {
+    if (isSelected) {
+      //추가되어야 하는 경우
+      setIsPressed(isSelected);
+      onPressIn();
+    }
+    if (isDeleted) {
+      //삭제되어야 하는 경우
+      setIsPressed(!isDeleted);
+      onPressOut();
+    }
+  }, [isSelected, isDeleted]);
 
   const handlePress = () => {
     setIsPressed(!isPressed);
     if (!isPressed) {
-      onPressIn();
+      onPressIn(); //keep에 추가
     } else {
-      onPressOut();
+      onPressOut(); //keep에서 삭제
     }
   };
 
