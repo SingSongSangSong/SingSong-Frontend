@@ -1,10 +1,10 @@
-import {RecommendTagsResponse, SongWithTagsProps} from '../types';
 import getTags from '../api/tags/getTags';
-import useDataStore from '../store/useDataStore';
-import postRecommendTags from '../api/recommendation/postRcdHome';
+import useDataStore from '../store/useSongStore';
+import postRcdHome from '../api/recommendation/postRcdHome';
+import {RcdHomeResponse, RcdHomeSongWithTags} from '../types';
 
 const useFetchData = () => {
-  const {tags, setTags, tagWithSongs, setTagWithSongs} = useDataStore();
+  const {tags, setTags, previewSongs, setPreviewSongs} = useDataStore();
 
   const fetchTags = async () => {
     try {
@@ -20,12 +20,12 @@ const useFetchData = () => {
 
   const fetchRecommendTags = async (fetchedTags: string[]) => {
     try {
-      const songData: RecommendTagsResponse = await postRecommendTags({
+      const songData: RcdHomeResponse = await postRcdHome({
         tags: fetchedTags,
       });
 
-      songData.data.forEach((songWithTags: SongWithTagsProps) => {
-        setTagWithSongs(songWithTags.tag, songWithTags.songs);
+      songData.data.forEach((songWithTags: RcdHomeSongWithTags) => {
+        setPreviewSongs(songWithTags.tag, songWithTags.songs);
       });
     } catch (error) {
       console.error('Error fetching songs:', error);
@@ -38,7 +38,7 @@ const useFetchData = () => {
 
   return {
     tags,
-    tagWithSongs,
+    previewSongs,
     fetchData,
   };
 };

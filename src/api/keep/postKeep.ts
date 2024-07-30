@@ -1,9 +1,12 @@
-import {RecommendResponse} from '../../types';
+import TokenStore from '../../store/TokenStore';
+import {KeepResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
-const postKeep = async (token: string, songNumbers: number[]) => {
+const postKeep = async (songNumbers: number[]) => {
   try {
-    const response = await axiosInstance.post<RecommendResponse>(
+    const {getAccessToken} = TokenStore();
+    const token = await getAccessToken();
+    const response = await axiosInstance.post<KeepResponse>(
       '/keep',
       {songNumbers: songNumbers},
       {

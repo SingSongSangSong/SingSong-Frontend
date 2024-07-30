@@ -2,10 +2,10 @@ import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {KeeplistItem} from '..';
-import {Song} from '../../types';
+import {KeepSong} from '../../types';
 
 interface KeeplistProps {
-  keeplistData: {[key: number]: Song} | null;
+  keeplistData: {[key: number]: KeepSong} | null;
   onPress: () => void;
 }
 
@@ -22,9 +22,9 @@ const Keeplist: React.FC<KeeplistProps> = ({keeplistData, onPress}) => {
               song && (
                 <KeeplistItem
                   key={Number(key)}
-                  songNumber={song.song_number}
-                  songName={song.song_name}
-                  singerName={song.singer_name}
+                  songNumber={song.songNumber}
+                  songName={song.songName}
+                  singerName={song.singerName}
                   onPress={onPress}
                 />
               )

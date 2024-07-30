@@ -1,9 +1,9 @@
-import {RecommendResponse} from '../../types';
+import {RcdSongResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const postRcdSongs = async (songs: number[]) => {
   try {
-    const response = await axiosInstance.post<RecommendResponse>(
+    const response = await axiosInstance.post<RcdSongResponse>(
       '/recommend/songs',
       {
         songs: songs,

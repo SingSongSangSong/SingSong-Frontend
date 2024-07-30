@@ -7,7 +7,7 @@ import {Previewlist} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
-import useDataStore from '../../store/useDataStore';
+import useDataStore from '../../store/useSongStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -15,7 +15,8 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
-  const {tags, tagWithSongs} = useDataStore();
+  const {tags, previewSongs} = useDataStore();
+
   const isEmptyObject = (obj: Record<string, any>): boolean => {
     return Reflect.ownKeys(obj).length === 0;
   };
@@ -33,7 +34,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
       }}
       style={tw`flex-1 bg-black`}>
       <SafeAreaView style={tw`justify-center items-center`}>
-        {!isEmptyObject(tagWithSongs) && (
+        {!isEmptyObject(previewSongs) && (
           <ScrollView contentContainerStyle={tw`flex-wrap flex-row`}>
             <View style={tw`justify-center items-center`}>
               <Text style={tw`text-white text-sm font-bold mt-10`}>
@@ -47,7 +48,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
                     tag={tag}
                     key={index}
                     onArrowPress={handleOnArrowPress}
-                    data={tagWithSongs[tag]}
+                    data={previewSongs[tag]}
                   />
                 ))}
               </View>

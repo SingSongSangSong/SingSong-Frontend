@@ -1,28 +1,28 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useState} from 'react';
-import useRecommendStore from '../store/useRecommendStore';
-import {Song} from '../types';
+// import useRecommendStore from '../store/useRecommendStore';
 import {RcdSonglistItem} from '../components';
-import useDataStore from '../store/useDataStore';
+import useDataStore from '../store/useSongStore';
 import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
+import postKeep from '../api/keep/postKeep';
+import deleteKeep from '../api/keep/deleteKeep';
+import {RcdRefreshSong} from '../types';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
-  // const [showData, setShowData] = useState<Song[]>([]);
-  // const [buttonTitle, setButtonTitle] = useState<string>('새로고침');
-  const [songLst, setSongLst] = useState<Song[]>([]); //songlist를 렌더링하기 위함
-  // const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
   const [refreshing, setRefreshing] = useState(false);
-  const {tagWithSongs, resetIndexLst, updateRefreshData} = useDataStore();
+  const {refreshSongs, resetIndexLst, updateRefreshSongs} = useDataStore();
+  const [songLst, setSongLst] = useState<RcdRefreshSong[]>(refreshSongs[tags]); //songlist를 렌더링하기 위함
 
-  const {reset} = useRecommendStore();
-  const {addSongToKeep, removeSongFromKeep} = useKeepListStore();
+  // const {reset} = useRecommendStore();
+  const {setKeepList} = useKeepListStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [isInit, setIsInit] = useState(false);
 
   // const [isEnabled, setIsEnabled] = useState(false);
   // const previousIsEnabled = useRef(isEnabled);
-
+  // const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
   // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const handleModeChange = () => setIsEnabled(previousState => !previousState);
 
@@ -33,18 +33,19 @@ const useSong = (initTag: string[]) => {
   //   previousIsEnabled.current = isEnabled;
   // }, [isEnabled, songLst]);
 
-  useEffect(() => {
-    console.log('isLoading 상태가 변경됨:', isLoading);
-  }, [isLoading]);
-
   //keep에 추가
-  const toggleAddStored = (songId: number, song: Song) => {
-    addSongToKeep(song);
+  const toggleAddStored = async (songNumber: number) => {
+    //addSongToKeep(song);
+    const updatedSongs = await postKeep([songNumber]);
+    setKeepList(updatedSongs.data);
   };
 
   //keep에서 삭제
-  const toggleRemoveStored = (songId: number) => {
-    removeSongFromKeep(songId);
+  const toggleRemoveStored = async (songNumber: number) => {
+    // removeSongFromKeep(songId);
+    const updatedSongs = await deleteKeep({songNumbers: [songNumber]});
+    console.log(updatedSongs);
+    // setKeepList(updatedSongs.data);
   };
 
   //위로 당겨서 새로고침시 실행되는 함수
@@ -55,22 +56,29 @@ const useSong = (initTag: string[]) => {
   };
 
   //초기 노래 리스트 세팅하는 함수
-  const setInitSongs = () => {
-    setSongLst(tagWithSongs[tags]);
+  const setInitSongs = async () => {
+    const initSongs = await postRcdRefresh(tags);
+    const songData = initSongs.data;
+    const newSongLst = updateRefreshSongs(tags, songData);
+    setSongLst(newSongLst);
+    setIsInit(true);
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
   const handleRefreshSongs = async () => {
+    if (isLoading) {
+      return;
+    }
     try {
       setIsLoading(true);
-      console.log(isLoading);
       //20개 이상일 경우에만 api 호출
-      if (songLst.length >= 20) {
+      if (songLst && songLst.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        console.log('refresh!!!!!!!!!!!!!!!!!!!');
         postRcdRefresh(tags)
           .then(response => {
             const songData = response.data;
-            const newSongLst = updateRefreshData(tags, songData);
+            const newSongLst = updateRefreshSongs(tags, songData);
             setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
             setIsLoading(false);
           })
@@ -107,7 +115,7 @@ const useSong = (initTag: string[]) => {
   //   });
   // };
 
-  const handleSonglist = ({item}: {item: Song}) => (
+  const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
     <RcdSonglistItem
       key={item.songNumber}
       songNumber={item.songNumber}
@@ -118,18 +126,19 @@ const useSong = (initTag: string[]) => {
       onAddPress={() => {}}
       onRemovePress={() => {}}
       showKeepIcon={true}
-      onToggleAddStored={() => toggleAddStored(item.songNumber, item)}
+      onToggleAddStored={() => toggleAddStored(item.songNumber)}
       onToggleRemoveStored={() => toggleRemoveStored(item.songNumber)}
     />
   );
 
   return {
+    isInit,
     isLoading,
     songLst,
     setSongLst,
     handleSonglist,
     handleRefreshSongs,
-    reset,
+    // reset,
     resetIndexLst,
     refreshing,
     onRefresh,

@@ -2,14 +2,14 @@ import React from 'react';
 import {FlatList, View} from 'react-native';
 import tw from 'twrnc';
 import {SonglistItem} from '..';
-import {Song} from '../../types';
+import {KeepSong} from '../../types';
 
 interface SonglistProps {
-  songlistData: Song[];
+  songlistData: KeepSong[];
 }
 
 const Songlist: React.FC<SonglistProps> = ({songlistData}) => {
-  const renderItem = ({item}: {item: Song}) => (
+  const renderItem = ({item}: {item: KeepSong}) => (
     <View style={tw`m-2`}>
       <SonglistItem
         songNumber={item.songNumber}

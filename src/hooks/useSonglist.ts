@@ -1,19 +1,18 @@
-import {useEffect, useState} from 'react';
-import useSonglistStore from '../store/useSonglistStore';
-import {Song} from '../types';
+// import {useEffect, useState} from 'react';
+// import useSonglistStore from '../store/useSonglistStore';
 
-const useSonglist = (playlistId: string) => {
-  const {songlist} = useSonglistStore();
-  const [songs, setSongs] = useState<Song[]>([]);
+// const useSonglist = (playlistId: string) => {
+//   const {songlist} = useSonglistStore();
+//   const [songs, setSongs] = useState<Song[]>([]);
 
-  useEffect(() => {
-    const songData =
-      songlist && songlist[playlistId] ? songlist[playlistId] : {};
-    const allSongs: Song[] = songData ? Object.values(songData) : [];
-    setSongs(allSongs);
-  }, [playlistId, songlist]);
+//   useEffect(() => {
+//     const songData =
+//       songlist && songlist[playlistId] ? songlist[playlistId] : {};
+//     const allSongs: Song[] = songData ? Object.values(songData) : [];
+//     setSongs(allSongs);
+//   }, [playlistId, songlist]);
 
-  return {songs};
-};
+//   return {songs};
+// };
 
-export default useSonglist;
+// export default useSonglist;

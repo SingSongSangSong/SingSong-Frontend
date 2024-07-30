@@ -1,14 +1,34 @@
-import {useState} from 'react';
-// import usePlaylistStore from '../store/usePlaylistStore';
+import {useEffect, useState} from 'react';
 import {buttonItem} from '../types';
 import {Alert} from 'react-native';
 import useKeepListStore from '../store/useKeepStore';
+import getKeep from '../api/keep/getKeep';
+import deleteKeep from '../api/keep/deleteKeep';
 
 const useKeep = () => {
+  const {keepList, setKeepList} = useKeepListStore();
+  const [removedSong, setRemovedSong] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (keepList.length == 0) {
+      setInitKeep();
+    }
+  }, []);
+
+  const setInitKeep = async () => {
+    const tempKeepList = await getKeep();
+    setKeepList(tempKeepList.data);
+  };
+
+  const handleDeleteKeep = async (songNumbers: number[]) => {
+    const updatedSongs = await deleteKeep({songNumbers: songNumbers});
+    // setKeepList(updatedSongs.data);
+    console.log(updatedSongs);
+  };
+
   // const playlists = usePlaylistStore(state => state.playlists);
   // const {playlists, getPlaylistInfo} = usePlaylistStore();
-  const {keepList, removeSongFromKeep} = useKeepListStore();
-  const [removedSong, setRemovedSong] = useState<number[]>([]);
+
   // const {removeSongFromPlaylist} = usePlaylistStore();
 
   // const [modalVisible, setModalVisible] = useState(false);
@@ -46,10 +66,11 @@ const useKeep = () => {
         {
           text: '삭제',
           onPress: () => {
+            // removedSong.map(song => {
+            //   removeSongFromKeep(song);
+            // });
+            handleDeleteKeep(removedSong);
             setRemovedSong([]);
-            removedSong.map(song => {
-              removeSongFromKeep(song);
-            });
           },
           style: 'destructive',
         },
@@ -74,10 +95,6 @@ const useKeep = () => {
     setRemovedSong(prevState => prevState.filter(num => num !== songNumber));
   };
 
-  // const getPlaylistSongCount = (playlistId: string) => {
-  //   return playlists[playlistId].length;
-  // }
-
   return {
     keepList,
     removedSong,
@@ -86,8 +103,6 @@ const useKeep = () => {
     handleRemoveButton,
     handleInCircleButton,
     handleOutCircleButton,
-    // getSonglist,
-    // getPlaylistInfo,
   };
 };
 
