@@ -1,6 +1,6 @@
 import {jwtDecode} from 'jwt-decode';
 import * as Keychain from 'react-native-keychain';
-import postReissue from '../api/user/postUserReissue';
+import postUserReissue from '../api/user/postUserReissue';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
 const TokenStore = () => {
@@ -38,7 +38,8 @@ const TokenStore = () => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
     if (accessToken && isExpiredToken(accessToken)) {
-      const reissueData = await postReissue(accessToken, refreshToken);
+      console.log('Token expired');
+      const reissueData = await postUserReissue(accessToken, refreshToken);
       setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
       setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
     }

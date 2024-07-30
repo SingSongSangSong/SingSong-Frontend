@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 import useRecommendStore from '../store/useRecommendStore';
 import {Song} from '../types';
@@ -9,135 +9,103 @@ import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
-  const [showData, setShowData] = useState<Song[]>([]);
-  const [buttonTitle, setButtonTitle] = useState<string>('새로고침');
+  // const [showData, setShowData] = useState<Song[]>([]);
+  // const [buttonTitle, setButtonTitle] = useState<string>('새로고침');
   const [songLst, setSongLst] = useState<Song[]>([]); //songlist를 렌더링하기 위함
-  const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
-  const [loading, setLoading] = useState(true); //노래가 안왔을 때의 로딩, 아니면 토스처럼 컴포넌트를 흐릿하게 보여줄까?
-  const {getSliceSongs, resetIndexLst, updateRefreshData} = useDataStore();
+  // const [songNumberLst, setSongNumberLst] = useState<number[]>([]); //노래 선택시 추가, 노래 버튼 해제시 삭제
+  const [refreshing, setRefreshing] = useState(false);
+  const {tagWithSongs, resetIndexLst, updateRefreshData} = useDataStore();
 
   const {reset} = useRecommendStore();
   const {addSongToKeep, removeSongFromKeep} = useKeepListStore();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const previousIsEnabled = useRef(isEnabled);
+  // const [isEnabled, setIsEnabled] = useState(false);
+  // const previousIsEnabled = useRef(isEnabled);
 
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const handleModeChange = () => setIsEnabled(previousState => !previousState);
+  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  // const handleModeChange = () => setIsEnabled(previousState => !previousState);
+
+  // useEffect(() => {
+  //   if (previousIsEnabled.current && !isEnabled) {
+  //     setShowData(songLst);
+  //   }
+  //   previousIsEnabled.current = isEnabled;
+  // }, [isEnabled, songLst]);
 
   useEffect(() => {
-    if (previousIsEnabled.current && !isEnabled) {
-      setShowData(songLst);
-    }
-    previousIsEnabled.current = isEnabled;
-  }, [isEnabled, songLst]);
+    console.log('isLoading 상태가 변경됨:', isLoading);
+  }, [isLoading]);
 
+  //keep에 추가
   const toggleAddStored = (songId: number, song: Song) => {
     addSongToKeep(song);
   };
 
+  //keep에서 삭제
   const toggleRemoveStored = (songId: number) => {
     removeSongFromKeep(songId);
   };
 
-  //처음 노래 받아오는 함수
-  // const fetchInitData = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const tempData = getSliceSongs(tags);
-  //     setSongLst(tempData); //songLst 설정
-  //     setShowData(tempData);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error('Error fetching songs:', error);
-  //     setLoading(false);
-  //   }
-  // };
+  //위로 당겨서 새로고침시 실행되는 함수
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await handleRefreshSongs(); //아예 데이터 리스트를 바꿔야 할듯?
+    setRefreshing(false);
+  };
 
-  // const fetchRefreshData = () => {
-  //   fetchInitData(); //새로 고침시 다시 똑같이 반복
-  // };
+  //초기 노래 리스트 세팅하는 함수
+  const setInitSongs = () => {
+    setSongLst(tagWithSongs[tags]);
+  };
 
-  // const fetchApplyNewData = async () => {
-  //   try {
-  //     console.log(songNumberLst);
-  //     setLoading(true);
-  //     const [songData] = await Promise.all([postRecommend(songNumberLst)]);
-  //     const tempData = songData.data;
-  //     setRecommendSongResults(tempData);
-  //     setShowData(tempData);
-  //     setLoading(false);
-  //     setSongNumberLst([]);
-  //   } catch (error) {
-  //     console.error('Error fetching songs:', error);
-  //   }
-  // };
-
-  // const handlePressButton = () => {
-  //   if (songNumberLst.length == 0) {
-  //     //없을 경우
-  //     return fetchRefreshData();
-  //   } else {
-  //     //노래가 있을 경우
-  //     return fetchApplyNewData();
-  //   }
-  // };
-
-  const handlePressButton = async () => {
+  //밑으로 스크롤 시 데이터 추가로 불러오는 함수
+  const handleRefreshSongs = async () => {
     try {
-      setLoading(true);
-      const {songs, isRefreshed} = getSliceSongs(tags);
-
-      if (isRefreshed) {
+      setIsLoading(true);
+      console.log(isLoading);
+      //20개 이상일 경우에만 api 호출
+      if (songLst.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         postRcdRefresh(tags)
           .then(response => {
-            // postRefresh가 성공하면 데이터 갱신
             const songData = response.data;
-            updateRefreshData(tags, songData);
+            const newSongLst = updateRefreshData(tags, songData);
+            setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
+            setIsLoading(false);
           })
           .catch(error => {
-            // 에러 처리
             console.error('Error refreshing data:', error);
+            setIsLoading(false);
           });
+      } else {
+        setIsLoading(false);
       }
-
-      setSongLst(songs); //songLst 설정
-      setShowData(songs);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching songs:', error);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const changeButtonTitle = (updatedList: number[]) => {
-    if (updatedList.length == 0) {
-      setButtonTitle('새로고침');
-    } else {
-      setButtonTitle('탐색하기');
-    }
-  };
+  // const handleAddPressSong = (songNumber: number) => {
+  //   if (songNumberLst.length == 0 && !isEnabled) {
+  //     handleModeChange();
+  //   }
+  //   setSongNumberLst(prevList => {
+  //     const updatedList = [...prevList, songNumber];
+  //     changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출
+  //     return updatedList;
+  //   });
+  // };
 
-  const handleAddPressSong = (songNumber: number) => {
-    if (songNumberLst.length == 0 && !isEnabled) {
-      handleModeChange();
-    }
-    setSongNumberLst(prevList => {
-      const updatedList = [...prevList, songNumber];
-      changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출
-      return updatedList;
-    });
-  };
+  // const handleRemovePressSong = (songNumber: number) => {
+  //   setSongNumberLst(prevList => {
+  //     const updatedList = prevList.filter(num => num !== songNumber);
+  //     changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출
 
-  const handleRemovePressSong = (songNumber: number) => {
-    setSongNumberLst(prevList => {
-      const updatedList = prevList.filter(num => num !== songNumber);
-      changeButtonTitle(updatedList); // 상태가 업데이트된 후의 값으로 changeButtonTitle 호출
-
-      return updatedList;
-    });
-  };
+  //     return updatedList;
+  //   });
+  // };
 
   const handleSonglist = ({item}: {item: Song}) => (
     <RcdSonglistItem
@@ -145,8 +113,10 @@ const useSong = (initTag: string[]) => {
       songNumber={item.songNumber}
       songName={item.songName}
       singerName={item.singerName}
-      onAddPress={() => handleAddPressSong(item.songNumber)}
-      onRemovePress={() => handleRemovePressSong(item.songNumber)}
+      // onAddPress={() => handleAddPressSong(item.songNumber)}
+      // onRemovePress={() => handleRemovePressSong(item.songNumber)}
+      onAddPress={() => {}}
+      onRemovePress={() => {}}
       showKeepIcon={true}
       onToggleAddStored={() => toggleAddStored(item.songNumber, item)}
       onToggleRemoveStored={() => toggleRemoveStored(item.songNumber)}
@@ -154,16 +124,16 @@ const useSong = (initTag: string[]) => {
   );
 
   return {
-    loading,
+    isLoading,
     songLst,
-    showData,
-    buttonTitle,
+    setSongLst,
     handleSonglist,
-    handlePressButton,
+    handleRefreshSongs,
     reset,
     resetIndexLst,
-    isEnabled,
-    toggleSwitch,
+    refreshing,
+    onRefresh,
+    setInitSongs,
   };
 };
 

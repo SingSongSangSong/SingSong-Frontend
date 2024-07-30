@@ -1,6 +1,6 @@
 import {login, logout, me} from '@react-native-kakao/user';
 import {useState} from 'react';
-import postLogin from '../api/user/postUserLogin';
+import postUserLogin from '../api/user/postUserLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
@@ -23,7 +23,7 @@ const useUserInfo = () => {
       setIsLoggedProcess(!isLoggedProcess); //true
       const result = await login();
       console.log('Login Result:', result);
-      const data = await postLogin(result); //accessToken 받기, 설정해야됨
+      const data = await postUserLogin(result); //accessToken 받기, 설정해야됨
       console.log(data);
       //설정하기
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
