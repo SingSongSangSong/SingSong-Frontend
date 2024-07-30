@@ -1,9 +1,12 @@
-import {RecommendResponse} from '../../types';
+import TokenStore from '../../store/TokenStore';
+import {KeepResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
-const getKeep = async (token: string) => {
+const getKeep = async () => {
   try {
-    const response = await axiosInstance.get<RecommendResponse>('/keep', {
+    const {getAccessToken} = TokenStore();
+    const token = await getAccessToken();
+    const response = await axiosInstance.get<KeepResponse>('/keep', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

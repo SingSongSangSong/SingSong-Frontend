@@ -4,7 +4,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
-// import {AddTextButton} from '../../components';
 import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
 
@@ -22,16 +21,15 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
 
   const unsubscribe = navigation.addListener('beforeRemove', () => {
     songHandler.resetIndexLst(initTag);
-    songHandler.reset();
+    // songHandler.reset();
   });
 
   useEffect(() => {
-    if (songHandler.songLst.length == 0) {
-      // songHandler.handleRefreshSongs();
+    if (!songHandler.songLst) {
       songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
     return unsubscribe;
-  }, [songHandler, unsubscribe]);
+  }, []);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-[#151515]`}>
@@ -55,7 +53,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
               style={tw`h-[50%]`}
               contentContainerStyle={tw`flex-grow`}
               onEndReached={songHandler.handleRefreshSongs}
-              onEndReachedThreshold={0.3}
+              onEndReachedThreshold={0.1}
               ListFooterComponent={() =>
                 songHandler.isLoading ? (
                   <View style={tw`py-10`}>

@@ -8,7 +8,7 @@ const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
   const {getSecureValue, setSecureValue, isValidToken} = TokenStore();
 
-  const getAccessToken = async (): Promise<boolean> => {
+  const getIsValidToken = async (): Promise<boolean> => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     if (!accessToken) {
       return false;
@@ -53,7 +53,7 @@ const useUserInfo = () => {
     isLoggedProcess,
     handleKakaoLogin,
     handleKakaoLogout,
-    getAccessToken,
+    getIsValidToken,
   };
 };
 

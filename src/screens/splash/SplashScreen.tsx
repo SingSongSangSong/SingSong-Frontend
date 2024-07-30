@@ -21,13 +21,12 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
     fetchDataHandler.fetchData();
     const timer = setTimeout(() => {
       handleNavigation();
-      // navigation.replace(appStackNavigations.MAIN);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
   const handleNavigation = async () => {
-    const isValidToken = await userInfoHandler.getAccessToken();
+    const isValidToken = await userInfoHandler.getIsValidToken();
     if (isValidToken) {
       navigation.replace(appStackNavigations.MAIN);
     } else {

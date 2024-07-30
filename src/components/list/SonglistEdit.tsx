@@ -1,11 +1,11 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import tw from 'twrnc';
-import {Song} from '../../types';
 import {SonglistEditItem} from '../item/SonglistEditItem';
+import {KeepSong} from '../../types';
 
 interface SonglistEditProps {
-  songlistData: Song[];
+  songlistData: KeepSong[];
   onPressIn: (songNumber: number) => void;
   onPressOut: (songNumber: number) => void;
 }
@@ -15,7 +15,7 @@ const SonglistEdit: React.FC<SonglistEditProps> = ({
   onPressIn,
   onPressOut,
 }) => {
-  const renderItem = ({item}: {item: Song}) => (
+  const renderItem = ({item}: {item: KeepSong}) => (
     <View style={tw`m-2`}>
       <SonglistEditItem
         key={item.songNumber}

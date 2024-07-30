@@ -1,12 +1,12 @@
 import TokenStore from '../../store/TokenStore';
-import {RecommendResponse} from '../../types';
+import {RcdRefreshResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const postRcdRefresh = async (tag: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.post<RecommendResponse>(
+    const response = await axiosInstance.post<RcdRefreshResponse>(
       '/recommend/refresh',
       {tag: tag},
       {

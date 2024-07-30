@@ -1,34 +1,56 @@
-interface Song {
-  songNumber: number;
-  songName: string;
+interface KeepSong {
   singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+}
+
+interface RcdHomeSong {
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
   tags: string[];
 }
 
-interface SongsResponse {
-  songs: Song[];
-}
-
-interface previewSongs {
-  [tag: string]: SongsResponse;
-}
-
-interface TagProps {
+interface RcdRefreshSong {
+  isKeep: boolean;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
   tags: string[];
 }
 
-interface SongWithTagsProps {
-  songs: Song[];
-  tag: string;
+interface RcdSong {
+  singerName: string;
+  songName: string;
+  songNumber: number;
+  tags: string[];
 }
 
-interface RecommendTagsResponse {
-  data: SongWithTagsProps[];
+interface KeepResponse {
+  data: KeepSong[];
   message: string;
 }
 
-interface RecommendResponse {
-  data: Song[];
+interface RcdHomeSongWithTags {
+  songs: RcdHomeSong[];
+  tag: string;
+}
+
+interface RcdHomeResponse {
+  data: RcdHomeSongWithTags[];
+  message: string;
+}
+
+interface RcdRefreshResponse {
+  data: RcdRefreshSong[];
+  message: string;
+}
+
+interface RcdSongResponse {
+  data: RcdSong[];
   message: string;
 }
 
@@ -37,29 +59,44 @@ interface TagsResponse {
   message: string;
 }
 
-interface SongNumbers {
+interface TagProps {
+  tags: string[];
+}
+
+interface SongNumbersProps {
   songNumbers: number[];
 }
 
 interface DeleteKeepResponse {
-  data: SongNumbers;
+  data: SongNumbersProps;
   message: string;
 }
 
-interface PlaylistInfo {
-  playlistName: string;
-  songCount: number;
-}
+// interface SongsResponse {
+//   songs: Song[];
+// }
+
+// interface previewSongs {
+//   [tag: string]: SongsResponse;
+// }
+
+// interface PlaylistInfo {
+//   playlistName: string;
+//   songCount: number;
+// }
 
 export type {
-  Song,
-  SongsResponse,
-  previewSongs,
+  KeepSong,
+  RcdHomeSong,
+  RcdRefreshSong,
+  RcdSong,
+  RcdHomeSongWithTags,
+  RcdHomeResponse,
+  RcdRefreshResponse,
+  RcdSongResponse,
+  KeepResponse,
   TagsResponse,
-  RecommendTagsResponse,
-  RecommendResponse,
   TagProps,
-  SongWithTagsProps,
-  PlaylistInfo,
+  SongNumbersProps,
   DeleteKeepResponse,
 };

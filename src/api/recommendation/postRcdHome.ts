@@ -1,9 +1,9 @@
-import {RecommendTagsResponse, TagProps} from '../../types';
+import {RcdHomeResponse, TagProps} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const postRcdHome = async (tags: TagProps) => {
   try {
-    const response = await axiosInstance.post<RecommendTagsResponse>(
+    const response = await axiosInstance.post<RcdHomeResponse>(
       '/recommend/home',
       tags,
     );
