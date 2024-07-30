@@ -19,16 +19,16 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리
   const songHandler = useSong([initTag]);
 
-  const unsubscribe = navigation.addListener('beforeRemove', () => {
-    songHandler.resetIndexLst(initTag);
-    // songHandler.reset();
-  });
+  // const unsubscribe = navigation.addListener('beforeRemove', () => {
+  //   songHandler.resetIndexLst(initTag);
+  //   // songHandler.reset();
+  // });
 
   useEffect(() => {
     if (!songHandler.songLst) {
       songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
-    return unsubscribe;
+    // return unsubscribe;
   }, []);
 
   return (

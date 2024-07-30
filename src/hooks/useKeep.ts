@@ -22,8 +22,8 @@ const useKeep = () => {
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
     const updatedSongs = await deleteKeep({songNumbers: songNumbers});
-    // setKeepList(updatedSongs.data);
-    console.log(updatedSongs);
+    setKeepList(updatedSongs.data); //keepList 업데이트
+    // console.log(updatedSongs);
   };
 
   // const playlists = usePlaylistStore(state => state.playlists);

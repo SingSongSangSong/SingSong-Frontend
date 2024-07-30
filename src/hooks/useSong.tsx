@@ -2,7 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 // import useRecommendStore from '../store/useRecommendStore';
 import {RcdSonglistItem} from '../components';
-import useDataStore from '../store/useSongStore';
+import useSongStore from '../store/useSongStore';
 import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
@@ -12,7 +12,7 @@ import {RcdRefreshSong} from '../types';
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
   const [refreshing, setRefreshing] = useState(false);
-  const {refreshSongs, resetIndexLst, updateRefreshSongs} = useDataStore();
+  const {refreshSongs, updateRefreshSongs} = useSongStore();
   const [songLst, setSongLst] = useState<RcdRefreshSong[]>(refreshSongs[tags]); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
@@ -44,8 +44,7 @@ const useSong = (initTag: string[]) => {
   const toggleRemoveStored = async (songNumber: number) => {
     // removeSongFromKeep(songId);
     const updatedSongs = await deleteKeep({songNumbers: [songNumber]});
-    console.log(updatedSongs);
-    // setKeepList(updatedSongs.data);
+    setKeepList(updatedSongs.data);
   };
 
   //위로 당겨서 새로고침시 실행되는 함수
@@ -138,8 +137,6 @@ const useSong = (initTag: string[]) => {
     setSongLst,
     handleSonglist,
     handleRefreshSongs,
-    // reset,
-    resetIndexLst,
     refreshing,
     onRefresh,
     setInitSongs,

@@ -1,12 +1,12 @@
 import TokenStore from '../../store/TokenStore';
-import {DeleteKeepResponse, SongNumbersProps} from '../../types';
+import {KeepResponse, SongNumbersProps} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const deleteKeep = async (songNumbers: SongNumbersProps) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.delete<DeleteKeepResponse>('/keep', {
+    const response = await axiosInstance.delete<KeepResponse>('/keep', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
