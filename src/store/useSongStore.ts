@@ -5,7 +5,7 @@ interface SongState {
   tags: string[];
   previewSongs: {[tag: string]: RcdHomeSong[]};
   refreshSongs: {[tag: string]: RcdRefreshSong[]};
-  indexLst: {[tag: string]: number};
+  // indexLst: {[tag: string]: number};
 
   setTags: (tags: string[]) => void;
   setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
@@ -15,8 +15,8 @@ interface SongState {
     tag: string,
     songs: RcdRefreshSong[],
   ) => RcdRefreshSong[];
-  setIndexLst: (tag: string, index: number) => void;
-  resetIndexLst: (tag: string) => void;
+  // setIndexLst: (tag: string, index: number) => void;
+  // resetIndexLst: (tag: string) => void;
   // recommendSongResults: Song[];
   // setRecommendSongResults: (songs: Song[]) => void;
   // getSliceSongs: (tag: string) => {songs: Song[]; isRefreshed: boolean}; //인덱스별로 노래 슬라이싱해서 보내기
@@ -27,7 +27,7 @@ const useSongStore = create<SongState>((set, get) => {
     tags: [],
     previewSongs: {},
     refreshSongs: {},
-    indexLst: {},
+    // indexLst: {},
   };
 
   return {
@@ -88,21 +88,21 @@ const useSongStore = create<SongState>((set, get) => {
       return updatedSongs;
     },
 
-    setIndexLst: (tag: string, index: number) =>
-      set(state => ({
-        indexLst: {
-          ...state.indexLst,
-          [tag]: index,
-        },
-      })),
+    // setIndexLst: (tag: string, index: number) =>
+    //   set(state => ({
+    //     indexLst: {
+    //       ...state.indexLst,
+    //       [tag]: index,
+    //     },
+    //   })),
 
-    resetIndexLst: (tag: string) =>
-      set(state => ({
-        indexLst: {
-          ...state.indexLst,
-          [tag]: 0,
-        },
-      })),
+    // resetIndexLst: (tag: string) =>
+    //   set(state => ({
+    //     indexLst: {
+    //       ...state.indexLst,
+    //       [tag]: 0,
+    //     },
+    //   })),
 
     // setTagWithSongs: (tag: string, songs: Song[]) =>
     //   set(state => {
