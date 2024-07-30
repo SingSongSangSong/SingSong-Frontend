@@ -1,10 +1,10 @@
-import {SafeAreaView, View, FlatList} from 'react-native';
+import {SafeAreaView, View, FlatList, ActivityIndicator} from 'react-native';
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
-import {AddTextButton} from '../../components';
+// import {AddTextButton} from '../../components';
 import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
 
@@ -27,8 +27,8 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
 
   useEffect(() => {
     if (songHandler.songLst.length == 0) {
-      // songHandler.fetchInitData(); //초기 카테고리에 대한 노래 리스트
-      songHandler.handlePressButton();
+      // songHandler.handleRefreshSongs();
+      songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
     return unsubscribe;
   }, [songHandler, unsubscribe]);
@@ -47,22 +47,30 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
         </View> */}
 
         <View style={tw`flex-1 h-[50%]`}>
-          {!songHandler.loading && (
-            <>
-              <FlatList
-                data={songHandler.showData}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={songHandler.handleSonglist}
-                style={tw`h-[50%]`}
-                contentContainerStyle={tw`flex-grow`}
-              />
-              <AddTextButton
-                title="새로고침"
-                onPress={songHandler.handlePressButton}
-                isCenter={true}
-              />
-            </>
-          )}
+          <>
+            <FlatList
+              data={songHandler.songLst}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={songHandler.handleSonglist}
+              style={tw`h-[50%]`}
+              contentContainerStyle={tw`flex-grow`}
+              onEndReached={songHandler.handleRefreshSongs}
+              onEndReachedThreshold={0.3}
+              ListFooterComponent={() =>
+                songHandler.isLoading ? (
+                  <View style={tw`py-10`}>
+                    <ActivityIndicator size="large" color="white" />
+                  </View>
+                ) : null
+              }
+              // refreshControl={
+              //   <RefreshControl
+              //     refreshing={songHandler.refreshing}
+              //     onRefresh={songHandler.onRefresh}
+              //   />
+              // }
+            />
+          </>
         </View>
       </View>
     </SafeAreaView>
