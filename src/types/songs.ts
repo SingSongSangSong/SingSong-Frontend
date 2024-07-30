@@ -37,6 +37,15 @@ interface TagsResponse {
   message: string;
 }
 
+interface SongNumbers {
+  songNumbers: number[];
+}
+
+interface DeleteKeepResponse {
+  data: SongNumbers;
+  message: string;
+}
+
 interface PlaylistInfo {
   playlistName: string;
   songCount: number;
@@ -52,4 +61,5 @@ export type {
   TagProps,
   SongWithTagsProps,
   PlaylistInfo,
+  DeleteKeepResponse,
 };
