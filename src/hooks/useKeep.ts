@@ -6,6 +6,8 @@ import getKeep from '../api/keep/getKeep';
 import deleteKeep from '../api/keep/deleteKeep';
 
 const useKeep = () => {
+  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [isAllDeleted, setIsAllDeleted] = useState(false);
   const {keepList, setKeepList} = useKeepListStore();
   const [removedSong, setRemovedSong] = useState<number[]>([]);
 
@@ -14,6 +16,17 @@ const useKeep = () => {
       setInitKeep();
     }
   }, []);
+
+  const handleIsAllSelected = () => {
+    setIsAllDeleted(false);
+    setIsAllSelected(true);
+    // toggleIsAllSelected(!selectAll); // 모든 항목 선택 상태 업데이트
+  };
+
+  const handleIsAllDeleted = () => {
+    setIsAllSelected(false);
+    setIsAllDeleted(true);
+  };
 
   const setInitKeep = async () => {
     const tempKeepList = await getKeep();
@@ -96,9 +109,13 @@ const useKeep = () => {
   };
 
   return {
+    isAllSelected,
+    isAllDeleted,
     keepList,
     removedSong,
     buttonItems,
+    handleIsAllSelected,
+    handleIsAllDeleted,
     handleFolderPress,
     handleRemoveButton,
     handleInCircleButton,

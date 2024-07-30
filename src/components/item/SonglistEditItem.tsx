@@ -10,6 +10,8 @@ interface SonglistEditItemProps {
   singerName: string;
   onPressIn: (songNumber: number) => void;
   onPressOut: (songNumber: number) => void;
+  isAllSelected: boolean;
+  isAllDeleted: boolean;
 }
 
 const SonglistEditItem = ({
@@ -18,6 +20,8 @@ const SonglistEditItem = ({
   singerName,
   onPressIn,
   onPressOut,
+  isAllSelected,
+  isAllDeleted,
 }: SonglistEditItemProps) => {
   return (
     <View>
@@ -26,6 +30,8 @@ const SonglistEditItem = ({
           <CircleButton
             onPressIn={() => onPressIn(songNumber)}
             onPressOut={() => onPressOut(songNumber)}
+            isSelected={isAllSelected}
+            isDeleted={isAllDeleted}
           />
         </View>
 

@@ -5,7 +5,12 @@ import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
 import {KeepStackParamList} from '../../types';
 import useKeep from '../../hooks/useKeep';
-import {PlusButton, RemoveButton, SonglistEdit} from '../../components';
+import {
+  CircleButton,
+  PlusButton,
+  RemoveButton,
+  SonglistEdit,
+} from '../../components';
 
 type KeepEditScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -19,7 +24,13 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND}]`}>
       <View style={tw`flex-row items-center justify-between m-2 my-4`}>
         <View style={tw`flex-row items-center justify-between`}>
-          <Text style={tw`text-white`}>전체 선택</Text>
+          <CircleButton
+            onPressIn={keepHandler.handleIsAllSelected}
+            onPressOut={keepHandler.handleIsAllDeleted}
+            isSelected={false}
+            isDeleted={false}
+          />
+          <Text style={tw`text-white ml-4`}>전체 선택</Text>
         </View>
         <View>
           <PlusButton title="곡 추가" onPress={() => {}} />
@@ -29,6 +40,8 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
         songlistData={keepHandler.keepList}
         onPressIn={keepHandler.handleInCircleButton}
         onPressOut={keepHandler.handleOutCircleButton}
+        isAllSelected={keepHandler.isAllSelected}
+        isAllDeleted={keepHandler.isAllDeleted}
       />
       {keepHandler.removedSong.length > 0 && (
         <View style={tw`justify-center items-center p-4`}>
