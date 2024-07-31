@@ -37,7 +37,9 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   return (
     <View style={tw`w-full h-full bg-black items-center`}>
       <LogoIcon width={200} height={200} style={tw`mt-30`} />
-      <Text style={tw`mt-2 text-white font-bold text-sm`}>싱숭생숭한 뉴스</Text>
+      <Text style={tw`mt-2 text-white font-bold text-sm`}>
+        싱숭생숭한 기분을 싱송생송하게!
+      </Text>
     </View>
   );
 }
