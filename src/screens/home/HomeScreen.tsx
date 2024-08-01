@@ -16,7 +16,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import useSongStore from '../../store/useSongStore';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import Carousel from '../../components/carousel/Carousel';
-
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.RCD_HOME
@@ -49,6 +48,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
         {/* 상단 바 */}
         <View
           style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
+
           <Image
             source={require('../../assets/png/appIcon.png')}
             style={tw`w-10 h-10`}
@@ -57,7 +57,6 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             <SettingsIcon width={28} height={28} />
           </TouchableOpacity>
         </View>
-
         {/* 스크롤 가능한 콘텐츠 */}
         <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
           <View style={tw`h-100 justify-center items-center`}>
