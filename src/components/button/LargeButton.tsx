@@ -12,8 +12,8 @@ const LargeButton: React.FC<LargeButtonProps> = ({title, onPress, color}) => {
   return (
     <Pressable
       onPress={onPress}
-      style={tw`p-3 bg-[${color}] rounded-lg  mx-4 justify-center items-center`}>
-      <Text style={tw`text-sm text-black`}>{title}</Text>
+      style={tw`p-2 bg-[${color}] rounded-lg  mx-4 justify-center items-center`}>
+      <Text style={tw`text-sm text-black font-bold`}>{title}</Text>
     </Pressable>
   );
 };

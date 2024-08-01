@@ -19,6 +19,7 @@ const designatedColor = {
   BACKGROUND: '#151515',
   RED: '#EE4E4E',
   KAKAO_YELLOW: '#FEE500',
+  LIGHT_BLUE: '#5AB2FF',
 } as const;
 
 export {randomColor, designatedColor};
