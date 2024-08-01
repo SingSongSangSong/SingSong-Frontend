@@ -1,21 +1,29 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
 import {Previewlist} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
-import useDataStore from '../../store/useSongStore';
+import useSongStore from '../../store/useSongStore';
 import SettingsIcon from '../../assets/svg/settings.svg';
+import Carousel from '../../components/carousel/Carousel';
+
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.RCD_HOME
 >;
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
-  const {tags, previewSongs} = useDataStore();
+  const {tags, previewSongs, exploreSongs} = useSongStore();
 
   const isEmptyObject = (obj: Record<string, any>): boolean => {
     return Reflect.ownKeys(obj).length === 0;
@@ -37,9 +45,10 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
         directionalOffsetThreshold: 80,
       }}
       style={tw`flex-1 bg-black`}>
-      <SafeAreaView style={tw`justify-center items-center`}>
+      <SafeAreaView style={tw`flex-1`}>
+        {/* 상단 바 */}
         <View
-          style={tw`w-full bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
+          style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
           <Image
             source={require('../../assets/png/appIcon.png')}
             style={tw`w-10 h-10`}
@@ -48,27 +57,35 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             <SettingsIcon width={28} height={28} />
           </TouchableOpacity>
         </View>
-        {!isEmptyObject(previewSongs) && (
-          <ScrollView contentContainerStyle={tw`flex-wrap flex-row`}>
-            <View style={tw`justify-center items-center`}>
-              <Text style={tw`text-white text-sm font-bold mt-10`}>
-                {' '}
-                싱송생송만의 노래 추천을 받아보세요
-              </Text>
-              <Text />
-              <View style={tw`mt-5`}>
-                {tags.map((tag, index) => (
-                  <Previewlist
-                    tag={tag}
-                    key={index}
-                    onArrowPress={handleOnArrowPress}
-                    data={previewSongs[tag]}
-                  />
-                ))}
-              </View>
+
+        {/* 스크롤 가능한 콘텐츠 */}
+        <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
+          <View style={tw`h-100 justify-center items-center`}>
+            {exploreSongs.length > 0 && (
+              <Carousel
+                exploringSongs={exploreSongs}
+                gap={16}
+                offset={36}
+                pageWidth={
+                  Math.round(Dimensions.get('window').width) - (16 + 36) * 2
+                }
+              />
+            )}
+          </View>
+          {!isEmptyObject(previewSongs) && (
+            <View
+              style={tw`flex-wrap flex-row justify-center items-center mt-5`}>
+              {tags.map((tag, index) => (
+                <Previewlist
+                  tag={tag}
+                  key={index}
+                  onArrowPress={handleOnArrowPress}
+                  data={previewSongs[tag]}
+                />
+              ))}
             </View>
-          </ScrollView>
-        )}
+          )}
+        </ScrollView>
       </SafeAreaView>
     </GestureRecognizer>
   );

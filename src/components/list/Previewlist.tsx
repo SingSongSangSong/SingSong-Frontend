@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {AddTextButton, PreviewlistItem} from '..';
 import {RcdHomeSong} from '../../types';
+import tw from 'twrnc';
 
 interface PreviewlistProps {
   tag: string;
@@ -11,7 +12,7 @@ interface PreviewlistProps {
 
 const Previewlist: React.FC<PreviewlistProps> = ({tag, onArrowPress, data}) => {
   return (
-    <View>
+    <View style={tw`w-full px-2`}>
       <AddTextButton title={tag} onPress={onArrowPress} isCenter={false} />
 
       {data &&

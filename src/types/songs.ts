@@ -13,6 +13,15 @@ interface RcdHomeSong {
   tags: string[];
 }
 
+interface RcdExploreSong {
+  album: string;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+  tags: string[];
+}
+
 interface RcdRefreshSong {
   isKeep: boolean;
   singerName: string;
@@ -44,6 +53,11 @@ interface RcdHomeResponse {
   message: string;
 }
 
+interface RcdExploreResponse {
+  data: RcdExploreSong[];
+  message: string;
+}
+
 interface RcdRefreshResponse {
   data: RcdRefreshSong[];
   message: string;
@@ -72,28 +86,17 @@ interface DeleteKeepResponse {
   message: string;
 }
 
-// interface SongsResponse {
-//   songs: Song[];
-// }
-
-// interface previewSongs {
-//   [tag: string]: SongsResponse;
-// }
-
-// interface PlaylistInfo {
-//   playlistName: string;
-//   songCount: number;
-// }
-
 export type {
   KeepSong,
   RcdHomeSong,
   RcdRefreshSong,
   RcdSong,
+  RcdExploreSong,
   RcdHomeSongWithTags,
   RcdHomeResponse,
   RcdRefreshResponse,
   RcdSongResponse,
+  RcdExploreResponse,
   KeepResponse,
   TagsResponse,
   TagProps,

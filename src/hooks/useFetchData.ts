@@ -1,10 +1,18 @@
 import getTags from '../api/tags/getTags';
-import useDataStore from '../store/useSongStore';
+import useSongStore from '../store/useSongStore';
 import postRcdHome from '../api/recommendation/postRcdHome';
 import {RcdHomeResponse, RcdHomeSongWithTags} from '../types';
+import getRcdHomeSongs from '../api/recommendation/getRcdHomeSongs';
 
 const useFetchData = () => {
-  const {tags, setTags, previewSongs, setPreviewSongs} = useDataStore();
+  const {
+    tags,
+    setTags,
+    previewSongs,
+    setPreviewSongs,
+    exploreSongs,
+    setExploreSongs,
+  } = useSongStore();
 
   const fetchTags = async () => {
     try {
@@ -15,6 +23,15 @@ const useFetchData = () => {
       fetchRecommendTags(tagData.data);
     } catch (error) {
       console.error('Error fetching tags:', error);
+    }
+  };
+
+  const fetchRcdHomeSongs = async () => {
+    try {
+      const exploreSongData = await getRcdHomeSongs();
+      setExploreSongs(exploreSongData.data);
+    } catch (error) {
+      console.error('Error fetching rcd home songs:', error);
     }
   };
 
@@ -34,11 +51,13 @@ const useFetchData = () => {
 
   const fetchData = async () => {
     await fetchTags();
+    await fetchRcdHomeSongs();
   };
 
   return {
     tags,
     previewSongs,
+    exploreSongs,
     fetchData,
   };
 };
