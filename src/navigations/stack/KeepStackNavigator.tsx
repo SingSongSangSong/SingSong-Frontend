@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {keepStackNavigations} from '../../constants';
-import {RouteProp} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 import {KeepStackParamList} from '../../types';
 import KeepScreen from '../../screens/keep/KeepScreen';
 import KeepEditScreen from '../../screens/keep/KeepEditScreen';
@@ -10,14 +10,14 @@ import {NavButton} from '../../components';
 const Stack = createStackNavigator<KeepStackParamList>();
 
 type KeepStackNavigatorProps = {
-  route?: RouteProp<KeepStackParamList, typeof keepStackNavigations.KEEP>;
+  navigation: NavigationProp<KeepStackParamList>;
 };
 
 const handleOnPress = (navigation: any) => {
   navigation.navigate(keepStackNavigations.KEEP_EDIT);
 };
 
-function KeepStackNavigator({navigation, route}: KeepStackNavigatorProps) {
+function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
   return (
     <Stack.Navigator
       initialRouteName={keepStackNavigations.KEEP}
@@ -44,6 +44,7 @@ function KeepStackNavigator({navigation, route}: KeepStackNavigatorProps) {
               title={'편집'}
             />
           ), // EditButton 컴포넌트를 전달
+          headerLeft: () => null,
         })}
       />
       <Stack.Screen

@@ -26,6 +26,7 @@ type AppStackParamList = {
 type HomeStackParamList = {
   [homeStackNavigations.RCD_HOME]: undefined;
   [homeStackNavigations.RCD_DETAIL]: {tag: string};
+  [homeStackNavigations.SETTING]: undefined;
 };
 
 type KeepStackParamList = {
