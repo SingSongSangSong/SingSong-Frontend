@@ -1,4 +1,10 @@
-import {SafeAreaView, View, FlatList, ActivityIndicator} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -61,12 +67,12 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
                   </View>
                 ) : null
               }
-              // refreshControl={
-              //   <RefreshControl
-              //     refreshing={songHandler.refreshing}
-              //     onRefresh={songHandler.onRefresh}
-              //   />
-              // }
+              refreshControl={
+                <RefreshControl
+                  refreshing={songHandler.refreshing}
+                  onRefresh={songHandler.onRefresh}
+                />
+              }
             />
           </>
         </View>

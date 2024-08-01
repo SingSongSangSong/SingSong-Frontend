@@ -12,7 +12,7 @@ import {RcdRefreshSong} from '../types';
 const useSong = (initTag: string[]) => {
   const [tags] = initTag; //태그를 렌더링하기 위함
   const [refreshing, setRefreshing] = useState(false);
-  const {refreshSongs, updateRefreshSongs} = useSongStore();
+  const {refreshSongs, setRefreshSongs, updateRefreshSongs} = useSongStore();
   const [songLst, setSongLst] = useState<RcdRefreshSong[]>(refreshSongs[tags]); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
@@ -50,8 +50,23 @@ const useSong = (initTag: string[]) => {
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
     setRefreshing(true);
-    await handleRefreshSongs(); //아예 데이터 리스트를 바꿔야 할듯?
+    await handleOnRefreshSongs(); //아예 데이터 리스트를 바꿔야 할듯?
     setRefreshing(false);
+  };
+
+  //위로 당길 시 노래 리스트 새로고침하는 함수
+  const handleOnRefreshSongs = async () => {
+    try {
+      if (songLst && songLst.length >= 20) {
+        // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        console.log('on refresh!!!!!!!!!!!!!!!!!!!');
+        const songData = await postRcdRefresh(tags);
+        const newSongLst = setRefreshSongs(tags, songData.data);
+        setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
+      }
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+    }
   };
 
   //초기 노래 리스트 세팅하는 함수

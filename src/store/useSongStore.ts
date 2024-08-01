@@ -9,7 +9,7 @@ interface SongState {
 
   setTags: (tags: string[]) => void;
   setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
-  setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => void;
+  setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => RcdRefreshSong[];
 
   updateRefreshSongs: (
     tag: string,
@@ -59,17 +59,15 @@ const useSongStore = create<SongState>((set, get) => {
         };
       }),
 
-    setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) =>
-      set(state => {
-        const existingSongs = state.refreshSongs[tag] || [];
-        const updatedSongs = [...existingSongs, ...songs];
-        return {
-          refreshSongs: {
-            ...state.refreshSongs,
-            [tag]: updatedSongs,
-          },
-        };
-      }),
+    setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => {
+      set(state => ({
+        refreshSongs: {
+          ...state.refreshSongs,
+          [tag]: songs,
+        },
+      }));
+      return songs;
+    },
 
     updateRefreshSongs: (tag: string, newSongs: RcdRefreshSong[]) => {
       // 현재 상태의 기존 노래 목록을 가져옴
