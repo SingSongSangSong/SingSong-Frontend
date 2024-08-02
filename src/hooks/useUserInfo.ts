@@ -1,29 +1,17 @@
-import {login, logout, me} from '@react-native-kakao/user';
+import {login, me} from '@react-native-kakao/user';
 import {useState} from 'react';
 import postMemberLogin from '../api/member/postMemberLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
+import getMember from '../api/member/getMember';
+import useMemberStore from '../store/useMemberStore';
+import postMemberLogout from '../api/member/postMemberLogout';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
-  const {
-    // getSecureValue,
-    setSecureValue,
-    // isValidAccessToken,
-    // isValidRefreshToken,
-    getIsValidToken,
-  } = TokenStore();
+  const {memberInfo, setMemberInfo} = useMemberStore();
 
-  // const isValidAccessToken = async () => {
-  //   const accessToken = await getSecureValue(ACCESS_TOKEN);
-  //   const refreshToken = await getSecureValue(REFRESH_TOKEN);
-  //   if (accessToken && isExpiredToken(accessToken)) {
-  //     console.log('Token expired');
-  //     const reissueData = await postMemberReissue(accessToken, refreshToken);
-  //     setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-  //     setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-  //   }
-  // };
+  const {setSecureValue, getIsValidToken} = TokenStore();
 
   const handleKakaoLogin = async () => {
     try {
@@ -48,18 +36,27 @@ const useUserInfo = () => {
 
   const handleKakaoLogout = async () => {
     try {
-      const result = await logout();
+      const result = await postMemberLogout();
       console.log('Logout Result:', result);
     } catch (err) {
       console.error('Logout Failed', err);
     }
   };
 
+  const getUserInfo = async () => {
+    const result = await getMember();
+    // setUserInfo(result.data);
+    setMemberInfo(result.data);
+    console.log('userInfo:', result.data);
+  };
+
   return {
+    memberInfo,
     isLoggedProcess,
     handleKakaoLogin,
     handleKakaoLogout,
     getIsValidToken,
+    getUserInfo,
   };
 };
 

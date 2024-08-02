@@ -50,10 +50,10 @@ type LoginResponse = {
 };
 
 type MemberInfo = {
-  birthYear: number;
-  email: string;
-  gender: string;
-  nickname: string;
+  birthYear?: number;
+  email?: string;
+  gender?: string;
+  nickname?: string;
 };
 
 type MemberInfoResponse = {

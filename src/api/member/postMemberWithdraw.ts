@@ -5,16 +5,21 @@ import axiosInstance from '../axiosIns';
 
 const postMemberWithdraw = async () => {
   try {
-    const {getAccessToken, removeSecureValue} = TokenStore();
-    const token = await getAccessToken();
+    const {getAccessToken, removeSecureValue, getSecureValue} = TokenStore();
+    const accessToken = await getAccessToken();
+    const refreshToken = await getSecureValue(REFRESH_TOKEN);
+
     removeSecureValue(ACCESS_TOKEN);
     removeSecureValue(REFRESH_TOKEN);
 
     const response = await axiosInstance.post<DefaultResponse>(
       '/member/withdraw',
       {
+        refreshToken: refreshToken,
+      },
+      {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       },

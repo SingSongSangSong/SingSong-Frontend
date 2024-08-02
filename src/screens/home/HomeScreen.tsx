@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   Dimensions,
@@ -16,6 +16,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import useSongStore from '../../store/useSongStore';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import Carousel from '../../components/carousel/Carousel';
+import useUserInfo from '../../hooks/useUserInfo';
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.RCD_HOME
@@ -23,6 +24,14 @@ type HomeScreenProps = StackScreenProps<
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
   const {tags, previewSongs, exploreSongs} = useSongStore();
+  const userInfoHandler = useUserInfo();
+
+  useEffect(() => {
+    if (isEmptyObject(userInfoHandler.memberInfo)) {
+      console.log('hi!');
+      userInfoHandler.getUserInfo();
+    }
+  }, []);
 
   const isEmptyObject = (obj: Record<string, any>): boolean => {
     return Reflect.ownKeys(obj).length === 0;
@@ -48,7 +57,6 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
         {/* 상단 바 */}
         <View
           style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
-
           <Image
             source={require('../../assets/png/appIcon.png')}
             style={tw`w-10 h-10`}

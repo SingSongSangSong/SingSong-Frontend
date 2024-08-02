@@ -9,11 +9,11 @@ type TextButtonProps = {
 
 const TextButton: React.FC<TextButtonProps> = ({title, onPress}) => {
   return (
-    <View style={tw`flex-row justify-center m-1`}>
+    <View style={tw`flex-row justify-center`}>
       <TouchableOpacity
-        style={tw`p-2 flex-row justify-center items-center`}
+        style={tw`flex-row justify-center items-center`}
         onPress={onPress}>
-        <Text style={tw`text-white font-bold text-sm`}>{title}</Text>
+        <Text style={tw`text-white text-sm`}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
