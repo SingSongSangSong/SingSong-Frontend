@@ -17,6 +17,7 @@ import useSongStore from '../../store/useSongStore';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import Carousel from '../../components/carousel/Carousel';
 import useUserInfo from '../../hooks/useUserInfo';
+
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.RCD_HOME
