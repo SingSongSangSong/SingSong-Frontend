@@ -28,8 +28,10 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   const handleNavigation = async () => {
     const isValidToken = await userInfoHandler.getIsValidToken();
     if (isValidToken) {
+      //accessToken이 유효하거나, accessToken이 유효하지 않지만 refreshToken이 유효해서 재발급을 받는 경우
       navigation.replace(appStackNavigations.MAIN);
     } else {
+      // 저장된 토큰이 없거나, accessToken이 유효하지 않고 refreshToken도 유효하지 않아 재발급을 받지 못한 경우
       navigation.replace(appStackNavigations.LOGIN);
     }
   };
