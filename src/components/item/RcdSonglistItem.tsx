@@ -9,6 +9,7 @@ interface RcdSonglistItemProps {
   songNumber: number;
   songName: string;
   singerName: string;
+  onPress: () => void;
   onAddPress: () => void;
   onRemovePress: () => void;
   showKeepIcon: boolean;
@@ -20,6 +21,7 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
   songNumber,
   songName,
   singerName,
+  onPress,
   onAddPress,
   onRemovePress,
   showKeepIcon,
@@ -58,17 +60,17 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
     ); // 색상 변경
   };
 
-  const handlePress = () => {
-    setIsPressed(!isPressed);
-    if (onAddPress && !isPressed) {
-      onAddPress();
-    } else if (onRemovePress && isPressed) {
-      onRemovePress();
-    }
-  };
+  // const handlePress = () => {
+  //   setIsPressed(!isPressed);
+  //   if (onAddPress && !isPressed) {
+  //     onAddPress();
+  //   } else if (onRemovePress && isPressed) {
+  //     onRemovePress();
+  //   }
+  // };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <View
         style={[
           styles.innerContainer,

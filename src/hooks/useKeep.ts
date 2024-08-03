@@ -34,7 +34,7 @@ const useKeep = () => {
   };
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
-    const updatedSongs = await deleteKeep({songNumbers: songNumbers});
+    const updatedSongs = await deleteKeep(songNumbers);
     setKeepList(updatedSongs.data); //keepList 업데이트
     // console.log(updatedSongs);
   };

@@ -6,6 +6,7 @@ import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 import {RouteProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
+import SongScreen from '../../screens/song/SongScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -45,6 +46,24 @@ function HomeStackNavigator({route}: HomeStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
         })}
       />
+      <Stack.Screen
+        name={homeStackNavigations.SONG_DETAIL}
+        component={SongScreen}
+        options={() => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+
       <Stack.Screen
         name={homeStackNavigations.SETTING}
         component={SettingScreen}

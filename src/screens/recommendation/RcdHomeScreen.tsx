@@ -23,7 +23,7 @@ type RcdHomeScreenProps = {
 
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리
-  const songHandler = useSong([initTag]);
+  const songHandler = useSong({initTag, navigation});
 
   // const unsubscribe = navigation.addListener('beforeRemove', () => {
   //   songHandler.resetIndexLst(initTag);

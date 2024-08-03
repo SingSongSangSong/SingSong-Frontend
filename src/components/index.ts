@@ -18,6 +18,7 @@ export * from './tag/ShowTag';
 export * from './button/CustomButton';
 export * from './button/AddTextButton';
 export * from './button/TextButton';
+export * from './button/OutlineButton';
 export * from './button/NavButton';
 export * from './button/CircleButton';
 export * from './button/PlusButton';
