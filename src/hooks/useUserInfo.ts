@@ -47,7 +47,7 @@ const useUserInfo = () => {
   const handleWithdraw = async () => {
     await postMemberWithdraw();
   };
-
+  
   const getUserInfo = async () => {
     const result = await getMember();
     // setUserInfo(result.data);
