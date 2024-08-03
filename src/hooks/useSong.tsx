@@ -7,13 +7,25 @@ import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
-import {RcdRefreshSong} from '../types';
+import {HomeStackParamList, RcdRefreshSong} from '../types';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {homeStackNavigations} from '../constants';
 
-const useSong = (initTag: string[]) => {
-  const [tags] = initTag; //태그를 렌더링하기 위함
+type UseSongProps = {
+  initTag: string;
+  navigation: StackNavigationProp<
+    HomeStackParamList,
+    typeof homeStackNavigations.RCD_DETAIL
+  >;
+};
+
+const useSong = ({initTag, navigation}: UseSongProps) => {
+  // const [tags] = initTag;
   const [refreshing, setRefreshing] = useState(false);
   const {refreshSongs, setRefreshSongs, updateRefreshSongs} = useSongStore();
-  const [songLst, setSongLst] = useState<RcdRefreshSong[]>(refreshSongs[tags]); //songlist를 렌더링하기 위함
+  const [songLst, setSongLst] = useState<RcdRefreshSong[]>(
+    refreshSongs[initTag],
+  ); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
   const {setKeepList} = useKeepListStore();
@@ -43,7 +55,7 @@ const useSong = (initTag: string[]) => {
   //keep에서 삭제
   const toggleRemoveStored = async (songNumber: number) => {
     // removeSongFromKeep(songId);
-    const updatedSongs = await deleteKeep({songNumbers: [songNumber]});
+    const updatedSongs = await deleteKeep([songNumber]);
     setKeepList(updatedSongs.data);
   };
 
@@ -60,8 +72,8 @@ const useSong = (initTag: string[]) => {
       if (songLst && songLst.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('on refresh!!!!!!!!!!!!!!!!!!!');
-        const songData = await postRcdRefresh(tags);
-        const newSongLst = setRefreshSongs(tags, songData.data);
+        const songData = await postRcdRefresh(initTag);
+        const newSongLst = setRefreshSongs(initTag, songData.data);
         setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
       }
     } catch (error) {
@@ -71,9 +83,9 @@ const useSong = (initTag: string[]) => {
 
   //초기 노래 리스트 세팅하는 함수
   const setInitSongs = async () => {
-    const initSongs = await postRcdRefresh(tags);
+    const initSongs = await postRcdRefresh(initTag);
     const songData = initSongs.data;
-    const newSongLst = updateRefreshSongs(tags, songData);
+    const newSongLst = updateRefreshSongs(initTag, songData);
     setSongLst(newSongLst);
     setIsInit(true);
   };
@@ -89,10 +101,10 @@ const useSong = (initTag: string[]) => {
       if (songLst && songLst.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('refresh!!!!!!!!!!!!!!!!!!!');
-        postRcdRefresh(tags)
+        postRcdRefresh(initTag)
           .then(response => {
             const songData = response.data;
-            const newSongLst = updateRefreshSongs(tags, songData);
+            const newSongLst = updateRefreshSongs(initTag, songData);
             setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
             setIsLoading(false);
           })
@@ -129,12 +141,17 @@ const useSong = (initTag: string[]) => {
   //   });
   // };
 
+  const handleOnPressSong = (songNumber: number) => () => {
+    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
+  };
+
   const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
     <RcdSonglistItem
       key={item.songNumber}
       songNumber={item.songNumber}
       songName={item.songName}
       singerName={item.singerName}
+      onPress={handleOnPressSong(item.songNumber)}
       // onAddPress={() => handleAddPressSong(item.songNumber)}
       // onRemovePress={() => handleRemovePressSong(item.songNumber)}
       onAddPress={() => {}}

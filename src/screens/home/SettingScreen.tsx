@@ -25,9 +25,17 @@ function SettingScreen({navigation}: SettingScreenProps) {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [
-          {name: appStackNavigations.LOGIN}, // 여기에 올바른 화면 이름 사용
-        ],
+        routes: [{name: appStackNavigations.LOGIN}],
+      }),
+    );
+  };
+
+  const handleWithdrawButton = () => {
+    userInfoHandler.handleWithdraw();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: appStackNavigations.LOGIN}],
       }),
     );
   };
@@ -48,6 +56,14 @@ function SettingScreen({navigation}: SettingScreenProps) {
               </Text>
             </View>
             <TextButton title="로그아웃" onPress={handleLogoutButton} />
+          </View>
+        </View>
+        <View style={tw`m-4`}>
+          <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+            개인 / 보안
+          </Text>
+          <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
+            <TextButton title="회원 탈퇴" onPress={handleWithdrawButton} />
           </View>
         </View>
       </View>

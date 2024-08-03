@@ -24,6 +24,7 @@ const homeStackNavigations = {
   RCD_HOME: '_RcdHome',
   RCD_DETAIL: '_RcdDetail',
   SETTING: '_Setting',
+  SONG_DETAIL: '_SongDetail',
 } as const;
 
 const keepStackNavigations = {

@@ -86,6 +86,45 @@ interface DeleteKeepResponse {
   message: string;
 }
 
+interface SongInfo {
+  album: string;
+  description: string;
+  isKeep: true;
+  octave: string;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+  tags: string[];
+}
+
+interface SongInfoResponse {
+  data: SongInfo;
+  message: string;
+}
+
+interface SongInfoRelated {
+  nextPage: number;
+  songs: RcdRefreshSong[];
+}
+
+interface SongInfoRelatedResponse {
+  data: SongInfoRelated;
+  message: string;
+}
+
+interface SongInfoReview {
+  count: number;
+  selected: boolean;
+  songReviewOptionId: number;
+  title: string;
+}
+
+interface SongInfoReviewResponse {
+  data: SongInfoReview[];
+  message: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -102,4 +141,10 @@ export type {
   TagProps,
   SongNumbersProps,
   DeleteKeepResponse,
+  SongInfo,
+  SongInfoResponse,
+  SongInfoRelated,
+  SongInfoRelatedResponse,
+  SongInfoReview,
+  SongInfoReviewResponse,
 };

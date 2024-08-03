@@ -21,6 +21,8 @@ const designatedColor = {
   KAKAO_YELLOW: '#FEE500',
   LIGHT_BLUE: '#5AB2FF',
   LIGHT_GRAY: '#EEEDEB',
+  GRAY4: '#333333',
+  GRAY: '#0F0F0F',
 } as const;
 
 export {randomColor, designatedColor};

@@ -1,8 +1,8 @@
 import TokenStore from '../../store/TokenStore';
-import {KeepResponse, SongNumbersProps} from '../../types';
+import {KeepResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
-const deleteKeep = async (songNumbers: SongNumbersProps) => {
+const deleteKeep = async (songNumbers: number[]) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
@@ -11,7 +11,7 @@ const deleteKeep = async (songNumbers: SongNumbersProps) => {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      data: songNumbers,
+      data: {songNumbers: songNumbers},
     });
     console.log('data for postKeep response', response.data);
     return response.data;

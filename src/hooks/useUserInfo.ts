@@ -6,6 +6,7 @@ import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 import getMember from '../api/member/getMember';
 import useMemberStore from '../store/useMemberStore';
 import postMemberLogout from '../api/member/postMemberLogout';
+import postMemberWithdraw from '../api/member/postMemberWithdraw';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
@@ -43,6 +44,10 @@ const useUserInfo = () => {
     }
   };
 
+  const handleWithdraw = async () => {
+    await postMemberWithdraw();
+  };
+  
   const getUserInfo = async () => {
     const result = await getMember();
     // setUserInfo(result.data);
@@ -55,6 +60,7 @@ const useUserInfo = () => {
     isLoggedProcess,
     handleKakaoLogin,
     handleKakaoLogout,
+    handleWithdraw,
     getIsValidToken,
     getUserInfo,
   };
