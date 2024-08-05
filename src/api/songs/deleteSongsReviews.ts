@@ -14,6 +14,7 @@ const deleteSongsReviews = async (songNumber: string) => {
         },
       },
     );
+    
     console.log('Response:', response.data);
     return response.data;
   } catch (error) {
@@ -22,4 +23,4 @@ const deleteSongsReviews = async (songNumber: string) => {
   }
 };
 
-export default deleteSongsReviews;
+export default deleteSongReview;

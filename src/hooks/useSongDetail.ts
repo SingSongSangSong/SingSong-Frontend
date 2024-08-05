@@ -26,7 +26,6 @@ const useSongDetail = (songNumber: number) => {
     const tempSongsReviews = await getSongsReviews(String(songNumber));
     setSongInfo(tempSongInfo.data);
     setSongReviews(tempSongsReviews.data);
-
     if (tempSongInfo.data.isKeep) {
       setKeepColor(designatedColor.KEEP_FILLED);
     } else {
@@ -45,7 +44,6 @@ const useSongDetail = (songNumber: number) => {
       setKeepList(tempKeepList.data);
     }
   };
-
   const handleOnAddPressReviewlist = async (songReviewOptionId: number) => {
     console.log(songReviewOptionId);
     await putSongReviews(String(songNumber), songReviewOptionId);
