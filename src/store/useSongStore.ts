@@ -2,12 +2,13 @@ import {create} from 'zustand';
 import {RcdExploreSong, RcdHomeSong, RcdRefreshSong} from '../types';
 
 interface SongState {
+  selectedTag: string;
   tags: string[];
   previewSongs: {[tag: string]: RcdHomeSong[]};
   refreshSongs: {[tag: string]: RcdRefreshSong[]};
   exploreSongs: RcdExploreSong[];
   // indexLst: {[tag: string]: number};
-
+  setSelectedTag: (tag: string) => void;
   setTags: (tags: string[]) => void;
   setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
   setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => RcdRefreshSong[];
@@ -26,6 +27,7 @@ interface SongState {
 
 const useSongStore = create<SongState>((set, get) => {
   const initState = {
+    selectedTag: '',
     tags: [],
     previewSongs: {},
     refreshSongs: {},
@@ -35,6 +37,11 @@ const useSongStore = create<SongState>((set, get) => {
 
   return {
     ...initState,
+
+    setSelectedTag: (tag: string) =>
+      set(() => ({
+        selectedTag: tag,
+      })),
 
     setTags: (tags: string[]) =>
       set(() => {

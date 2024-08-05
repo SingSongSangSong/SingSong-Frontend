@@ -7,6 +7,9 @@ import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 import {NavigationProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
+import useSongStore from '../../store/useSongStore';
+import {IconButton} from '../../components';
+import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -18,6 +21,7 @@ type HomeStackNavigatorProps = {
 function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
   // const {tag} = route.params;
   // const tag = route?.params?.tag ?? 'defaultTag';
+  const {selectedTag} = useSongStore();
 
   return (
     <Stack.Navigator
@@ -62,6 +66,16 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() =>
+                navigation.navigate(homeStackNavigations.RCD_DETAIL, {
+                  tag: selectedTag,
+                })
+              }
+              Icon={ArrowLeftIcon}
+            />
+          ),
         })}
       />
 

@@ -28,18 +28,36 @@ function SongScreen(props: SongScreenProps) {
   const songNumber = props.route?.params?.songNumber; //초기 카테고리
   const songDetailHandler = useSongDetail(songNumber);
 
+  // const handleOnPressRelated = (songNumber: number) => {
+  //   if ('navigate' in props.navigation) {
+  //     if (props.navigation.canGoBack()) {
+  //       // HomeStack에서 왔을 때 처리
+  //       (
+  //         props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+  //       ).navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
+  //       console.log('homestack navigation');
+  //     } else {
+  //       // KeepStack에서 왔을 때 처리
+  //       (
+  //         props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+  //       ).navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+  //       console.log('keepstack navigation');
+  //     }
+  //   }
+  // };
+
   const handleOnPressRelated = (songNumber: number) => {
     if ('navigate' in props.navigation) {
-      if (props.navigation.canGoBack()) {
+      if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
+        // KeepStack에서 왔을 때
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).push(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+      } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
-      } else {
-        // KeepStack에서 왔을 때 처리
-        (
-          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+        ).push(homeStackNavigations.SONG_DETAIL, {songNumber});
       }
     }
   };
@@ -57,7 +75,7 @@ function SongScreen(props: SongScreenProps) {
                 <MusicIcon width={64} height={64} />
               </View>
             </View>
-            <View style={tw`mx-4`}>
+            <View>
               <View style={tw`flex-row items-center mt-3`}>
                 <Text
                   style={tw`text-white text-2xl text-[${designatedColor.GREEN}] font-bold`}>
@@ -127,11 +145,15 @@ function SongScreen(props: SongScreenProps) {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {songDetailHandler.songRelated && (
-        <View style={tw`h-full w-full`}>
+        <View style={tw`h-full w-full px-4`}>
           <Relatedlist
+            isLoading={songDetailHandler.isLoading}
             relatedlistData={songDetailHandler.songRelated}
             onPress={handleOnPressRelated}
             renderHeader={renderHeader}
+            handleRefreshRelatedSongs={
+              songDetailHandler.handleRefreshRelatedSongs
+            }
           />
         </View>
       )}

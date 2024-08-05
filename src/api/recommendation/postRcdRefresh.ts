@@ -6,6 +6,8 @@ const postRcdRefresh = async (tag: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
+    console.log(token);
+    console.log(tag);
     const response = await axiosInstance.post<RcdRefreshResponse>(
       '/recommend/refresh',
       {tag: tag},

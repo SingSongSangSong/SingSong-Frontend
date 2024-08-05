@@ -5,8 +5,9 @@ import {NavigationProp} from '@react-navigation/native';
 import {KeepStackParamList} from '../../types';
 import KeepScreen from '../../screens/keep/KeepScreen';
 import KeepEditScreen from '../../screens/keep/KeepEditScreen';
-import {NavButton} from '../../components';
+import {IconButton, NavButton} from '../../components';
 import SongScreen from '../../screens/song/SongScreen';
+import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -62,6 +63,12 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.navigate(keepStackNavigations.KEEP)}
+              Icon={ArrowLeftIcon}
+            />
+          ),
         })}
       />
       <Stack.Screen

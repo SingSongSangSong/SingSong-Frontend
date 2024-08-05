@@ -18,6 +18,7 @@ const useSongDetail = (songNumber: number) => {
   const [size, setSize] = useState<number>(20);
   const {setKeepList} = useKeepListStore();
   const [keepColor, setKeepColor] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!songInfo) {
@@ -66,7 +67,39 @@ const useSongDetail = (songNumber: number) => {
     await deleteSongsReviews(String(songNumber));
   };
 
+  //밑으로 스크롤 시 데이터 추가로 불러오는 함수
+  const handleRefreshRelatedSongs = async () => {
+    if (isLoading) {
+      return;
+    }
+    try {
+      setIsLoading(true);
+      //20개 이상일 경우에만 api 호출
+      if (songRelated && songRelated.length >= 20) {
+        // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        console.log('refresh!!!!!!!!!!!!!!!!!!!');
+        getSongsRelated(String(songNumber), page, size)
+          .then(response => {
+            const newSongRelated = response.data.songs;
+            setPage(response.data.nextPage);
+            setSongRelated(prev => [...(prev || []), ...newSongRelated]); //새로운 노래 리스트로 업데이트
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error('Error refreshing data:', error);
+            setIsLoading(false);
+          });
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching new related songs:', error);
+      setIsLoading(false);
+    }
+  };
+
   return {
+    isLoading,
     page,
     size,
     keepColor,
@@ -76,6 +109,7 @@ const useSongDetail = (songNumber: number) => {
     handleOnPressKeep,
     handleOnAddPressReviewlist,
     handleOnRemovePressReviewlist,
+    handleRefreshRelatedSongs,
   };
 };
 

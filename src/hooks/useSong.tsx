@@ -22,7 +22,8 @@ type UseSongProps = {
 const useSong = ({initTag, navigation}: UseSongProps) => {
   // const [tags] = initTag;
   const [refreshing, setRefreshing] = useState(false);
-  const {refreshSongs, setRefreshSongs, updateRefreshSongs} = useSongStore();
+  const {setSelectedTag, refreshSongs, setRefreshSongs, updateRefreshSongs} =
+    useSongStore();
   const [songLst, setSongLst] = useState<RcdRefreshSong[]>(
     refreshSongs[initTag],
   ); //songlist를 렌더링하기 위함
@@ -88,6 +89,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     const newSongLst = updateRefreshSongs(initTag, songData);
     setSongLst(newSongLst);
     setIsInit(true);
+    setSelectedTag(initTag);
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
@@ -101,6 +103,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       if (songLst && songLst.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('refresh!!!!!!!!!!!!!!!!!!!');
+        console.log(initTag);
         postRcdRefresh(initTag)
           .then(response => {
             const songData = response.data;

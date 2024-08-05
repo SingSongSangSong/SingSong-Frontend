@@ -19,6 +19,7 @@ export * from './tag/ClickableTag';
 export * from './tag/RemovableTag';
 export * from './tag/CustomTag';
 export * from './tag/ShowTag';
+export * from './button/IconButton';
 export * from './button/CustomButton';
 export * from './button/AddTextButton';
 export * from './button/TextButton';
