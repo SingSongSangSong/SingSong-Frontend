@@ -6,15 +6,17 @@ import {KeepSong} from '../../types';
 
 interface SonglistProps {
   songlistData: KeepSong[];
+  onPress: (songNumber: number) => void;
 }
 
-const Songlist: React.FC<SonglistProps> = ({songlistData}) => {
+const Songlist: React.FC<SonglistProps> = ({songlistData, onPress}) => {
   const renderItem = ({item}: {item: KeepSong}) => (
     <View style={tw`m-2`}>
       <SonglistItem
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
+        onPress={() => onPress(item.songNumber)}
       />
     </View>
   );

@@ -1,16 +1,20 @@
-import axios from 'axios';
-import TokenStore from '../../store/TokenStore'; // TokenStore를 import해주세요.
+import TokenStore from '../../store/TokenStore';
+import axiosInstance from '../axiosIns';
 
-const deleteSongReview = async (songNumber: string) => {
+const deleteSongsReviews = async (songNumber: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axios.delete(`/songs/${songNumber}/reviews`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const response = await axiosInstance.delete(
+      `/songs/${songNumber}/reviews`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
+    
     console.log('Response:', response.data);
     return response.data;
   } catch (error) {

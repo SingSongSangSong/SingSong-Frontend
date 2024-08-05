@@ -1,14 +1,15 @@
-import axios from 'axios';
-import TokenStore from '../../store/TokenStore'; // TokenStore를 import해주세요.
+import TokenStore from '../../store/TokenStore';
+import axiosInstance from '../axiosIns';
 
-const putSongReview = async (
+const putSongReviews = async (
   songNumber: string,
   songReviewOptionId: number,
 ) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axios.put(
+    const response = await axiosInstance.put(
+
       `/songs/${songNumber}/reviews`,
       {songReviewOptionId: songReviewOptionId},
       {
@@ -26,4 +27,4 @@ const putSongReview = async (
   }
 };
 
-export default putSongReview;
+export default putSongReviews;

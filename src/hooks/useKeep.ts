@@ -17,6 +17,10 @@ const useKeep = () => {
     }
   }, []);
 
+  // const handleOnPressSonglist = (songNumber: number) => {
+  //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+  // };
+
   const handleIsAllSelected = () => {
     setIsAllDeleted(false);
     setIsAllSelected(true);
@@ -120,6 +124,7 @@ const useKeep = () => {
     handleRemoveButton,
     handleInCircleButton,
     handleOutCircleButton,
+    // handleOnPressSonglist,
   };
 };
 

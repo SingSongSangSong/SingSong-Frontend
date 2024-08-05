@@ -1,22 +1,28 @@
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList} from '../../types';
-import {RouteProp} from '@react-navigation/native';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {HomeStackParamList, KeepStackParamList} from '../../types';
+// import {RouteProp} from '@react-navigation/native';
+import {
+  designatedColor,
+  homeStackNavigations,
+  keepStackNavigations,
+} from '../../constants';
 import useSongDetail from '../../hooks/useSongDetail';
 import MusicIcon from '../../assets/svg/music.svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {OutlineButton} from '../../components';
+import {OutlineButton, Reviewlist} from '../../components';
 
-type SongScreenProps = {
-  route: RouteProp<HomeStackParamList, typeof homeStackNavigations.SONG_DETAIL>;
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.SONG_DETAIL
-  >;
-};
+type SongScreenProps =
+  | StackScreenProps<
+      KeepStackParamList,
+      typeof keepStackNavigations.KEEP_SONG_DETAIL
+    >
+  | StackScreenProps<
+      HomeStackParamList,
+      typeof homeStackNavigations.SONG_DETAIL
+    >;
 
 function SongScreen({route, navigation}: SongScreenProps) {
   const songNumber = route?.params?.songNumber; //초기 카테고리
@@ -24,7 +30,7 @@ function SongScreen({route, navigation}: SongScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      {songDetailHandler.songInfo && (
+      {songDetailHandler.songInfo && songDetailHandler.songReviews && (
         <View>
           <View style={tw`justify-center items-center overflow-hidden`}>
             <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
@@ -45,7 +51,9 @@ function SongScreen({route, navigation}: SongScreenProps) {
               </Text>
             </View>
 
-            <Text style={tw`text-white mt-4`}>김민석</Text>
+            <Text style={tw`text-white mt-4`}>
+              {songDetailHandler.songInfo.singerName}
+            </Text>
             <View style={tw`flex-row items-center mt-4`}>
               <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
               {songDetailHandler.songInfo.octave == '' ? (
@@ -75,6 +83,16 @@ function SongScreen({route, navigation}: SongScreenProps) {
                 color={designatedColor.GREEN}
               />
             </View>
+            <View>
+              <Text style={tw`text-white font-bold text-lg my-5`}>
+                이 노래는 어떻송
+              </Text>
+              <Reviewlist
+                reviewlistData={songDetailHandler.songReviews}
+                onAddPress={songDetailHandler.handleOnAddPressReviewlist}
+                onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
+              />
+            </View>
 
             {/* <View style={tw`flex-row justify-around w-full mt-4 px-6`}>
               <View style={tw`flex-row items-center`}>
@@ -98,20 +116,20 @@ function SongScreen({route, navigation}: SongScreenProps) {
             </View> */}
 
             {/* <View style={tw`mt-8 p-4`}>
-            <Text style={tw`text-white text-lg mb-4`}>이 노래는 어땡송</Text>
-            <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-              <Text style={tw`text-white`}>노래가 너무 높아요.</Text>
-              <Text style={tw`text-white text-right`}>999</Text>
-            </View>
-            <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-              <Text style={tw`text-white`}>쉬운 줄 알았지만 어려워요.</Text>
-              <Text style={tw`text-white text-right`}>35</Text>
-            </View>
-            <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-              <Text style={tw`text-white`}>부를만 해요.</Text>
-              <Text style={tw`text-white text-right`}>2</Text>
-            </View>
-          </View> */}
+              <Text style={tw`text-white text-lg mb-4`}>이 노래는 어땡송</Text>
+              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
+                <Text style={tw`text-white`}>노래가 너무 높아요.</Text>
+                <Text style={tw`text-white text-right`}>999</Text>
+              </View>
+              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
+                <Text style={tw`text-white`}>쉬운 줄 알았지만 어려워요.</Text>
+                <Text style={tw`text-white text-right`}>35</Text>
+              </View>
+              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
+                <Text style={tw`text-white`}>부를만 해요.</Text>
+                <Text style={tw`text-white text-right`}>2</Text>
+              </View>
+            </View> */}
           </View>
         </View>
       )}

@@ -83,8 +83,11 @@ const TokenStore = () => {
 
     //액세스 토큰이 만료된 경우
     if (isExpiredToken(accessToken)) {
+      console.log(accessToken);
+      console.log(refreshToken);
       const reissueData = await postMemberReissue(accessToken, refreshToken);
       setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
+
       setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
       return true;
     }

@@ -30,6 +30,7 @@ const homeStackNavigations = {
 const keepStackNavigations = {
   KEEP: '_Keep',
   KEEP_EDIT: '_KeepEdit',
+  KEEP_SONG_DETAIL: '_KeepSongDetail',
 } as const;
 
 export {

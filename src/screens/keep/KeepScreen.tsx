@@ -7,6 +7,17 @@ import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 
+// type KeepScreenNavigationProp = CompositeNavigationProp<
+//   StackNavigationProp<KeepStackParamList, typeof keepStackNavigations.KEEP>,
+//   CompositeNavigationProp<
+//     StackNavigationProp<
+//       HomeStackParamList,
+//       typeof homeStackNavigations.RCD_HOME
+//     >,
+//     StackNavigationProp<HomeStackParamList>
+//   >
+// >;
+
 type KeepScreenProps = StackScreenProps<
   KeepStackParamList,
   typeof keepStackNavigations.KEEP
@@ -14,6 +25,10 @@ type KeepScreenProps = StackScreenProps<
 
 function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
+
+  const handleOnPressSonglist = (songNumber: number) => {
+    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+  };
 
   return (
     <SafeAreaView style={tw`h-full w-full  bg-[${designatedColor.BACKGROUND}]`}>
@@ -23,7 +38,10 @@ function KeepScreen({navigation}: KeepScreenProps) {
 
       <View style={tw`w-full h-full`}>
         {keepHandler.keepList.length > 0 ? (
-          <Songlist songlistData={keepHandler.keepList} />
+          <Songlist
+            songlistData={keepHandler.keepList}
+            onPress={handleOnPressSonglist}
+          />
         ) : (
           <View style={tw`h-full w-full justify-center items-center`}>
             <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
