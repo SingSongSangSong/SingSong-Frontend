@@ -7,6 +7,8 @@ export * from './list/Songlist';
 export * from './item/KeeplistItem';
 export * from './list/Keeplist';
 export * from './list/Folderlist';
+export * from './list/Relatedlist';
+export * from './item/RelatedlistItem';
 export * from './list/Taglist';
 export * from './item/PreviewlistItem';
 export * from './list/Previewlist';

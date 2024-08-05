@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import getSongs from '../api/songs/getSongs';
-import {SongInfo, SongInfoReview} from '../types';
+import {RcdRefreshSong, SongInfo, SongInfoReview} from '../types';
 import {designatedColor} from '../constants';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
@@ -8,10 +8,14 @@ import useKeepListStore from '../store/useKeepStore';
 import getSongsReviews from '../api/songs/getSongsReviews';
 import putSongReviews from '../api/songs/putSongsReviews';
 import deleteSongsReviews from '../api/songs/deleteSongsReviews';
+import getSongsRelated from '../api/songs/getSongsRelated';
 
 const useSongDetail = (songNumber: number) => {
   const [songInfo, setSongInfo] = useState<SongInfo | null>(null);
   const [songReviews, setSongReviews] = useState<SongInfoReview[] | null>(null);
+  const [songRelated, setSongRelated] = useState<RcdRefreshSong[] | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(20);
   const {setKeepList} = useKeepListStore();
   const [keepColor, setKeepColor] = useState<string>('');
 
@@ -24,8 +28,16 @@ const useSongDetail = (songNumber: number) => {
   const setInitSongDetail = async () => {
     const tempSongInfo = await getSongs(String(songNumber));
     const tempSongsReviews = await getSongsReviews(String(songNumber));
+    const tempSongRelated = await getSongsRelated(
+      String(songNumber),
+      page,
+      size,
+    );
     setSongInfo(tempSongInfo.data);
     setSongReviews(tempSongsReviews.data);
+    setSongRelated(tempSongRelated.data.songs);
+    setPage(tempSongRelated.data.nextPage);
+
     if (tempSongInfo.data.isKeep) {
       setKeepColor(designatedColor.KEEP_FILLED);
     } else {
@@ -55,9 +67,12 @@ const useSongDetail = (songNumber: number) => {
   };
 
   return {
+    page,
+    size,
     keepColor,
     songInfo,
     songReviews,
+    songRelated,
     handleOnPressKeep,
     handleOnAddPressReviewlist,
     handleOnRemovePressReviewlist,

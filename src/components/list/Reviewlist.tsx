@@ -41,7 +41,11 @@ const Reviewlist: React.FC<ReviewlistProps> = ({
   );
 
   return (
-    <FlatList data={reviewlistData} renderItem={renderItem} style={tw`mb-10`} />
+    <FlatList
+      data={reviewlistData}
+      renderItem={renderItem}
+      style={tw`w-full h-full mb-4`}
+    />
   );
 };
 

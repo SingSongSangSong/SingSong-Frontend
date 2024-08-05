@@ -12,7 +12,7 @@ import {
 import useSongDetail from '../../hooks/useSongDetail';
 import MusicIcon from '../../assets/svg/music.svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {OutlineButton, Reviewlist} from '../../components';
+import {OutlineButton, Relatedlist, Reviewlist} from '../../components';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -24,113 +24,115 @@ type SongScreenProps =
       typeof homeStackNavigations.SONG_DETAIL
     >;
 
-function SongScreen({route, navigation}: SongScreenProps) {
-  const songNumber = route?.params?.songNumber; //초기 카테고리
+function SongScreen(props: SongScreenProps) {
+  const songNumber = props.route?.params?.songNumber; //초기 카테고리
   const songDetailHandler = useSongDetail(songNumber);
+
+  const handleOnPressRelated = (songNumber: number) => {
+    if ('navigate' in props.navigation) {
+      if (props.navigation.canGoBack()) {
+        // HomeStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
+      } else {
+        // KeepStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+      }
+    }
+  };
+
+  const renderHeader = () => {
+    return (
+      <View>
+        {songDetailHandler.songInfo && songDetailHandler.songReviews && (
+          <View>
+            <View style={tw`justify-center items-center overflow-hidden`}>
+              <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
+              <View style={tw`w-full h-30 bg-black`} />
+              <View
+                style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
+                <MusicIcon width={64} height={64} />
+              </View>
+            </View>
+            <View style={tw`mx-4`}>
+              <View style={tw`flex-row items-center mt-3`}>
+                <Text
+                  style={tw`text-white text-2xl text-[${designatedColor.GREEN}] font-bold`}>
+                  {songDetailHandler.songInfo.songNumber}
+                </Text>
+                <Text style={tw`text-white text-3xl ml-4`}>
+                  {songDetailHandler.songInfo.songName}
+                </Text>
+              </View>
+
+              <Text style={tw`text-white mt-4`}>
+                {songDetailHandler.songInfo.singerName}
+              </Text>
+              <View style={tw`flex-row items-center mt-4`}>
+                <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
+                {songDetailHandler.songInfo.octave == '' ? (
+                  <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+                    없음
+                  </Text>
+                ) : (
+                  <Text style={tw`text-[${designatedColor.GREEN}]`}>
+                    {songDetailHandler.songInfo.octave}
+                  </Text>
+                )}
+              </View>
+              <Text style={tw`text-[${designatedColor.GREEN}] mt-2`}>
+                {songDetailHandler.songInfo.description}
+              </Text>
+              <View style={tw`flex-row justify-between mt-6 items-center`}>
+                <TouchableOpacity onPress={songDetailHandler.handleOnPressKeep}>
+                  <Icon
+                    name="star"
+                    size={24}
+                    color={songDetailHandler.keepColor}
+                  />
+                </TouchableOpacity>
+                <OutlineButton
+                  title="미리듣기"
+                  onPress={() => {}}
+                  color={designatedColor.GREEN}
+                />
+              </View>
+              <View>
+                <Text style={tw`text-white font-bold text-lg mt-4 mb-2`}>
+                  이 노래는 어떻송
+                </Text>
+                <Reviewlist
+                  reviewlistData={songDetailHandler.songReviews}
+                  onAddPress={songDetailHandler.handleOnAddPressReviewlist}
+                  onRemovePress={
+                    songDetailHandler.handleOnRemovePressReviewlist
+                  }
+                />
+              </View>
+              <View>
+                <Text style={tw`text-white font-bold text-lg mb-2`}>
+                  관련 노래
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      {songDetailHandler.songInfo && songDetailHandler.songReviews && (
-        <View>
-          <View style={tw`justify-center items-center overflow-hidden`}>
-            <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
-            <View style={tw`w-full h-30 bg-black`} />
-            <View
-              style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
-              <MusicIcon width={64} height={64} />
-            </View>
-          </View>
-          <View style={tw`mx-4`}>
-            <View style={tw`flex-row items-center mt-3`}>
-              <Text
-                style={tw`text-white text-2xl text-[${designatedColor.GREEN}] font-bold`}>
-                {songDetailHandler.songInfo.songNumber}
-              </Text>
-              <Text style={tw`text-white text-3xl ml-4`}>
-                {songDetailHandler.songInfo.songName}
-              </Text>
-            </View>
-
-            <Text style={tw`text-white mt-4`}>
-              {songDetailHandler.songInfo.singerName}
-            </Text>
-            <View style={tw`flex-row items-center mt-4`}>
-              <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
-              {songDetailHandler.songInfo.octave == '' ? (
-                <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
-                  없음
-                </Text>
-              ) : (
-                <Text style={tw`text-[${designatedColor.GREEN}]`}>
-                  {songDetailHandler.songInfo.octave}
-                </Text>
-              )}
-            </View>
-            <Text style={tw`text-[${designatedColor.GREEN}] mt-2`}>
-              {songDetailHandler.songInfo.description}
-            </Text>
-            <View style={tw`flex-row justify-between mt-6 items-center`}>
-              <TouchableOpacity onPress={songDetailHandler.handleOnPressKeep}>
-                <Icon
-                  name="star"
-                  size={24}
-                  color={songDetailHandler.keepColor}
-                />
-              </TouchableOpacity>
-              <OutlineButton
-                title="미리듣기"
-                onPress={() => {}}
-                color={designatedColor.GREEN}
-              />
-            </View>
-            <View>
-              <Text style={tw`text-white font-bold text-lg my-5`}>
-                이 노래는 어떻송
-              </Text>
-              <Reviewlist
-                reviewlistData={songDetailHandler.songReviews}
-                onAddPress={songDetailHandler.handleOnAddPressReviewlist}
-                onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
-              />
-            </View>
-
-            {/* <View style={tw`flex-row justify-around w-full mt-4 px-6`}>
-              <View style={tw`flex-row items-center`}>
-                <Text style={tw`text-white`}>⭐ 62</Text>
-              </View>
-              <View style={tw`flex-row items-center`}>
-                <Text style={tw`text-white`}>💬 2</Text>
-              </View>
-            </View> */}
-            {/*
-            <View style={tw`flex-row mt-4`}>
-              <TouchableOpacity style={tw`bg-gray-700 p-2 rounded-full mx-2`}>
-                <Text style={tw`text-white`}>⭐</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={tw`bg-gray-700 p-2 rounded-full mx-2`}>
-                <Text style={tw`text-white`}>🔗</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={tw`bg-green-500 p-2 rounded-full mx-2`}>
-                <Text style={tw`text-white`}>미리듣기</Text>
-              </TouchableOpacity>
-            </View> */}
-
-            {/* <View style={tw`mt-8 p-4`}>
-              <Text style={tw`text-white text-lg mb-4`}>이 노래는 어땡송</Text>
-              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-                <Text style={tw`text-white`}>노래가 너무 높아요.</Text>
-                <Text style={tw`text-white text-right`}>999</Text>
-              </View>
-              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-                <Text style={tw`text-white`}>쉬운 줄 알았지만 어려워요.</Text>
-                <Text style={tw`text-white text-right`}>35</Text>
-              </View>
-              <View style={tw`bg-gray-800 p-4 rounded-lg mb-4`}>
-                <Text style={tw`text-white`}>부를만 해요.</Text>
-                <Text style={tw`text-white text-right`}>2</Text>
-              </View>
-            </View> */}
-          </View>
+      {songDetailHandler.songRelated && (
+        <View style={tw`h-full w-full`}>
+          <Relatedlist
+            relatedlistData={songDetailHandler.songRelated}
+            onPress={handleOnPressRelated}
+            renderHeader={renderHeader}
+          />
         </View>
       )}
     </SafeAreaView>
