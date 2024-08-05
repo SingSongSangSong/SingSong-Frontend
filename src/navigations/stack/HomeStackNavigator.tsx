@@ -4,19 +4,20 @@ import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
-import {RouteProp} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
 type HomeStackNavigatorProps = {
-  route?: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>; // route를 옵셔널로 변경
+  // route?: RouteProp<HomeStackParamList>; // route를 옵셔널로 변경
+  navigation: NavigationProp<HomeStackParamList>;
 };
 
-function HomeStackNavigator({route}: HomeStackNavigatorProps) {
+function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
   // const {tag} = route.params;
-  const tag = route?.params?.tag ?? 'defaultTag';
+  // const tag = route?.params?.tag ?? 'defaultTag';
 
   return (
     <Stack.Navigator
@@ -32,7 +33,7 @@ function HomeStackNavigator({route}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.RCD_DETAIL}
         component={RcdHomeScreen}
-        initialParams={{tag}} // 기본값 설정
+        // initialParams={{tag}}
         options={() => ({
           headerShown: true,
           headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정

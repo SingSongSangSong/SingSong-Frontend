@@ -6,6 +6,7 @@ import {KeepStackParamList} from '../../types';
 import KeepScreen from '../../screens/keep/KeepScreen';
 import KeepEditScreen from '../../screens/keep/KeepEditScreen';
 import {NavButton} from '../../components';
+import SongScreen from '../../screens/song/SongScreen';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -45,6 +46,22 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             />
           ), // EditButton 컴포넌트를 전달
           headerLeft: () => null,
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_SONG_DETAIL}
+        component={SongScreen}
+        options={() => ({
+          headerShown: true,
+          headerTitle: 'KEEP', // 헤더 제목을 비움
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
         })}
       />
       <Stack.Screen

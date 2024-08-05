@@ -1,22 +1,28 @@
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList} from '../../types';
-import {RouteProp} from '@react-navigation/native';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {HomeStackParamList, KeepStackParamList} from '../../types';
+// import {RouteProp} from '@react-navigation/native';
+import {
+  designatedColor,
+  homeStackNavigations,
+  keepStackNavigations,
+} from '../../constants';
 import useSongDetail from '../../hooks/useSongDetail';
 import MusicIcon from '../../assets/svg/music.svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {OutlineButton} from '../../components';
 
-type SongScreenProps = {
-  route: RouteProp<HomeStackParamList, typeof homeStackNavigations.SONG_DETAIL>;
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.SONG_DETAIL
-  >;
-};
+type SongScreenProps =
+  | StackScreenProps<
+      KeepStackParamList,
+      typeof keepStackNavigations.KEEP_SONG_DETAIL
+    >
+  | StackScreenProps<
+      HomeStackParamList,
+      typeof homeStackNavigations.SONG_DETAIL
+    >;
 
 function SongScreen({route, navigation}: SongScreenProps) {
   const songNumber = route?.params?.songNumber; //초기 카테고리
@@ -45,7 +51,9 @@ function SongScreen({route, navigation}: SongScreenProps) {
               </Text>
             </View>
 
-            <Text style={tw`text-white mt-4`}>김민석</Text>
+            <Text style={tw`text-white mt-4`}>
+              {songDetailHandler.songInfo.singerName}
+            </Text>
             <View style={tw`flex-row items-center mt-4`}>
               <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
               {songDetailHandler.songInfo.octave == '' ? (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 
@@ -7,15 +7,17 @@ interface SonglistItemProps {
   songNumber: number;
   songName: string;
   singerName: string;
+  onPress: () => void;
 }
 
 const SonglistItem = ({
   songNumber,
   songName,
   singerName,
+  onPress,
 }: SonglistItemProps) => {
   return (
-    <View>
+    <TouchableOpacity onPress={onPress}>
       <View style={tw`flex-row`}>
         {/* <View style={tw`h-[20] w-[20] bg-[#C7E3BE]`} /> */}
         <Image
@@ -40,7 +42,7 @@ const SonglistItem = ({
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
