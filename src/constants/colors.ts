@@ -23,6 +23,7 @@ const designatedColor = {
   LIGHT_GRAY: '#EEEDEB',
   GRAY4: '#333333',
   GRAY: '#0F0F0F',
+  GRAY3: '#979797',
 } as const;
 
 export {randomColor, designatedColor};

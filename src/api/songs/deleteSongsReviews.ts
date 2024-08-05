@@ -1,7 +1,7 @@
 import TokenStore from '../../store/TokenStore';
 import axiosInstance from '../axiosIns';
 
-const deleteSongReview = async (songNumber: string) => {
+const deleteSongsReviews = async (songNumber: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
@@ -22,4 +22,4 @@ const deleteSongReview = async (songNumber: string) => {
   }
 };
 
-export default deleteSongReview;
+export default deleteSongsReviews;

@@ -1,7 +1,7 @@
 import TokenStore from '../../store/TokenStore';
 import axiosInstance from '../axiosIns';
 
-const putSongReview = async (
+const putSongReviews = async (
   songNumber: string,
   songReviewOptionId: number,
 ) => {
@@ -26,4 +26,4 @@ const putSongReview = async (
   }
 };
 
-export default putSongReview;
+export default putSongReviews;
