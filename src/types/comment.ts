@@ -7,10 +7,15 @@ interface Comment {
   nickname: string;
   parentCommentId: number;
   recomments: Comment[];
-  songInfoId: number;
+  songId: number;
 }
 
 interface PostCommentResponse {
+  data: Comment;
+  message: string;
+}
+
+interface GetCommentResponse {
   data: Comment[];
   message: string;
 }
@@ -30,6 +35,7 @@ interface PostCommentReportResponse {
 export type {
   Comment,
   PostCommentResponse,
+  GetCommentResponse,
   CommentReport,
   PostCommentReportResponse,
 };

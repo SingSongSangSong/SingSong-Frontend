@@ -5,6 +5,7 @@ import {
   keepStackNavigations,
   mainTabNavigations,
 } from '../constants';
+import {Comment} from './comment';
 
 type AuthStackParamList = {
   [authNavigations.AUTH_HOME]: undefined;
@@ -29,6 +30,7 @@ type HomeStackParamList = {
   [homeStackNavigations.SETTING]: undefined;
   [homeStackNavigations.SONG_DETAIL]: {songNumber: number; songId: number};
   [homeStackNavigations.COMMENT]: {songNumber: number; songId: number};
+  [homeStackNavigations.RECOMMENT]: {comment: Comment};
 };
 
 type KeepStackParamList = {
@@ -36,6 +38,7 @@ type KeepStackParamList = {
   [keepStackNavigations.KEEP_EDIT]: undefined;
   [keepStackNavigations.KEEP_SONG_DETAIL]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_COMMENT]: {songNumber: number; songId: number};
+  [keepStackNavigations.KEEP_RECOMMENT]: {comment: Comment};
 };
 export type {
   AuthStackParamList,

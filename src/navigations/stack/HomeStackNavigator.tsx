@@ -10,7 +10,9 @@ import SongScreen from '../../screens/song/SongScreen';
 import useSongStore from '../../store/useSongStore';
 import {IconButton} from '../../components';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
+import DeleteIcon from '../../assets/svg/delete.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
+import RecommentScreen from '../../screens/song/RecommentScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -74,6 +76,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
                   tag: selectedTag,
                 })
               }
+              size={24}
               Icon={ArrowLeftIcon}
             />
           ),
@@ -94,6 +97,31 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.RECOMMENT}
+        component={RecommentScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
         })}
       />
       <Stack.Screen

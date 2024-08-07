@@ -6,9 +6,13 @@ import {CommentItem} from './CommentItem';
 
 interface CommentlistProps {
   commentData: Comment[];
+  onPressRecomment: (comment: Comment) => void;
 }
 
-const Commentlist: React.FC<CommentlistProps> = ({commentData}) => {
+const Commentlist: React.FC<CommentlistProps> = ({
+  commentData,
+  onPressRecomment,
+}) => {
   console.log('commentData', commentData);
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
@@ -21,7 +25,11 @@ const Commentlist: React.FC<CommentlistProps> = ({commentData}) => {
         nickname={item.nickname}
         parentCommentId={item.parentCommentId}
         recomments={item.recomments}
-        songInfoId={item.songInfoId}
+        songId={item.songId}
+        onPressRecomment={() => {
+          onPressRecomment(item);
+        }}
+        isVisibleRecomment={true}
       />
     </View>
   );
@@ -30,7 +38,7 @@ const Commentlist: React.FC<CommentlistProps> = ({commentData}) => {
     <FlatList
       data={commentData}
       renderItem={renderItem}
-      //   keyExtractor={item => item.songInfoId.toString()}
+      //   keyExtractor={item => item.songId.toString()}
     />
     // <Text style={tw`text-white`}>hi!!!!!!!!</Text>
   );

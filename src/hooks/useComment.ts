@@ -5,7 +5,7 @@ import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
 
 const useComment = (songNumber: number, songId: number) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<Comment[]>();
   const keyboard = useKeyboard();
 
   useEffect(() => {

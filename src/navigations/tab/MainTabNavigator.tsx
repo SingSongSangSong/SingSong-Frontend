@@ -39,7 +39,9 @@ const MainTabNavigator = () => {
         const shouldHideTabBar = () => {
           if (
             routeName === keepStackNavigations.KEEP_COMMENT ||
-            routeName === homeStackNavigations.COMMENT
+            routeName === homeStackNavigations.COMMENT ||
+            routeName === homeStackNavigations.RECOMMENT ||
+            routeName === keepStackNavigations.KEEP_RECOMMENT
           ) {
             return true;
           }

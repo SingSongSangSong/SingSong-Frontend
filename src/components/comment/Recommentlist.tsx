@@ -1,0 +1,66 @@
+import React from 'react';
+import {FlatList, View} from 'react-native';
+import tw from 'twrnc';
+import {Comment} from '../../types';
+import {CommentItem} from './CommentItem';
+import {RecommentItem} from './RecommentItem';
+
+interface RecommentlistProps {
+  parentComment: Comment;
+  recomments: Comment[];
+}
+
+const Recommentlist: React.FC<RecommentlistProps> = ({
+  parentComment,
+  recomments,
+}) => {
+  const renderItem = ({item}: {item: Comment}) => (
+    <View style={tw`px-4 py-2`}>
+      <RecommentItem
+        commentId={item.commentId}
+        content={item.content}
+        createdAt={item.createdAt}
+        isRecomment={item.isRecomment}
+        memberId={item.memberId}
+        nickname={item.nickname}
+        parentCommentId={item.parentCommentId}
+        recomments={item.recomments}
+        songId={item.songId}
+        isVisibleRecomment={false}
+        onPressRecomment={() => {}}
+      />
+    </View>
+  );
+
+  const renderHeader = () => {
+    return (
+      <View>
+        <CommentItem
+          commentId={parentComment.commentId}
+          content={parentComment.content}
+          createdAt={parentComment.createdAt}
+          isRecomment={parentComment.isRecomment}
+          memberId={parentComment.memberId}
+          nickname={parentComment.nickname}
+          parentCommentId={parentComment.parentCommentId}
+          recomments={parentComment.recomments}
+          songId={parentComment.songId}
+          isVisibleRecomment={false}
+          onPressRecomment={() => {}}
+        />
+      </View>
+    );
+  };
+
+  return (
+    <FlatList
+      data={recomments}
+      renderItem={renderItem}
+      ListHeaderComponent={renderHeader}
+      keyExtractor={(recomments, index) => index.toString()}
+    />
+    // <Text style={tw`text-white`}>hi!!!!!!!!</Text>
+  );
+};
+
+export {Recommentlist};

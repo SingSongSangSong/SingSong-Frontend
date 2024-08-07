@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList, KeepStackParamList} from '../../types';
+import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
 import {homeStackNavigations, keepStackNavigations} from '../../constants';
 import useComment from '../../hooks/useComment';
 import {CommentKeyboard, Commentlist} from '../../components';
@@ -20,6 +20,22 @@ function CommentScreen(props: CommentScreenProps) {
 
   const commentHandler = useComment(songNumber, songId);
 
+  const handleOnPressRecomment = (comment: Comment) => {
+    if ('navigate' in props.navigation) {
+      if (props.route.name === keepStackNavigations.KEEP_COMMENT) {
+        // KeepStack에서 왔을 때
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).navigate(keepStackNavigations.KEEP_RECOMMENT, {comment});
+      } else if (props.route.name === homeStackNavigations.COMMENT) {
+        // HomeStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.RECOMMENT, {comment});
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
@@ -29,13 +45,21 @@ function CommentScreen(props: CommentScreenProps) {
           // ) : (
           //   <Text style={tw`text-white`}>댓글이 없어요</Text>
           // )
-          <Commentlist commentData={commentHandler.comments} />
+          <Commentlist
+            commentData={commentHandler.comments}
+            onPressRecomment={handleOnPressRecomment}
+          />
         ) : (
-          <Text style={tw`text-white`}>댓글을 불러오는 중...</Text>
+          <View style={tw`flex-1 justify-center items-center`}>
+            <Text style={tw`text-white`}>댓글을 불러오는 중...</Text>
+          </View>
         )}
       </View>
-      <View style={tw`w-full justify-end m-0`}>
-        <CommentKeyboard onSendPress={commentHandler.handleOnPressSendButton} />
+      <View style={tw`w-full justify-end`}>
+        <CommentKeyboard
+          onSendPress={commentHandler.handleOnPressSendButton}
+          text="댓글"
+        />
       </View>
     </SafeAreaView>
   );

@@ -1,12 +1,12 @@
 import TokenStore from '../../store/TokenStore';
-import {PostCommentResponse} from '../../types';
+import {GetCommentResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const getComment = async (songId: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.get<PostCommentResponse>(
+    const response = await axiosInstance.get<GetCommentResponse>(
       `/comment/${songId}`,
       {
         headers: {

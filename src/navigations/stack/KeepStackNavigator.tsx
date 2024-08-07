@@ -9,6 +9,8 @@ import {IconButton, NavButton} from '../../components';
 import SongScreen from '../../screens/song/SongScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
+import RecommentScreen from '../../screens/song/RecommentScreen';
+import DeleteIcon from '../../assets/svg/delete.svg';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -55,7 +57,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={SongScreen}
         options={() => ({
           headerShown: true,
-          headerTitle: 'KEEP', // 헤더 제목을 비움
+          headerTitle: '', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임
@@ -84,6 +86,31 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임
           },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_RECOMMENT}
+        component={RecommentScreen}
+        options={({navigation}) => ({
+          headerShown: true,
+          tabBarVisible: false,
+          headerTitle: '답글', // 헤더 제목을 비움
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
           headerStyle: {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },

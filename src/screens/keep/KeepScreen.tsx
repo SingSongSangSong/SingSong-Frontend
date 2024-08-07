@@ -1,7 +1,7 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, Text, View} from 'react-native';
-import {ButtonBar, Songlist} from '../../components';
+import {Songlist} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
@@ -35,11 +35,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
 
   return (
     <SafeAreaView style={tw`h-full w-full  bg-[${designatedColor.BACKGROUND}]`}>
-      <View>
-        <ButtonBar buttonItems={keepHandler.buttonItems} />
-      </View>
-
-      <View style={tw`w-full h-full`}>
+      <View style={tw`w-full h-full pt-6`}>
         {keepHandler.keepList.length > 0 ? (
           <Songlist
             songlistData={keepHandler.keepList}

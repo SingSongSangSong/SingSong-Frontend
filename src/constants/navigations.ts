@@ -26,6 +26,7 @@ const homeStackNavigations = {
   SETTING: '_Setting',
   SONG_DETAIL: '_SongDetail',
   COMMENT: '_Comment',
+  RECOMMENT: '_Recomment',
 } as const;
 
 const keepStackNavigations = {
@@ -33,6 +34,7 @@ const keepStackNavigations = {
   KEEP_EDIT: '_KeepEdit',
   KEEP_SONG_DETAIL: '_KeepSongDetail',
   KEEP_COMMENT: '_KeepComment',
+  KEEP_RECOMMENT: '_KeepRecomment',
 } as const;
 
 export {

@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {Comment} from '../../types';
 import {IconButton} from '../button/IconButton';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
+import RecommentIcon from '../../assets/svg/recomment.svg';
 import {designatedColor} from '../../constants';
 
 interface CommentItemProps {
@@ -15,7 +16,9 @@ interface CommentItemProps {
   nickname: string;
   parentCommentId: number;
   recomments: Comment[];
-  songInfoId: number;
+  songId: number;
+  isVisibleRecomment: boolean;
+  onPressRecomment: () => void;
 }
 
 const CommentItem = ({
@@ -27,22 +30,37 @@ const CommentItem = ({
   nickname,
   parentCommentId,
   recomments,
-  songInfoId,
+  songId,
+  onPressRecomment,
+  isVisibleRecomment,
 }: CommentItemProps) => {
   console.log('commentItem!!!');
   return (
-    <View style={tw`w-full pb-8 border-b border-[${designatedColor.GRAY4}]`}>
+    <View style={tw`w-full border-b border-[${designatedColor.GRAY4}]`}>
       <View
         style={tw`flex-row justify-between mb-2 items-center 
         `}>
-        <Text style={tw`text-white`}>{nickname}</Text>
+        <Text style={tw`text-white ml-2`}>{nickname}</Text>
         <View style={tw`flex-row items-center`}>
           <Text style={tw`text-white mr-2`}>{createdAt}</Text>
           <IconButton Icon={MoreVerticalIcon} size={20} onPress={() => {}} />
         </View>
       </View>
       <View>
-        <Text style={tw`text-white`}>{content}</Text>
+        <Text style={tw`text-white ml-4`}>{content}</Text>
+      </View>
+
+      <View style={tw`justify-between flex-row my-2`}>
+        {isVisibleRecomment && (
+          <View style={tw`flex-row items-center`}>
+            <IconButton
+              Icon={RecommentIcon}
+              size={20}
+              onPress={onPressRecomment}
+            />
+            <Text style={tw`text-white`}>{recomments.length}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
