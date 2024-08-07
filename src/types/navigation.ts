@@ -28,12 +28,14 @@ type HomeStackParamList = {
   [homeStackNavigations.RCD_DETAIL]: {tag: string};
   [homeStackNavigations.SETTING]: undefined;
   [homeStackNavigations.SONG_DETAIL]: {songNumber: number};
+  [homeStackNavigations.COMMENT]: {songNumber: number};
 };
 
 type KeepStackParamList = {
   [keepStackNavigations.KEEP]: undefined;
   [keepStackNavigations.KEEP_EDIT]: undefined;
   [keepStackNavigations.KEEP_SONG_DETAIL]: {songNumber: number};
+  [keepStackNavigations.KEEP_COMMENT]: {songNumber: number};
 };
 export type {
   AuthStackParamList,

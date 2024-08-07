@@ -1,6 +1,10 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {mainTabNavigations} from '../../constants';
+import {
+  homeStackNavigations,
+  keepStackNavigations,
+  mainTabNavigations,
+} from '../../constants';
 import {MainTabParamList} from '../../types';
 import PlaygroundScreen from '../../screens/playground/PlaygroundScreen';
 import HomeStackNavigator from '../stack/HomeStackNavigator';
@@ -9,6 +13,7 @@ import PlaygroundIcon from '../../assets/svg/play.svg';
 import StarIcon from '../../assets/svg/star.svg';
 import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -28,23 +33,40 @@ const MainTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName={mainTabNavigations.HOME}
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color, size}) => {
-          const IconComponent = getTabBarIcon(route.name);
-          return IconComponent ? (
-            <IconComponent width={size} height={size} fill={color} />
-          ) : null;
-        },
-        headerShown: false,
-        tabBarStyle: {
-          height: 60,
-          backgroundColor: 'black', // 탭 배경색을 검정색으로 설정
-          paddingTop: 5,
-          paddingBottom: 5,
-        },
-        tabBarActiveTintColor: 'white', // 활성화된 탭 아이템 색상을 흰색으로 설정
-        tabBarInactiveTintColor: 'gray', // 비활성화된 탭 아이템 색상을 회색으로 설정
-      })}>
+      screenOptions={({route}) => {
+        const routeName = getFocusedRouteNameFromRoute(route) ?? route.name;
+
+        const shouldHideTabBar = () => {
+          if (
+            routeName === keepStackNavigations.KEEP_COMMENT ||
+            routeName === homeStackNavigations.COMMENT
+          ) {
+            return true;
+          }
+          return false;
+        };
+
+        return {
+          tabBarIcon: ({color, size}) => {
+            const IconComponent = getTabBarIcon(route.name);
+            return IconComponent ? (
+              <IconComponent width={size} height={size} fill={color} />
+            ) : null;
+          },
+          headerShown: false,
+          tabBarStyle: shouldHideTabBar()
+            ? {display: 'none'}
+            : {
+                height: 60,
+                backgroundColor: 'black',
+                paddingTop: 5,
+                paddingBottom: 5,
+              },
+          tabBarActiveTintColor: 'white', // 활성화된 탭 아이템 색상을 흰색으로 설정
+          tabBarInactiveTintColor: 'gray', // 비활성화된 탭 아이템 색상을 회색으로 설정
+          keyboardHidesTabBar: false,
+        };
+      }}>
       <Tab.Screen
         name={mainTabNavigations.PLAYGROUND}
         component={PlaygroundScreen}

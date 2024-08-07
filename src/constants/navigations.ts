@@ -25,12 +25,14 @@ const homeStackNavigations = {
   RCD_DETAIL: '_RcdDetail',
   SETTING: '_Setting',
   SONG_DETAIL: '_SongDetail',
+  COMMENT: '_Comment',
 } as const;
 
 const keepStackNavigations = {
   KEEP: '_Keep',
   KEEP_EDIT: '_KeepEdit',
   KEEP_SONG_DETAIL: '_KeepSongDetail',
+  KEEP_COMMENT: '_KeepComment',
 } as const;
 
 export {

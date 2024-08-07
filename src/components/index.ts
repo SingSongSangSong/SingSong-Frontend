@@ -31,3 +31,4 @@ export * from './button/RemoveButton';
 export * from './button/LargeButton';
 export * from './slider/CustomSlider';
 export * from './bar/ButtonBar';
+export * from './comment/CommentKeyboard';

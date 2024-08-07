@@ -20,7 +20,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
   renderHeader,
 }) => {
   const renderItem = ({item}: {item: RcdRefreshSong}) => (
-    <View style={tw`m-2`}>
+    <View style={tw`px-4 py-2`}>
       <RelatedlistItem
         songNumber={item.songNumber}
         songName={item.songName}

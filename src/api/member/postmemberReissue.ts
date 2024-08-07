@@ -3,6 +3,9 @@ import axiosInstance from '../axiosIns';
 
 const postMemberReissue = async (accessToken: string, refreshToken: string) => {
   try {
+    console.log('accessToken:', accessToken);
+    console.log('refreshToken:', refreshToken);
+
     const response = await axiosInstance.post<LoginResponse>(
       '/member/reissue',
       {

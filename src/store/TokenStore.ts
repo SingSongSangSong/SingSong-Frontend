@@ -27,6 +27,8 @@ const TokenStore = () => {
     try {
       const decoded = jwtDecode<{exp: number}>(token);
       const currentTime = Date.now() / 1000;
+      console.log('decoded:', decoded);
+      console.log('current Time:', currentTime);
       return decoded.exp < currentTime;
     } catch (error) {
       console.error('Invalid token:', error);

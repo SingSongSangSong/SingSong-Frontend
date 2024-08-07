@@ -11,8 +11,14 @@ import {
 } from '../../constants';
 import useSongDetail from '../../hooks/useSongDetail';
 import MusicIcon from '../../assets/svg/music.svg';
+import CommentIcon from '../../assets/svg/comment.svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {OutlineButton, Relatedlist, Reviewlist} from '../../components';
+import {
+  IconButton,
+  OutlineButton,
+  Relatedlist,
+  Reviewlist,
+} from '../../components';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -27,24 +33,6 @@ type SongScreenProps =
 function SongScreen(props: SongScreenProps) {
   const songNumber = props.route?.params?.songNumber; //초기 카테고리
   const songDetailHandler = useSongDetail(songNumber);
-
-  // const handleOnPressRelated = (songNumber: number) => {
-  //   if ('navigate' in props.navigation) {
-  //     if (props.navigation.canGoBack()) {
-  //       // HomeStack에서 왔을 때 처리
-  //       (
-  //         props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-  //       ).navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
-  //       console.log('homestack navigation');
-  //     } else {
-  //       // KeepStack에서 왔을 때 처리
-  //       (
-  //         props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-  //       ).navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
-  //       console.log('keepstack navigation');
-  //     }
-  //   }
-  // };
 
   const handleOnPressRelated = (songNumber: number) => {
     if ('navigate' in props.navigation) {
@@ -62,6 +50,22 @@ function SongScreen(props: SongScreenProps) {
     }
   };
 
+  const handleOnPressComment = (songNumber: number) => {
+    if ('navigate' in props.navigation) {
+      if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
+        // KeepStack에서 왔을 때
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).push(keepStackNavigations.KEEP_COMMENT, {songNumber});
+      } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
+        // HomeStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).push(homeStackNavigations.COMMENT, {songNumber});
+      }
+    }
+  };
+
   const renderHeader = () => {
     return (
       <View>
@@ -75,7 +79,7 @@ function SongScreen(props: SongScreenProps) {
                 <MusicIcon width={64} height={64} />
               </View>
             </View>
-            <View>
+            <View style={tw`px-4`}>
               <View style={tw`flex-row items-center mt-3`}>
                 <Text
                   style={tw`text-white text-2xl text-[${designatedColor.GREEN}] font-bold`}>
@@ -105,13 +109,24 @@ function SongScreen(props: SongScreenProps) {
                 {songDetailHandler.songInfo.description}
               </Text>
               <View style={tw`flex-row justify-between mt-6 items-center`}>
-                <TouchableOpacity onPress={songDetailHandler.handleOnPressKeep}>
-                  <Icon
-                    name="star"
-                    size={24}
-                    color={songDetailHandler.keepColor}
+                <View style={tw`flex-row items-center`}>
+                  <TouchableOpacity
+                    onPress={songDetailHandler.handleOnPressKeep}
+                    style={tw`mr-2`}>
+                    <Icon
+                      name="star"
+                      size={24}
+                      color={songDetailHandler.keepColor}
+                    />
+                  </TouchableOpacity>
+                  <IconButton
+                    Icon={CommentIcon}
+                    onPress={() => {
+                      handleOnPressComment(songNumber);
+                    }}
                   />
-                </TouchableOpacity>
+                </View>
+
                 <OutlineButton
                   title="미리듣기"
                   onPress={() => {}}
@@ -145,7 +160,7 @@ function SongScreen(props: SongScreenProps) {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {songDetailHandler.songRelated && (
-        <View style={tw`h-full w-full px-4`}>
+        <View style={tw`h-full w-full`}>
           <Relatedlist
             isLoading={songDetailHandler.isLoading}
             relatedlistData={songDetailHandler.songRelated}

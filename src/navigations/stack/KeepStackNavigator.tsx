@@ -8,6 +8,7 @@ import KeepEditScreen from '../../screens/keep/KeepEditScreen';
 import {IconButton, NavButton} from '../../components';
 import SongScreen from '../../screens/song/SongScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
+import CommentScreen from '../../screens/song/CommentScreen';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -69,6 +70,23 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
               Icon={ArrowLeftIcon}
             />
           ),
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_COMMENT}
+        component={CommentScreen}
+        options={() => ({
+          headerShown: true,
+          tabBarVisible: false,
+          headerTitle: '댓글', // 헤더 제목을 비움
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
         })}
       />
       <Stack.Screen

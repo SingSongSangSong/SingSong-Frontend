@@ -3,3 +3,4 @@ export * from './songs';
 export * from './common';
 export * from './components';
 export * from './userInfo';
+export * from './comment';
