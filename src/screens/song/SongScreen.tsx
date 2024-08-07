@@ -32,36 +32,37 @@ type SongScreenProps =
 
 function SongScreen(props: SongScreenProps) {
   const songNumber = props.route?.params?.songNumber; //초기 카테고리
-  const songDetailHandler = useSongDetail(songNumber);
+  const songId = props.route?.params?.songId;
+  const songDetailHandler = useSongDetail(songNumber, songId);
 
-  const handleOnPressRelated = (songNumber: number) => {
+  const handleOnPressRelated = (songNumber: number, songId: number) => {
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).push(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+        ).push(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber, songId});
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).push(homeStackNavigations.SONG_DETAIL, {songNumber});
+        ).push(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
       }
     }
   };
 
-  const handleOnPressComment = (songNumber: number) => {
+  const handleOnPressComment = (songNumber: number, songId: number) => {
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).push(keepStackNavigations.KEEP_COMMENT, {songNumber});
+        ).push(keepStackNavigations.KEEP_COMMENT, {songNumber, songId});
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).push(homeStackNavigations.COMMENT, {songNumber});
+        ).push(homeStackNavigations.COMMENT, {songNumber, songId});
       }
     }
   };
@@ -122,8 +123,9 @@ function SongScreen(props: SongScreenProps) {
                   <IconButton
                     Icon={CommentIcon}
                     onPress={() => {
-                      handleOnPressComment(songNumber);
+                      handleOnPressComment(songNumber, songId);
                     }}
+                    size={28}
                   />
                 </View>
 

@@ -7,7 +7,7 @@ import {RelatedlistItem} from '../item/RelatedlistItem';
 interface RelatedlistProps {
   isLoading: boolean;
   relatedlistData: RcdRefreshSong[];
-  onPress: (songNumber: number) => void;
+  onPress: (songNumber: number, songId: number) => void;
   handleRefreshRelatedSongs: () => void;
   renderHeader: () => React.ReactNode;
 }
@@ -25,7 +25,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
-        onPress={() => onPress(item.songNumber)}
+        onPress={() => onPress(item.songNumber, item.songId)}
       />
     </View>
   );

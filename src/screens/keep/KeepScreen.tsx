@@ -26,8 +26,11 @@ type KeepScreenProps = StackScreenProps<
 function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
 
-  const handleOnPressSonglist = (songNumber: number) => {
-    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
+  const handleOnPressSonglist = (songNumber: number, songId: number) => {
+    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
+      songNumber,
+      songId,
+    });
   };
 
   return (

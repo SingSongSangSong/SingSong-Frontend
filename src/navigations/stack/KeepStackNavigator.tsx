@@ -68,6 +68,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             <IconButton
               onPress={() => navigation.navigate(keepStackNavigations.KEEP)}
               Icon={ArrowLeftIcon}
+              size={28}
             />
           ),
         })}

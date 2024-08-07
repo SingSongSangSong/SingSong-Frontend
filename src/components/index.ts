@@ -32,3 +32,5 @@ export * from './button/LargeButton';
 export * from './slider/CustomSlider';
 export * from './bar/ButtonBar';
 export * from './comment/CommentKeyboard';
+export * from './comment/Commentlist';
+export * from './comment/CommentItem';

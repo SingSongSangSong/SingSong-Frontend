@@ -144,8 +144,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //   });
   // };
 
-  const handleOnPressSong = (songNumber: number) => () => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber});
+  const handleOnPressSong = (songNumber: number, songId: number) => () => {
+    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
   };
 
   const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
@@ -154,14 +154,14 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       songNumber={item.songNumber}
       songName={item.songName}
       singerName={item.singerName}
-      onPress={handleOnPressSong(item.songNumber)}
+      onPress={handleOnPressSong(item.songNumber, item.songId)}
       // onAddPress={() => handleAddPressSong(item.songNumber)}
       // onRemovePress={() => handleRemovePressSong(item.songNumber)}
       onAddPress={() => {}}
       onRemovePress={() => {}}
       showKeepIcon={true}
-      onToggleAddStored={() => toggleAddStored(item.songNumber)}
-      onToggleRemoveStored={() => toggleRemoveStored(item.songNumber)}
+      onToggleAddStored={() => toggleAddStored(item.songId)}
+      onToggleRemoveStored={() => toggleRemoveStored(item.songId)}
     />
   );
 

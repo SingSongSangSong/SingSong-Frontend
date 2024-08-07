@@ -55,7 +55,7 @@ const TokenStore = () => {
   const getAccessToken = async () => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-
+    console.log(accessToken, refreshToken);
     //accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
       const reissueData = await postMemberReissue(accessToken, refreshToken);

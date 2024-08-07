@@ -5,14 +5,15 @@ import tw from 'twrnc';
 interface IconButtonProps {
   Icon: any;
   onPress: () => void;
+  size: number;
 }
 
-const IconButton = ({Icon, onPress}: IconButtonProps) => {
+const IconButton = ({Icon, onPress, size}: IconButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={tw`px-4 py-4 flex-row justify-center items-center`}>
-      <Icon width={28} height={28} />
+      <Icon width={size} height={size} />
     </TouchableOpacity>
   );
 };

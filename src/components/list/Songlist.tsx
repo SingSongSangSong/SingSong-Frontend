@@ -6,7 +6,7 @@ import {KeepSong} from '../../types';
 
 interface SonglistProps {
   songlistData: KeepSong[];
-  onPress: (songNumber: number) => void;
+  onPress: (songNumber: number, songId: number) => void;
 }
 
 const Songlist: React.FC<SonglistProps> = ({songlistData, onPress}) => {
@@ -16,7 +16,7 @@ const Songlist: React.FC<SonglistProps> = ({songlistData, onPress}) => {
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
-        onPress={() => onPress(item.songNumber)}
+        onPress={() => onPress(item.songNumber, item.songId)}
       />
     </View>
   );

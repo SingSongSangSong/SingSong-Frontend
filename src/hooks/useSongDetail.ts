@@ -10,7 +10,7 @@ import putSongReviews from '../api/songs/putSongsReviews';
 import deleteSongsReviews from '../api/songs/deleteSongsReviews';
 import getSongsRelated from '../api/songs/getSongsRelated';
 
-const useSongDetail = (songNumber: number) => {
+const useSongDetail = (songNumber: number, songId: number) => {
   const [songInfo, setSongInfo] = useState<SongInfo | null>(null);
   const [songReviews, setSongReviews] = useState<SongInfoReview[] | null>(null);
   const [songRelated, setSongRelated] = useState<RcdRefreshSong[] | null>(null);
@@ -27,13 +27,9 @@ const useSongDetail = (songNumber: number) => {
   }, []);
 
   const setInitSongDetail = async () => {
-    const tempSongInfo = await getSongs(String(songNumber));
-    const tempSongsReviews = await getSongsReviews(String(songNumber));
-    const tempSongRelated = await getSongsRelated(
-      String(songNumber),
-      page,
-      size,
-    );
+    const tempSongInfo = await getSongs(String(songId));
+    const tempSongsReviews = await getSongsReviews(String(songId));
+    const tempSongRelated = await getSongsRelated(String(songId), page, size);
     setSongInfo(tempSongInfo.data);
     setSongReviews(tempSongsReviews.data);
     setSongRelated(tempSongRelated.data.songs);
@@ -49,22 +45,22 @@ const useSongDetail = (songNumber: number) => {
   const handleOnPressKeep = async () => {
     if (keepColor == designatedColor.KEEP_EMPTY) {
       setKeepColor(designatedColor.KEEP_FILLED);
-      const tempKeepList = await postKeep([songNumber]);
+      const tempKeepList = await postKeep([songId]);
       setKeepList(tempKeepList.data);
     } else {
       setKeepColor(designatedColor.KEEP_EMPTY);
-      const tempKeepList = await deleteKeep([songNumber]);
+      const tempKeepList = await deleteKeep([songId]);
       setKeepList(tempKeepList.data);
     }
   };
   const handleOnAddPressReviewlist = async (songReviewOptionId: number) => {
     console.log(songReviewOptionId);
-    await putSongReviews(String(songNumber), songReviewOptionId);
+    await putSongReviews(String(songId), songReviewOptionId);
   };
 
   const handleOnRemovePressReviewlist = async (songReviewOptionId: number) => {
     console.log(songReviewOptionId);
-    await deleteSongsReviews(String(songNumber));
+    await deleteSongsReviews(String(songId));
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
@@ -78,7 +74,7 @@ const useSongDetail = (songNumber: number) => {
       if (songRelated && songRelated.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('refresh!!!!!!!!!!!!!!!!!!!');
-        getSongsRelated(String(songNumber), page, size)
+        getSongsRelated(String(songId), page, size)
           .then(response => {
             const newSongRelated = response.data.songs;
             setPage(response.data.nextPage);
