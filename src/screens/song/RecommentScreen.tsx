@@ -1,11 +1,16 @@
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
-import {homeStackNavigations, keepStackNavigations} from '../../constants';
-import {CommentKeyboard, Recommentlist} from '../../components';
+import {
+  designatedColor,
+  homeStackNavigations,
+  keepStackNavigations,
+} from '../../constants';
+import {CommentKeyboard, Recommentlist, TextButton} from '../../components';
 import useRecomment from '../../hooks/useRecomment';
+import Modal from 'react-native-modal';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -20,6 +25,27 @@ function RecommentScreen(props: RecommentScreenProps) {
   //   const commentHandler = useComment(songNumber, songId);
   const recommentHandler = useRecomment(comment);
 
+  const handleOnPressReport = () => {
+    const reportParams = {
+      reportCommentId: recommentHandler.reportCommentId,
+      reportSubjectMemberId: recommentHandler.reportSubjectMemberId,
+    };
+
+    if ('navigate' in props.navigation) {
+      if (props.route.name === keepStackNavigations.KEEP_RECOMMENT) {
+        // KeepStack에서 왔을 때
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).navigate(keepStackNavigations.KEEP_REPORT, reportParams);
+      } else if (props.route.name === homeStackNavigations.RECOMMENT) {
+        // HomeStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.REPORT, reportParams);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {/* <View style={tw`w-full justify-end m-0`}>
@@ -30,6 +56,7 @@ function RecommentScreen(props: RecommentScreenProps) {
           <Recommentlist
             parentComment={recommentHandler.parentComment}
             recomments={recommentHandler.recomments}
+            onPressMoreInfo={recommentHandler.handleOnPressMoreInfo}
           />
         )}
       </View>
@@ -40,6 +67,26 @@ function RecommentScreen(props: RecommentScreenProps) {
           text="답글"
         />
       </View>
+      <Modal
+        isVisible={recommentHandler.isModalVisible}
+        onBackdropPress={() => recommentHandler.setIsModalVisible(false)}
+        style={{justifyContent: 'flex-end', margin: 0}}>
+        <View style={tw`bg-black w-full px-4`}>
+          <Text style={tw`text-white font-bold text-xl my-4`}>답글</Text>
+          <View
+            style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+            <TextButton title="신고하기" onPress={handleOnPressReport} />
+          </View>
+          <View style={tw`py-4`}>
+            <TextButton
+              title="닫기"
+              onPress={() => {
+                recommentHandler.setIsModalVisible(false);
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }

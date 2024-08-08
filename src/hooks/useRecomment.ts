@@ -5,6 +5,9 @@ import postComment from '../api/comment/postComment';
 
 const useRecomment = (comment: Comment) => {
   const [recomments, setRecomments] = useState<Comment[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [reportCommentId, setReportCommentId] = useState<number>(0);
+  const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [parentComment, setParentComment] = useState<Comment>();
   const keyboard = useKeyboard();
 
@@ -29,7 +32,26 @@ const useRecomment = (comment: Comment) => {
     );
     setRecomments(prev => [...prev, tempRecomment.data]);
   };
-  return {recomments, parentComment, handleOnPressSendButton};
+
+  const handleOnPressMoreInfo = (
+    reportCommentId: number,
+    reportSubjectMemberId: number,
+  ) => {
+    setIsModalVisible(true);
+    setReportCommentId(reportCommentId);
+    setReportSubjectMemberId(reportSubjectMemberId);
+  };
+
+  return {
+    recomments,
+    reportCommentId,
+    reportSubjectMemberId,
+    isModalVisible,
+    setIsModalVisible,
+    parentComment,
+    handleOnPressSendButton,
+    handleOnPressMoreInfo,
+  };
 };
 
 export default useRecomment;

@@ -8,11 +8,16 @@ import {RecommentItem} from './RecommentItem';
 interface RecommentlistProps {
   parentComment: Comment;
   recomments: Comment[];
+  onPressMoreInfo: (
+    reportCommentId: number,
+    reportSubjectMemberId: number,
+  ) => void;
 }
 
 const Recommentlist: React.FC<RecommentlistProps> = ({
   parentComment,
   recomments,
+  onPressMoreInfo,
 }) => {
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
@@ -28,6 +33,9 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
         songId={item.songId}
         isVisibleRecomment={false}
         onPressRecomment={() => {}}
+        onPressMoreInfo={() => {
+          onPressMoreInfo(item.commentId, item.memberId);
+        }}
       />
     </View>
   );
@@ -47,6 +55,9 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
           songId={parentComment.songId}
           isVisibleRecomment={false}
           onPressRecomment={() => {}}
+          onPressMoreInfo={() => {
+            onPressMoreInfo(parentComment.commentId, parentComment.memberId);
+          }}
         />
       </View>
     );

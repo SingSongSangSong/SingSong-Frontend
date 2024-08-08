@@ -20,6 +20,7 @@ interface RecommentItemProps {
   songId: number;
   isVisibleRecomment: boolean;
   onPressRecomment: () => void;
+  onPressMoreInfo: () => void;
 }
 
 const RecommentItem = ({
@@ -33,6 +34,7 @@ const RecommentItem = ({
   recomments,
   songId,
   onPressRecomment,
+  onPressMoreInfo,
   isVisibleRecomment,
 }: RecommentItemProps) => {
   return (
@@ -49,7 +51,11 @@ const RecommentItem = ({
           <Text style={tw`text-white ml-2`}>{nickname}</Text>
           <View style={tw`flex-row items-center`}>
             <Text style={tw`text-white mr-2`}>{createdAt}</Text>
-            <IconButton Icon={MoreVerticalIcon} size={20} onPress={() => {}} />
+            <IconButton
+              Icon={MoreVerticalIcon}
+              size={20}
+              onPress={onPressMoreInfo}
+            />
           </View>
         </View>
         <View>
