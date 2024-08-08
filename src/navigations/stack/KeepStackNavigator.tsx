@@ -11,6 +11,7 @@ import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import DeleteIcon from '../../assets/svg/delete.svg';
+import ReportScreen from '../../screens/song/ReportScreen';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -99,6 +100,31 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerShown: true,
           tabBarVisible: false,
           headerTitle: '답글', // 헤더 제목을 비움
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_REPORT}
+        component={ReportScreen}
+        options={({navigation}) => ({
+          headerShown: true,
+          tabBarVisible: false,
+          headerTitle: '신고', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임

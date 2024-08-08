@@ -3,9 +3,14 @@ import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
-import {homeStackNavigations, keepStackNavigations} from '../../constants';
+import {
+  designatedColor,
+  homeStackNavigations,
+  keepStackNavigations,
+} from '../../constants';
 import useComment from '../../hooks/useComment';
-import {CommentKeyboard, Commentlist} from '../../components';
+import {CommentKeyboard, Commentlist, TextButton} from '../../components';
+import Modal from 'react-native-modal';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -36,6 +41,27 @@ function CommentScreen(props: CommentScreenProps) {
     }
   };
 
+  const handleOnPressReport = () => {
+    const reportParams = {
+      reportCommentId: commentHandler.reportCommentId,
+      reportSubjectMemberId: commentHandler.reportSubjectMemberId,
+    };
+
+    if ('navigate' in props.navigation) {
+      if (props.route.name === keepStackNavigations.KEEP_COMMENT) {
+        // KeepStack에서 왔을 때
+        (
+          props.navigation as StackScreenProps<KeepStackParamList>['navigation']
+        ).navigate(keepStackNavigations.KEEP_REPORT, reportParams);
+      } else if (props.route.name === homeStackNavigations.COMMENT) {
+        // HomeStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.REPORT, reportParams);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
@@ -48,6 +74,7 @@ function CommentScreen(props: CommentScreenProps) {
           <Commentlist
             commentData={commentHandler.comments}
             onPressRecomment={handleOnPressRecomment}
+            onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
           />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
@@ -61,6 +88,26 @@ function CommentScreen(props: CommentScreenProps) {
           text="댓글"
         />
       </View>
+      <Modal
+        isVisible={commentHandler.isModalVisible}
+        onBackdropPress={() => commentHandler.setIsModalVisible(false)}
+        style={{justifyContent: 'flex-end', margin: 0}}>
+        <View style={tw`bg-black w-full px-4`}>
+          <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
+          <View
+            style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+            <TextButton title="신고하기" onPress={handleOnPressReport} />
+          </View>
+          <View style={tw`py-4`}>
+            <TextButton
+              title="닫기"
+              onPress={() => {
+                commentHandler.setIsModalVisible(false);
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }

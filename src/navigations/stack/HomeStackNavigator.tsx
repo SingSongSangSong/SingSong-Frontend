@@ -13,6 +13,7 @@ import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
+import ReportScreen from '../../screens/song/ReportScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -106,6 +107,31 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.REPORT}
+        component={ReportScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임

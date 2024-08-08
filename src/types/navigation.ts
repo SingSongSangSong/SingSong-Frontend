@@ -31,6 +31,10 @@ type HomeStackParamList = {
   [homeStackNavigations.SONG_DETAIL]: {songNumber: number; songId: number};
   [homeStackNavigations.COMMENT]: {songNumber: number; songId: number};
   [homeStackNavigations.RECOMMENT]: {comment: Comment};
+  [homeStackNavigations.REPORT]: {
+    reportCommentId: number;
+    reportSubjectMemberId: number;
+  };
 };
 
 type KeepStackParamList = {
@@ -39,6 +43,10 @@ type KeepStackParamList = {
   [keepStackNavigations.KEEP_SONG_DETAIL]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_COMMENT]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_RECOMMENT]: {comment: Comment};
+  [keepStackNavigations.KEEP_REPORT]: {
+    reportCommentId: number;
+    reportSubjectMemberId: number;
+  };
 };
 export type {
   AuthStackParamList,

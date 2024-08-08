@@ -6,6 +6,9 @@ import postComment from '../api/comment/postComment';
 
 const useComment = (songNumber: number, songId: number) => {
   const [comments, setComments] = useState<Comment[]>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [reportCommentId, setReportCommentId] = useState<number>(0);
+  const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -30,7 +33,25 @@ const useComment = (songNumber: number, songId: number) => {
     const tempComments = await getComment(String(songId));
     setComments(tempComments.data);
   };
-  return {comments, handleOnPressSendButton};
+
+  const handleOnPressMoreInfo = (
+    reportCommentId: number,
+    reportSubjectMemberId: number,
+  ) => {
+    setIsModalVisible(true);
+    setReportCommentId(reportCommentId);
+    setReportSubjectMemberId(reportSubjectMemberId);
+  };
+
+  return {
+    comments,
+    reportCommentId,
+    reportSubjectMemberId,
+    isModalVisible,
+    setIsModalVisible,
+    handleOnPressSendButton,
+    handleOnPressMoreInfo,
+  };
 };
 
 export default useComment;

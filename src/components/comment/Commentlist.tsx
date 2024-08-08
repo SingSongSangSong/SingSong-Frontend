@@ -7,11 +7,16 @@ import {CommentItem} from './CommentItem';
 interface CommentlistProps {
   commentData: Comment[];
   onPressRecomment: (comment: Comment) => void;
+  onPressMoreInfo: (
+    reportCommentId: number,
+    reportSubjectMemberId: number,
+  ) => void;
 }
 
 const Commentlist: React.FC<CommentlistProps> = ({
   commentData,
   onPressRecomment,
+  onPressMoreInfo,
 }) => {
   console.log('commentData', commentData);
   const renderItem = ({item}: {item: Comment}) => (
@@ -28,6 +33,9 @@ const Commentlist: React.FC<CommentlistProps> = ({
         songId={item.songId}
         onPressRecomment={() => {
           onPressRecomment(item);
+        }}
+        onPressMoreInfo={() => {
+          onPressMoreInfo(item.commentId, item.memberId);
         }}
         isVisibleRecomment={true}
       />

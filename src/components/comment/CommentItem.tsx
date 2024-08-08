@@ -19,6 +19,7 @@ interface CommentItemProps {
   songId: number;
   isVisibleRecomment: boolean;
   onPressRecomment: () => void;
+  onPressMoreInfo: () => void;
 }
 
 const CommentItem = ({
@@ -32,9 +33,9 @@ const CommentItem = ({
   recomments,
   songId,
   onPressRecomment,
+  onPressMoreInfo,
   isVisibleRecomment,
 }: CommentItemProps) => {
-  console.log('commentItem!!!');
   return (
     <View style={tw`w-full border-b border-[${designatedColor.GRAY4}]`}>
       <View
@@ -43,7 +44,11 @@ const CommentItem = ({
         <Text style={tw`text-white ml-2`}>{nickname}</Text>
         <View style={tw`flex-row items-center`}>
           <Text style={tw`text-white mr-2`}>{createdAt}</Text>
-          <IconButton Icon={MoreVerticalIcon} size={20} onPress={() => {}} />
+          <IconButton
+            Icon={MoreVerticalIcon}
+            size={20}
+            onPress={onPressMoreInfo}
+          />
         </View>
       </View>
       <View>

@@ -35,7 +35,6 @@ const RecommentItem = ({
   onPressRecomment,
   isVisibleRecomment,
 }: RecommentItemProps) => {
-  console.log('commentItem!!!');
   return (
     <View
       style={tw`w-full border-b border-[${designatedColor.GRAY4}] flex-row`}>
