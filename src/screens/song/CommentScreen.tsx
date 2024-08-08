@@ -11,6 +11,7 @@ import {
 import useComment from '../../hooks/useComment';
 import {CommentKeyboard, Commentlist, TextButton} from '../../components';
 import Modal from 'react-native-modal';
+import {useFocusEffect} from '@react-navigation/native';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -24,6 +25,17 @@ function CommentScreen(props: CommentScreenProps) {
   const songId = props.route?.params?.songId;
 
   const commentHandler = useComment(songNumber, songId);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 화면이 포커스될 때 실행
+      commentHandler.setIsKeyboardVisible(true);
+      return () => {
+        // 화면에서 벗어날 때 실행
+        // commentHandler.setIsKeyboardVisible(false);
+      };
+    }, []),
+  );
 
   const handleOnPressRecomment = (comment: Comment) => {
     if ('navigate' in props.navigation) {
@@ -82,12 +94,15 @@ function CommentScreen(props: CommentScreenProps) {
           </View>
         )}
       </View>
-      <View style={tw`w-full justify-end`}>
-        <CommentKeyboard
-          onSendPress={commentHandler.handleOnPressSendButton}
-          text="댓글"
-        />
-      </View>
+      {commentHandler.isKeyboardVisible && (
+        <View style={tw`w-full justify-end m-0`}>
+          <CommentKeyboard
+            onSendPress={commentHandler.handleOnPressSendButton}
+            text="댓글"
+          />
+        </View>
+      )}
+
       <Modal
         isVisible={commentHandler.isModalVisible}
         onBackdropPress={() => commentHandler.setIsModalVisible(false)}

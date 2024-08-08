@@ -9,6 +9,7 @@ const useComment = (songNumber: number, songId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [reportCommentId, setReportCommentId] = useState<number>(0);
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const useComment = (songNumber: number, songId: number) => {
     reportSubjectMemberId: number,
   ) => {
     setIsModalVisible(true);
+    setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
   };
@@ -49,6 +51,8 @@ const useComment = (songNumber: number, songId: number) => {
     reportSubjectMemberId,
     isModalVisible,
     setIsModalVisible,
+    isKeyboardVisible,
+    setIsKeyboardVisible,
     handleOnPressSendButton,
     handleOnPressMoreInfo,
   };

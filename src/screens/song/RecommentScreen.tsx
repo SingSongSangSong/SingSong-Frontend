@@ -11,6 +11,7 @@ import {
 import {CommentKeyboard, Recommentlist, TextButton} from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
+import {useFocusEffect} from '@react-navigation/native';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -24,6 +25,17 @@ function RecommentScreen(props: RecommentScreenProps) {
 
   //   const commentHandler = useComment(songNumber, songId);
   const recommentHandler = useRecomment(comment);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 화면이 포커스될 때 실행
+      recommentHandler.setIsKeyboardVisible(true);
+      return () => {
+        // 화면에서 벗어날 때 실행
+        // recommentHandler.setIsKeyboardVisible(false);
+      };
+    }, []),
+  );
 
   const handleOnPressReport = () => {
     const reportParams = {
@@ -60,13 +72,15 @@ function RecommentScreen(props: RecommentScreenProps) {
           />
         )}
       </View>
+      {recommentHandler.isKeyboardVisible && (
+        <View style={tw`w-full justify-end m-0`}>
+          <CommentKeyboard
+            onSendPress={recommentHandler.handleOnPressSendButton}
+            text="답글"
+          />
+        </View>
+      )}
 
-      <View style={tw`w-full justify-end m-0`}>
-        <CommentKeyboard
-          onSendPress={recommentHandler.handleOnPressSendButton}
-          text="답글"
-        />
-      </View>
       <Modal
         isVisible={recommentHandler.isModalVisible}
         onBackdropPress={() => recommentHandler.setIsModalVisible(false)}

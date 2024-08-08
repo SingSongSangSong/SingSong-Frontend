@@ -9,6 +9,7 @@ const useRecomment = (comment: Comment) => {
   const [reportCommentId, setReportCommentId] = useState<number>(0);
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [parentComment, setParentComment] = useState<Comment>();
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const useRecomment = (comment: Comment) => {
     reportSubjectMemberId: number,
   ) => {
     setIsModalVisible(true);
+    setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
   };
@@ -47,7 +49,9 @@ const useRecomment = (comment: Comment) => {
     reportCommentId,
     reportSubjectMemberId,
     isModalVisible,
+    isKeyboardVisible,
     setIsModalVisible,
+    setIsKeyboardVisible,
     parentComment,
     handleOnPressSendButton,
     handleOnPressMoreInfo,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {keepStackNavigations} from '../../constants';
 import {NavigationProp} from '@react-navigation/native';
 import {KeepStackParamList} from '../../types';
@@ -29,6 +29,8 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       initialRouteName={keepStackNavigations.KEEP}
       screenOptions={{
         animationEnabled: false, // 애니메이션을 비활성화하여 TabNavigator와 유사한 전환 효과를 만듭니다
+
+        // ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
       }}>
       <Stack.Screen
         name={keepStackNavigations.KEEP}
@@ -141,6 +143,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          ...TransitionPresets.SlideFromRightIOS,
         })}
       />
       <Stack.Screen
