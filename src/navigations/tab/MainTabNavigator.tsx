@@ -41,7 +41,9 @@ const MainTabNavigator = () => {
             routeName === keepStackNavigations.KEEP_COMMENT ||
             routeName === homeStackNavigations.COMMENT ||
             routeName === homeStackNavigations.RECOMMENT ||
-            routeName === keepStackNavigations.KEEP_RECOMMENT
+            routeName === keepStackNavigations.KEEP_RECOMMENT ||
+            routeName === homeStackNavigations.REPORT ||
+            routeName === keepStackNavigations.KEEP_REPORT
           ) {
             return true;
           }

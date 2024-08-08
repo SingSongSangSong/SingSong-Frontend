@@ -36,3 +36,4 @@ export * from './comment/Commentlist';
 export * from './comment/CommentItem';
 export * from './comment/Recommentlist';
 export * from './comment/RecommentItem';
+export * from './button/RadioButton';
