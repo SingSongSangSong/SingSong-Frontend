@@ -37,3 +37,4 @@ export * from './comment/CommentItem';
 export * from './comment/Recommentlist';
 export * from './comment/RecommentItem';
 export * from './button/RadioButton';
+export * from './list/RcdSonglist';

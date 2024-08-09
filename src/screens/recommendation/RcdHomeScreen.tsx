@@ -1,10 +1,4 @@
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  ActivityIndicator,
-  RefreshControl,
-} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -12,6 +6,7 @@ import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
+import {RcdSonglist} from '../../components';
 
 type RcdHomeScreenProps = {
   route: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>;
@@ -38,7 +33,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   }, []);
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-[#151515]`}>
+    <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
         {/* <View style={tw`flex-row items-center m-4`}>
           <ToggleButton
@@ -52,7 +47,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
 
         <View style={tw`flex-1 h-[50%]`}>
           <>
-            <FlatList
+            {/* <FlatList
               data={songHandler.songLst}
               keyExtractor={(item, index) => index.toString()}
               renderItem={songHandler.handleSonglist}
@@ -73,6 +68,16 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
                   onRefresh={songHandler.onRefresh}
                 />
               }
+            /> */}
+            <RcdSonglist
+              RcdSonglistData={songHandler.songLst}
+              handleOnPressSong={songHandler.handleOnPressSong}
+              toggleAddStored={songHandler.toggleAddStored}
+              toggleRemoveStored={songHandler.toggleRemoveStored}
+              handleRefreshSongs={songHandler.handleRefreshSongs}
+              onRefresh={songHandler.onRefresh}
+              isLoading={songHandler.isLoading}
+              refreshing={songHandler.refreshing}
             />
           </>
         </View>

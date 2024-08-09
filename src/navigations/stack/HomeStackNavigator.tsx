@@ -42,9 +42,9 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
         name={homeStackNavigations.RCD_DETAIL}
         component={RcdHomeScreen}
         // initialParams={{tag}}
-        options={() => ({
+        options={({route}) => ({
           headerShown: true,
-          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitle: `${route?.params?.tag}`, //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임

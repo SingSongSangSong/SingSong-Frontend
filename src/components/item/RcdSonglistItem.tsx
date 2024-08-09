@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {designatedColor} from '../../constants';
 import tw from 'twrnc';
@@ -27,12 +27,11 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
   showKeepIcon,
   onToggleAddStored,
   onToggleRemoveStored,
-  // keepColor = designatedColor.KEEP_EMPTY,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [keepColor, setKeepColor] = useState<string>(
     designatedColor.KEEP_EMPTY,
-  ); // 초기 색상을 설정
+  );
   const {keepList} = useKeepListStore();
   const isStored = keepList.some(
     keepSong => keepSong.songNumber === songNumber,
@@ -57,87 +56,42 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
       prevColor === designatedColor.KEEP_EMPTY
         ? designatedColor.KEEP_FILLED
         : designatedColor.KEEP_EMPTY,
-    ); // 색상 변경
+    );
   };
 
-  // const handlePress = () => {
-  //   setIsPressed(!isPressed);
-  //   if (onAddPress && !isPressed) {
-  //     onAddPress();
-  //   } else if (onRemovePress && isPressed) {
-  //     onRemovePress();
-  //   }
-  // };
-
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={tw`w-full`}>
       <View
         style={[
-          styles.innerContainer,
-          isPressed && styles.innerContainerPressed,
+          tw`flex-row justify-between items-center p-2 border-b border-[${designatedColor.GRAY4}] bg-black`,
+          isPressed && tw`bg-gray-300`,
         ]}>
-        <View style={styles.textContainer}>
-          <Text style={[styles.songNumber, isPressed && styles.textPressed]}>
+        <View style={tw`flex-row h-full items-center`}>
+          <Text
+            style={[
+              tw`font-bold text-sm text-white mr-3`,
+              isPressed && tw`text-black`,
+            ]}>
             {songNumber}
           </Text>
           <View>
-            <Text style={[styles.songName, isPressed && styles.textPressed]}>
+            <Text
+              style={[tw`font-bold text-white`, isPressed && tw`text-black`]}>
               {songName}
             </Text>
-            <Text style={[styles.singerName, isPressed && styles.textPressed]}>
+            <Text style={[tw`text-white`, isPressed && tw`text-black`]}>
               {singerName}
             </Text>
           </View>
         </View>
         {showKeepIcon && (
           <TouchableOpacity onPress={handleToggleStored} style={tw`p-4`}>
-            <Icon name="star" size={24} color={keepColor} />
+            <Icon name="star" size={20} color={keepColor} />
           </TouchableOpacity>
         )}
       </View>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  innerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: 4,
-    padding: 5,
-    borderRadius: 8,
-    borderColor: 'white',
-    borderWidth: 1,
-    backgroundColor: 'black',
-  },
-  innerContainerPressed: {
-    backgroundColor: '#CCCCCC',
-  },
-  textContainer: {
-    flexDirection: 'row',
-    height: '100%',
-    alignItems: 'center',
-  },
-  songNumber: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: 'white',
-    marginRight: 12,
-  },
-  songName: {
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  singerName: {
-    color: 'white',
-  },
-  textPressed: {
-    color: 'black',
-  },
-});
 
 export {RcdSonglistItem};
