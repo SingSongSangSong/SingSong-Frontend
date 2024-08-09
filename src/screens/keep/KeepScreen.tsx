@@ -34,7 +34,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`h-full w-full  bg-[${designatedColor.BACKGROUND}]`}>
+    <SafeAreaView style={tw`h-full w-full bg-black`}>
       <View style={tw`w-full h-full pt-6`}>
         {keepHandler.keepList.length > 0 ? (
           <Songlist

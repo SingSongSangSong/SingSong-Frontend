@@ -6,9 +6,10 @@ const postKeep = async (songNumbers: number[]) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
+    console.log(songNumbers);
     const response = await axiosInstance.post<KeepResponse>(
       '/keep',
-      {songNumbers: songNumbers},
+      {songId: songNumbers},
       {
         headers: {
           Authorization: `Bearer ${token}`,

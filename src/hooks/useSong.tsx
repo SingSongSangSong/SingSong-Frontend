@@ -49,6 +49,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //keep에 추가
   const toggleAddStored = async (songNumber: number) => {
     //addSongToKeep(song);
+    console.log('toggle add');
     const updatedSongs = await postKeep([songNumber]);
     setKeepList(updatedSongs.data);
   };
@@ -56,6 +57,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //keep에서 삭제
   const toggleRemoveStored = async (songNumber: number) => {
     // removeSongFromKeep(songId);
+    console.log('toggle remove');
     const updatedSongs = await deleteKeep([songNumber]);
     setKeepList(updatedSongs.data);
   };

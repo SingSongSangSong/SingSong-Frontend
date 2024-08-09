@@ -11,7 +11,7 @@ interface SonglistProps {
 
 const Songlist: React.FC<SonglistProps> = ({songlistData, onPress}) => {
   const renderItem = ({item}: {item: KeepSong}) => (
-    <View style={tw`m-2`}>
+    <View>
       <SonglistItem
         songNumber={item.songNumber}
         songName={item.songName}
@@ -21,9 +21,7 @@ const Songlist: React.FC<SonglistProps> = ({songlistData, onPress}) => {
     </View>
   );
 
-  return (
-    <FlatList data={songlistData} renderItem={renderItem} style={tw`mb-10`} />
-  );
+  return <FlatList data={songlistData} renderItem={renderItem} />;
 };
 
 export {Songlist};
