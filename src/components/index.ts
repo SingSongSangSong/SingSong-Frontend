@@ -38,3 +38,4 @@ export * from './comment/Recommentlist';
 export * from './comment/RecommentItem';
 export * from './button/RadioButton';
 export * from './list/RcdSonglist';
+export * from './message/CustomToast';

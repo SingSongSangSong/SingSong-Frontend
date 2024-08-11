@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import tw from 'twrnc';
 import {SonglistEditItem} from '../item/SonglistEditItem';
 import {KeepSong} from '../../types';
 
@@ -20,9 +19,10 @@ const SonglistEdit: React.FC<SonglistEditProps> = ({
   isAllDeleted,
 }) => {
   const renderItem = ({item}: {item: KeepSong}) => (
-    <View style={tw`m-2`}>
+    <View>
       <SonglistEditItem
         key={item.songNumber}
+        songId={item.songId}
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
@@ -34,9 +34,7 @@ const SonglistEdit: React.FC<SonglistEditProps> = ({
     </View>
   );
 
-  return (
-    <FlatList data={songlistData} renderItem={renderItem} style={tw`mb-10`} />
-  );
+  return <FlatList data={songlistData} renderItem={renderItem} />;
 };
 
 export {SonglistEdit};

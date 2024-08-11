@@ -4,12 +4,14 @@ import {Alert} from 'react-native';
 import useKeepListStore from '../store/useKeepStore';
 import getKeep from '../api/keep/getKeep';
 import deleteKeep from '../api/keep/deleteKeep';
+import Toast from 'react-native-toast-message';
 
 const useKeep = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [isAllDeleted, setIsAllDeleted] = useState(false);
   const {keepList, setKeepList} = useKeepListStore();
   const [removedSong, setRemovedSong] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (keepList.length == 0) {
@@ -33,11 +35,14 @@ const useKeep = () => {
   };
 
   const setInitKeep = async () => {
+    setIsLoading(true);
     const tempKeepList = await getKeep();
     setKeepList(tempKeepList.data);
+    setIsLoading(false);
   };
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
+    console.log(songNumbers);
     const updatedSongs = await deleteKeep(songNumbers);
     setKeepList(updatedSongs.data); //keepList 업데이트
     // console.log(updatedSongs);
@@ -86,8 +91,15 @@ const useKeep = () => {
             // removedSong.map(song => {
             //   removeSongFromKeep(song);
             // });
+            console.log('삭제');
             handleDeleteKeep(removedSong);
             setRemovedSong([]);
+            Toast.show({
+              type: 'selectedToast',
+              text1: 'keep에서 삭제되었습니다.',
+              position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+              visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+            });
           },
           style: 'destructive',
         },
@@ -113,6 +125,7 @@ const useKeep = () => {
   };
 
   return {
+    isLoading,
     isAllSelected,
     isAllDeleted,
     keepList,

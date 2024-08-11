@@ -11,9 +11,9 @@ const deleteKeep = async (songNumbers: number[]) => {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      data: {songNumbers: songNumbers},
+      data: {songIds: songNumbers},
     });
-    console.log('data for postKeep response', response.data);
+    console.log('data for deleteKeep response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postKeep:', error);

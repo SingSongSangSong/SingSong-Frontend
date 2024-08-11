@@ -4,7 +4,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 import {Songlist} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
-import {designatedColor, keepStackNavigations} from '../../constants';
+import {keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 
 // type KeepScreenNavigationProp = CompositeNavigationProp<
@@ -36,14 +36,22 @@ function KeepScreen({navigation}: KeepScreenProps) {
   return (
     <SafeAreaView style={tw`h-full w-full bg-black`}>
       <View style={tw`w-full h-full pt-6`}>
-        {keepHandler.keepList.length > 0 ? (
-          <Songlist
-            songlistData={keepHandler.keepList}
-            onPress={handleOnPressSonglist}
-          />
-        ) : (
+        {keepHandler.isLoading ? (
           <View style={tw`h-full w-full justify-center items-center`}>
-            <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
+            <Text style={tw`text-white font-bold`}>Loading...</Text>
+          </View>
+        ) : (
+          <View>
+            {keepHandler.keepList.length > 0 ? (
+              <Songlist
+                songlistData={keepHandler.keepList}
+                onPress={handleOnPressSonglist}
+              />
+            ) : (
+              <View style={tw`h-full w-full justify-center items-center`}>
+                <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
+              </View>
+            )}
           </View>
         )}
       </View>

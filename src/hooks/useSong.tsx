@@ -10,6 +10,8 @@ import deleteKeep from '../api/keep/deleteKeep';
 import {HomeStackParamList, RcdRefreshSong} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
+import Toast from 'react-native-toast-message';
+// import {CustomToast} from '../components';
 
 type UseSongProps = {
   initTag: string;
@@ -52,6 +54,12 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     console.log('toggle add');
     const updatedSongs = await postKeep([songNumber]);
     setKeepList(updatedSongs.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'Keep에 추가되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
   };
 
   //keep에서 삭제
@@ -60,6 +68,12 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     console.log('toggle remove');
     const updatedSongs = await deleteKeep([songNumber]);
     setKeepList(updatedSongs.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'Keep에서 삭제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
   };
 
   //위로 당겨서 새로고침시 실행되는 함수
@@ -146,7 +160,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //   });
   // };
 
-  const handleOnPressSong = (songNumber: number, songId: number) => () => {
+  const handleOnPressSong = (songNumber: number, songId: number) => {
     navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
   };
 
@@ -156,7 +170,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       songNumber={item.songNumber}
       songName={item.songName}
       singerName={item.singerName}
-      onPress={handleOnPressSong(item.songNumber, item.songId)}
+      onPress={() => handleOnPressSong(item.songNumber, item.songId)}
       // onAddPress={() => handleAddPressSong(item.songNumber)}
       // onRemovePress={() => handleRemovePressSong(item.songNumber)}
       onAddPress={() => {}}

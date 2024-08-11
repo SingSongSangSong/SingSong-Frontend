@@ -129,11 +129,11 @@ function SongScreen(props: SongScreenProps) {
                   />
                 </View>
 
-                <OutlineButton
+                {/* <OutlineButton
                   title="미리듣기"
                   onPress={() => {}}
                   color={designatedColor.GREEN}
-                />
+                /> */}
               </View>
               <View>
                 <Text style={tw`text-white font-bold text-lg mt-4 mb-2`}>
@@ -149,7 +149,7 @@ function SongScreen(props: SongScreenProps) {
               </View>
               <View>
                 <Text style={tw`text-white font-bold text-lg mb-2`}>
-                  관련 노래
+                  다른 노래는 어떻송
                 </Text>
               </View>
             </View>

@@ -23,7 +23,12 @@ const useComment = (songNumber: number, songId: number) => {
   const setInitComments = async () => {
     console.log('songid', songId);
     const tempComments = await getComment(String(songId));
-    setComments(tempComments.data);
+    if (!tempComments.data) {
+      setComments([]);
+    } else {
+      setComments(tempComments.data);
+    }
+
     console.log('comments', tempComments.data);
   };
 

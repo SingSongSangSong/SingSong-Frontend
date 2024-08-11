@@ -78,16 +78,17 @@ function CommentScreen(props: CommentScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
         {commentHandler.comments ? (
-          // commentHandler.comments.length > 0 ? (
-          //   <Commentlist commentData={commentHandler.comments} />
-          // ) : (
-          //   <Text style={tw`text-white`}>댓글이 없어요</Text>
-          // )
-          <Commentlist
-            commentData={commentHandler.comments}
-            onPressRecomment={handleOnPressRecomment}
-            onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
-          />
+          commentHandler.comments.length > 0 ? (
+            <Commentlist
+              commentData={commentHandler.comments}
+              onPressRecomment={handleOnPressRecomment}
+              onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
+            />
+          ) : (
+            <View style={tw`flex-1 justify-center items-center`}>
+              <Text style={tw`text-white`}>댓글이 없어요</Text>
+            </View>
+          )
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
             <Text style={tw`text-white`}>댓글을 불러오는 중...</Text>
