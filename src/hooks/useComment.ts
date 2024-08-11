@@ -3,6 +3,7 @@ import {Comment} from '../types';
 import getComment from '../api/comment/getComment';
 import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
+import postCommentLike from '../api/comment/postCommentLike';
 
 const useComment = (songNumber: number, songId: number) => {
   const [comments, setComments] = useState<Comment[]>();
@@ -30,6 +31,11 @@ const useComment = (songNumber: number, songId: number) => {
     }
 
     console.log('comments', tempComments.data);
+  };
+
+  const handleOnPressLikeButton = async (commentId: number) => {
+    console.log('commentId', commentId);
+    await postCommentLike(String(commentId));
   };
 
   const handleOnPressSendButton = async (content: string) => {
@@ -60,6 +66,7 @@ const useComment = (songNumber: number, songId: number) => {
     setIsKeyboardVisible,
     handleOnPressSendButton,
     handleOnPressMoreInfo,
+    handleOnPressLikeButton,
   };
 };
 

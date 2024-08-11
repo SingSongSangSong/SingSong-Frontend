@@ -83,6 +83,7 @@ function CommentScreen(props: CommentScreenProps) {
               commentData={commentHandler.comments}
               onPressRecomment={handleOnPressRecomment}
               onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
+              onPressLikeButton={commentHandler.handleOnPressLikeButton}
             />
           ) : (
             <View style={tw`flex-1 justify-center items-center`}>

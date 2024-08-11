@@ -69,6 +69,7 @@ function RecommentScreen(props: RecommentScreenProps) {
             parentComment={recommentHandler.parentComment}
             recomments={recommentHandler.recomments}
             onPressMoreInfo={recommentHandler.handleOnPressMoreInfo}
+            onPressLikeButton={recommentHandler.handleOnPressLikeButton}
           />
         )}
       </View>

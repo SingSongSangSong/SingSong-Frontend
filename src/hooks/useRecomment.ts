@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Comment} from '../types';
 import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
+import postCommentLike from '../api/comment/postCommentLike';
 
 const useRecomment = (comment: Comment) => {
   const [recomments, setRecomments] = useState<Comment[]>([]);
@@ -44,6 +45,11 @@ const useRecomment = (comment: Comment) => {
     setReportSubjectMemberId(reportSubjectMemberId);
   };
 
+  const handleOnPressLikeButton = async (commentId: number) => {
+    console.log('commentId', commentId);
+    await postCommentLike(String(commentId));
+  };
+
   return {
     recomments,
     reportCommentId,
@@ -55,6 +61,7 @@ const useRecomment = (comment: Comment) => {
     parentComment,
     handleOnPressSendButton,
     handleOnPressMoreInfo,
+    handleOnPressLikeButton,
   };
 };
 

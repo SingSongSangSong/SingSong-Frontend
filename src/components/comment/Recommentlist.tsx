@@ -12,12 +12,14 @@ interface RecommentlistProps {
     reportCommentId: number,
     reportSubjectMemberId: number,
   ) => void;
+  onPressLikeButton: (commentId: number) => void;
 }
 
 const Recommentlist: React.FC<RecommentlistProps> = ({
   parentComment,
   recomments,
   onPressMoreInfo,
+  onPressLikeButton,
 }) => {
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
@@ -31,10 +33,14 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
         parentCommentId={item.parentCommentId}
         recomments={item.recomments}
         songId={item.songId}
+        likes={item.likes}
         isVisibleRecomment={false}
         onPressRecomment={() => {}}
         onPressMoreInfo={() => {
           onPressMoreInfo(item.commentId, item.memberId);
+        }}
+        onPressLikeButton={() => {
+          onPressLikeButton(item.commentId);
         }}
       />
     </View>
@@ -53,10 +59,14 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
           parentCommentId={parentComment.parentCommentId}
           recomments={parentComment.recomments}
           songId={parentComment.songId}
+          likes={parentComment.likes}
           isVisibleRecomment={false}
           onPressRecomment={() => {}}
           onPressMoreInfo={() => {
             onPressMoreInfo(parentComment.commentId, parentComment.memberId);
+          }}
+          onPressLikeButton={() => {
+            onPressLikeButton(parentComment.commentId);
           }}
         />
       </View>

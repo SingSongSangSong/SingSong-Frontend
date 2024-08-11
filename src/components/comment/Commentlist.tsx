@@ -11,12 +11,14 @@ interface CommentlistProps {
     reportCommentId: number,
     reportSubjectMemberId: number,
   ) => void;
+  onPressLikeButton: (commentId: number) => void;
 }
 
 const Commentlist: React.FC<CommentlistProps> = ({
   commentData,
   onPressRecomment,
   onPressMoreInfo,
+  onPressLikeButton,
 }) => {
   console.log('commentData', commentData);
   const renderItem = ({item}: {item: Comment}) => (
@@ -25,6 +27,7 @@ const Commentlist: React.FC<CommentlistProps> = ({
         commentId={item.commentId}
         content={item.content}
         createdAt={item.createdAt}
+        likes={item.likes}
         isRecomment={item.isRecomment}
         memberId={item.memberId}
         nickname={item.nickname}
@@ -37,6 +40,9 @@ const Commentlist: React.FC<CommentlistProps> = ({
         onPressMoreInfo={() => {
           onPressMoreInfo(item.commentId, item.memberId);
         }}
+        onPressLikeButton={() => {
+          onPressLikeButton(item.commentId);
+        }}
         isVisibleRecomment={true}
       />
     </View>
@@ -46,7 +52,7 @@ const Commentlist: React.FC<CommentlistProps> = ({
     <FlatList
       data={commentData}
       renderItem={renderItem}
-      //   keyExtractor={item => item.songId.toString()}
+      keyExtractor={item => item.commentId.toString()}
     />
     // <Text style={tw`text-white`}>hi!!!!!!!!</Text>
   );

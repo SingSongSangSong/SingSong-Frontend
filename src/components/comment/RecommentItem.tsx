@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {Comment} from '../../types';
 import {IconButton} from '../button/IconButton';
@@ -7,6 +7,8 @@ import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import RecommentIcon from '../../assets/svg/recomment.svg';
 import ArrowRecommentIcon from '../../assets/svg/arrowRecomment.svg';
 import {designatedColor} from '../../constants';
+import LikeIcon from '../../assets/svg/like.svg';
+import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 
 interface RecommentItemProps {
   commentId: number;
@@ -18,9 +20,11 @@ interface RecommentItemProps {
   parentCommentId: number;
   recomments: Comment[];
   songId: number;
+  likes: number;
   isVisibleRecomment: boolean;
   onPressRecomment: () => void;
   onPressMoreInfo: () => void;
+  onPressLikeButton: () => void;
 }
 
 const RecommentItem = ({
@@ -33,10 +37,21 @@ const RecommentItem = ({
   parentCommentId,
   recomments,
   songId,
+  likes,
   onPressRecomment,
   onPressMoreInfo,
   isVisibleRecomment,
+  onPressLikeButton,
 }: RecommentItemProps) => {
+  const [isLike, setIsLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
+
+  const handleOnPressLike = () => {
+    onPressLikeButton();
+    setIsLike(true);
+    setLikeCount(likeCount + 1);
+  };
+
   return (
     <View
       style={tw`w-full border-b border-[${designatedColor.GRAY4}] flex-row`}>
@@ -63,6 +78,19 @@ const RecommentItem = ({
         </View>
 
         <View style={tw`justify-between flex-row my-2`}>
+          <View style={tw`flex-row items-center`}>
+            {!isLike ? (
+              <TouchableOpacity onPress={handleOnPressLike} style={tw`p-2`}>
+                <LikeIcon width={20} height={20} />
+              </TouchableOpacity>
+            ) : (
+              <View style={tw`p-2`}>
+                <FilledLikeIcon width={20} height={20} />
+              </View>
+            )}
+            <Text style={tw`text-white`}>{likeCount}</Text>
+          </View>
+
           {isVisibleRecomment && (
             <View style={tw`flex-row items-center`}>
               <IconButton

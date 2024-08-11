@@ -3,6 +3,7 @@ interface Comment {
   content: string;
   createdAt: string;
   isRecomment: boolean;
+  likes: number;
   memberId: number;
   nickname: string;
   parentCommentId: number;
@@ -32,10 +33,16 @@ interface PostCommentReportResponse {
   message: string;
 }
 
+interface PostCommentLikeResponse {
+  data: string;
+  message: string;
+}
+
 export type {
   Comment,
   PostCommentResponse,
   GetCommentResponse,
   CommentReport,
   PostCommentReportResponse,
+  PostCommentLikeResponse,
 };
