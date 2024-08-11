@@ -28,18 +28,17 @@ const useSongDetail = (songNumber: number, songId: number) => {
 
   const setInitSongDetail = async () => {
     const tempSongInfo = await getSongs(String(songId));
-    const tempSongsReviews = await getSongsReviews(String(songId));
-    const tempSongRelated = await getSongsRelated(String(songId), page, size);
-    setSongInfo(tempSongInfo.data);
-    setSongReviews(tempSongsReviews.data);
-    setSongRelated(tempSongRelated.data.songs);
-    setPage(tempSongRelated.data.nextPage);
-
     if (tempSongInfo.data.isKeep) {
       setKeepColor(designatedColor.KEEP_FILLED);
     } else {
       setKeepColor(designatedColor.KEEP_EMPTY);
     }
+    setSongInfo(tempSongInfo.data);
+    const tempSongsReviews = await getSongsReviews(String(songId));
+    setSongReviews(tempSongsReviews.data);
+    const tempSongRelated = await getSongsRelated(String(songId), page, size);
+    setSongRelated(tempSongRelated.data.songs);
+    setPage(tempSongRelated.data.nextPage);
   };
 
   const handleOnPressKeep = async () => {

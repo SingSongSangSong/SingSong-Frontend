@@ -67,13 +67,16 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
           isPressed && tw`bg-gray-300`,
         ]}>
         <View style={tw`flex-row items-center flex-1`}>
-          <Text
-            style={[
-              tw`font-bold text-sm text-white mr-3 w-[14] justify-center items-center`,
-              isPressed && tw`text-black`,
-            ]}>
-            {songNumber}
-          </Text>
+          <View style={tw`w-[12] justify-center items-center mr-3`}>
+            <Text
+              style={[
+                tw`font-bold text-sm text-white text-[${designatedColor.GREEN}] `,
+                isPressed && tw`text-black`,
+              ]}>
+              {songNumber}
+            </Text>
+          </View>
+
           <View style={tw`flex-1`}>
             <Text
               style={[

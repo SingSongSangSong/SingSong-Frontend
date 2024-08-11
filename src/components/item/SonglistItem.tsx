@@ -20,14 +20,17 @@ const SonglistItem = ({
     <TouchableOpacity onPress={onPress}>
       <View
         style={tw`flex-row items-center border-b border-[${designatedColor.GRAY4}] p-3 mx-2`}>
-        <Text
-          style={tw`text-white text-sm mr-2 text-[${designatedColor.GREEN}] items-center justify-center font-bold w-[12]`}>
-          {songNumber}
-        </Text>
+        <View style={tw`items-center justify-center w-[12]`}>
+          <Text
+            style={tw`text-white text-sm text-[${designatedColor.GREEN}] font-bold `}>
+            {songNumber}
+          </Text>
+        </View>
+
         <View style={tw`h-full ml-4 flex-1`}>
           <View style={tw`flex-row`}>
             <Text
-              style={tw`text-white text-sm truncate`}
+              style={tw`text-white text-sm`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {songName}
@@ -35,7 +38,7 @@ const SonglistItem = ({
           </View>
 
           <Text
-            style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}] truncate`}
+            style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}]`}
             numberOfLines={1}
             ellipsizeMode="tail">
             {singerName}

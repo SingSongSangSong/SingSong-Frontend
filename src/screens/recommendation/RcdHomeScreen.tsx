@@ -1,17 +1,11 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
-import {homeStackNavigations} from '../../constants';
+import {designatedColor, homeStackNavigations} from '../../constants';
 import {RcdSonglist} from '../../components';
 
 type RcdHomeScreenProps = {
@@ -52,29 +46,29 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
         </View> */}
 
         <View style={tw`flex-1 h-[50%]`}>
-          <>
-            {/* <FlatList
-              data={songHandler.songLst}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={songHandler.handleSonglist}
-              style={tw`h-[50%]`}
-              contentContainerStyle={tw`flex-grow`}
-              onEndReached={songHandler.handleRefreshSongs}
-              onEndReachedThreshold={0.1}
-              ListFooterComponent={() =>
-                songHandler.isLoading ? (
-                  <View style={tw`py-10`}>
-                    <ActivityIndicator size="large" color="white" />
-                  </View>
-                ) : null
-              }
-              refreshControl={
-                <RefreshControl
-                  refreshing={songHandler.refreshing}
-                  onRefresh={songHandler.onRefresh}
-                />
-              }
-            /> */}
+          {/* <FlatList
+            data={songHandler.songLst}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={songHandler.handleSonglist}
+            style={tw`h-[50%]`}
+            contentContainerStyle={tw`flex-grow`}
+            onEndReached={songHandler.handleRefreshSongs}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={() =>
+              songHandler.isLoading ? (
+                <View style={tw`py-10`}>
+                  <ActivityIndicator size="large" color="white" />
+                </View>
+              ) : null
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={songHandler.refreshing}
+                onRefresh={songHandler.onRefresh}
+              />
+            }
+          /> */}
+          {songHandler.songLst ? (
             <RcdSonglist
               RcdSonglistData={songHandler.songLst}
               handleOnPressSong={songHandler.handleOnPressSong}
@@ -85,7 +79,37 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
               isLoading={songHandler.isLoading}
               refreshing={songHandler.refreshing}
             />
-          </>
+          ) : (
+            <View>
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
+              />
+            </View>
+          )}
         </View>
       </View>
     </SafeAreaView>
