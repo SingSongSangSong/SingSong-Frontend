@@ -14,6 +14,7 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
   text,
 }) => {
   const [comment, setComment] = useState('');
+  const [inputHeight, setInputHeight] = useState(0);
   const handleOnSendPress = () => {
     onSendPress(comment);
     setComment('');
@@ -24,11 +25,19 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
     <View style={tw`w-full bg-black`}>
       <View style={tw`flex-row items-center py-4`}>
         <TextInput
-          style={tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mr-2`}
+          style={[
+            tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mr-2`,
+            {height: Math.min(Math.max(40, inputHeight), 60)}, // 최소 1줄, 최대 2줄 높이로 설정
+          ]}
           value={comment}
           onChangeText={setComment}
           placeholder={`${text}을 입력하세요`}
           placeholderTextColor="gray"
+          multiline={true} // 멀티라인 활성화
+          scrollEnabled={true} // 입력이 많아지면 스크롤 가능
+          onContentSizeChange={event =>
+            setInputHeight(event.nativeEvent.contentSize.height)
+          } // 텍스트 입력 시 높이 조절
         />
         <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
       </View>
