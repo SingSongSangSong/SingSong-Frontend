@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
-import CheckIcon from '../../assets/svg/check.svg';
 
 interface ReviewlistItemProps {
   title: string;
@@ -12,6 +11,10 @@ interface ReviewlistItemProps {
   onAddPress: () => void;
   onRemovePress: () => void;
   setSelectedId: (id: number) => void;
+  color: string;
+  textColor: string;
+  titleColor: string;
+  percentage: number;
 }
 
 const ReviewlistItem = ({
@@ -22,6 +25,10 @@ const ReviewlistItem = ({
   onAddPress,
   onRemovePress,
   setSelectedId,
+  color,
+  textColor,
+  titleColor,
+  percentage,
 }: ReviewlistItemProps) => {
   const handleOnPress = () => {
     if (!isPressed) {
@@ -32,26 +39,28 @@ const ReviewlistItem = ({
       onRemovePress();
     }
   };
+
   return (
     <TouchableOpacity onPress={handleOnPress}>
       <View
         style={[
-          tw`p-3 rounded-lg flex-row justify-between items-center`,
-          isPressed && tw`bg-white`,
-          !isPressed && tw`bg-[${designatedColor.GRAY4}]`,
+          tw`rounded-lg justify-between items-center relative overflow-hidden bg-[${designatedColor.GRAY4}]`,
+          // isPressed && tw`bg-white`,
+          // !isPressed && tw`bg-[${designatedColor.GRAY4}]`,
         ]}>
-        <Text
+        {/* 퍼센테이지에 따른 색상 칠하기 */}
+        <View
           style={[
-            isPressed && tw`text-[${designatedColor.GRAY4}] font-bold`,
-            !isPressed && tw`text-white`,
-          ]}>
-          {title}
-        </Text>
-        {!isPressed ? (
-          <CheckIcon width={24} height={24} />
-        ) : (
-          <Text style={tw`text-black font-bold`}>{count}</Text>
-        )}
+            tw`absolute top-0 left-0 h-full`,
+            {width: `${percentage}%`, backgroundColor: color},
+          ]}
+        />
+        <View style={tw`flex-row justify-between w-full z-10 p-3`}>
+          <Text style={tw`text-[${titleColor}] font-bold`}>{title}</Text>
+          <Text style={tw`text-black font-bold text-[${textColor}]`}>
+            {count}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

@@ -19,12 +19,47 @@ const useSongDetail = (songNumber: number, songId: number) => {
   const {setKeepList} = useKeepListStore();
   const [keepColor, setKeepColor] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLikePressed, setIsLikePressed] = useState(false);
+  const [isDislikePressed, setIsDislikePressed] = useState(false);
 
   useEffect(() => {
     if (!songInfo) {
       setInitSongDetail();
     }
   }, []);
+
+  // 특정 songReviewOptionId의 count 증가
+  const increaseCount = (optionId: number) => {
+    setSongReviews(
+      prevState =>
+        prevState?.map(review =>
+          review.songReviewOptionId === optionId
+            ? {...review, count: review.count + 1}
+            : review,
+        ) || null,
+    );
+  };
+
+  // 특정 songReviewOptionId의 count 감소
+  const decreaseCount = (optionId: number) => {
+    setSongReviews(
+      prevState =>
+        prevState?.map(review =>
+          review.songReviewOptionId === optionId && review.count > 0
+            ? {...review, count: review.count - 1}
+            : review,
+        ) || null,
+    );
+  };
+
+  // selected가 true인 optionId 찾기
+  // const getSelectedOptionIds = () => {
+  //   return (
+  //     songReviews
+  //       ?.filter(review => review.selected)
+  //       .map(review => review.songReviewOptionId) || []
+  //   );
+  // };
 
   const setInitSongDetail = async () => {
     const tempSongInfo = await getSongs(String(songId));
@@ -35,10 +70,24 @@ const useSongDetail = (songNumber: number, songId: number) => {
     }
     setSongInfo(tempSongInfo.data);
     const tempSongsReviews = await getSongsReviews(String(songId));
+
     setSongReviews(tempSongsReviews.data);
     const tempSongRelated = await getSongsRelated(String(songId), page, size);
     setSongRelated(tempSongRelated.data.songs);
     setPage(tempSongRelated.data.nextPage);
+
+    const selectedReview =
+      tempSongsReviews.data
+        ?.filter(review => review.selected)
+        .map(review => review.songReviewOptionId) || [];
+    if (selectedReview.includes(1)) {
+      setIsLikePressed(true);
+      console.log('isLikePressed:', isLikePressed);
+    } else if (selectedReview.includes(2)) {
+      setIsDislikePressed(true);
+      console.log('isDislikePressed:', isDislikePressed);
+    }
+    console.log(selectedReview);
   };
 
   const handleOnPressKeep = async () => {
@@ -53,14 +102,66 @@ const useSongDetail = (songNumber: number, songId: number) => {
     }
   };
   const handleOnAddPressReviewlist = async (songReviewOptionId: number) => {
-    console.log(songReviewOptionId);
-    await putSongReviews(String(songId), songReviewOptionId);
+    if (songReviewOptionId == 1) {
+      //1을 선택했을 경우
+      if (isLikePressed) {
+        //선택이 되어있다면
+        setIsLikePressed(false);
+        await deleteSongsReviews(String(songId));
+        decreaseCount(1); //삭제만
+        return;
+      } else if (!isLikePressed) {
+        //1이 선택이 되어있지 않은 상태에서 1을 선택한다면
+        if (isDislikePressed) {
+          //2가 선택되어있는 경우
+          setIsDislikePressed(false);
+          setIsLikePressed(true);
+          await putSongReviews(String(songId), songReviewOptionId);
+          decreaseCount(2);
+          increaseCount(1);
+          return;
+        } else {
+          //2가 선택되어있지 않은 경우에서 1을 선택하는 경우
+          setIsLikePressed(true);
+          await putSongReviews(String(songId), songReviewOptionId);
+          increaseCount(1);
+          return;
+        }
+      }
+    } else if (songReviewOptionId == 2) {
+      if (isDislikePressed) {
+        //2가 이미 선택되어있는 경우
+        setIsDislikePressed(false);
+        await deleteSongsReviews(String(songId));
+        decreaseCount(2);
+        return;
+      } else if (!isDislikePressed) {
+        //2가 선택되어있지 않은 경우에서 2를 선택한 경우
+        if (isLikePressed) {
+          //1이 근데 선택되어있는 경우
+          setIsLikePressed(false);
+          setIsDislikePressed(true);
+          await putSongReviews(String(songId), songReviewOptionId);
+          decreaseCount(1);
+          increaseCount(2);
+          return;
+        } else {
+          //1이 선택되어있지 않은 경우
+          setIsDislikePressed(true);
+          await putSongReviews(String(songId), songReviewOptionId);
+          increaseCount(2);
+          return;
+        }
+      }
+    }
   };
 
-  const handleOnRemovePressReviewlist = async (songReviewOptionId: number) => {
-    console.log(songReviewOptionId);
-    await deleteSongsReviews(String(songId));
-  };
+  // const handleOnRemovePressReviewlist = async (songReviewOptionId: number) => {
+  //   console.log('handleOnRemovePressReviewQQ');
+  //   setIsLikePressed(false);
+  //   setIsDislikePressed(true);
+  //   await deleteSongsReviews(String(songId));
+  // };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
   const handleRefreshRelatedSongs = async () => {
@@ -95,6 +196,8 @@ const useSongDetail = (songNumber: number, songId: number) => {
 
   return {
     isLoading,
+    isLikePressed,
+    isDislikePressed,
     page,
     size,
     keepColor,
@@ -103,7 +206,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
     songRelated,
     handleOnPressKeep,
     handleOnAddPressReviewlist,
-    handleOnRemovePressReviewlist,
+    // handleOnRemovePressReviewlist,
     handleRefreshRelatedSongs,
   };
 };

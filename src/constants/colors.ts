@@ -24,6 +24,11 @@ const designatedColor = {
   GRAY4: '#333333',
   GRAY: '#0F0F0F',
   GRAY3: '#979797',
+  PINK2: '#FB6DA9',
+  GRAY1: '#B3B3B3',
+  PINK: '#FDC9F7',
+  BLACK: '#000000',
+  WHITE: '#FFFFFF',
 } as const;
 
 export {randomColor, designatedColor};

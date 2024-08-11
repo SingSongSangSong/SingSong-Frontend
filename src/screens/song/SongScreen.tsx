@@ -14,6 +14,11 @@ import MusicIcon from '../../assets/svg/music.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {IconButton, Relatedlist, Reviewlist} from '../../components';
+import LikeIcon from '../../assets/svg/like.svg';
+import FilledLikeIcon from '../../assets/svg/filledLike.svg';
+import DislikeIcon from '../../assets/svg/dislike.svg';
+import FilledDislikeIcon from '../../assets/svg/filledDislike.svg';
+import {LikeButton} from '../../components/button/LikeButton';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -168,9 +173,43 @@ function SongScreen(props: SongScreenProps) {
             </Text>
             <Reviewlist
               reviewlistData={songDetailHandler.songReviews}
-              onAddPress={songDetailHandler.handleOnAddPressReviewlist}
-              onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
+              // isLikePressed={songDetailHandler.isLikePressed}
+              // isDislikePressed={songDetailHandler.isDislikePressed}
+              // onAddPress={songDetailHandler.handleOnAddPressReviewlist}
+              // onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
             />
+
+            <View style={tw`flex-row items-center justify-between mx-2`}>
+              <View style={tw`flex-row items-center`}>
+                <MusicIcon width={18} height={18} />
+                <Text style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
+                  나의 평가는?
+                </Text>
+              </View>
+              <View style={tw`flex-row`}>
+                <LikeButton
+                  title="쉬워요"
+                  color={designatedColor.PINK}
+                  onPress={() => {
+                    songDetailHandler.handleOnAddPressReviewlist(1);
+                  }}
+                  Icon={LikeIcon}
+                  PressIcon={FilledLikeIcon}
+                  isPressed={songDetailHandler.isLikePressed}
+                />
+                <LikeButton
+                  title="어려워요"
+                  color={designatedColor.PINK}
+                  onPress={() => {
+                    songDetailHandler.handleOnAddPressReviewlist(2);
+                  }}
+                  Icon={DislikeIcon}
+                  PressIcon={FilledDislikeIcon}
+                  isPressed={songDetailHandler.isDislikePressed}
+                />
+              </View>
+            </View>
+
             <Text style={tw`text-white font-bold text-lg mt-4 mb-2`}>
               다른 노래는 어떻송
             </Text>
