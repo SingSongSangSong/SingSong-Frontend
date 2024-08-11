@@ -3,6 +3,7 @@ import {Comment} from '../types';
 import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
 import postCommentLike from '../api/comment/postCommentLike';
+import useCommentStore from '../store/useCommentStore';
 
 const useRecomment = (comment: Comment) => {
   const [recomments, setRecomments] = useState<Comment[]>([]);
@@ -11,6 +12,7 @@ const useRecomment = (comment: Comment) => {
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [parentComment, setParentComment] = useState<Comment>();
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
+  const {addRecommentCount} = useCommentStore();
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ const useRecomment = (comment: Comment) => {
       comment.songId,
     );
     setRecomments(prev => [...prev, tempRecomment.data]);
+    addRecommentCount(comment.commentId);
   };
 
   const handleOnPressMoreInfo = (

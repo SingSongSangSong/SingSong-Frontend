@@ -4,6 +4,7 @@ import getComment from '../api/comment/getComment';
 import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
 import postCommentLike from '../api/comment/postCommentLike';
+import useCommentStore from '../store/useCommentStore';
 
 const useComment = (songNumber: number, songId: number) => {
   const [comments, setComments] = useState<Comment[]>();
@@ -11,6 +12,7 @@ const useComment = (songNumber: number, songId: number) => {
   const [reportCommentId, setReportCommentId] = useState<number>(0);
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
+  const {recommentCount, setRecommentCount} = useCommentStore();
   const keyboard = useKeyboard();
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const useComment = (songNumber: number, songId: number) => {
       setComments([]);
     } else {
       setComments(tempComments.data);
+      setRecommentCount(tempComments.data);
     }
 
     console.log('comments', tempComments.data);
@@ -57,6 +60,7 @@ const useComment = (songNumber: number, songId: number) => {
   };
 
   return {
+    recommentCount,
     comments,
     reportCommentId,
     reportSubjectMemberId,

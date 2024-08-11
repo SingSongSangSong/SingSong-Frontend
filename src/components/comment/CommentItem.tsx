@@ -24,6 +24,7 @@ interface CommentItemProps {
   onPressRecomment: () => void;
   onPressMoreInfo: () => void;
   onPressLikeButton: () => void;
+  recommentCount: number;
 }
 
 const CommentItem = ({
@@ -41,6 +42,7 @@ const CommentItem = ({
   onPressMoreInfo,
   isVisibleRecomment,
   onPressLikeButton,
+  recommentCount,
 }: CommentItemProps) => {
   const [isLike, setIsLike] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
@@ -85,13 +87,16 @@ const CommentItem = ({
           <Text style={tw`text-white`}>{likeCount}</Text>
         </View>
         {isVisibleRecomment && (
-          <View style={tw`flex-row items-center`}>
+          <View style={tw`flex-row items-center mx-2`}>
             <IconButton
               Icon={RecommentIcon}
               size={20}
               onPress={onPressRecomment}
             />
-            <Text style={tw`text-white`}>{recomments.length}</Text>
+            <Text style={tw`text-white`}>{recommentCount}</Text>
+            <TouchableOpacity onPress={onPressRecomment} />
+
+            {/* <Text style={tw`text-[${designatedColor.GRAY1}]`}>답글 보기</Text> */}
           </View>
         )}
       </View>

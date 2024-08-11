@@ -12,6 +12,7 @@ interface CommentlistProps {
     reportSubjectMemberId: number,
   ) => void;
   onPressLikeButton: (commentId: number) => void;
+  recommentCount: {[commentId: number]: number};
 }
 
 const Commentlist: React.FC<CommentlistProps> = ({
@@ -19,6 +20,7 @@ const Commentlist: React.FC<CommentlistProps> = ({
   onPressRecomment,
   onPressMoreInfo,
   onPressLikeButton,
+  recommentCount,
 }) => {
   console.log('commentData', commentData);
   const renderItem = ({item}: {item: Comment}) => (
@@ -44,6 +46,7 @@ const Commentlist: React.FC<CommentlistProps> = ({
           onPressLikeButton(item.commentId);
         }}
         isVisibleRecomment={true}
+        recommentCount={recommentCount[item.commentId]}
       />
     </View>
   );
