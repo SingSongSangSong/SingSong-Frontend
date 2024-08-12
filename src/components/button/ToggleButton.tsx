@@ -18,11 +18,11 @@ const ToggleButton = ({isEnabled, toggleSwitch}: ToggleButtonProps) => {
       easing: Easing.linear,
       useNativeDriver: false,
     }).start();
-  }, [isEnabled, animationValue]);
+  }, [isEnabled]);
 
   const interpolateBackgroundColor = animationValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['gray', designatedColor.GREEN],
+    outputRange: ['gray', designatedColor.PINK2],
   });
 
   const interpolateThumbPosition = animationValue.interpolate({

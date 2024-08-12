@@ -18,9 +18,9 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   const userInfoHandler = useUserInfo();
 
   useEffect(() => {
-    fetchDataHandler.fetchData();
     const timer = setTimeout(() => {
       handleNavigation();
+      fetchDataHandler.fetchData();
     }, 2000);
     return () => clearTimeout(timer);
   }, []);

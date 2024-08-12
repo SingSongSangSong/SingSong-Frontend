@@ -21,7 +21,9 @@ const designatedColor = {
   KAKAO_YELLOW: '#FEE500',
   LIGHT_BLUE: '#5AB2FF',
   LIGHT_GRAY: '#EEEDEB',
-  GRAY4: '#333333',
+  // GRAY4: '#333333',
+  GRAY5: '#2D2D2D',
+  GRAY4: '#575757',
   GRAY: '#0F0F0F',
   GRAY3: '#979797',
   PINK2: '#FB6DA9',
@@ -29,6 +31,8 @@ const designatedColor = {
   PINK: '#FDC9F7',
   BLACK: '#000000',
   WHITE: '#FFFFFF',
+  ORANGE: '#FF7436',
+  PURPLE: '#7A51E2',
 } as const;
 
 export {randomColor, designatedColor};

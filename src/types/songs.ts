@@ -125,6 +125,21 @@ interface SongInfoReviewResponse {
   message: string;
 }
 
+interface Chart {
+  artistName: string;
+  isMr: number;
+  new: string;
+  ranking: number;
+  rankingChange: number;
+  songId: number;
+  songName: string;
+  songNumber: number;
+  totalScore: number;
+}
+interface ChartResponse {
+  data: {gender: string; female: Chart[]; male: Chart[]; time: string};
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -147,4 +162,6 @@ export type {
   SongInfoRelatedResponse,
   SongInfoReview,
   SongInfoReviewResponse,
+  Chart,
+  ChartResponse,
 };

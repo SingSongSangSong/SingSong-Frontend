@@ -51,7 +51,7 @@ const useFetchData = () => {
 
   const fetchData = async () => {
     await fetchTags();
-    await fetchRcdHomeSongs();
+    // await fetchRcdHomeSongs();
   };
 
   return {

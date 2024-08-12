@@ -10,7 +10,7 @@ const postMemberLogin = async (
       birthYear: profile.birthyear,
       gender: profile.gender,
       idToken: results.idToken,
-      provider: 'KAKAO',
+      provider: 'KAKAO_KEY',
     });
     console.log('postLogin:', response.data);
     return response.data;
