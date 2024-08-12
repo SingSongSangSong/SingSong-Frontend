@@ -72,17 +72,17 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          headerLeft: () => (
-            <IconButton
-              onPress={() =>
-                navigation.navigate(homeStackNavigations.RCD_DETAIL, {
-                  tag: selectedTag,
-                })
-              }
-              size={24}
-              Icon={ArrowLeftIcon}
-            />
-          ),
+          // headerLeft: () => (
+          //   <IconButton
+          //     onPress={() =>
+          //       navigation.navigate(homeStackNavigations.RCD_DETAIL, {
+          //         tag: selectedTag,
+          //       })
+          //     }
+          //     size={24}
+          //     Icon={ArrowLeftIcon}
+          //   />
+          // ),
         })}
       />
       <Stack.Screen

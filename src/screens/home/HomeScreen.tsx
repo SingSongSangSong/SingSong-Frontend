@@ -3,7 +3,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
-import {HotTrending, Previewlist, Taglist, TextButton} from '../../components';
+import {HotTrending, Taglist, TextButton} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -13,6 +13,7 @@ import useUserInfo from '../../hooks/useUserInfo';
 import LogoIcon from '../../assets/svg/logo.svg';
 import {formatDateString} from '../../utils';
 import {ToggleButton} from '../../components/button/ToggleButton';
+import {SongCardList} from '../../components/list/SongCardList';
 // import HotTrending from './HotTrending';
 
 type HomeScreenProps = StackScreenProps<
@@ -39,6 +40,10 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
 
   const handleOnArrowPress = (tag: string) => {
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+  };
+
+  const handleOnSongPress = (songNumber: number, songId: number) => {
+    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
   };
 
   const handleOnPressSetting = () => {
@@ -117,7 +122,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             />
           </View>
           <View
-            style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4  my-2`}>
+            style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 my-2`}>
             <View style={tw`justify-between flex-row mx-4 items-center mx-4`}>
               <Text style={tw`text-white text-sm font-bold my-2`}>
                 어떤 노래를 찾으시나요?
@@ -138,12 +143,15 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             <View
               style={tw`flex-wrap flex-row justify-center items-center mt-5`}>
               {userInfoHandler.tags.map((tag, index) => (
-                <Previewlist
-                  tag={tag}
-                  key={index}
-                  onArrowPress={handleOnArrowPress}
-                  data={userInfoHandler.previewSongs[tag]}
-                />
+                <View>
+                  <SongCardList
+                    tag={tag}
+                    key={index}
+                    onPress={handleOnArrowPress}
+                    data={userInfoHandler.previewSongs[tag]}
+                    onSongPress={handleOnSongPress}
+                  />
+                </View>
               ))}
             </View>
           )}
