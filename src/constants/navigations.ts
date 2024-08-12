@@ -28,6 +28,7 @@ const homeStackNavigations = {
   COMMENT: '_Comment',
   RECOMMENT: '_Recomment',
   REPORT: '_Report',
+  TAG_DETAIL: '_TagDetail',
 } as const;
 
 const keepStackNavigations = {

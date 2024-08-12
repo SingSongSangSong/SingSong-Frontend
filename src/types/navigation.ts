@@ -35,6 +35,7 @@ type HomeStackParamList = {
     reportCommentId: number;
     reportSubjectMemberId: number;
   };
+  [homeStackNavigations.TAG_DETAIL]: undefined;
 };
 
 type KeepStackParamList = {

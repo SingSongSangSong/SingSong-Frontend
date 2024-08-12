@@ -5,15 +5,22 @@ import tw from 'twrnc';
 type TextButtonProps = {
   title: string;
   onPress: () => void;
+  color: string;
+  size: number;
 };
 
-const TextButton: React.FC<TextButtonProps> = ({title, onPress}) => {
+const TextButton: React.FC<TextButtonProps> = ({
+  title,
+  onPress,
+  color,
+  size,
+}) => {
   return (
     <View style={tw`flex-row justify-center`}>
       <TouchableOpacity
         style={tw`flex-row justify-center items-center`}
         onPress={onPress}>
-        <Text style={tw`text-white text-sm`}>{title}</Text>
+        <Text style={tw`text-[${color}] text-[${size}]`}>{title}</Text>
       </TouchableOpacity>
     </View>
   );

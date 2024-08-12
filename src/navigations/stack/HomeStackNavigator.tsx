@@ -4,7 +4,7 @@ import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
-import {NavigationProp} from '@react-navigation/native';
+import {NavigationProp, RouteProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
 import useSongStore from '../../store/useSongStore';
@@ -14,6 +14,7 @@ import DeleteIcon from '../../assets/svg/delete.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import ReportScreen from '../../screens/song/ReportScreen';
+import TagDetailScreen from '../../screens/home/TagDetailScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -32,6 +33,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       initialRouteName={homeStackNavigations.RCD_HOME}
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
+        // animationEnabled: false,
       }}>
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
@@ -157,6 +159,23 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '설정', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.TAG_DETAIL}
+        component={TagDetailScreen}
+        options={() => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '노래 목록', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임

@@ -79,16 +79,13 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
 
           <View style={tw`flex-1`}>
             <Text
-              style={[
-                tw`font-bold text-white truncate`,
-                isPressed && tw`text-black`,
-              ]}
+              style={[tw`font-bold text-white`, isPressed && tw`text-black`]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {songName}
             </Text>
             <Text
-              style={[tw`text-white truncate`, isPressed && tw`text-black`]}
+              style={[tw`text-white`, isPressed && tw`text-black`]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {singerName}

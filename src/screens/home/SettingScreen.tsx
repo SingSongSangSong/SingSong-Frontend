@@ -55,7 +55,12 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 {userInfoHandler.memberInfo?.email}
               </Text>
             </View>
-            <TextButton title="로그아웃" onPress={handleLogoutButton} />
+            <TextButton
+              title="로그아웃"
+              onPress={handleLogoutButton}
+              color="white"
+              size={3}
+            />
           </View>
         </View>
         <View style={tw`m-4`}>
@@ -63,7 +68,12 @@ function SettingScreen({navigation}: SettingScreenProps) {
             개인 / 보안
           </Text>
           <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
-            <TextButton title="회원 탈퇴" onPress={handleWithdrawButton} />
+            <TextButton
+              title="회원 탈퇴"
+              onPress={handleWithdrawButton}
+              color="white"
+              size={3}
+            />
           </View>
         </View>
       </View>

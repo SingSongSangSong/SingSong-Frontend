@@ -3,7 +3,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
-import {HotTrending, Previewlist} from '../../components';
+import {HotTrending, Previewlist, Taglist, TextButton} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -45,6 +45,10 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
     navigation.navigate(homeStackNavigations.SETTING);
   };
 
+  const handleOnPressTotalButton = () => {
+    navigation.navigate(homeStackNavigations.TAG_DETAIL);
+  };
+
   return (
     <GestureRecognizer
       // onSwipeLeft={onSwipeRight}
@@ -80,9 +84,9 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
               />
             )}
           </View> */}
-          <View style={tw`bg-black`}>
-            <View style={tw`flex-row justify-between m-3`}>
-              <View style={tw`flex-row items-end`}>
+          <View style={tw`bg-black my-6`}>
+            <View style={tw`flex-row justify-between mx-4 my-2`}>
+              <View style={tw`flex-row items-end mb-2`}>
                 <Text
                   style={tw`text-[${designatedColor.PINK}] font-bold text-xl `}>
                   HOT TRENDING
@@ -107,10 +111,27 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
                 />
               </View>
             </View>
-
             <HotTrending
               data={userInfoHandler.charts}
               selectedGender={userInfoHandler.selectedGender}
+            />
+          </View>
+          <View
+            style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4  my-2`}>
+            <View style={tw`justify-between flex-row mx-4 items-center mx-4`}>
+              <Text style={tw`text-white text-sm font-bold my-2`}>
+                어떤 노래를 찾으시나요?
+              </Text>
+              <TextButton
+                title="전체보기"
+                onPress={handleOnPressTotalButton}
+                color={designatedColor.GRAY3}
+                size={3}
+              />
+            </View>
+            <Taglist
+              tags={userInfoHandler.tags}
+              handleOnTagButton={handleOnArrowPress}
             />
           </View>
           {!isEmptyObject(userInfoHandler.previewSongs) && (

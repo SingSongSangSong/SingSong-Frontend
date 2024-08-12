@@ -41,3 +41,6 @@ export * from './list/RcdSonglist';
 export * from './message/CustomToast';
 export * from './list/HotTrending';
 export * from './item/HotTrendingItem';
+export * from './button/TagIconButton';
+export * from './list/TagDetailList';
+export * from './item/TagDetailListItem';
