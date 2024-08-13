@@ -7,20 +7,26 @@ import {RecommentItem} from './RecommentItem';
 
 interface RecommentlistProps {
   parentComment: Comment;
-  recomments: Comment[];
+  recomments: {[recommentId: number]: Comment} | undefined; // 객체로 수정
   onPressMoreInfo: (
     reportCommentId: number,
     reportSubjectMemberId: number,
   ) => void;
-  onPressLikeButton: (commentId: number) => void;
+  onPressCommentLikeButton: (commentId: number) => void;
+  onPressRecommentLikeButton: (commentId: number, recommentId: number) => void;
 }
 
 const Recommentlist: React.FC<RecommentlistProps> = ({
   parentComment,
-  recomments,
+  recomments = {},
   onPressMoreInfo,
-  onPressLikeButton,
+  onPressCommentLikeButton,
+  onPressRecommentLikeButton,
 }) => {
+  // 객체를 배열로 변환
+  const recommentArray = Object.values(recomments);
+  console.log('recommentArray', recommentArray);
+
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
       <RecommentItem
@@ -34,13 +40,14 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
         recomments={item.recomments}
         songId={item.songId}
         likes={item.likes}
+        isLiked={item.isLiked}
         isVisibleRecomment={false}
         onPressRecomment={() => {}}
         onPressMoreInfo={() => {
           onPressMoreInfo(item.commentId, item.memberId);
         }}
         onPressLikeButton={() => {
-          onPressLikeButton(item.commentId);
+          onPressRecommentLikeButton(item.parentCommentId, item.commentId);
         }}
       />
     </View>
@@ -59,6 +66,7 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
           parentCommentId={parentComment.parentCommentId}
           recomments={parentComment.recomments}
           songId={parentComment.songId}
+          isLiked={parentComment.isLiked}
           likes={parentComment.likes}
           isVisibleRecomment={false}
           onPressRecomment={() => {}}
@@ -66,8 +74,9 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
             onPressMoreInfo(parentComment.commentId, parentComment.memberId);
           }}
           onPressLikeButton={() => {
-            onPressLikeButton(parentComment.commentId);
+            onPressCommentLikeButton(parentComment.commentId);
           }}
+          recommentCount={0}
         />
       </View>
     );
@@ -75,12 +84,11 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
 
   return (
     <FlatList
-      data={recomments}
+      data={recommentArray} // 객체를 배열로 변환하여 FlatList에 전달
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
-      keyExtractor={(recomments, index) => index.toString()}
+      keyExtractor={item => item.commentId.toString()} // commentId를 사용하여 고유한 키 생성
     />
-    // <Text style={tw`text-white`}>hi!!!!!!!!</Text>
   );
 };
 

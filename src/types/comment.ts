@@ -3,6 +3,7 @@ interface Comment {
   content: string;
   createdAt: string;
   isRecomment: boolean;
+  isLiked: boolean;
   likes: number;
   memberId: number;
   nickname: string;

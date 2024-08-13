@@ -25,13 +25,11 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
   const userInfoHandler = useUserInfo();
 
   useEffect(() => {
+    userInfoHandler.fetchChart();
     if (isEmptyObject(userInfoHandler.memberInfo)) {
       userInfoHandler.getUserInfo();
     }
     console.log('userInfoHandler of chart', userInfoHandler.charts);
-    if (isEmptyObject(userInfoHandler.charts)) {
-      userInfoHandler.fetchChart();
-    }
   }, []);
 
   const isEmptyObject = (obj: Record<string, any>): boolean => {
@@ -140,8 +138,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             />
           </View>
           {!isEmptyObject(userInfoHandler.previewSongs) && (
-            <View
-              style={tw`flex-wrap flex-row justify-center items-center mt-5`}>
+            <View style={tw`flex-wrap flex-row justify-center items-center`}>
               {userInfoHandler.tags.map((tag, index) => (
                 <View>
                   <SongCardList

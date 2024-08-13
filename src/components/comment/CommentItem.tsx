@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {Comment} from '../../types';
@@ -14,6 +14,7 @@ interface CommentItemProps {
   content: string;
   createdAt: string;
   likes: number;
+  isLiked: boolean;
   isRecomment: boolean;
   memberId: number;
   nickname: string;
@@ -32,6 +33,7 @@ const CommentItem = ({
   content,
   createdAt,
   likes,
+  isLiked,
   isRecomment,
   memberId,
   nickname,
@@ -44,15 +46,15 @@ const CommentItem = ({
   onPressLikeButton,
   recommentCount,
 }: CommentItemProps) => {
-  const [isLike, setIsLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes);
+  // const [isLike, setIsLike] = useState(isLiked);
+  // const [likeCount, setLikeCount] = useState(likes);
 
-  const handleOnPressLike = () => {
-    onPressLikeButton();
-    setIsLike(true);
-    setLikeCount(likeCount + 1);
+  const handleOnPressLikeButton = () => {
+    if (!isLiked) {
+      onPressLikeButton();
+    }
   };
-
+  console.log('isLiked', isLiked);
   return (
     <View style={tw`w-full border-b border-[${designatedColor.GRAY4}]`}>
       <View
@@ -74,8 +76,8 @@ const CommentItem = ({
 
       <View style={tw`justify-between flex-row my-2 items-center`}>
         <View style={tw`flex-row items-center`}>
-          {!isLike ? (
-            <TouchableOpacity onPress={handleOnPressLike} style={tw`p-2`}>
+          {!isLiked ? (
+            <TouchableOpacity onPress={handleOnPressLikeButton} style={tw`p-2`}>
               <LikeIcon width={20} height={20} />
             </TouchableOpacity>
           ) : (
@@ -84,7 +86,7 @@ const CommentItem = ({
             </View>
           )}
 
-          <Text style={tw`text-white`}>{likeCount}</Text>
+          <Text style={tw`text-white`}>{likes}</Text>
         </View>
         {isVisibleRecomment && (
           <View style={tw`flex-row items-center mx-2`}>

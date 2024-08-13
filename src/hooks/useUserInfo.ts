@@ -56,7 +56,7 @@ const useUserInfo = () => {
 
   const fetchChart = async () => {
     try {
-      console.log('fetchChart');
+      console.log('fetchChart request!!!!!!!!!!!!!!!!');
       const chartData = await getChart();
       setCharts('FEMALE', chartData.data.female); //chart 데이터 설정
       setCharts('MALE', chartData.data.male);

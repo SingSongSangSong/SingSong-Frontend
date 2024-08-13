@@ -61,33 +61,37 @@ const useSongDetail = (songNumber: number, songId: number) => {
   //   );
   // };
 
-  const setInitSongDetail = async () => {
-    const tempSongInfo = await getSongs(String(songId));
-    if (tempSongInfo.data.isKeep) {
-      setKeepColor(designatedColor.KEEP_FILLED);
-    } else {
-      setKeepColor(designatedColor.KEEP_EMPTY);
-    }
-    setSongInfo(tempSongInfo.data);
-    const tempSongsReviews = await getSongsReviews(String(songId));
+  const setInitSongDetail = () => {
+    getSongs(String(songId)).then(tempSongInfo => {
+      if (tempSongInfo.data.isKeep) {
+        setKeepColor(designatedColor.KEEP_FILLED);
+      } else {
+        setKeepColor(designatedColor.KEEP_EMPTY);
+      }
+      setSongInfo(tempSongInfo.data);
+    });
 
-    setSongReviews(tempSongsReviews.data);
-    const tempSongRelated = await getSongsRelated(String(songId), page, size);
-    setSongRelated(tempSongRelated.data.songs);
-    setPage(tempSongRelated.data.nextPage);
+    getSongsReviews(String(songId)).then(tempSongsReviews => {
+      setSongReviews(tempSongsReviews.data);
 
-    const selectedReview =
-      tempSongsReviews.data
-        ?.filter(review => review.selected)
-        .map(review => review.songReviewOptionId) || [];
-    if (selectedReview.includes(1)) {
-      setIsLikePressed(true);
-      console.log('isLikePressed:', isLikePressed);
-    } else if (selectedReview.includes(2)) {
-      setIsDislikePressed(true);
-      console.log('isDislikePressed:', isDislikePressed);
-    }
-    console.log(selectedReview);
+      const selectedReview =
+        tempSongsReviews.data
+          ?.filter(review => review.selected)
+          .map(review => review.songReviewOptionId) || [];
+      if (selectedReview.includes(1)) {
+        setIsLikePressed(true);
+        console.log('isLikePressed:', isLikePressed);
+      } else if (selectedReview.includes(2)) {
+        setIsDislikePressed(true);
+        console.log('isDislikePressed:', isDislikePressed);
+      }
+      console.log(selectedReview);
+    });
+
+    getSongsRelated(String(songId), page, size).then(tempSongRelated => {
+      setSongRelated(tempSongRelated.data.songs);
+      setPage(tempSongRelated.data.nextPage);
+    });
   };
 
   const handleOnPressKeep = async () => {

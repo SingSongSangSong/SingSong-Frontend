@@ -3,40 +3,141 @@ import {Comment} from '../types';
 
 // CommentState 인터페이스 정의
 interface CommentState {
-  recommentCount: {[commentId: number]: number}; // 댓글 ID를 키로, 답글 개수를 값으로 가짐
-  setRecommentCount: (comments: Comment[]) => void; // 댓글 배열을 받아 답글 개수를 설정
-  addRecommentCount: (commentId: number) => void; // 특정 댓글 ID의 답글 개수를 증가
+  comments: {[commentId: number]: Comment}; // commentId를 키로 사용하는 댓글 객체
+  recomments: {[commentId: number]: {[recommentId: number]: Comment}}; // commentId와 recommentId를 키로 사용하는 답글 객체
+  setComments: (comments: Comment[]) => void; // 댓글 배열을 설정
+  addComment: (comment: Comment) => void; // 댓글 추가
+  updateIsLikedComment: (commentId: number, isLiked: boolean) => void;
+  updateLikesComment: (commentId: number) => void;
+  updateIsLikedRecomment: (
+    commentId: number,
+    recommentId: number,
+    isLiked: boolean,
+  ) => void;
+  updateLikesRecomment: (commentId: number, recommentId: number) => void;
+  addRecommentComment: (commentId: number, recomment: Comment) => void; // recomment 더하기
+  getRecommentCount: (commentId: number) => number;
 }
 
-// zustand 스토어 생성
-const useCommentStore = create<CommentState>((set, get) => {
-  // 초기 상태
-  const initState = {
-    recommentCount: {},
-  };
+const useCommentStore = create<CommentState>((set, get) => ({
+  comments: {},
+  recomments: {},
 
-  return {
-    ...initState,
+  // 댓글 배열을 설정하는 함수
+  setComments: (comments: Comment[]) => {
+    const commentsMap = comments.reduce((acc, comment) => {
+      acc[comment.commentId] = comment;
+      return acc;
+    }, {} as {[commentId: number]: Comment});
 
-    // 댓글 배열을 받아 답글 개수를 설정하는 함수
-    setRecommentCount: (comments: Comment[]) => {
-      const recommentCount = comments.reduce((acc, comment) => {
-        acc[comment.commentId] = comment.recomments.length; // commentId를 키로, 답글 개수를 값으로 설정
-        return acc;
-      }, {} as {[commentId: number]: number});
+    const recommentsMap = comments.reduce((acc, comment) => {
+      if (comment.recomments.length > 0) {
+        acc[comment.commentId] = comment.recomments.reduce(
+          (reAcc, recomment) => {
+            reAcc[recomment.commentId] = recomment;
+            return reAcc;
+          },
+          {} as {[recommentId: number]: Comment},
+        );
+      }
+      return acc;
+    }, {} as {[commentId: number]: {[recommentId: number]: Comment}});
 
-      set({recommentCount}); // 상태 업데이트
-    },
+    set({
+      comments: commentsMap,
+      recomments: recommentsMap,
+    });
+  },
 
-    // 특정 댓글 ID의 답글 개수를 증가시키는 함수
-    addRecommentCount: (commentId: number) => {
-      const {recommentCount} = get(); // 현재 상태 가져오기
-      const updatedCount = recommentCount[commentId]
-        ? recommentCount[commentId] + 1
-        : 1;
-      set({recommentCount: {...recommentCount, [commentId]: updatedCount}}); // 상태 업데이트
-    },
-  };
-});
+  // 새로운 댓글을 추가하는 함수
+  addComment: (comment: Comment) => {
+    set(state => ({
+      comments: {
+        ...state.comments,
+        [comment.commentId]: comment,
+      },
+    }));
+  },
+
+  // 특정 댓글 ID의 좋아요 상태를 업데이트하는 함수
+  updateIsLikedComment: (commentId: number, isLiked: boolean) => {
+    set(state => ({
+      comments: {
+        ...state.comments,
+        [commentId]: {
+          ...state.comments[commentId],
+          isLiked,
+        },
+      },
+    }));
+  },
+
+  // 특정 댓글 ID의 좋아요 개수를 1 증가시키는 함수
+  updateLikesComment: (commentId: number) => {
+    set(state => ({
+      comments: {
+        ...state.comments,
+        [commentId]: {
+          ...state.comments[commentId],
+          likes: state.comments[commentId].likes + 1,
+        },
+      },
+    }));
+  },
+
+  // 특정 답글의 좋아요 상태를 업데이트하는 함수
+  updateIsLikedRecomment: (
+    commentId: number,
+    recommentId: number,
+    isLiked: boolean,
+  ) => {
+    set(state => ({
+      recomments: {
+        ...state.recomments,
+        [commentId]: {
+          ...state.recomments[commentId],
+          [recommentId]: {
+            ...state.recomments[commentId][recommentId],
+            isLiked,
+          },
+        },
+      },
+    }));
+  },
+
+  // 특정 답글의 좋아요 개수를 1 증가시키는 함수
+  updateLikesRecomment: (commentId: number, recommentId: number) => {
+    set(state => ({
+      recomments: {
+        ...state.recomments,
+        [commentId]: {
+          ...state.recomments[commentId],
+          [recommentId]: {
+            ...state.recomments[commentId][recommentId],
+            likes: state.recomments[commentId][recommentId].likes + 1,
+          },
+        },
+      },
+    }));
+  },
+
+  // 특정 댓글에 답글을 추가하는 함수
+  addRecommentComment: (commentId: number, recomment: Comment) => {
+    set(state => ({
+      recomments: {
+        ...state.recomments,
+        [commentId]: {
+          ...state.recomments[commentId],
+          [recomment.commentId]: recomment,
+        },
+      },
+    }));
+  },
+  getRecommentCount: (commentId: number) => {
+    const state = get();
+    const recommentsForComment = state.recomments[commentId];
+    return recommentsForComment ? Object.keys(recommentsForComment).length : 0;
+  },
+}));
 
 export default useCommentStore;

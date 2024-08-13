@@ -5,30 +5,35 @@ import {Comment} from '../../types';
 import {CommentItem} from './CommentItem';
 
 interface CommentlistProps {
-  commentData: Comment[];
+  commentData: {[commentId: number]: Comment};
   onPressRecomment: (comment: Comment) => void;
   onPressMoreInfo: (
     reportCommentId: number,
     reportSubjectMemberId: number,
   ) => void;
   onPressLikeButton: (commentId: number) => void;
-  recommentCount: {[commentId: number]: number};
+  getRecommentCount: (commentId: number) => number;
 }
 
-const Commentlist: React.FC<CommentlistProps> = ({
+const Commentlist = ({
   commentData,
   onPressRecomment,
   onPressMoreInfo,
   onPressLikeButton,
-  recommentCount,
-}) => {
+  getRecommentCount,
+}: CommentlistProps) => {
   console.log('commentData', commentData);
+
+  // 객체를 배열로 변환
+  const commentArray = Object.values(commentData);
+
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
       <CommentItem
         commentId={item.commentId}
         content={item.content}
         createdAt={item.createdAt}
+        isLiked={item.isLiked}
         likes={item.likes}
         isRecomment={item.isRecomment}
         memberId={item.memberId}
@@ -46,18 +51,17 @@ const Commentlist: React.FC<CommentlistProps> = ({
           onPressLikeButton(item.commentId);
         }}
         isVisibleRecomment={true}
-        recommentCount={recommentCount[item.commentId]}
+        recommentCount={getRecommentCount(item.commentId)}
       />
     </View>
   );
 
   return (
     <FlatList
-      data={commentData}
+      data={commentArray} // 객체를 배열로 변환하여 FlatList에 전달
       renderItem={renderItem}
       keyExtractor={item => item.commentId.toString()}
     />
-    // <Text style={tw`text-white`}>hi!!!!!!!!</Text>
   );
 };
 

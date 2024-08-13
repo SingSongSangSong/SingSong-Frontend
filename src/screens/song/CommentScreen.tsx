@@ -77,14 +77,14 @@ function CommentScreen(props: CommentScreenProps) {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
-        {commentHandler.comments ? (
-          commentHandler.comments.length > 0 ? (
+        {!commentHandler.isLoading ? (
+          Object.keys(commentHandler.comments).length > 0 ? (
             <Commentlist
               commentData={commentHandler.comments}
               onPressRecomment={handleOnPressRecomment}
               onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
               onPressLikeButton={commentHandler.handleOnPressLikeButton}
-              recommentCount={commentHandler.recommentCount}
+              getRecommentCount={commentHandler.getRecommentCount}
             />
           ) : (
             <View style={tw`flex-1 justify-center items-center`}>
@@ -114,7 +114,12 @@ function CommentScreen(props: CommentScreenProps) {
           <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
           <View
             style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <TextButton title="신고하기" onPress={handleOnPressReport} />
+            <TextButton
+              title="신고하기"
+              onPress={handleOnPressReport}
+              color="white"
+              size={4}
+            />
           </View>
           <View style={tw`py-4`}>
             <TextButton
@@ -122,6 +127,8 @@ function CommentScreen(props: CommentScreenProps) {
               onPress={() => {
                 commentHandler.setIsModalVisible(false);
               }}
+              color="white"
+              size={4}
             />
           </View>
         </View>

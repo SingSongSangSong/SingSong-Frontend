@@ -21,10 +21,10 @@ type RecommentScreenProps =
   | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.RECOMMENT>;
 
 function RecommentScreen(props: RecommentScreenProps) {
-  const comment = props.route?.params?.comment; // 초기 카테고리
+  const commentId = props.route?.params?.comment.commentId; // 초기 카테고리
 
   //   const commentHandler = useComment(songNumber, songId);
-  const recommentHandler = useRecomment(comment);
+  const recommentHandler = useRecomment(commentId);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -66,10 +66,15 @@ function RecommentScreen(props: RecommentScreenProps) {
       <View style={tw`flex-1`}>
         {recommentHandler.parentComment && (
           <Recommentlist
-            parentComment={recommentHandler.parentComment}
-            recomments={recommentHandler.recomments}
+            parentComment={recommentHandler.parentComment} //comments[commentId]
+            recomments={recommentHandler.recomments} //recomments[commentId]
             onPressMoreInfo={recommentHandler.handleOnPressMoreInfo}
-            onPressLikeButton={recommentHandler.handleOnPressLikeButton}
+            onPressCommentLikeButton={
+              recommentHandler.handleOnPressCommentLikeButton
+            }
+            onPressRecommentLikeButton={
+              recommentHandler.handleOnPressRecommentLikeButton
+            }
           />
         )}
       </View>
@@ -90,7 +95,12 @@ function RecommentScreen(props: RecommentScreenProps) {
           <Text style={tw`text-white font-bold text-xl my-4`}>답글</Text>
           <View
             style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <TextButton title="신고하기" onPress={handleOnPressReport} />
+            <TextButton
+              title="신고하기"
+              onPress={handleOnPressReport}
+              color="white"
+              size={3}
+            />
           </View>
           <View style={tw`py-4`}>
             <TextButton
@@ -98,6 +108,8 @@ function RecommentScreen(props: RecommentScreenProps) {
               onPress={() => {
                 recommentHandler.setIsModalVisible(false);
               }}
+              color="white"
+              size={3}
             />
           </View>
         </View>
