@@ -13,7 +13,8 @@ function AppStackNavigator() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        ...TransitionPresets.FadeFromBottomAndroid, // iOS 스타일의 슬라이드 애니메이션
+        // ...TransitionPresets.FadeFromBottomAndroid, // iOS 스타일의 슬라이드 애니메이션
+        animationEnabled: false,
       }}>
       <Stack.Screen
         name={appStackNavigations.SPLASH}
