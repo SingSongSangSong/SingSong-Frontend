@@ -28,9 +28,9 @@ const useUserInfo = () => {
 
   const [selectedGender, setSelectedGender] = useState<string>();
 
-  useEffect(() => {
-    setSelectedGender(gender);
-  }, [gender]);
+  // useEffect(() => {
+  //   setSelectedGender(gender);
+  // }, [gender]);
 
   const {setSecureValue, getIsValidToken} = TokenStore();
 
@@ -64,6 +64,7 @@ const useUserInfo = () => {
       setCharts('MALE', chartData.data.male);
       setTime(chartData.data.time);
       setGender(chartData.data.gender);
+      setSelectedGender(chartData.data.gender);
     } catch (error) {
       console.error('Error fetching chart:', error);
     }

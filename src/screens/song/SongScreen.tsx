@@ -92,6 +92,7 @@ function SongScreen(props: SongScreenProps) {
                     <Image
                       source={{uri: songDetailHandler.songInfo?.Album}}
                       style={tw`w-50 h-50 rounded-md`}
+                      resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
                     />
                   </View>
                 )}
@@ -126,12 +127,14 @@ function SongScreen(props: SongScreenProps) {
             </View>
 
             {songDetailHandler.songInfo ? (
-              <Text
-                style={tw`flex-1 text-white mt-4`}
-                numberOfLines={1}
-                ellipsizeMode="tail">
-                {songDetailHandler.songInfo.singerName}
-              </Text>
+              <View>
+                <Text
+                  style={tw`text-white mt-4`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
+                  {songDetailHandler.songInfo.singerName}
+                </Text>
+              </View>
             ) : (
               <View
                 style={tw`bg-[${designatedColor.GRAY4}] w-[12] h-6 rounded-lg mt-4`}
@@ -264,17 +267,17 @@ function SongScreen(props: SongScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {/* {songDetailHandler.songRelated && ( */}
       <View style={tw`h-full w-full`}>
-        {songDetailHandler.songRelated && (
-          <Relatedlist
-            isLoading={songDetailHandler.isLoading}
-            relatedlistData={songDetailHandler.songRelated}
-            onPress={handleOnPressRelated}
-            renderHeader={renderHeader}
-            handleRefreshRelatedSongs={
-              songDetailHandler.handleRefreshRelatedSongs
-            }
-          />
-        )}
+        {/* {songDetailHandler.songRelated && ( */}
+        <Relatedlist
+          isLoading={songDetailHandler.isLoading}
+          relatedlistData={songDetailHandler.songRelated}
+          onPress={handleOnPressRelated}
+          renderHeader={renderHeader}
+          handleRefreshRelatedSongs={
+            songDetailHandler.handleRefreshRelatedSongs
+          }
+        />
+        {/* )} */}
       </View>
       {/* )} */}
     </SafeAreaView>
