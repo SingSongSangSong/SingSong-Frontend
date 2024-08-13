@@ -1,4 +1,4 @@
-import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -74,10 +74,29 @@ function SongScreen(props: SongScreenProps) {
           <View style={tw`justify-center items-center overflow-hidden`}>
             <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
             <View style={tw`w-full h-30 bg-black`} />
-            <View
-              style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
-              <MusicIcon width={64} height={64} />
-            </View>
+            {!songDetailHandler.isInit ? (
+              <View
+                style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
+                <MusicIcon width={64} height={64} />
+              </View>
+            ) : (
+              <>
+                {songDetailHandler.songInfo?.Album == '' ? (
+                  <View
+                    style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
+                    <MusicIcon width={64} height={64} />
+                  </View>
+                ) : (
+                  <View
+                    style={tw`absolute top-5 w-50 h-50 rounded-lg justify-center items-center`}>
+                    <Image
+                      source={{uri: songDetailHandler.songInfo?.Album}}
+                      style={tw`w-50 h-50 rounded-md`}
+                    />
+                  </View>
+                )}
+              </>
+            )}
           </View>
           <View style={tw`px-4`}>
             <View style={tw`flex-row items-center mt-3`}>
@@ -93,7 +112,10 @@ function SongScreen(props: SongScreenProps) {
               )}
 
               {songDetailHandler.songInfo ? (
-                <Text style={tw`text-white text-2xl ml-4`}>
+                <Text
+                  style={tw`flex-1 text-white text-2xl ml-4`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
                   {songDetailHandler.songInfo.songName}
                 </Text>
               ) : (
@@ -104,7 +126,10 @@ function SongScreen(props: SongScreenProps) {
             </View>
 
             {songDetailHandler.songInfo ? (
-              <Text style={tw`text-white mt-4`}>
+              <Text
+                style={tw`flex-1 text-white mt-4`}
+                numberOfLines={1}
+                ellipsizeMode="tail">
                 {songDetailHandler.songInfo.singerName}
               </Text>
             ) : (
@@ -134,7 +159,7 @@ function SongScreen(props: SongScreenProps) {
           </View>
         </View>
 
-        <View style={tw`flex-row justify-between mt-6 items-center`}>
+        <View style={tw`flex-row justify-between mt-6 items-center mx-4`}>
           {songDetailHandler.keepColor ? (
             <View style={tw`flex-row items-center`}>
               <TouchableOpacity
@@ -239,15 +264,17 @@ function SongScreen(props: SongScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {/* {songDetailHandler.songRelated && ( */}
       <View style={tw`h-full w-full`}>
-        <Relatedlist
-          isLoading={songDetailHandler.isLoading}
-          relatedlistData={songDetailHandler.songRelated}
-          onPress={handleOnPressRelated}
-          renderHeader={renderHeader}
-          handleRefreshRelatedSongs={
-            songDetailHandler.handleRefreshRelatedSongs
-          }
-        />
+        {songDetailHandler.songRelated && (
+          <Relatedlist
+            isLoading={songDetailHandler.isLoading}
+            relatedlistData={songDetailHandler.songRelated}
+            onPress={handleOnPressRelated}
+            renderHeader={renderHeader}
+            handleRefreshRelatedSongs={
+              songDetailHandler.handleRefreshRelatedSongs
+            }
+          />
+        )}
       </View>
       {/* )} */}
     </SafeAreaView>

@@ -6,6 +6,7 @@ interface KeepSong {
 }
 
 interface RcdHomeSong {
+  album: string;
   singerName: string;
   songId: number;
   songName: string;
@@ -87,7 +88,7 @@ interface DeleteKeepResponse {
 }
 
 interface SongInfo {
-  album: string;
+  Album: string;
   description: string;
   isKeep: true;
   octave: string;

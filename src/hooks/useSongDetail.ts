@@ -21,6 +21,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLikePressed, setIsLikePressed] = useState(false);
   const [isDislikePressed, setIsDislikePressed] = useState(false);
+  const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
     if (!songInfo) {
@@ -69,6 +70,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
         setKeepColor(designatedColor.KEEP_EMPTY);
       }
       setSongInfo(tempSongInfo.data);
+      setIsInit(true);
     });
 
     getSongsReviews(String(songId)).then(tempSongsReviews => {
@@ -199,6 +201,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
   };
 
   return {
+    isInit,
     isLoading,
     isLikePressed,
     isDislikePressed,

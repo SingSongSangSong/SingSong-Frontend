@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {Dimensions, Image, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
@@ -10,6 +10,7 @@ type SongCardProps = {
   singerName: string;
   songNumber: number;
   onSongPress: () => void;
+  album: string;
 };
 
 const SongCard = ({
@@ -17,23 +18,47 @@ const SongCard = ({
   singerName,
   songNumber,
   onSongPress,
+  album,
 }: SongCardProps) => {
   const deviceWidth = Dimensions.get('window').width;
   const cardWidth = deviceWidth * 0.4;
+  // console.log('album', album);
 
   return (
     <TouchableOpacity style={tw`mx-1`} onPress={onSongPress}>
-      <View
-        style={[
-          {
-            backgroundColor: 'rgba(0, 0, 0, 1)',
-            width: cardWidth,
-            height: cardWidth,
-          },
-          tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
-        ]}>
-        <MusicIcon width={40} height={40} />
-      </View>
+      {album != '' ? (
+        <View
+          style={[
+            {
+              width: cardWidth,
+              height: cardWidth,
+            },
+            tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
+          ]}>
+          <Image
+            source={{uri: album}}
+            style={[
+              tw`rounded-md`,
+              {
+                width: cardWidth,
+                height: cardWidth,
+              },
+            ]}
+          />
+        </View>
+      ) : (
+        <View
+          style={[
+            {
+              backgroundColor: 'rgba(0, 0, 0, 1)',
+              width: cardWidth,
+              height: cardWidth,
+            },
+            tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
+          ]}>
+          <MusicIcon width={40} height={40} />
+        </View>
+      )}
       <View style={tw`flex-row m-1`}>
         <View
           style={tw`px-3 py-0.5 border border-[${designatedColor.PINK2}] rounded-full`}>

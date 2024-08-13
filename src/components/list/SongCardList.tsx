@@ -44,6 +44,7 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
               songName={song.songName}
               singerName={song.singerName}
               onSongPress={() => onSongPress(song.songNumber, song.songId)}
+              album={song.album}
             />
           ))}
       </ScrollView>
