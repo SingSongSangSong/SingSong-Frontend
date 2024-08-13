@@ -14,6 +14,7 @@ const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
   const {memberInfo, setMemberInfo} = useMemberStore();
   const [isEnabled, setIsEnabled] = useState<boolean>(true);
+  const [isInit, setIsInit] = useState<boolean>(false);
   const {
     tags,
     previewSongs,
@@ -56,6 +57,7 @@ const useUserInfo = () => {
 
   const fetchChart = async () => {
     try {
+      setIsInit(true);
       console.log('fetchChart request!!!!!!!!!!!!!!!!');
       const chartData = await getChart();
       setCharts('FEMALE', chartData.data.female); //chart 데이터 설정
@@ -101,6 +103,7 @@ const useUserInfo = () => {
   };
 
   return {
+    isInit,
     tags,
     previewSongs,
     charts,

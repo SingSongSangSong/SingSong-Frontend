@@ -25,11 +25,13 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
   const userInfoHandler = useUserInfo();
 
   useEffect(() => {
-    userInfoHandler.fetchChart();
+    if (!userInfoHandler.isInit) {
+      userInfoHandler.fetchChart();
+    }
+
     if (isEmptyObject(userInfoHandler.memberInfo)) {
       userInfoHandler.getUserInfo();
     }
-    console.log('userInfoHandler of chart', userInfoHandler.charts);
   }, []);
 
   const isEmptyObject = (obj: Record<string, any>): boolean => {
