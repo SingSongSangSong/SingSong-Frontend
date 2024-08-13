@@ -40,6 +40,10 @@ function SettingScreen({navigation}: SettingScreenProps) {
     );
   };
 
+  const handleOnBlacklistButton = () => {
+    navigation.navigate(homeStackNavigations.BLACKLIST);
+  };
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
@@ -67,13 +71,23 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
             개인 / 보안
           </Text>
-          <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
-            <TextButton
-              title="회원 탈퇴"
-              onPress={handleWithdrawButton}
-              color="white"
-              size={3}
-            />
+          <View style={tw`mt-4 ml-2`}>
+            <View style={tw`items-start mb-4`}>
+              <TextButton
+                title="댓글 차단 관리"
+                onPress={handleOnBlacklistButton}
+                color="white"
+                size={4}
+              />
+            </View>
+            <View style={tw`items-start`}>
+              <TextButton
+                title="회원 탈퇴"
+                onPress={handleWithdrawButton}
+                color="white"
+                size={4}
+              />
+            </View>
           </View>
         </View>
       </View>

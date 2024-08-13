@@ -108,24 +108,38 @@ function CommentScreen(props: CommentScreenProps) {
 
       <Modal
         isVisible={commentHandler.isModalVisible}
-        onBackdropPress={() => commentHandler.setIsModalVisible(false)}
+        onBackdropPress={() => {
+          commentHandler.setIsModalVisible(false);
+          commentHandler.setIsKeyboardVisible(true);
+        }}
         style={{justifyContent: 'flex-end', margin: 0}}>
         <View style={tw`bg-black w-full px-4`}>
           <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
           <View
             style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <TextButton
-              title="신고하기"
-              onPress={handleOnPressReport}
-              color="white"
-              size={4}
-            />
+            <View style={tw`mb-3`}>
+              <TextButton
+                title="신고하기"
+                onPress={handleOnPressReport}
+                color="white"
+                size={4}
+              />
+            </View>
+            <View style={tw`mt-3`}>
+              <TextButton
+                title="차단하기"
+                onPress={commentHandler.handleOnPressBlacklist}
+                color="white"
+                size={4}
+              />
+            </View>
           </View>
           <View style={tw`py-4`}>
             <TextButton
               title="닫기"
               onPress={() => {
                 commentHandler.setIsModalVisible(false);
+                commentHandler.setIsKeyboardVisible(true);
               }}
               color="white"
               size={4}

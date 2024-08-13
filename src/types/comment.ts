@@ -39,6 +39,17 @@ interface PostCommentLikeResponse {
   message: string;
 }
 
+interface Blacklist {
+  blockDate: string;
+  memberId: number;
+  nickname: string;
+}
+
+interface GetBlacklistResponse {
+  data: Blacklist[];
+  message: string;
+}
+
 export type {
   Comment,
   PostCommentResponse,
@@ -46,4 +57,6 @@ export type {
   CommentReport,
   PostCommentReportResponse,
   PostCommentLikeResponse,
+  Blacklist,
+  GetBlacklistResponse,
 };

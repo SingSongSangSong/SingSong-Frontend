@@ -3,6 +3,10 @@ import {useState} from 'react';
 import postComment from '../api/comment/postComment';
 import postCommentLike from '../api/comment/postCommentLike';
 import useCommentStore from '../store/useCommentStore';
+import postBlacklist from '../api/comment/postBlacklist';
+import getComment from '../api/comment/getComment';
+import Toast from 'react-native-toast-message';
+import {Alert} from 'react-native';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -13,6 +17,7 @@ const useRecomment = (commentId: number) => {
   const {
     comments,
     recomments,
+    setComments,
     updateIsLikedComment,
     updateLikesComment,
     addRecommentComment,
@@ -41,6 +46,12 @@ const useRecomment = (commentId: number) => {
 
     // 답글을 스토어에 추가
     addRecommentComment(commentId, tempRecomment.data);
+  };
+
+  const setInitRecomments = async () => {
+    const tempComments = await getComment(String(comments[commentId].songId));
+    console.log('refreshComments', tempComments.data);
+    setComments(tempComments.data); //Comment[], comment 데이터 설정
   };
 
   const handleOnPressMoreInfo = (
@@ -76,6 +87,40 @@ const useRecomment = (commentId: number) => {
     updateLikesComment(commentId); // 좋아요 개수를 증가
   };
 
+  const _handleOnPressBlacklist = async (reportSubjectMemberId: number) => {
+    await postBlacklist(reportSubjectMemberId);
+    await setInitRecomments();
+  };
+
+  const handleOnPressBlacklist = () => {
+    Alert.alert(
+      '차단',
+      '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다. 차단하시겠습니까?',
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {
+          text: '확인',
+          onPress: () => {
+            _handleOnPressBlacklist(reportSubjectMemberId);
+            setIsModalVisible(false);
+            setIsKeyboardVisible(true);
+            Toast.show({
+              type: 'selectedToast',
+              text1: '차단되었습니다.',
+              position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+              visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+            });
+          },
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
+  };
+
   return {
     recomments: recomments[commentId], // 특정 댓글의 답글들을 반환
     reportCommentId,
@@ -89,6 +134,7 @@ const useRecomment = (commentId: number) => {
     handleOnPressMoreInfo,
     handleOnPressCommentLikeButton,
     handleOnPressRecommentLikeButton,
+    handleOnPressBlacklist,
   };
 };
 

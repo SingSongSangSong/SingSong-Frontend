@@ -15,6 +15,7 @@ import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import ReportScreen from '../../screens/song/ReportScreen';
 import TagDetailScreen from '../../screens/home/TagDetailScreen';
+import BlacklistScreen from '../../screens/home/BlacklistScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -159,6 +160,23 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '설정', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.BLACKLIST}
+        component={BlacklistScreen}
+        options={() => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '댓글 차단 관리', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임

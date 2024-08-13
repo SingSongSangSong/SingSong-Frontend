@@ -44,3 +44,5 @@ export * from './item/HotTrendingItem';
 export * from './button/TagIconButton';
 export * from './list/TagDetailList';
 export * from './item/TagDetailListItem';
+export * from './list/BlacklistList';
+export * from './item/BlacklistItem';

@@ -64,7 +64,7 @@ function RecommentScreen(props: RecommentScreenProps) {
         <CommentKeyboard onSendPress={commentHandler.handleOnPressSendButton} />
       </View> */}
       <View style={tw`flex-1`}>
-        {recommentHandler.parentComment && (
+        {recommentHandler.parentComment ? (
           <Recommentlist
             parentComment={recommentHandler.parentComment} //comments[commentId]
             recomments={recommentHandler.recomments} //recomments[commentId]
@@ -76,6 +76,10 @@ function RecommentScreen(props: RecommentScreenProps) {
               recommentHandler.handleOnPressRecommentLikeButton
             }
           />
+        ) : (
+          <View style={tw`flex-1 justify-center items-center`}>
+            <Text style={tw`text-white`}>답글이 없어요</Text>
+          </View>
         )}
       </View>
       {recommentHandler.isKeyboardVisible && (
@@ -89,24 +93,38 @@ function RecommentScreen(props: RecommentScreenProps) {
 
       <Modal
         isVisible={recommentHandler.isModalVisible}
-        onBackdropPress={() => recommentHandler.setIsModalVisible(false)}
+        onBackdropPress={() => {
+          recommentHandler.setIsModalVisible(false);
+          recommentHandler.setIsKeyboardVisible(true);
+        }}
         style={{justifyContent: 'flex-end', margin: 0}}>
         <View style={tw`bg-black w-full px-4`}>
           <Text style={tw`text-white font-bold text-xl my-4`}>답글</Text>
           <View
             style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <TextButton
-              title="신고하기"
-              onPress={handleOnPressReport}
-              color="white"
-              size={3}
-            />
+            <View style={tw`mb-3`}>
+              <TextButton
+                title="신고하기"
+                onPress={handleOnPressReport}
+                color="white"
+                size={4}
+              />
+            </View>
+            <View style={tw`mt-3`}>
+              <TextButton
+                title="차단하기"
+                onPress={recommentHandler.handleOnPressBlacklist}
+                color="white"
+                size={4}
+              />
+            </View>
           </View>
           <View style={tw`py-4`}>
             <TextButton
               title="닫기"
               onPress={() => {
                 recommentHandler.setIsModalVisible(false);
+                recommentHandler.setIsKeyboardVisible(true);
               }}
               color="white"
               size={3}
