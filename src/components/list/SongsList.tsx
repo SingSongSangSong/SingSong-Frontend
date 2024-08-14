@@ -5,7 +5,7 @@ import {Song} from '../../types';
 
 interface SongsListProps {
   songlistData: Song[];
-  isShowKeepIcon: boolean | undefined;
+  isShowKeepIcon: boolean;
   onSongPress: (
     songId: number,
     songNumber: number,
@@ -13,8 +13,8 @@ interface SongsListProps {
     singerName: string,
     album: string,
   ) => void;
-  onKeepAddPress: (songId: number) => void;
-  onKeepRemovePress: (songId: number) => void;
+  onKeepAddPress?: (songId: number) => void;
+  onKeepRemovePress?: (songId: number) => void;
 }
 
 const SongsList = ({
@@ -43,8 +43,12 @@ const SongsList = ({
             item.album,
           )
         }
-        onKeepAddPress={() => onKeepAddPress(item.songId)}
-        onKeepRemovePress={() => onKeepRemovePress(item.songId)}
+        onKeepAddPress={
+          onKeepAddPress ? () => onKeepAddPress(item.songId) : () => {}
+        }
+        onKeepRemovePress={
+          onKeepRemovePress ? () => onKeepRemovePress(item.songId) : () => {}
+        }
       />
     </View>
   );

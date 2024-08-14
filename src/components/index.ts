@@ -50,3 +50,4 @@ export * from './item/SongItem';
 export * from './list/SongsList';
 export * from './list/RefreshSongsList';
 export * from './button/CheckButton';
+export * from './message/CustomModal';

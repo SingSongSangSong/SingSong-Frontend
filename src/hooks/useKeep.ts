@@ -12,6 +12,7 @@ const useKeep = () => {
   const {keepList, setKeepList} = useKeepListStore();
   const [removedSong, setRemovedSong] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRemoved, setIsRemoved] = useState(false);
 
   useEffect(() => {
     if (keepList.length == 0) {
@@ -124,7 +125,21 @@ const useKeep = () => {
     setRemovedSong(prevState => prevState.filter(num => num !== songNumber));
   };
 
+  const handleConfirmRemove = () => {
+    handleDeleteKeep(removedSong);
+    setRemovedSong([]);
+    setIsRemoved(false);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'keep에서 삭제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
   return {
+    isRemoved,
+    setIsRemoved,
     isLoading,
     isAllSelected,
     isAllDeleted,
@@ -137,6 +152,7 @@ const useKeep = () => {
     handleRemoveButton,
     handleInCircleButton,
     handleOutCircleButton,
+    handleConfirmRemove,
     // handleOnPressSonglist,
   };
 };

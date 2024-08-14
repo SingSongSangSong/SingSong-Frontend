@@ -44,7 +44,7 @@ function ReportScreen(props: ReportScreenProps) {
       />
       <View style={tw`m-20`}>
         <OutlineButton
-          title="신고"
+          title="신고하기"
           onPress={reportHandler.handleOnPressSubmit}
           color={designatedColor.GRAY3}
         />

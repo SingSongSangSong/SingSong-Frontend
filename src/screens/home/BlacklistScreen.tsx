@@ -5,7 +5,7 @@ import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {SafeAreaView, Text, View} from 'react-native';
 import useBlacklist from '../../hooks/useBlacklist';
-import {BlacklistList} from '../../components';
+import {BlacklistList, CustomModal} from '../../components';
 import ErrorIcon from '../../assets/svg/error.svg';
 
 type BlacklistScreenProps = StackScreenProps<
@@ -41,6 +41,7 @@ function BlacklistScreen({navigation}: BlacklistScreenProps) {
               </View>
             </View>
           ))}
+        {/* <CustomModal visible={isPressed} onClose={()}/> */}
       </View>
     </SafeAreaView>
   );

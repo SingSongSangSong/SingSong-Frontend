@@ -5,7 +5,12 @@ import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
 import {KeepStackParamList} from '../../types';
 import useKeep from '../../hooks/useKeep';
-import {CheckButton, RemoveButton, SonglistEdit} from '../../components';
+import {
+  CheckButton,
+  CustomModal,
+  RemoveButton,
+  SonglistEdit,
+} from '../../components';
 
 type KeepEditScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -47,10 +52,21 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
           <RemoveButton
             title={'삭제'}
             count={keepHandler.removedSong.length}
-            onPress={keepHandler.handleRemoveButton}
+            onPress={() => {
+              keepHandler.setIsRemoved(true);
+            }}
           />
         </View>
       )}
+      <CustomModal
+        visible={keepHandler.isRemoved}
+        onClose={() => keepHandler.setIsRemoved(false)}
+        message={'선택한 곡을 삭제하시겠습니까?'}
+        onConfirm={keepHandler.handleConfirmRemove}
+        onCancel={() => keepHandler.setIsRemoved(false)}
+        confirmText="삭제"
+        cancelText="취소"
+      />
     </SafeAreaView>
   );
 }
