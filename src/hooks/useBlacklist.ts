@@ -17,6 +17,17 @@ const useBlacklist = () => {
     setBlacklist(tempBlacklist.data);
   };
 
+  const _handleOnPress = async (memberId: number) => {
+    await deleteBlacklist([memberId]);
+    await setInitBlacklist();
+    Toast.show({
+      type: 'selectedToast',
+      text1: '차단이 해제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
   const handleOnPressDelete = async (memberId: number) => {
     Alert.alert(
       '댓글 차단 해제',
@@ -45,7 +56,7 @@ const useBlacklist = () => {
     );
   };
 
-  return {blacklist, handleOnPressDelete};
+  return {blacklist, handleOnPressDelete, _handleOnPress};
 };
 
 export default useBlacklist;

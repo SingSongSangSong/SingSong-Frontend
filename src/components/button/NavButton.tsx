@@ -9,7 +9,7 @@ interface NavButtonProps {
 }
 
 const NavButton = ({onPress, title}: NavButtonProps) => (
-  <TouchableOpacity onPress={onPress} style={tw`p-3`}>
+  <TouchableOpacity onPress={onPress} style={tw`p-3`} activeOpacity={0.8}>
     <Text style={{color: designatedColor.DARK_GRAY}}>{title}</Text>
   </TouchableOpacity>
 );

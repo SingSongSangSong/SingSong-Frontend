@@ -15,8 +15,8 @@ interface SongItemProps {
   isKeep: boolean | undefined;
   isShowKeepIcon: boolean;
   onSongPress: () => void;
-  onKeepAddPress: () => void | undefined;
-  onKeepRemovePress: () => void | undefined;
+  onKeepAddPress?: () => void | undefined;
+  onKeepRemovePress?: () => void | undefined;
 }
 
 const SongItem = ({
@@ -44,7 +44,7 @@ const SongItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={onSongPress}>
+    <TouchableOpacity onPress={onSongPress} activeOpacity={0.9}>
       <View
         style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
         <View style={tw`flex-row flex-1`}>
@@ -90,9 +90,12 @@ const SongItem = ({
             </Text>
           </View>
         </View>
-        <View style={tw`p-2`}>
+        <View>
           {isShowKeepIcon && (
-            <TouchableOpacity onPress={handleOnKeepPress}>
+            <TouchableOpacity
+              onPress={handleOnKeepPress}
+              activeOpacity={0.8}
+              style={tw`p-2`}>
               {isKeepPressed ? (
                 <KeepFilledIcon width={24} height={24} />
               ) : (

@@ -1,13 +1,20 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, View} from 'react-native';
 import tw from 'twrnc';
-import {RcdRefreshSong} from '../../types';
-import {RelatedlistItem} from '../item/RelatedlistItem';
+import {Song} from '../../types';
+import {SongItem} from '..';
 
 interface RelatedlistProps {
   isLoading: boolean;
-  relatedlistData: RcdRefreshSong[];
-  onPress: (songNumber: number, songId: number) => void;
+  relatedlistData: Song[];
+  isShowKeepIcon: boolean;
+  onSongPress: (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => void;
   handleRefreshRelatedSongs: () => void;
   renderHeader: () => React.ReactNode;
 }
@@ -15,17 +22,30 @@ interface RelatedlistProps {
 const Relatedlist: React.FC<RelatedlistProps> = ({
   isLoading,
   relatedlistData,
-  onPress,
+  isShowKeepIcon,
+  onSongPress,
   handleRefreshRelatedSongs,
   renderHeader,
 }) => {
-  const renderItem = ({item}: {item: RcdRefreshSong}) => (
-    <View style={tw`px-4 py-2`}>
-      <RelatedlistItem
+  const renderItem = ({item}: {item: Song}) => (
+    <View>
+      <SongItem
+        songId={item.songId}
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
-        onPress={() => onPress(item.songNumber, item.songId)}
+        album={item.album}
+        isKeep={item.isKeep}
+        isShowKeepIcon={isShowKeepIcon}
+        onSongPress={() =>
+          onSongPress(
+            item.songId,
+            item.songNumber,
+            item.songName,
+            item.singerName,
+            item.album,
+          )
+        }
       />
     </View>
   );

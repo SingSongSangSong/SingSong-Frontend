@@ -1,10 +1,10 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {SafeAreaView, Text, View} from 'react-native';
+import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {SongsList} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
-import {keepStackNavigations} from '../../constants';
+import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 
 // type KeepScreenNavigationProp = CompositeNavigationProp<
@@ -26,12 +26,12 @@ type KeepScreenProps = StackScreenProps<
 function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
 
-  const handleOnPressSonglist = (songNumber: number, songId: number) => {
-    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
-      songNumber,
-      songId,
-    });
-  };
+  // const handleOnPressSonglist = (songNumber: number, songId: number) => {
+  //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
+  //     songNumber,
+  //     songId,
+  //   });
+  // };
 
   const _onSongPress = (
     songId: number,
@@ -50,8 +50,8 @@ function KeepScreen({navigation}: KeepScreenProps) {
     <SafeAreaView style={tw`h-full w-full bg-black`}>
       <View style={tw`w-full h-full pt-6`}>
         {keepHandler.isLoading ? (
-          <View style={tw`h-full w-full justify-center items-center`}>
-            <Text style={tw`text-white font-bold`}>Loading...</Text>
+          <View style={tw`flex-1 justify-center items-center`}>
+            <ActivityIndicator size="small" color={designatedColor.PINK2} />
           </View>
         ) : (
           <View>

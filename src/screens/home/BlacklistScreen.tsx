@@ -2,10 +2,11 @@ import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
-import {homeStackNavigations} from '../../constants';
+import {designatedColor, homeStackNavigations} from '../../constants';
 import {SafeAreaView, Text, View} from 'react-native';
 import useBlacklist from '../../hooks/useBlacklist';
-import {BlacklistList} from '../../components';
+import {BlacklistList, CustomModal} from '../../components';
+import ErrorIcon from '../../assets/svg/error.svg';
 
 type BlacklistScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -31,11 +32,16 @@ function BlacklistScreen({navigation}: BlacklistScreenProps) {
             />
           ) : (
             <View style={tw`flex-1 justify-center items-center`}>
-              <Text style={tw`text-white font-bold`}>
-                차단한 목록이 없어요.
-              </Text>
+              <View style={tw`flex-1 items-center justify-center`}>
+                <ErrorIcon width={50} height={50} />
+                <Text
+                  style={tw`text-[${designatedColor.PINK2}] font-bold mt-4`}>
+                  차단한 유저가 없어요
+                </Text>
+              </View>
             </View>
           ))}
+        {/* <CustomModal visible={isPressed} onClose={()}/> */}
       </View>
     </SafeAreaView>
   );

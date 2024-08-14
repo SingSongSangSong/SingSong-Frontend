@@ -12,7 +12,8 @@ const IconButton = ({Icon, onPress, size}: IconButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`px-2 py-2 flex-row justify-center items-center`}>
+      style={tw`px-2 py-2 flex-row justify-center items-center`}
+      activeOpacity={0.8}>
       <Icon width={size} height={size} />
     </TouchableOpacity>
   );

@@ -60,7 +60,7 @@ const SonglistEditItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={() => handleOnPress()}>
+    <TouchableOpacity onPress={() => handleOnPress()} activeOpacity={0.8}>
       <View
         style={tw`flex-row items-center border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
         <View style={tw`mr-4 justify-center items-center`}>

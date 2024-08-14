@@ -25,7 +25,7 @@ const SongCard = ({
   // console.log('album', album);
 
   return (
-    <TouchableOpacity style={tw`mx-1`} onPress={onSongPress}>
+    <TouchableOpacity style={tw`mx-1`} onPress={onSongPress} activeOpacity={1}>
       {album != '' ? (
         <View
           style={[

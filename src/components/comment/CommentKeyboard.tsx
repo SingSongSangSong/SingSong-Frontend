@@ -39,7 +39,9 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
             setInputHeight(event.nativeEvent.contentSize.height)
           } // 텍스트 입력 시 높이 조절
         />
-        <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
+        <View style={tw`pr-4`}>
+          <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
+        </View>
       </View>
     </View>
   );

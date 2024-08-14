@@ -28,7 +28,8 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       ]}>
       <TouchableOpacity
         style={tw`flex-row justify-center items-center px-4 py-2`}
-        onPress={onPress}>
+        onPress={onPress}
+        activeOpacity={0.8}>
         {isPressed ? (
           <PressIcon width={20} height={20} />
         ) : (

@@ -31,7 +31,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       // 로고가 사라지는 애니메이션
       Animated.timing(logoOpacity, {
         toValue: 0,
-        duration: 1000, // 1초
+        duration: 800, // 1초
         delay: 1000, // 1초 동안 유지한 후 사라짐
         useNativeDriver: true,
       }).start();
@@ -44,7 +44,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         duration: 1000, // 1초
         useNativeDriver: true,
       }).start();
-    }, 3000); // 로고가 사라지고 나서 첫 번째 텍스트 나타남
+    }, 2000); // 로고가 사라지고 나서 첫 번째 텍스트 나타남
 
     // 두 번째 텍스트가 나타나는 애니메이션
     setTimeout(() => {
@@ -53,13 +53,13 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         duration: 1000, // 1초
         useNativeDriver: true,
       }).start();
-    }, 5000); // 첫 번째 텍스트가 나타난 후 두 번째 텍스트 나타남
+    }, 2800); // 첫 번째 텍스트가 나타난 후 두 번째 텍스트 나타남
 
     // 애니메이션 완료 후 로그인 화면으로 전환
     const timer = setTimeout(() => {
       handleNavigation();
       fetchDataHandler.fetchData();
-    }, 7000); // 총 6초 후 로그인 화면으로 전환
+    }, 3000); // 총 6초 후 로그인 화면으로 전환
 
     return () => clearTimeout(timer);
   }, []);

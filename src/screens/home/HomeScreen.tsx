@@ -3,7 +3,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
-import {HotTrending, Taglist, TextButton} from '../../components';
+import {HotTrending, IconButton, Taglist, TextButton} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -71,9 +71,14 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
             style={tw`w-10 h-10`}
           /> */}
           <LogoIcon />
-          <TouchableOpacity onPress={handleOnPressSetting} style={tw`p-2`}>
+          {/* <TouchableOpacity onPress={handleOnPressSetting} style={tw`p-2`}>
             <SettingsIcon width={28} height={28} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <IconButton
+            Icon={SettingsIcon}
+            onPress={handleOnPressSetting}
+            size={28}
+          />
         </View>
         {/* 스크롤 가능한 콘텐츠 */}
         <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
