@@ -1,30 +1,15 @@
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text} from 'react-native';
 import Toast, {ToastConfig} from 'react-native-toast-message';
 import {designatedColor} from '../../constants';
-
-const windowWidth = Dimensions.get('window').width;
+import tw from 'twrnc';
 
 const CustomToast = () => {
   const toastConfig: ToastConfig = {
-    selectedToast: ({text1, props}) => (
+    selectedToast: ({text1}) => (
       <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          height: 60,
-          width: windowWidth - 30,
-          backgroundColor: `${designatedColor.GREEN}`,
-          padding: 4,
-          borderRadius: 18,
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            fontFamily: 'Poppins-Regular',
-          }}>
-          {text1}
-        </Text>
+        style={tw`justify-center items-center bg-[#373A40] w-[64] py-3 rounded-full`}>
+        <Text style={tw`text-[${designatedColor.PINK2}]`}>{text1}</Text>
       </View>
     ),
   };

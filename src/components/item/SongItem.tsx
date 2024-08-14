@@ -90,9 +90,12 @@ const SongItem = ({
             </Text>
           </View>
         </View>
-        <View style={tw`p-2`}>
+        <View>
           {isShowKeepIcon && (
-            <TouchableOpacity onPress={handleOnKeepPress} activeOpacity={0.8}>
+            <TouchableOpacity
+              onPress={handleOnKeepPress}
+              activeOpacity={0.8}
+              style={tw`p-2`}>
               {isKeepPressed ? (
                 <KeepFilledIcon width={24} height={24} />
               ) : (

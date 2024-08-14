@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
@@ -12,6 +12,7 @@ import useComment from '../../hooks/useComment';
 import {CommentKeyboard, Commentlist, TextButton} from '../../components';
 import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
+import ErrorIcon from '../../assets/svg/error.svg';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -88,12 +89,20 @@ function CommentScreen(props: CommentScreenProps) {
             />
           ) : (
             <View style={tw`flex-1 justify-center items-center`}>
-              <Text style={tw`text-white`}>댓글이 없어요</Text>
+              <View style={tw`flex-1 justify-center items-center`}>
+                <ErrorIcon width={50} height={50} />
+                <Text style={tw`text-[${designatedColor.PINK2}] mt-4`}>
+                  댓글이 없어요
+                </Text>
+              </View>
             </View>
           )
         ) : (
+          // <View style={tw`flex-1 justify-center items-center`}>
+          //   <Text style={tw`text-[${}]`}>댓글을 불러오는 중...</Text>
+          // </View>
           <View style={tw`flex-1 justify-center items-center`}>
-            <Text style={tw`text-white`}>댓글을 불러오는 중...</Text>
+            <ActivityIndicator size="small" color={designatedColor.PINK2} />
           </View>
         )}
       </View>

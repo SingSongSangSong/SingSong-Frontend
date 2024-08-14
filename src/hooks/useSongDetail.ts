@@ -15,7 +15,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
   const [songReviews, setSongReviews] = useState<SongInfoReview[] | null>(null);
   const [songRelated, setSongRelated] = useState<Song[]>();
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(20);
+  const [size, setSize] = useState<number>(10);
   const {setKeepList} = useKeepListStore();
   const [keepColor, setKeepColor] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
@@ -177,7 +177,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
     try {
       setIsLoading(true);
       //20개 이상일 경우에만 api 호출
-      if (songRelated && songRelated.length >= 20) {
+      if (songRelated) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('refresh!!!!!!!!!!!!!!!!!!!');
         getSongsRelated(String(songId), page, size)

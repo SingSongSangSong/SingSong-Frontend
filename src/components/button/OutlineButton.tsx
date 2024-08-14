@@ -18,7 +18,8 @@ const OutlineButton: React.FC<OutlineButtonProps> = ({
       style={tw`flex-row justify-center rounded-full border border-[${color}] `}>
       <TouchableOpacity
         style={tw`flex-row justify-center items-center px-4 py-2`}
-        onPress={onPress}>
+        onPress={onPress}
+        activeOpacity={0.8}>
         <Text style={tw`text-white text-sm text-[${color}]`}>{title}</Text>
       </TouchableOpacity>
     </View>
