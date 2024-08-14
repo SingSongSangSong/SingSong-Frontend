@@ -81,7 +81,7 @@ function SongScreen(props: SongScreenProps) {
               </View>
             ) : (
               <>
-                {songDetailHandler.songInfo?.Album == '' ? (
+                {songDetailHandler.songInfo?.album == '' ? (
                   <View
                     style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
                     <MusicIcon width={64} height={64} />
@@ -90,7 +90,7 @@ function SongScreen(props: SongScreenProps) {
                   <View
                     style={tw`absolute top-5 w-50 h-50 rounded-lg justify-center items-center`}>
                     <Image
-                      source={{uri: songDetailHandler.songInfo?.Album}}
+                      source={{uri: songDetailHandler.songInfo?.album}}
                       style={tw`w-50 h-50 rounded-md`}
                       resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
                     />

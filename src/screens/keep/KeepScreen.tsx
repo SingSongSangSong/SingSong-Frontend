@@ -1,7 +1,7 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, Text, View} from 'react-native';
-import {Songlist} from '../../components';
+import {SongsList} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {keepStackNavigations} from '../../constants';
@@ -33,6 +33,19 @@ function KeepScreen({navigation}: KeepScreenProps) {
     });
   };
 
+  const _onSongPress = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => {
+    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
+      songNumber,
+      songId,
+    });
+  };
+
   return (
     <SafeAreaView style={tw`h-full w-full bg-black`}>
       <View style={tw`w-full h-full pt-6`}>
@@ -43,9 +56,10 @@ function KeepScreen({navigation}: KeepScreenProps) {
         ) : (
           <View>
             {keepHandler.keepList.length > 0 ? (
-              <Songlist
+              <SongsList
                 songlistData={keepHandler.keepList}
-                onPress={handleOnPressSonglist}
+                isShowKeepIcon={false}
+                onSongPress={_onSongPress}
               />
             ) : (
               <View style={tw`h-full w-full justify-center items-center`}>

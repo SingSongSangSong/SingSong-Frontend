@@ -43,7 +43,7 @@ const CircleButton = ({
   return (
     <TouchableOpacity onPress={handlePress} style={styles.button}>
       <View style={[styles.circle, isPressed && styles.circlePressed]}>
-        {isPressed && <Icon name="check" size={12} color="white" />}
+        {isPressed && <Icon name="check" size={12} color="black" />}
       </View>
     </TouchableOpacity>
   );
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: designatedColor.BLACK,
   },
   circle: {
     width: 18,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circlePressed: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: designatedColor.PINK,
   },
 });
 

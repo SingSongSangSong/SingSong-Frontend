@@ -1,24 +1,24 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import {SonglistEditItem} from '../item/SonglistEditItem';
-import {KeepSong} from '../../types';
+import {Song} from '../../types';
 
 interface SonglistEditProps {
-  songlistData: KeepSong[];
+  songlistData: Song[];
   onPressIn: (songNumber: number) => void;
   onPressOut: (songNumber: number) => void;
   isAllSelected: boolean; // 추가된 prop
   isAllDeleted: boolean;
 }
 
-const SonglistEdit: React.FC<SonglistEditProps> = ({
+const SonglistEdit = ({
   songlistData,
   onPressIn,
   onPressOut,
   isAllSelected,
   isAllDeleted,
-}) => {
-  const renderItem = ({item}: {item: KeepSong}) => (
+}: SonglistEditProps) => {
+  const renderItem = ({item}: {item: Song}) => (
     <View>
       <SonglistEditItem
         key={item.songNumber}
@@ -26,6 +26,7 @@ const SonglistEdit: React.FC<SonglistEditProps> = ({
         songNumber={item.songNumber}
         songName={item.songName}
         singerName={item.singerName}
+        album={item.album}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         isAllSelected={isAllSelected}

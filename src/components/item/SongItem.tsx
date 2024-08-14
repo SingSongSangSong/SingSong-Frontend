@@ -64,13 +64,13 @@ const SongItem = ({
             ) : (
               <Image
                 source={{uri: album}}
-                style={tw`w-full h-full rounded-3xl`}
+                style={tw`w-full h-full rounded-sm`}
               />
             )}
           </View>
 
           <View style={tw`flex-1 h-full ml-4 mr-2`}>
-            <View style={tw`flex-row`}>
+            <View style={tw`flex-row items-center`}>
               <Text
                 style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
                 {songNumber}
@@ -83,23 +83,24 @@ const SongItem = ({
               </Text>
             </View>
             <Text
-              style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY_E5}]`}
+              style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {singerName}
             </Text>
           </View>
         </View>
-
-        {isShowKeepIcon && (
-          <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
-            {isKeepPressed ? (
-              <KeepFilledIcon width={24} height={24} />
-            ) : (
-              <KeepIcon width={24} height={24} />
-            )}
-          </TouchableOpacity>
-        )}
+        <View style={tw`p-2`}>
+          {isShowKeepIcon && (
+            <TouchableOpacity onPress={handleOnKeepPress}>
+              {isKeepPressed ? (
+                <KeepFilledIcon width={24} height={24} />
+              ) : (
+                <KeepIcon width={24} height={24} />
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </TouchableOpacity>
   );

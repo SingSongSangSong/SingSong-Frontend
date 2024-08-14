@@ -1,10 +1,10 @@
 import {create} from 'zustand';
-import {KeepSong} from '../types';
+import {Song} from '../types';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface KeepListState {
-  keepList: KeepSong[]; //나중에 keep에 저장되어 있는지 true/false로 바꾸기
-  setKeepList: (songs: KeepSong[]) => void;
+  keepList: Song[]; //나중에 keep에 저장되어 있는지 true/false로 바꾸기
+  setKeepList: (songs: Song[]) => void;
   // addSongToKeep: (song: Song) => void;
   // removeSongFromKeep: (songId: number) => void;
 }
@@ -17,7 +17,7 @@ const useKeepListStore = create<KeepListState>(set => {
   return {
     ...initState,
 
-    setKeepList: (songs: KeepSong[]) => {
+    setKeepList: (songs: Song[]) => {
       set(() => ({
         keepList: songs,
       }));

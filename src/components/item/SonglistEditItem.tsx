@@ -3,12 +3,14 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {CircleButton} from '..';
+import MusicIcon from '../../assets/svg/music.svg';
 
 interface SonglistEditItemProps {
   songId: number;
   songNumber: number;
   songName: string;
   singerName: string;
+  album: string | undefined;
   onPressIn: (songNumber: number) => void;
   onPressOut: (songNumber: number) => void;
   isAllSelected: boolean;
@@ -20,6 +22,7 @@ const SonglistEditItem = ({
   songNumber,
   songName,
   singerName,
+  album = '',
   onPressIn,
   onPressOut,
   isAllSelected,
@@ -59,7 +62,7 @@ const SonglistEditItem = ({
   return (
     <TouchableOpacity onPress={() => handleOnPress()}>
       <View
-        style={tw`flex-row border-b border-[${designatedColor.GRAY4}] mx-2 p-2`}>
+        style={tw`flex-row items-center border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
         <View style={tw`mr-4 justify-center items-center`}>
           <CircleButton
             onPressIn={() => handleOnPressIn()}
@@ -69,28 +72,44 @@ const SonglistEditItem = ({
           />
         </View>
 
-        {/* <Image
-          source={{
-            uri: 'https://t2.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/8fXh/image/dCyJyeNJ50BMG489LQg9cokHUpk.jpg',
-          }}
-          // style={styles.image}
-          style={tw`w-12 h-12 rounded-sm`}
-        /> */}
+        <View style={tw`items-center justify-center w-[12] h-[12]`}>
+          {album == '' ? (
+            <View
+              style={[
+                {
+                  backgroundColor: 'rgba(0, 0, 0, 1)',
+                  width: 54,
+                  height: 54,
+                },
+                tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
+              ]}>
+              <MusicIcon width={16} height={16} />
+            </View>
+          ) : (
+            <Image source={{uri: album}} style={tw`w-full h-full rounded-sm`} />
+          )}
+        </View>
 
-        <View style={tw`h-full ml-2`}>
+        <View style={tw`flex-1 h-full ml-4 mr-2`}>
           <View style={tw`flex-row items-center`}>
             <Text
-              style={tw`text-white text-sm mr-2 text-[${designatedColor.GREEN}] items-center justify-center font-bold`}>
+              style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
               {songNumber}
             </Text>
-            <View style={tw`ml-2`}>
-              <Text style={tw`text-white text-sm`}>{songName}</Text>
-              <Text
-                style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}]`}>
-                {singerName}
-              </Text>
-            </View>
+            <Text
+              style={tw`text-white text-sm ml-2 flex-1`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {songName}
+            </Text>
           </View>
+
+          <Text
+            style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {singerName}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
