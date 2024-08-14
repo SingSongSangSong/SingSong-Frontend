@@ -14,6 +14,16 @@ interface RcdHomeSong {
   tags: string[];
 }
 
+interface Song {
+  album: string;
+  isKeep: boolean;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+  tags: string[];
+}
+
 interface RcdExploreSong {
   album: string;
   singerName: string;
@@ -163,6 +173,7 @@ export type {
   SongInfoRelatedResponse,
   SongInfoReview,
   SongInfoReviewResponse,
+  Song,
   Chart,
   ChartResponse,
 };

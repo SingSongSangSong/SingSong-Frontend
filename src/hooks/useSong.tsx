@@ -7,7 +7,7 @@ import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
-import {HomeStackParamList, RcdRefreshSong} from '../types';
+import {HomeStackParamList, RcdRefreshSong, Song} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
@@ -26,9 +26,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const {setSelectedTag, refreshSongs, setRefreshSongs, updateRefreshSongs} =
     useSongStore();
-  const [songLst, setSongLst] = useState<RcdRefreshSong[]>(
-    refreshSongs[initTag],
-  ); //songlist를 렌더링하기 위함
+  const [songLst, setSongLst] = useState<Song[]>(refreshSongs[initTag]); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
   const {setKeepList} = useKeepListStore();

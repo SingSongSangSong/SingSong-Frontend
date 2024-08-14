@@ -6,7 +6,7 @@ import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
 import {designatedColor, homeStackNavigations} from '../../constants';
-import {RcdSonglist} from '../../components';
+import {RcdSonglist, SongsList} from '../../components';
 
 type RcdHomeScreenProps = {
   route: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>;
@@ -80,6 +80,13 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
               refreshing={songHandler.refreshing}
             />
           ) : (
+            // <SongsList
+            //   songlistData={songHandler.songLst}
+            //   isShowKeepIcon={true}
+            //   onSongPress={songHandler.handleOnPressSong}
+            //   onKeepAddPress={songHandler.toggleAddStored}
+            //   onKeepRemovePress={songHandler.toggleRemoveStored}
+            // />
             <View>
               <View
                 style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}

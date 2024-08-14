@@ -46,3 +46,5 @@ export * from './list/TagDetailList';
 export * from './item/TagDetailListItem';
 export * from './list/BlacklistList';
 export * from './item/BlacklistItem';
+export * from './item/SongItem';
+export * from './list/SongsList';
