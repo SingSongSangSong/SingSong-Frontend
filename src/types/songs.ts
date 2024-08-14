@@ -50,7 +50,7 @@ interface RcdSong {
 }
 
 interface KeepResponse {
-  data: KeepSong[];
+  data: Song[];
   message: string;
 }
 
@@ -70,7 +70,7 @@ interface RcdExploreResponse {
 }
 
 interface RcdRefreshResponse {
-  data: RcdRefreshSong[];
+  data: Song[];
   message: string;
 }
 
@@ -98,7 +98,7 @@ interface DeleteKeepResponse {
 }
 
 interface SongInfo {
-  Album: string;
+  album: string;
   description: string;
   isKeep: true;
   octave: string;

@@ -1,11 +1,11 @@
 import {create} from 'zustand';
-import {Chart, RcdExploreSong, RcdHomeSong, RcdRefreshSong} from '../types';
+import {Chart, RcdExploreSong, RcdHomeSong, Song} from '../types';
 
 interface SongState {
   selectedTag: string;
   tags: string[];
   previewSongs: {[tag: string]: RcdHomeSong[]};
-  refreshSongs: {[tag: string]: RcdRefreshSong[]};
+  refreshSongs: {[tag: string]: Song[]};
   exploreSongs: RcdExploreSong[];
   charts: {[gender: string]: Chart[]};
   time: string;
@@ -17,13 +17,10 @@ interface SongState {
   setSelectedTag: (tag: string) => void;
   setTags: (tags: string[]) => void;
   setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
-  setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => RcdRefreshSong[];
+  setRefreshSongs: (tag: string, songs: Song[]) => Song[];
   setExploreSongs: (songs: RcdExploreSong[]) => void;
 
-  updateRefreshSongs: (
-    tag: string,
-    songs: RcdRefreshSong[],
-  ) => RcdRefreshSong[];
+  updateRefreshSongs: (tag: string, songs: Song[]) => Song[];
   // setIndexLst: (tag: string, index: number) => void;
   // resetIndexLst: (tag: string) => void;
   // recommendSongResults: Song[];
@@ -78,7 +75,7 @@ const useSongStore = create<SongState>((set, get) => {
         };
       }),
 
-    setRefreshSongs: (tag: string, songs: RcdRefreshSong[]) => {
+    setRefreshSongs: (tag: string, songs: Song[]) => {
       set(state => ({
         refreshSongs: {
           ...state.refreshSongs,
@@ -94,7 +91,7 @@ const useSongStore = create<SongState>((set, get) => {
       }));
     },
 
-    updateRefreshSongs: (tag: string, newSongs: RcdRefreshSong[]) => {
+    updateRefreshSongs: (tag: string, newSongs: Song[]) => {
       // 현재 상태의 기존 노래 목록을 가져옴
       const existingSongs = get().refreshSongs[tag] || [];
 

@@ -13,17 +13,17 @@ interface SongsListProps {
     singerName: string,
     album: string,
   ) => void;
-  onKeepAddPress: (songId: number) => void | undefined;
-  onKeepRemovePress: (songId: number) => void | undefined;
+  onKeepAddPress: (songId: number) => void;
+  onKeepRemovePress: (songId: number) => void;
 }
 
-const SongsList: React.FC<SongsListProps> = ({
+const SongsList = ({
   songlistData,
   isShowKeepIcon = false,
   onSongPress,
   onKeepAddPress,
   onKeepRemovePress,
-}) => {
+}: SongsListProps) => {
   const renderItem = ({item}: {item: Song}) => (
     <View>
       <SongItem

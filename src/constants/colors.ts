@@ -28,6 +28,8 @@ const designatedColor = {
   GRAY3: '#979797',
   PINK2: '#FB6DA9',
   GRAY1: '#B3B3B3',
+  GRAY2: '#979797',
+  GRAY_E5: '#E5E5E5',
   PINK: '#FDC9F7',
   BLACK: '#000000',
   WHITE: '#FFFFFF',

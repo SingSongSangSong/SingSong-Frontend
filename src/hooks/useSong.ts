@@ -1,13 +1,11 @@
-import React from 'react';
 import {useState} from 'react';
 // import useRecommendStore from '../store/useRecommendStore';
-import {RcdSonglistItem} from '../components';
 import useSongStore from '../store/useSongStore';
-import useKeepListStore from '../store/useKeepStore';
+// import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
-import {HomeStackParamList, RcdRefreshSong, Song} from '../types';
+import {HomeStackParamList, Song} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
@@ -29,7 +27,6 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [songLst, setSongLst] = useState<Song[]>(refreshSongs[initTag]); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
-  const {setKeepList} = useKeepListStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isInit, setIsInit] = useState(false);
 
@@ -47,32 +44,32 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   // }, [isEnabled, songLst]);
 
   //keep에 추가
-  const toggleAddStored = async (songNumber: number) => {
-    //addSongToKeep(song);
-    console.log('toggle add');
-    const updatedSongs = await postKeep([songNumber]);
-    setKeepList(updatedSongs.data);
-    Toast.show({
-      type: 'selectedToast',
-      text1: 'Keep에 추가되었습니다.',
-      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-    });
-  };
+  // const toggleAddStored = async (songNumber: number) => {
+  //   //addSongToKeep(song);
+  //   console.log('toggle add');
+  //   const updatedSongs = await postKeep([songNumber]);
+  //   setKeepList(updatedSongs.data);
+  //   Toast.show({
+  //     type: 'selectedToast',
+  //     text1: 'Keep에 추가되었습니다.',
+  //     position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //     visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //   });
+  // };
 
   //keep에서 삭제
-  const toggleRemoveStored = async (songNumber: number) => {
-    // removeSongFromKeep(songId);
-    console.log('toggle remove');
-    const updatedSongs = await deleteKeep([songNumber]);
-    setKeepList(updatedSongs.data);
-    Toast.show({
-      type: 'selectedToast',
-      text1: 'Keep에서 삭제되었습니다.',
-      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-    });
-  };
+  // const toggleRemoveStored = async (songNumber: number) => {
+  //   // removeSongFromKeep(songId);
+  //   console.log('toggle remove');
+  //   const updatedSongs = await deleteKeep([songNumber]);
+  //   setKeepList(updatedSongs.data);
+  //   Toast.show({
+  //     type: 'selectedToast',
+  //     text1: 'Keep에서 삭제되었습니다.',
+  //     position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //     visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //   });
+  // };
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -162,36 +159,60 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
   };
 
-  const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
-    <RcdSonglistItem
-      key={item.songNumber}
-      songNumber={item.songNumber}
-      songName={item.songName}
-      singerName={item.singerName}
-      onPress={() => handleOnPressSong(item.songNumber, item.songId)}
-      // onAddPress={() => handleAddPressSong(item.songNumber)}
-      // onRemovePress={() => handleRemovePressSong(item.songNumber)}
-      onAddPress={() => {}}
-      onRemovePress={() => {}}
-      showKeepIcon={true}
-      onToggleAddStored={() => toggleAddStored(item.songId)}
-      onToggleRemoveStored={() => toggleRemoveStored(item.songId)}
-    />
-  );
+  // const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
+  //   <RcdSonglistItem
+  //     key={item.songNumber}
+  //     songNumber={item.songNumber}
+  //     songName={item.songName}
+  //     singerName={item.singerName}
+  //     onPress={() => handleOnPressSong(item.songNumber, item.songId)}
+  //     // onAddPress={() => handleAddPressSong(item.songNumber)}
+  //     // onRemovePress={() => handleRemovePressSong(item.songNumber)}
+  //     onAddPress={() => {}}
+  //     onRemovePress={() => {}}
+  //     showKeepIcon={true}
+  //     onToggleAddStored={() => toggleAddStored(item.songId)}
+  //     onToggleRemoveStored={() => toggleRemoveStored(item.songId)}
+  //   />
+  // );
+
+  const _onKeepAddPress = async (songId: number) => {
+    await postKeep([songId]);
+    // setKeepList(updatedSongs.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'Keep에 추가되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
+  const _onKeepRemovePress = async (songId: number) => {
+    await deleteKeep([songId]);
+    // setKeepList(updatedSongs.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'Keep에서 삭제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
 
   return {
     isInit,
     isLoading,
     songLst,
     setSongLst,
-    handleSonglist,
+    // handleSonglist,
     handleRefreshSongs,
     handleOnPressSong,
-    toggleAddStored,
-    toggleRemoveStored,
+    // toggleAddStored,
+    // toggleRemoveStored,
     refreshing,
     onRefresh,
     setInitSongs,
+    _onKeepAddPress,
+    _onKeepRemovePress,
   };
 };
 

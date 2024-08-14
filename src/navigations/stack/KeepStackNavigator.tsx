@@ -151,7 +151,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={KeepEditScreen}
         options={{
           headerShown: true,
-          headerTitle: '플레이리스트 편집', // 헤더 제목을 비움
+          headerTitle: 'KEEP 편집', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
             fontSize: 18, // 헤더 글씨 크기를 줄임
