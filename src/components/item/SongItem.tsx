@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import KeepIcon from '../../assets/svg/keepIcon.svg';
 import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
+import MusicIcon from '../../assets/svg/music.svg';
+
 interface SongItemProps {
   songId: number;
   songNumber: number;
@@ -44,47 +46,60 @@ const SongItem = ({
   return (
     <TouchableOpacity onPress={onSongPress}>
       <View
-        style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] p-3 mx-2`}>
-        <View>
-          <View style={tw`items-center justify-center w-[12]`}>
-            <Text
-              style={tw`text-white text-sm text-[${designatedColor.GREEN}] font-bold `}>
-              {songNumber}
-            </Text>
+        style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
+        <View style={tw`flex-row flex-1`}>
+          <View style={tw`items-center justify-center w-[12] h-[12]`}>
+            {album == '' ? (
+              <View
+                style={[
+                  {
+                    backgroundColor: 'rgba(0, 0, 0, 1)',
+                    width: 54,
+                    height: 54,
+                  },
+                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
+                ]}>
+                <MusicIcon width={16} height={16} />
+              </View>
+            ) : (
+              <Image
+                source={{uri: album}}
+                style={tw`w-full h-full rounded-3xl`}
+              />
+            )}
           </View>
 
-          <View style={tw`h-full ml-4 flex-1`}>
+          <View style={tw`flex-1 h-full ml-4 mr-2`}>
             <View style={tw`flex-row`}>
               <Text
-                style={tw`text-white text-sm`}
+                style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
+                {songNumber}
+              </Text>
+              <Text
+                style={tw`text-white text-sm ml-2 flex-1`}
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {songName}
               </Text>
             </View>
             <Text
-              style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}]`}
+              style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY_E5}]`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {singerName}
             </Text>
           </View>
         </View>
-        <View>
-          {isShowKeepIcon && (
-            <>
-              {isKeepPressed ? (
-                <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
-                  <KeepFilledIcon />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
-                  <KeepIcon />
-                </TouchableOpacity>
-              )}
-            </>
-          )}
-        </View>
+
+        {isShowKeepIcon && (
+          <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
+            {isKeepPressed ? (
+              <KeepFilledIcon width={24} height={24} />
+            ) : (
+              <KeepIcon width={24} height={24} />
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

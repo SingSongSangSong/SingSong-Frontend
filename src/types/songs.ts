@@ -70,7 +70,7 @@ interface RcdExploreResponse {
 }
 
 interface RcdRefreshResponse {
-  data: RcdRefreshSong[];
+  data: Song[];
   message: string;
 }
 
