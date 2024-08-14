@@ -19,6 +19,8 @@ import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import DislikeIcon from '../../assets/svg/dislike.svg';
 import FilledDislikeIcon from '../../assets/svg/filledDislike.svg';
 import {LikeButton} from '../../components/button/LikeButton';
+import KeepIcon from '../../assets/svg/keepIcon.svg';
+import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -35,7 +37,14 @@ function SongScreen(props: SongScreenProps) {
   const songId = props.route?.params?.songId;
   const songDetailHandler = useSongDetail(songNumber, songId);
 
-  const handleOnPressRelated = (songNumber: number, songId: number) => {
+  const _onSongPress = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => {
+    console.log(songName, singerName, album);
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         // KeepStack에서 왔을 때
@@ -70,7 +79,7 @@ function SongScreen(props: SongScreenProps) {
   const renderHeader = () => {
     return (
       <View>
-        <View>
+        <View style={tw`border-b border-[${designatedColor.GRAY4}] py-6 px-3`}>
           <View style={tw`justify-center items-center overflow-hidden`}>
             <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
             <View style={tw`w-full h-30 bg-black`} />
@@ -99,37 +108,36 @@ function SongScreen(props: SongScreenProps) {
               </>
             )}
           </View>
-          <View style={tw`px-4`}>
+          <View>
             <View style={tw`flex-row items-center mt-3`}>
               {songDetailHandler.songInfo ? (
                 <Text
-                  style={tw`text-white text-2xl text-[${designatedColor.GREEN}] font-bold`}>
-                  {songDetailHandler.songInfo.songNumber}
-                </Text>
-              ) : (
-                <View
-                  style={tw`bg-[${designatedColor.GRAY4}] w-[12] h-9 rounded-lg`}
-                />
-              )}
-
-              {songDetailHandler.songInfo ? (
-                <Text
-                  style={tw`flex-1 text-white text-2xl ml-4`}
+                  style={tw`flex-1 text-white text-2xl font-bold`}
                   numberOfLines={1}
                   ellipsizeMode="tail">
                   {songDetailHandler.songInfo.songName}
                 </Text>
               ) : (
                 <View
-                  style={tw`bg-[${designatedColor.GRAY4}] w-[20] h-9 rounded-lg ml-4`}
+                  style={tw`bg-[${designatedColor.GRAY4}] w-[20] h-9 rounded-lg`}
                 />
               )}
             </View>
 
             {songDetailHandler.songInfo ? (
-              <View>
+              <View style={tw`flex-row items-center mt-2`}>
+                <View style={tw`items-center justify-center`}>
+                  <Text style={tw`text-white text-[${designatedColor.PINK2}]`}>
+                    {songDetailHandler.songInfo.songNumber}
+                  </Text>
+                </View>
+
+                {/* <View
+                  style={tw`bg-[${designatedColor.GRAY4}] w-[12] h-9 rounded-lg`}
+                /> */}
+
                 <Text
-                  style={tw`text-white mt-4`}
+                  style={tw`text-white mx-2`}
                   numberOfLines={1}
                   ellipsizeMode="tail">
                   {songDetailHandler.songInfo.singerName}
@@ -160,105 +168,131 @@ function SongScreen(props: SongScreenProps) {
               />
             )}
           </View>
-        </View>
-
-        <View style={tw`flex-row justify-between mt-6 items-center mx-4`}>
-          {songDetailHandler.keepColor ? (
+          <View style={tw`flex-row justify-between mt-6 items-center`}>
             <View style={tw`flex-row items-center`}>
-              <TouchableOpacity
-                onPress={songDetailHandler.handleOnPressKeep}
-                style={tw`mr-2`}>
-                <Icon
+              {songDetailHandler.keepColor == designatedColor.KEEP_FILLED ? (
+                <>
+                  <TouchableOpacity
+                    onPress={songDetailHandler.handleOnPressKeep}
+                    style={tw`mr-4`}>
+                    {/* <Icon
                   name="star"
                   size={24}
                   color={songDetailHandler.keepColor}
-                />
-              </TouchableOpacity>
-              <IconButton
-                Icon={CommentIcon}
-                onPress={() => {
-                  handleOnPressComment(songNumber, songId);
-                }}
-                size={28}
+                /> */}
+                    <KeepFilledIcon width={24} height={24} />
+                  </TouchableOpacity>
+                  <IconButton
+                    Icon={CommentIcon}
+                    onPress={() => {
+                      handleOnPressComment(songNumber, songId);
+                    }}
+                    size={28}
+                  />
+                </>
+              ) : (
+                // <View style={tw`flex-row items-center`}>
+                //   <View
+                //     style={tw`w-10 h-10 bg-[${designatedColor.GRAY4}] rounded-xl mr-2`}
+                //   />
+                //   <View
+                //     style={tw`w-10 h-10 bg-[${designatedColor.GRAY4}] rounded-xl`}
+                //   />
+                // </View>
+                <>
+                  <TouchableOpacity
+                    onPress={songDetailHandler.handleOnPressKeep}
+                    style={tw`mr-4`}>
+                    {/* <Icon
+                  name="star"
+                  size={24}
+                  color={songDetailHandler.keepColor}
+                /> */}
+                    <KeepIcon width={24} height={24} />
+                  </TouchableOpacity>
+                  <IconButton
+                    Icon={CommentIcon}
+                    onPress={() => {
+                      handleOnPressComment(songNumber, songId);
+                    }}
+                    size={28}
+                  />
+                </>
+              )}
+            </View>
+          </View>
+        </View>
+
+        <View style={tw`px-3`}>
+          {songDetailHandler.songReviews ? (
+            <View>
+              <Text style={tw`text-white font-bold text-xl my-4`}>
+                이 노래는 어떻송
+              </Text>
+              <Reviewlist
+                reviewlistData={songDetailHandler.songReviews}
+                // isLikePressed={songDetailHandler.isLikePressed}
+                // isDislikePressed={songDetailHandler.isDislikePressed}
+                // onAddPress={songDetailHandler.handleOnAddPressReviewlist}
+                // onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
               />
+
+              <View style={tw`flex-row items-center justify-between mx-2`}>
+                <View style={tw`flex-row items-center`}>
+                  <MusicIcon width={18} height={18} />
+                  <Text
+                    style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
+                    나의 평가는?
+                  </Text>
+                </View>
+                <View style={tw`flex-row`}>
+                  <LikeButton
+                    title="쉬워요"
+                    color={designatedColor.PINK}
+                    onPress={() => {
+                      songDetailHandler.handleOnAddPressReviewlist(1);
+                    }}
+                    Icon={LikeIcon}
+                    PressIcon={FilledLikeIcon}
+                    isPressed={songDetailHandler.isLikePressed}
+                  />
+                  <LikeButton
+                    title="어려워요"
+                    color={designatedColor.PINK}
+                    onPress={() => {
+                      songDetailHandler.handleOnAddPressReviewlist(2);
+                    }}
+                    Icon={DislikeIcon}
+                    PressIcon={FilledDislikeIcon}
+                    isPressed={songDetailHandler.isDislikePressed}
+                  />
+                </View>
+              </View>
+              <View
+                style={tw`mt-10 mb-4 border-t border-[${designatedColor.GRAY4}] py-4`}>
+                <Text style={tw`text-white font-bold text-xl`}>
+                  다른 노래는 어떻송
+                </Text>
+              </View>
             </View>
           ) : (
-            <View style={tw`flex-row items-center`}>
+            <View>
               <View
-                style={tw`w-10 h-10 bg-[${designatedColor.GRAY4}] rounded-xl mr-2`}
+                style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
               />
               <View
-                style={tw`w-10 h-10 bg-[${designatedColor.GRAY4}] rounded-xl`}
+                style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}] mb-2`}
+              />
+              <View
+                style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}]`}
+              />
+
+              <View
+                style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
               />
             </View>
           )}
         </View>
-
-        {songDetailHandler.songReviews ? (
-          <View>
-            <Text style={tw`text-white font-bold text-lg mt-4 mb-2`}>
-              이 노래는 어떻송
-            </Text>
-            <Reviewlist
-              reviewlistData={songDetailHandler.songReviews}
-              // isLikePressed={songDetailHandler.isLikePressed}
-              // isDislikePressed={songDetailHandler.isDislikePressed}
-              // onAddPress={songDetailHandler.handleOnAddPressReviewlist}
-              // onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
-            />
-
-            <View style={tw`flex-row items-center justify-between mx-2`}>
-              <View style={tw`flex-row items-center`}>
-                <MusicIcon width={18} height={18} />
-                <Text style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
-                  나의 평가는?
-                </Text>
-              </View>
-              <View style={tw`flex-row`}>
-                <LikeButton
-                  title="쉬워요"
-                  color={designatedColor.PINK}
-                  onPress={() => {
-                    songDetailHandler.handleOnAddPressReviewlist(1);
-                  }}
-                  Icon={LikeIcon}
-                  PressIcon={FilledLikeIcon}
-                  isPressed={songDetailHandler.isLikePressed}
-                />
-                <LikeButton
-                  title="어려워요"
-                  color={designatedColor.PINK}
-                  onPress={() => {
-                    songDetailHandler.handleOnAddPressReviewlist(2);
-                  }}
-                  Icon={DislikeIcon}
-                  PressIcon={FilledDislikeIcon}
-                  isPressed={songDetailHandler.isDislikePressed}
-                />
-              </View>
-            </View>
-
-            <Text style={tw`text-white font-bold text-lg mt-4 mb-2`}>
-              다른 노래는 어떻송
-            </Text>
-          </View>
-        ) : (
-          <View>
-            <View
-              style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
-            />
-            <View
-              style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}] mb-2`}
-            />
-            <View
-              style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}]`}
-            />
-
-            <View
-              style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
-            />
-          </View>
-        )}
       </View>
     );
   };
@@ -267,17 +301,19 @@ function SongScreen(props: SongScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {/* {songDetailHandler.songRelated && ( */}
       <View style={tw`h-full w-full`}>
-        {/* {songDetailHandler.songRelated && ( */}
-        <Relatedlist
-          isLoading={songDetailHandler.isLoading}
-          relatedlistData={songDetailHandler.songRelated}
-          onPress={handleOnPressRelated}
-          renderHeader={renderHeader}
-          handleRefreshRelatedSongs={
-            songDetailHandler.handleRefreshRelatedSongs
-          }
-        />
-        {/* )} */}
+        {songDetailHandler.songRelated && (
+          <Relatedlist
+            isLoading={songDetailHandler.isLoading}
+            relatedlistData={songDetailHandler.songRelated}
+            isShowKeepIcon={false}
+            onSongPress={_onSongPress}
+            // handleOnPressRelated
+            renderHeader={renderHeader}
+            handleRefreshRelatedSongs={
+              songDetailHandler.handleRefreshRelatedSongs
+            }
+          />
+        )}
       </View>
       {/* )} */}
     </SafeAreaView>

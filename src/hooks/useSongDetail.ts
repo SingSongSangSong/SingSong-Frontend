@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import getSongs from '../api/songs/getSongs';
-import {RcdRefreshSong, SongInfo, SongInfoReview} from '../types';
+import {Song, SongInfo, SongInfoReview} from '../types';
 import {designatedColor} from '../constants';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
@@ -13,7 +13,7 @@ import getSongsRelated from '../api/songs/getSongsRelated';
 const useSongDetail = (songNumber: number, songId: number) => {
   const [songInfo, setSongInfo] = useState<SongInfo | null>(null);
   const [songReviews, setSongReviews] = useState<SongInfoReview[] | null>(null);
-  const [songRelated, setSongRelated] = useState<RcdRefreshSong[] | null>(null);
+  const [songRelated, setSongRelated] = useState<Song[]>();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(20);
   const {setKeepList} = useKeepListStore();

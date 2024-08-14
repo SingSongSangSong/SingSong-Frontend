@@ -15,8 +15,8 @@ interface SongItemProps {
   isKeep: boolean | undefined;
   isShowKeepIcon: boolean;
   onSongPress: () => void;
-  onKeepAddPress: () => void | undefined;
-  onKeepRemovePress: () => void | undefined;
+  onKeepAddPress?: () => void | undefined;
+  onKeepRemovePress?: () => void | undefined;
 }
 
 const SongItem = ({

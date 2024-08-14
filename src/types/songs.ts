@@ -116,7 +116,7 @@ interface SongInfoResponse {
 
 interface SongInfoRelated {
   nextPage: number;
-  songs: RcdRefreshSong[];
+  songs: Song[];
 }
 
 interface SongInfoRelatedResponse {

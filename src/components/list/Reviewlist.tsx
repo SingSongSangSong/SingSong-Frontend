@@ -41,19 +41,17 @@ const Reviewlist: React.FC<ReviewlistProps> = ({reviewlistData}) => {
 
     const percentage = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
     return (
-      <View style={tw`m-2`}>
+      <View>
         <ReviewlistItem
           title={item.title}
           count={item.count}
           reviewId={item.songReviewOptionId}
-          isPressed={item.songReviewOptionId === selectedId}
-          onAddPress={() => {}}
-          onRemovePress={() => {}}
           setSelectedId={setSelectedId}
           color={color}
           textColor={textColor}
           titleColor={titleColor}
           percentage={percentage}
+          isSelected={item.count === maxCount}
         />
       </View>
     );
