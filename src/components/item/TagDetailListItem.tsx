@@ -10,7 +10,7 @@ interface TagDetailListItemProps {
 
 const TagDetailListItem = ({tag, Icon, onPress}: TagDetailListItemProps) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View style={tw`flex-row my-2 mx-2 items-center`}>
         {/* 아이콘을 감싸는 하얀색 동그라미 배경 */}
         <View

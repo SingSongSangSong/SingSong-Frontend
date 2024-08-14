@@ -5,7 +5,7 @@ import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
 import {KeepStackParamList} from '../../types';
 import useKeep from '../../hooks/useKeep';
-import {CircleButton, RemoveButton, SonglistEdit} from '../../components';
+import {CheckButton, RemoveButton, SonglistEdit} from '../../components';
 
 type KeepEditScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -17,21 +17,16 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={tw`flex-row items-center justify-between m-2 my-4`}>
-        <View style={tw`flex-row items-center justify-between`}>
-          <CircleButton
-            onPressIn={keepHandler.handleIsAllSelected}
-            onPressOut={keepHandler.handleIsAllDeleted}
-            isSelected={false}
-            isDeleted={false}
-          />
-          <Text style={tw`text-white ml-4`}>전체 선택</Text>
-        </View>
-        {/* <View>
-          <PlusButton title="곡 추가" onPress={() => {}} />
-        </View> */}
+      <View style={tw`flex-row items-center justify-between m-4`}>
+        <CheckButton
+          onPressIn={keepHandler.handleIsAllSelected}
+          onPressOut={keepHandler.handleIsAllDeleted}
+          isSelected={false}
+          isDeleted={false}
+        />
       </View>
-      <View>
+
+      <View style={tw`flex-1`}>
         {keepHandler.keepList.length > 0 ? (
           <SonglistEdit
             songlistData={keepHandler.keepList}
@@ -41,22 +36,21 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
             isAllDeleted={keepHandler.isAllDeleted}
           />
         ) : (
-          <View style={tw`h-full w-full justify-center items-center`}>
+          <View style={tw`flex-1 justify-center items-center`}>
             <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
           </View>
         )}
       </View>
 
-      <View
-        style={tw`justify-center items-center py-2 absolute bottom-0 bg-black w-full`}>
-        {keepHandler.removedSong.length > 0 && (
+      {keepHandler.removedSong.length > 0 && (
+        <View style={tw`justify-center items-center py-2 bg-black`}>
           <RemoveButton
             title={'삭제'}
             count={keepHandler.removedSong.length}
             onPress={keepHandler.handleRemoveButton}
           />
-        )}
-      </View>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

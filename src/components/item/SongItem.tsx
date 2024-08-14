@@ -44,7 +44,7 @@ const SongItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={onSongPress}>
+    <TouchableOpacity onPress={onSongPress} activeOpacity={0.9}>
       <View
         style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
         <View style={tw`flex-row flex-1`}>
@@ -92,7 +92,7 @@ const SongItem = ({
         </View>
         <View style={tw`p-2`}>
           {isShowKeepIcon && (
-            <TouchableOpacity onPress={handleOnKeepPress}>
+            <TouchableOpacity onPress={handleOnKeepPress} activeOpacity={0.8}>
               {isKeepPressed ? (
                 <KeepFilledIcon width={24} height={24} />
               ) : (

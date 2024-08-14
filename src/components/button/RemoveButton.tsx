@@ -14,7 +14,8 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({title, count, onPress}) => {
     <View style={tw`flex-row justify-center m-1`}>
       <TouchableOpacity
         style={tw`p-2 flex-row justify-center items-center`}
-        onPress={onPress}>
+        onPress={onPress}
+        activeOpacity={0.8}>
         <Text style={tw`text-white font-bold text-sm mr-2`}>{title}</Text>
         <Text
           style={tw`text-white font-bold text-sm text-[${designatedColor.RED}] `}>

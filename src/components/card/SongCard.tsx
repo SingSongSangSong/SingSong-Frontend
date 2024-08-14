@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Pressable} from 'react-native';
 
 type SongCardProps = {
   songName: string;
@@ -25,7 +26,7 @@ const SongCard = ({
   // console.log('album', album);
 
   return (
-    <TouchableOpacity style={tw`mx-1`} onPress={onSongPress}>
+    <TouchableOpacity style={tw`mx-1`} onPress={onSongPress} activeOpacity={1}>
       {album != '' ? (
         <View
           style={[

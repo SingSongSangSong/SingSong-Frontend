@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {designatedColor} from '../../constants';
+import CheckIcon from '../../assets/svg/check.svg';
+import CheckFilledIcon from '../../assets/svg/checkFilled.svg';
+import tw from 'twrnc';
 
-interface CircleButtonProps {
+interface CheckButtonProps {
   onPressIn: () => void;
   onPressOut: () => void;
   isSelected: boolean;
   isDeleted: boolean;
 }
 
-const CircleButton = ({
+const CheckButton = ({
   onPressIn,
   onPressOut,
   isSelected,
   isDeleted,
-}: CircleButtonProps) => {
+}: CheckButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   useEffect(() => {
@@ -43,33 +45,24 @@ const CircleButton = ({
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={styles.button}
+      style={tw`justify-center items-center bg-[${designatedColor.BLACK}]`}
       activeOpacity={0.8}>
-      <View style={[styles.circle, isPressed && styles.circlePressed]}>
-        {isPressed && <Icon name="check" size={12} color="black" />}
+      <View style={tw`flex-row items-center`}>
+        {isPressed ? (
+          <CheckFilledIcon width={18} height={18} />
+        ) : (
+          <CheckIcon width={18} height={18} />
+        )}
+        <Text
+          style={[
+            tw`text-[${designatedColor.GRAY3}] ml-2`,
+            isPressed && tw`text-[${designatedColor.PINK2}]`,
+          ]}>
+          {isPressed ? '선택 해제' : '전체 선택'}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: designatedColor.BLACK,
-  },
-  circle: {
-    width: 18,
-    height: 18,
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: designatedColor.GRAY4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  circlePressed: {
-    backgroundColor: designatedColor.PINK2,
-  },
-});
-
-export {CircleButton};
+export {CheckButton};

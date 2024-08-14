@@ -19,7 +19,8 @@ const TextButton: React.FC<TextButtonProps> = ({
     <View style={tw`flex-row justify-center`}>
       <TouchableOpacity
         style={tw`flex-row justify-center items-center`}
-        onPress={onPress}>
+        onPress={onPress}
+        activeOpacity={0.8}>
         <Text style={tw`text-[${color}] text-[${size}]`}>{title}</Text>
       </TouchableOpacity>
     </View>
