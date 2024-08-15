@@ -1,6 +1,5 @@
 import {useState} from 'react';
 // import useRecommendStore from '../store/useRecommendStore';
-import useSongStore from '../store/useSongStore';
 // import useKeepListStore from '../store/useKeepStore';
 import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
@@ -22,13 +21,15 @@ type UseSongProps = {
 const useSong = ({initTag, navigation}: UseSongProps) => {
   // const [tags] = initTag;
   const [refreshing, setRefreshing] = useState(false);
-  const {setSelectedTag, refreshSongs, setRefreshSongs, updateRefreshSongs} =
-    useSongStore();
-  const [songLst, setSongLst] = useState<Song[]>(refreshSongs[initTag]); //songlist를 렌더링하기 위함
+  // const {setSelectedTag, refreshSongs, setRefreshSongs, updateRefreshSongs} =
+  //   useSongStore();
+  // const {setSelectedTag} = useSongStore();
+
+  const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
 
   // const {reset} = useRecommendStore();
   const [isLoading, setIsLoading] = useState(false);
-  const [isInit, setIsInit] = useState(false);
+  // const [isInit, setIsInit] = useState(false);
 
   // const [isEnabled, setIsEnabled] = useState(false);
   // const previousIsEnabled = useRef(isEnabled);
@@ -85,8 +86,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         const songData = await postRcdRefresh(initTag);
-        const newSongLst = setRefreshSongs(initTag, songData.data);
-        setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
+        setSongLst(songData.data);
+        // setRefreshSongs(initTag, songData.data);
       }
     } catch (error) {
       console.error('Error fetching songs:', error);
@@ -96,11 +97,10 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //초기 노래 리스트 세팅하는 함수
   const setInitSongs = async () => {
     const initSongs = await postRcdRefresh(initTag);
-    const songData = initSongs.data;
-    const newSongLst = updateRefreshSongs(initTag, songData);
-    setSongLst(newSongLst);
-    setIsInit(true);
-    setSelectedTag(initTag);
+    setSongLst(initSongs.data);
+    // updateRefreshSongs(initTag, initSongs.data);
+    // setIsInit(true);
+    // setSelectedTag(initTag);
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
@@ -118,8 +118,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
         postRcdRefresh(initTag)
           .then(response => {
             const songData = response.data;
-            const newSongLst = updateRefreshSongs(initTag, songData);
-            setSongLst(newSongLst); //새로운 노래 리스트로 업데이트
+            // const newSongLst = updateRefreshSongs(initTag, songData);
+            setSongLst(prev => [...(prev || []), ...songData]);
             setIsLoading(false);
           })
           .catch(error => {
@@ -155,8 +155,20 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //   });
   // };
 
-  const handleOnPressSong = (songNumber: number, songId: number) => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
+  const handleOnPressSong = (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => {
+    navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+      songNumber,
+      songId,
+      songName,
+      singerName,
+      album,
+    });
   };
 
   // const handleSonglist = ({item}: {item: RcdRefreshSong}) => (
@@ -199,7 +211,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   return {
-    isInit,
+    // isInit,
     isLoading,
     songLst,
     setSongLst,

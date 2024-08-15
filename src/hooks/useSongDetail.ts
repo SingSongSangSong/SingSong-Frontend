@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import getSongs from '../api/songs/getSongs';
-import {Song, SongInfo, SongInfoReview} from '../types';
+import {Song, SongInfo, SongInfoReview, SongParams} from '../types';
 import {designatedColor} from '../constants';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
@@ -10,8 +10,25 @@ import putSongReviews from '../api/songs/putSongsReviews';
 import deleteSongsReviews from '../api/songs/deleteSongsReviews';
 import getSongsRelated from '../api/songs/getSongsRelated';
 
-const useSongDetail = (songNumber: number, songId: number) => {
-  const [songInfo, setSongInfo] = useState<SongInfo | null>(null);
+const useSongDetail = ({
+  songId,
+  songNumber,
+  songName,
+  singerName,
+  album,
+}: SongParams) => {
+  const [defaultSongInfo, setDefaultSongInfo] = useState<SongParams>({
+    songId,
+    songNumber,
+    songName,
+    singerName,
+    album,
+  });
+  // const [octave, setOctave] = useState<string>('');
+  // const [description, setDescription] = useState<string>('');
+  // const [isKeep, setIsKeep] = useState<boolean>();
+
+  const [songInfo, setSongInfo] = useState<SongInfo>();
   const [songReviews, setSongReviews] = useState<SongInfoReview[] | null>(null);
   const [songRelated, setSongRelated] = useState<Song[]>();
   const [page, setPage] = useState<number>(1);
@@ -209,6 +226,7 @@ const useSongDetail = (songNumber: number, songId: number) => {
     size,
     keepColor,
     songInfo,
+    defaultSongInfo,
     songReviews,
     songRelated,
     handleOnPressKeep,

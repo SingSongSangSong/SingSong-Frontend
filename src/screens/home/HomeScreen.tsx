@@ -1,166 +1,104 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
-import {HotTrending, IconButton, Taglist, TextButton} from '../../components';
+import {
+  HotTrendingModule,
+  IconButton,
+  SongCardModule,
+  TaglistModule,
+} from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
 import SettingsIcon from '../../assets/svg/settings.svg';
-// import Carousel from '../../components/carousel/Carousel';
-import useUserInfo from '../../hooks/useUserInfo';
 import LogoIcon from '../../assets/svg/logo.svg';
-import {formatDateString} from '../../utils';
-import {ToggleButton} from '../../components/button/ToggleButton';
-import {SongCardList} from '../../components/list/SongCardList';
-// import HotTrending from './HotTrending';
+import useHomeInfo from '../../hooks/useHomeInfo';
+import {isEmptyObject} from '../../utils';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.RCD_HOME
 >;
 
-export default function HomeScreen({navigation}: HomeScreenProps) {
-  const userInfoHandler = useUserInfo();
+const HomeScreen = ({navigation}: HomeScreenProps) => {
+  const {fetchChart, isEmptyChart, memberInfo, getUserInfo} = useHomeInfo();
 
   useEffect(() => {
-    if (!userInfoHandler.isInit) {
-      userInfoHandler.fetchChart();
+    if (isEmptyObject(memberInfo)) {
+      getUserInfo();
     }
-
-    if (isEmptyObject(userInfoHandler.memberInfo)) {
-      userInfoHandler.getUserInfo();
+    if (isEmptyChart()) {
+      fetchChart();
     }
   }, []);
 
-  const isEmptyObject = (obj: Record<string, any>): boolean => {
-    return Reflect.ownKeys(obj).length === 0;
-  };
+  const handleOnArrowPress = useCallback(
+    (tag: string) => {
+      navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+    },
+    [navigation],
+  );
 
-  const handleOnArrowPress = (tag: string) => {
-    navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
-  };
+  const handleOnSongPress = useCallback(
+    (
+      songNumber: number,
+      songId: number,
+      songName: string,
+      singerName: string,
+      album: string,
+    ) => {
+      navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album,
+      });
+    },
+    [navigation],
+  );
 
-  const handleOnSongPress = (songNumber: number, songId: number) => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
-  };
-
-  const handleOnPressSetting = () => {
+  const handleOnPressSetting = useCallback(() => {
     navigation.navigate(homeStackNavigations.SETTING);
-  };
+  }, [navigation]);
 
-  const handleOnPressTotalButton = () => {
+  const handleOnPressTotalButton = useCallback(() => {
     navigation.navigate(homeStackNavigations.TAG_DETAIL);
-  };
+  }, [navigation]);
 
   return (
     <GestureRecognizer
-      // onSwipeLeft={onSwipeRight}
       config={{
         velocityThreshold: 0.5,
         directionalOffsetThreshold: 80,
       }}
       style={tw`flex-1 bg-black`}>
-      <SafeAreaView style={tw`flex-1`}>
-        {/* 상단 바 */}
+      <SafeAreaView style={tw`flex-1 bg-black`}>
         <View
           style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
-          {/* <Image
-            source={require('../../assets/png/appIcon.png')}
-            style={tw`w-10 h-10`}
-          /> */}
           <LogoIcon />
-          {/* <TouchableOpacity onPress={handleOnPressSetting} style={tw`p-2`}>
-            <SettingsIcon width={28} height={28} />
-          </TouchableOpacity> */}
           <IconButton
             Icon={SettingsIcon}
             onPress={handleOnPressSetting}
             size={28}
           />
         </View>
-        {/* 스크롤 가능한 콘텐츠 */}
         <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
-          {/* <View style={tw`h-100 justify-center items-center`}>
-            {exploreSongs.length > 0 && (
-              <Carousel
-                exploringSongs={exploreSongs}
-                gap={16}
-                offset={36}
-                pageWidth={
-                  Math.round(Dimensions.get('window').width) - (16 + 36) * 2
-                }
-              />
-            )}
-          </View> */}
-          <View style={tw`bg-black my-6`}>
-            <View style={tw`flex-row justify-between mx-4 my-2`}>
-              <View style={tw`flex-row items-end mb-2`}>
-                <Text
-                  style={tw`text-[${designatedColor.PINK}] font-bold text-xl `}>
-                  HOT TRENDING
-                </Text>
-                {userInfoHandler.time && (
-                  <Text
-                    style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
-                    {formatDateString(userInfoHandler.time)}
-                  </Text>
-                )}
-              </View>
-              <View style={tw`flex-row items-center`}>
-                <Text style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
-                  {userInfoHandler.selectedGender &&
-                  userInfoHandler.selectedGender == 'FEMALE'
-                    ? '여'
-                    : '남'}
-                </Text>
-                <ToggleButton
-                  isEnabled={userInfoHandler.isEnabled}
-                  toggleSwitch={userInfoHandler.toggleSwitch}
-                />
-              </View>
-            </View>
-            <HotTrending
-              data={userInfoHandler.charts}
-              selectedGender={userInfoHandler.selectedGender}
-            />
-          </View>
-          <View
-            style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 my-2`}>
-            <View style={tw`justify-between flex-row mx-4 items-center mx-4`}>
-              <Text style={tw`text-white text-sm font-bold my-2`}>
-                어떤 노래를 찾으시나요?
-              </Text>
-              <TextButton
-                title="전체보기"
-                onPress={handleOnPressTotalButton}
-                color={designatedColor.GRAY3}
-                size={3}
-              />
-            </View>
-            <Taglist
-              tags={userInfoHandler.tags}
-              handleOnTagButton={handleOnArrowPress}
-            />
-          </View>
-          {!isEmptyObject(userInfoHandler.previewSongs) && (
-            <View style={tw`flex-wrap flex-row justify-center items-center`}>
-              {userInfoHandler.tags.map((tag, index) => (
-                <View>
-                  <SongCardList
-                    tag={tag}
-                    key={index}
-                    onPress={handleOnArrowPress}
-                    data={userInfoHandler.previewSongs[tag]}
-                    onSongPress={handleOnSongPress}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
+          <HotTrendingModule />
+          <TaglistModule
+            onPressTagButton={handleOnArrowPress}
+            onPressTotalButton={handleOnPressTotalButton}
+          />
+          <SongCardModule
+            onPressSongButton={handleOnSongPress}
+            onPressTotalButton={handleOnArrowPress}
+          />
         </ScrollView>
       </SafeAreaView>
     </GestureRecognizer>
   );
-}
+};
+
+export default React.memo(HomeScreen);

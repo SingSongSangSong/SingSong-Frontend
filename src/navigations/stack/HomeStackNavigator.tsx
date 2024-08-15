@@ -4,12 +4,10 @@ import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
-import {NavigationProp, RouteProp} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
-import useSongStore from '../../store/useSongStore';
 import {IconButton} from '../../components';
-import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
@@ -27,7 +25,7 @@ type HomeStackNavigatorProps = {
 function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
   // const {tag} = route.params;
   // const tag = route?.params?.tag ?? 'defaultTag';
-  const {selectedTag} = useSongStore();
+  // const {selectedTag} = useSongStore();
 
   return (
     <Stack.Navigator
@@ -106,7 +104,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.RECOMMENT}
         component={RecommentScreen}
-        options={({navigation}) => ({
+        options={() => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -131,7 +129,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.REPORT}
         component={ReportScreen}
-        options={({navigation}) => ({
+        options={() => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정

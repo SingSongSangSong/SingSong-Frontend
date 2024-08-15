@@ -27,8 +27,8 @@ const TokenStore = () => {
     try {
       const decoded = jwtDecode<{exp: number}>(token);
       const currentTime = Date.now() / 1000;
-      console.log('decoded:', decoded);
-      console.log('current Time:', currentTime);
+      // console.log(':', decoded);
+      // console.log('current Time:', currentTime);
       return decoded.exp < currentTime;
     } catch (error) {
       console.error('Invalid token:', error);
@@ -55,7 +55,7 @@ const TokenStore = () => {
   const getAccessToken = async () => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-    console.log(accessToken, refreshToken);
+    // console.log(accessToken, refreshToken);
     //accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
       const reissueData = await postMemberReissue(accessToken, refreshToken);
@@ -85,8 +85,8 @@ const TokenStore = () => {
 
     //액세스 토큰이 만료된 경우
     if (isExpiredToken(accessToken)) {
-      console.log(accessToken);
-      console.log(refreshToken);
+      // console.log(accessToken);
+      // console.log(refreshToken);
       const reissueData = await postMemberReissue(accessToken, refreshToken);
       setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
 

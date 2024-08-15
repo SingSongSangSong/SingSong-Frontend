@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, ScrollView, Text, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {RcdHomeSong} from '../../types';
@@ -9,7 +9,13 @@ type SongCardListProps = {
   tag: string;
   onPress: (tag: string) => void;
   data: RcdHomeSong[];
-  onSongPress: (songNumber: number, songId: number) => void;
+  onSongPress: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => void;
 };
 
 const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
@@ -43,7 +49,15 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
               songNumber={song.songNumber}
               songName={song.songName}
               singerName={song.singerName}
-              onSongPress={() => onSongPress(song.songNumber, song.songId)}
+              onSongPress={() =>
+                onSongPress(
+                  song.songNumber,
+                  song.songId,
+                  song.songName,
+                  song.singerName,
+                  song.album,
+                )
+              }
               album={song.album}
             />
           ))}
@@ -52,4 +66,6 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
   );
 };
 
-export {SongCardList};
+// React.memo를 사용하여 SongCardList 컴포넌트를 메모이제이션하고 내보내기
+export const MemoizedSongCardList = memo(SongCardList);
+export {MemoizedSongCardList as SongCardList};

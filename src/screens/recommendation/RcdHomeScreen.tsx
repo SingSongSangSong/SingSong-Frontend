@@ -5,7 +5,7 @@ import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
 
 type RcdHomeScreenProps = {
@@ -19,6 +19,7 @@ type RcdHomeScreenProps = {
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리
   const songHandler = useSong({initTag, navigation});
+  // console.log('RcdHomeScreen');
 
   // const unsubscribe = navigation.addListener('beforeRemove', () => {
   //   songHandler.resetIndexLst(initTag);
@@ -40,8 +41,11 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     album: string,
   ) => {
     navigation.navigate(homeStackNavigations.SONG_DETAIL, {
-      songNumber,
       songId,
+      songNumber,
+      songName,
+      singerName,
+      album,
     });
   };
 
@@ -59,24 +63,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
         </View> */}
 
         <View style={tw`flex-1 h-[50%]`}>
-          {songHandler.songLst ? (
-            // <RcdSonglist
-            //   RcdSonglistData={songHandler.songLst}
-            //   handleOnPressSong={songHandler.handleOnPressSong}
-            //   toggleAddStored={songHandler.toggleAddStored}
-            //   toggleRemoveStored={songHandler.toggleRemoveStored}
-            //   handleRefreshSongs={songHandler.handleRefreshSongs}
-            //   onRefresh={songHandler.onRefresh}
-            //   isLoading={songHandler.isLoading}
-            //   refreshing={songHandler.refreshing}
-            // />
-            // <SongsList
-            //   songlistData={songHandler.songLst}
-            //   isShowKeepIcon={true}
-            //   onSongPress={_onSongPress} //노래 눌렀을 경우 song_detail로 이동
-            //   onKeepAddPress={songHandler._onKeepAddPress} //keep에 추가하는 함수
-            //   onKeepRemovePress={songHandler._onKeepRemovePress} //keep에서 삭제하는 함수
-            // />
+          {songHandler.songLst && (
             <RefreshSongsList
               songlistData={songHandler.songLst}
               isShowKeepIcon={true}
@@ -88,43 +75,6 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
               isLoading={songHandler.isLoading}
               refreshing={songHandler.refreshing}
             />
-          ) : (
-            // <SongsList
-            //   songlistData={songHandler.songLst}
-            //   isShowKeepIcon={true}
-            //   onSongPress={songHandler.handleOnPressSong}
-            //   onKeepAddPress={songHandler.toggleAddStored}
-            //   onKeepRemovePress={songHandler.toggleRemoveStored}
-            // />
-            <View>
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-              <View
-                style={tw`w-full px-4 rounded-xl bg-[${designatedColor.GRAY4}] my-2 h-15`}
-              />
-            </View>
           )}
         </View>
       </View>

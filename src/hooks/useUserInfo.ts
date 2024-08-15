@@ -1,5 +1,5 @@
 import {login, me} from '@react-native-kakao/user';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import postMemberLogin from '../api/member/postMemberLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
@@ -15,16 +15,7 @@ const useUserInfo = () => {
   const {memberInfo, setMemberInfo} = useMemberStore();
   const [isEnabled, setIsEnabled] = useState<boolean>(true);
   const [isInit, setIsInit] = useState<boolean>(false);
-  const {
-    tags,
-    previewSongs,
-    charts,
-    time,
-    gender,
-    setCharts,
-    setTime,
-    setGender,
-  } = useSongStore();
+  const {tags, previewSongs, time, gender, setTime, setGender} = useSongStore();
 
   const [selectedGender, setSelectedGender] = useState<string>();
 
@@ -107,7 +98,6 @@ const useUserInfo = () => {
     isInit,
     tags,
     previewSongs,
-    charts,
     time,
     gender,
     selectedGender,

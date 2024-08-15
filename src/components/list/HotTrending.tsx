@@ -1,66 +1,18 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
-import {Chart} from '../../types';
 import {designatedColor} from '../../constants';
+import useChartStore from '../../store/useChartStore';
 
-const groupData = (
-  data: {[gender: string]: Chart[]},
-  itemsPerPage: number,
-  selectedGender: string | undefined,
-) => {
-  const groupedData: {[gender: string]: Chart[][]} = {};
-
-  if (!selectedGender) {
-    // selectedGender가 존재하지 않으면 빈 데이터를 채운 그룹을 만듦
-    groupedData.empty = [
-      Array(itemsPerPage).fill({
-        songId: 0,
-        songName: '',
-        artistName: '',
-        isMr: 0,
-        rankingChange: 0,
-        new: '',
-      }),
-    ];
-  } else {
-    Object.keys(data).forEach(gender => {
-      const charts = data[gender];
-      groupedData[gender] = [];
-      for (let i = 0; i < charts.length; i += itemsPerPage) {
-        const group = charts.slice(i, i + itemsPerPage);
-        // 마지막 그룹이 itemsPerPage 미만일 경우, 빈 데이터를 추가
-        while (group.length % itemsPerPage != 0) {
-          group.push({
-            songId: 0,
-            songName: '',
-            artistName: '',
-            isMr: 0,
-            rankingChange: 0,
-            new: '',
-          } as Chart); // 빈 객체를 추가, 필요한 데이터 형식을 따릅니다.
-        }
-        console.log('group:', group);
-        groupedData[gender].push(group);
-        console.log('groupedData:', groupedData);
-      }
-    });
-  }
-
-  return groupedData;
-};
-
-interface HotTrendingProps {
-  data: {[gender: string]: Chart[]};
-  selectedGender: string;
-}
-
-const HotTrending = ({data, selectedGender}: HotTrendingProps) => {
+const HotTrending = memo(() => {
   const itemsPerPage = 5;
-  const groupedCharts = groupData(data, itemsPerPage, selectedGender);
-  console.log('groupedCharts:', groupedCharts);
-  console.log('selectedGender:', selectedGender);
+  const {selectedCharts} = useChartStore();
+
+  const groupedCharts = [];
+  for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
+    groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
+  }
 
   return (
     <ScrollView
@@ -68,13 +20,13 @@ const HotTrending = ({data, selectedGender}: HotTrendingProps) => {
       pagingEnabled
       showsHorizontalScrollIndicator={false}
       style={tw`bg-black`}>
-      {groupedCharts[selectedGender || 'empty']?.map((group, index) => (
+      {groupedCharts.map((group, index) => (
         <View
-          key={`${selectedGender}-${index}`}
+          key={`group-${index}`}
           style={[tw`w-full`, {width: Dimensions.get('window').width}]}>
           {group.map((item, idx) => (
             <View key={idx}>
-              {item ? (
+              {item.songId !== 0 ? (
                 <HotTrendingItem
                   artistName={item.artistName}
                   isMr={item.isMr}
@@ -95,6 +47,100 @@ const HotTrending = ({data, selectedGender}: HotTrendingProps) => {
       ))}
     </ScrollView>
   );
-};
+});
 
 export {HotTrending};
+
+// import React, {memo} from 'react';
+// import {View, Text, ScrollView, Dimensions} from 'react-native';
+// import tw from 'twrnc';
+// import {HotTrendingItem} from '../item/HotTrendingItem';
+// import {designatedColor} from '../../constants';
+// import {ToggleButton} from '../button/ToggleButton';
+// import useChartStore from '../../store/useChartStore';
+// import {formatDateString} from '../../utils';
+
+// const HotTrending = memo(() => {
+//   const {selectedCharts, selectedGender, setSelectedGender, time} =
+//     useChartStore();
+//   console.log('Hot Trending');
+
+//   const changeGender = () => {
+//     //성별 변경
+//     if (selectedGender == 'FEMALE') {
+//       setSelectedGender('MALE');
+//     } else {
+//       setSelectedGender('FEMALE');
+//     }
+//   };
+
+//   const toggleSwitch = () => {
+//     changeGender();
+//   };
+
+//   const itemsPerPage = 5;
+
+//   const groupedCharts = [];
+//   for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
+//     groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
+//   }
+
+//   return (
+//     <View style={tw`bg-black my-6`}>
+//       {/* Header Section */}
+//       <View style={tw`flex-row justify-between mx-4 my-2`}>
+//         <View style={tw`flex-row items-end mb-2`}>
+//           <Text style={tw`text-[${designatedColor.PINK}] font-bold text-xl`}>
+//             HOT TRENDING
+//           </Text>
+//           {time && (
+//             <Text style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
+//               {formatDateString(time)}
+//             </Text>
+//           )}
+//         </View>
+//         <View style={tw`flex-row items-center`}>
+//           <Text style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
+//             {selectedGender === 'FEMALE' ? '여자' : '남자'}
+//           </Text>
+//           <ToggleButton toggleSwitch={toggleSwitch} />
+//         </View>
+//       </View>
+
+//       {/* Chart Section */}
+//       <ScrollView
+//         horizontal
+//         pagingEnabled
+//         showsHorizontalScrollIndicator={false}
+//         style={tw`bg-black`}>
+//         {groupedCharts.map((group, index) => (
+//           <View
+//             key={`group-${index}`}
+//             style={[tw`w-full`, {width: Dimensions.get('window').width}]}>
+//             {group.map((item, idx) => (
+//               <View key={idx}>
+//                 {item.songId !== 0 ? (
+//                   <HotTrendingItem
+//                     artistName={item.artistName}
+//                     isMr={item.isMr}
+//                     isNew={item.new}
+//                     ranking={item.ranking}
+//                     rankingChange={item.rankingChange}
+//                     songName={item.songName}
+//                     songNumber={item.songNumber}
+//                   />
+//                 ) : (
+//                   <View
+//                     style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}] h-16`}
+//                   />
+//                 )}
+//               </View>
+//             ))}
+//           </View>
+//         ))}
+//       </ScrollView>
+//     </View>
+//   );
+// });
+
+// export {HotTrending};

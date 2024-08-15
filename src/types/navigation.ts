@@ -28,7 +28,13 @@ type HomeStackParamList = {
   [homeStackNavigations.RCD_HOME]: undefined;
   [homeStackNavigations.RCD_DETAIL]: {tag: string};
   [homeStackNavigations.SETTING]: undefined;
-  [homeStackNavigations.SONG_DETAIL]: {songNumber: number; songId: number};
+  [homeStackNavigations.SONG_DETAIL]: {
+    songId: number;
+    songNumber: number;
+    songName: string;
+    singerName: string;
+    album: string;
+  };
   [homeStackNavigations.COMMENT]: {songNumber: number; songId: number};
   [homeStackNavigations.RECOMMENT]: {comment: Comment};
   [homeStackNavigations.REPORT]: {
@@ -42,7 +48,13 @@ type HomeStackParamList = {
 type KeepStackParamList = {
   [keepStackNavigations.KEEP]: undefined;
   [keepStackNavigations.KEEP_EDIT]: undefined;
-  [keepStackNavigations.KEEP_SONG_DETAIL]: {songNumber: number; songId: number};
+  [keepStackNavigations.KEEP_SONG_DETAIL]: {
+    songId: number;
+    songNumber: number;
+    songName: string;
+    singerName: string;
+    album: string;
+  };
   [keepStackNavigations.KEEP_COMMENT]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_RECOMMENT]: {comment: Comment};
   [keepStackNavigations.KEEP_REPORT]: {

@@ -41,8 +41,11 @@ function KeepScreen({navigation}: KeepScreenProps) {
     album: string,
   ) => {
     navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
-      songNumber,
       songId,
+      songNumber,
+      songName,
+      singerName,
+      album,
     });
   };
 

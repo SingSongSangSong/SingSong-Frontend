@@ -51,3 +51,7 @@ export * from './list/SongsList';
 export * from './list/RefreshSongsList';
 export * from './button/CheckButton';
 export * from './message/CustomModal';
+export * from './list/EmptyHotTrending';
+export * from './module/TaglistModule';
+export * from './module/SongCardModule';
+export * from './module/HotTrendingModule';

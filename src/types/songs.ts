@@ -151,6 +151,14 @@ interface ChartResponse {
   data: {gender: string; female: Chart[]; male: Chart[]; time: string};
 }
 
+interface SongParams {
+  songId: number;
+  songNumber: number;
+  songName: string;
+  singerName: string;
+  album: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -176,4 +184,5 @@ export type {
   Song,
   Chart,
   ChartResponse,
+  SongParams,
 };
