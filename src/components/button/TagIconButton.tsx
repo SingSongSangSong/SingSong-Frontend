@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, ScrollView, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import tw from 'twrnc';
-import Tag1Icon from '../../assets/svg/tags/tag1.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type TagIconButtonProps = {
@@ -17,10 +16,13 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
 
   return (
     <View style={[tw`justify-center items-center my-1`, {width: viewWidth}]}>
-      <Icon width={50} height={50} onPress={onPress} />
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={tw`justify-center items-center`}
+        activeOpacity={0.8}>
+        <Icon width={24} height={24} onPress={onPress} />
         <Text
-          style={tw`text-white text-[10px] mx-4 text-center`}
+          style={tw`text-white text-[10px] mx-4 text-center mt-2`}
           numberOfLines={2} // 최대 두 줄로 표시되도록 설정
           ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
         >

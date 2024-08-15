@@ -67,7 +67,7 @@ function RecommentScreen(props: RecommentScreenProps) {
         {recommentHandler.parentComment ? (
           <Recommentlist
             parentComment={recommentHandler.parentComment} //comments[commentId]
-            recomments={recommentHandler.recomments} //recomments[commentId]
+            recomments={recommentHandler.orderedRecomments} //recomments[commentId]
             onPressMoreInfo={recommentHandler.handleOnPressMoreInfo}
             onPressCommentLikeButton={
               recommentHandler.handleOnPressCommentLikeButton
@@ -127,7 +127,7 @@ function RecommentScreen(props: RecommentScreenProps) {
                 recommentHandler.setIsKeyboardVisible(true);
               }}
               color="white"
-              size={3}
+              size={4}
             />
           </View>
         </View>

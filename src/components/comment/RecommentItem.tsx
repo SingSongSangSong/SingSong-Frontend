@@ -9,6 +9,7 @@ import ArrowRecommentIcon from '../../assets/svg/arrowRecomment.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
+import {formatDateComment} from '../../utils';
 
 interface RecommentItemProps {
   commentId: number;
@@ -55,25 +56,26 @@ const RecommentItem = ({
   };
 
   return (
-    <View
-      style={tw`w-full border-b border-[${designatedColor.GRAY4}] flex-row`}>
-      <View style={tw`mt-2`}>
+    <View style={tw`w-full flex-row`}>
+      {/* <View style={tw`mt-2`}>
         <ArrowRecommentIcon width={16} height={16} />
-      </View>
+      </View> */}
 
       <View style={tw`flex-1`}>
         <View
           style={tw`flex-row justify-between mb-2 items-center 
         `}>
-          <Text style={tw`text-white ml-2`}>{nickname}</Text>
           <View style={tw`flex-row items-center`}>
-            <Text style={tw`text-white mr-2`}>{createdAt}</Text>
-            <IconButton
-              Icon={MoreVerticalIcon}
-              size={20}
-              onPress={onPressMoreInfo}
-            />
+            <Text style={tw`text-white ml-2`}>{nickname}</Text>
+            <Text style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
+              {formatDateComment(createdAt)}
+            </Text>
           </View>
+          <IconButton
+            Icon={MoreVerticalIcon}
+            size={16}
+            onPress={onPressMoreInfo}
+          />
         </View>
         <View>
           <Text style={tw`text-white ml-4`}>{content}</Text>
@@ -84,11 +86,11 @@ const RecommentItem = ({
             {!isLiked ? (
               <TouchableOpacity
                 onPress={handleOnPressLikeButton}
-                style={tw`p-2`}>
+                style={tw`p-2 pr-1`}>
                 <LikeIcon width={20} height={20} />
               </TouchableOpacity>
             ) : (
-              <View style={tw`p-2`}>
+              <View style={tw`p-2 pr-1`}>
                 <FilledLikeIcon width={20} height={20} />
               </View>
             )}

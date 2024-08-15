@@ -35,7 +35,8 @@ const ToggleButton = ({toggleSwitch}: ToggleButtonProps) => {
   return (
     <TouchableOpacity
       style={[tw`justify-center items-center`, styles.switchContainer]}
-      onPress={handleOnToggleSwith}>
+      onPress={handleOnToggleSwith}
+      activeOpacity={0.9}>
       <Animated.View
         style={[styles.track, {backgroundColor: interpolateBackgroundColor}]}
       />

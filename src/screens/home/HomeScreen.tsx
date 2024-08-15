@@ -24,7 +24,7 @@ type HomeScreenProps = StackScreenProps<
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
   const {fetchChart, isEmptyChart, memberInfo, getUserInfo} = useHomeInfo();
-
+  console.log('HomeScreen');
   useEffect(() => {
     if (isEmptyObject(memberInfo)) {
       getUserInfo();

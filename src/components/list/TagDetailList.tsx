@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import Tag1Icon from '../../assets/svg/tags/tag1.svg';
+import MusicIcon from '../../assets/svg/music.svg';
 import {TagDetailListItem} from '../item/TagDetailListItem';
 
 interface TagDetailListProps {
@@ -13,7 +13,7 @@ const TagDetailList = ({tags, onPress}: TagDetailListProps) => {
     <View>
       <TagDetailListItem
         tag={item}
-        Icon={Tag1Icon}
+        Icon={MusicIcon}
         onPress={() => onPress(item)}
       />
     </View>

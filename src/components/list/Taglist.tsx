@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, ScrollView, Dimensions} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import tw from 'twrnc';
-import Tag1Icon from '../../assets/svg/tags/tag1.svg';
+// import Tag1Icon from '../../assets/svg/tags/tag1.svg';
+import PlayIcon from '../../assets/svg/play.svg';
 import {TagIconButton} from '../button/TagIconButton';
 
 type TaglistProps = {
@@ -22,7 +23,7 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
               tag={tag}
               index={index}
               onPress={() => handleOnTagButton(tag)}
-              Icon={Tag1Icon}
+              Icon={PlayIcon}
             />
           </View>
         ))}

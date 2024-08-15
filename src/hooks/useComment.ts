@@ -22,23 +22,24 @@ const useComment = (songNumber: number, songId: number) => {
     updateIsLikedComment,
     updateLikesComment,
     getRecommentCount,
+    getOrderedComments,
   } = useCommentStore();
+
+  const orderedComments = getOrderedComments();
 
   // const keyboard = useKeyboard();
 
   useEffect(() => {
-    console.log('comments loadding...');
     setInitComments();
-    console.log('stored comments', comments);
   }, []);
 
   const setInitComments = async () => {
-    console.log('songid', songId);
     setIsLoading(true);
     const tempComments = await getComment(String(songId));
+
     setComments(tempComments.data); //Comment[], comment 데이터 설정
+
     setIsLoading(false);
-    console.log('comments', tempComments.data);
   };
 
   //like 버튼 눌렀을 때
@@ -113,6 +114,7 @@ const useComment = (songNumber: number, songId: number) => {
     handleOnPressLikeButton,
     getRecommentCount,
     handleOnPressBlacklist,
+    orderedComments,
   };
 };
 

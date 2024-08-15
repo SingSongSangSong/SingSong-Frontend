@@ -79,9 +79,9 @@ function CommentScreen(props: CommentScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
         {!commentHandler.isLoading ? (
-          Object.keys(commentHandler.comments).length > 0 ? (
+          commentHandler.orderedComments.length > 0 ? (
             <Commentlist
-              commentData={commentHandler.comments}
+              commentData={commentHandler.orderedComments}
               onPressRecomment={handleOnPressRecomment}
               onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
               onPressLikeButton={commentHandler.handleOnPressLikeButton}

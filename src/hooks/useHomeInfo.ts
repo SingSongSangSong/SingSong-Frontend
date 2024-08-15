@@ -10,32 +10,44 @@ const useHomeInfo = () => {
   const {setCharts, setUserGender, setSelectedGender, setTime, isEmptyChart} =
     useChartStore();
 
-  const fetchChart = async () => {
-    const chartData = await getChart();
-
-    setCharts('FEMALE', chartData.data.female, 5); // chart 데이터 설정, 1번
-    setCharts('MALE', chartData.data.male, 5); //1번
-    setTime(chartData.data.time); //1번
-    setUserGender(chartData.data.gender); //2번
+  const fetchChart = () => {
+    return getChart()
+      .then(chartData => {
+        setCharts('FEMALE', chartData.data.female, 5); // chart 데이터 설정
+        setCharts('MALE', chartData.data.male, 5);
+        setTime(chartData.data.time);
+        setUserGender(chartData.data.gender);
+      })
+      .catch(error => {
+        console.error('Error fetching chart:', error);
+      });
   };
 
-  const handleKakaoLogout = async () => {
-    try {
-      const result = await postMemberLogout();
-      console.log('Logout Result:', result);
-    } catch (err) {
-      console.error('Logout Failed', err);
-    }
+  const handleKakaoLogout = () => {
+    return postMemberLogout()
+      .then(result => {
+        console.log('Logout Result:', result);
+      })
+      .catch(err => {
+        console.error('Logout Failed', err);
+      });
   };
 
-  const handleWithdraw = async () => {
-    await postMemberWithdraw();
+  const handleWithdraw = () => {
+    return postMemberWithdraw().catch(err => {
+      console.error('Withdraw Failed', err);
+    });
   };
 
-  const getUserInfo = async () => {
-    const result = await getMember();
-    setMemberInfo(result.data);
-    console.log('userInfo:', result.data);
+  const getUserInfo = () => {
+    return getMember()
+      .then(result => {
+        setMemberInfo(result.data);
+        console.log('userInfo:', result.data);
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+      });
   };
 
   return {

@@ -23,8 +23,10 @@ const useRecomment = (commentId: number) => {
     addRecommentComment,
     updateIsLikedRecomment,
     updateLikesRecomment,
+    getOrderedRecomments,
   } = useCommentStore();
 
+  const orderedRecomments = getOrderedRecomments(commentId);
   // const keyboard = useKeyboard();ㄴ
 
   // 특정 댓글(commentId)의 답글 가져오기
@@ -32,7 +34,7 @@ const useRecomment = (commentId: number) => {
 
   // 새 답글을 추가하는 함수
   const handleOnPressSendButton = async (content: string) => {
-    const parentComment = comments[commentId];
+    const parentComment = comments.get(commentId);
     if (!parentComment) {
       return;
     }
@@ -49,8 +51,9 @@ const useRecomment = (commentId: number) => {
   };
 
   const setInitRecomments = async () => {
-    const tempComments = await getComment(String(comments[commentId].songId));
-    console.log('refreshComments', tempComments.data);
+    const tempComments = await getComment(
+      String(comments.get(commentId)?.songId),
+    );
     setComments(tempComments.data); //Comment[], comment 데이터 설정
   };
 
@@ -79,7 +82,6 @@ const useRecomment = (commentId: number) => {
 
   const handleOnPressCommentLikeButton = async (commentId: number) => {
     //좋아요가 눌린 commentId 이용하여 업데이트
-    console.log('commentId', commentId);
     await postCommentLike(String(commentId));
 
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
@@ -129,12 +131,13 @@ const useRecomment = (commentId: number) => {
     isKeyboardVisible,
     setIsModalVisible,
     setIsKeyboardVisible,
-    parentComment: comments[commentId], // 해당 댓글 정보를 반환
+    parentComment: comments.get(commentId), // 해당 댓글 정보를 반환
     handleOnPressSendButton,
     handleOnPressMoreInfo,
     handleOnPressCommentLikeButton,
     handleOnPressRecommentLikeButton,
     handleOnPressBlacklist,
+    orderedRecomments,
   };
 };
 

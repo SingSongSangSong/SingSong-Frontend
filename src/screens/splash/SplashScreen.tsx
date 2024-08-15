@@ -1,8 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Text, View, Animated, Dimensions} from 'react-native';
+import {Text, View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
-import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations, designatedColor} from '../../constants';
 import useFetchData from '../../hooks/useFetchData';
@@ -22,56 +21,57 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   const secondTextOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // 로고가 나타나는 애니메이션
-    fetchDataHandler.fetchData();
-    Animated.timing(logoOpacity, {
-      toValue: 1,
-      duration: 1000, // 1초
-      useNativeDriver: true,
-    }).start(() => {
-      // 로고가 사라지는 애니메이션
+    const runAnimations = async () => {
+      // 데이터를 미리 가져오기 시작
+      const isValidTokenPromise = userInfoHandler.getIsValidToken();
+      const isValidToken = await isValidTokenPromise;
+      await fetchDataHandler.fetchData();
+      // 로고가 나타나는 애니메이션 (즉시 나타남)
       Animated.timing(logoOpacity, {
-        toValue: 0,
-        duration: 800, // 1초
-        delay: 1000, // 1초 동안 유지한 후 사라짐
-        useNativeDriver: true,
-      }).start();
-    });
-
-    // 첫 번째 텍스트가 나타나는 애니메이션
-    setTimeout(() => {
-      Animated.timing(firstTextOpacity, {
         toValue: 1,
-        duration: 1000, // 1초
+        duration: 500, // 0.8초 동안 로고가 나타남
         useNativeDriver: true,
-      }).start();
-    }, 2000); // 로고가 사라지고 나서 첫 번째 텍스트 나타남
+      }).start(() => {
+        if (isValidToken) {
+          // fetchDataHandler.fetchRcdHomeSongs();
+          setTimeout(() => {
+            navigation.replace(appStackNavigations.MAIN);
+          }, 200);
 
-    // 두 번째 텍스트가 나타나는 애니메이션
-    setTimeout(() => {
-      Animated.timing(secondTextOpacity, {
-        toValue: 1,
-        duration: 1000, // 1초
-        useNativeDriver: true,
-      }).start();
-    }, 2800); // 첫 번째 텍스트가 나타난 후 두 번째 텍스트 나타남
+          // }, 100); // 로고가 0.5초 동안 보인 후 메인 화면으로 이동
+        } else {
+          // 로고가 완전히 나타난 후 0.5초 후에 사라지는 애니메이션 시작
+          setTimeout(() => {
+            Animated.timing(logoOpacity, {
+              toValue: 0,
+              duration: 1000, // 0.5초 동안 로고가 사라짐
+              useNativeDriver: true,
+            }).start(() => {
+              // 첫 번째 텍스트가 나타나는 애니메이션
+              Animated.timing(firstTextOpacity, {
+                toValue: 1,
+                duration: 1000, // 0.5초 동안 첫 번째 텍스트가 나타남
+                useNativeDriver: true,
+              }).start();
 
-    // 애니메이션 완료 후 로그인 화면으로 전환
-    const timer = setTimeout(() => {
-      handleNavigation();
-    }, 2900); // 총 6초 후 로그인 화면으로 전환
+              // 두 번째 텍스트가 나타나는 애니메이션
+              setTimeout(() => {
+                Animated.timing(secondTextOpacity, {
+                  toValue: 1,
+                  duration: 1000, // 0.5초 동안 두 번째 텍스트가 나타남
+                  useNativeDriver: true,
+                }).start(() => {
+                  navigation.replace(appStackNavigations.LOGIN);
+                });
+              }, 1000); // 첫 번째 텍스트가 나타난 후 바로 두 번째 텍스트가 나타남
+            });
+          }, 500); // 로고가 나타난 후 0.5초 후에 사라짐
+        }
+      });
+    };
 
-    return () => clearTimeout(timer);
+    runAnimations();
   }, []);
-
-  const handleNavigation = async () => {
-    const isValidToken = await userInfoHandler.getIsValidToken();
-    if (isValidToken) {
-      navigation.replace(appStackNavigations.MAIN);
-    } else {
-      navigation.replace(appStackNavigations.LOGIN);
-    }
-  };
 
   const deviceHeight = Dimensions.get('window').height;
 
@@ -81,7 +81,6 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         tw`w-full h-full bg-black items-center justify-start`,
         {paddingTop: deviceHeight * 0.35},
       ]}>
-      {/* 로고와 첫 번째 텍스트가 동일한 위치에 배치 */}
       <View style={tw`items-center`}>
         {/* 로고 애니메이션 */}
         <Animated.View
@@ -90,7 +89,10 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
             position: 'absolute',
             transform: [{translateY: -deviceHeight * 0.1}],
           }}>
-          <WhiteLogoIcon />
+          <Image
+            source={require('../../assets/png/shinedLogo.png')}
+            style={{width: 246, height: 129}}
+          />
         </Animated.View>
 
         {/* 첫 번째 텍스트 애니메이션 */}

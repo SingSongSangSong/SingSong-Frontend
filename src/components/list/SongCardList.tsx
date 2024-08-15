@@ -1,5 +1,12 @@
 import React, {memo} from 'react';
-import {View, ScrollView, Text, Dimensions} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  Dimensions,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import tw from 'twrnc';
 import {RcdHomeSong} from '../../types';
 import {SongCard, TextButton} from '..';
@@ -27,12 +34,14 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
       <View
         style={tw`flex-row justify-between px-2 items-center px-4 mt-2 mb-6`}>
         <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
-        <TextButton
-          title="전체보기"
+        <TouchableOpacity
           onPress={() => onPress(tag)}
-          color={designatedColor.GRAY3}
-          size={3}
-        />
+          activeOpacity={0.8}
+          style={tw`p-2`}>
+          <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+            전체보기
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView
