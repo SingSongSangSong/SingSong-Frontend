@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Text, View, Animated, Dimensions} from 'react-native';
+import {Text, View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 import {AppStackParamList} from '../../types';
@@ -54,12 +54,12 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         duration: 1000, // 1초
         useNativeDriver: true,
       }).start();
-    }, 2800); // 첫 번째 텍스트가 나타난 후 두 번째 텍스트 나타남
+    }, 2400); // 첫 번째 텍스트가 나타난 후 두 번째 텍스트 나타남
 
     // 애니메이션 완료 후 로그인 화면으로 전환
     const timer = setTimeout(() => {
       handleNavigation();
-    }, 2900); // 총 6초 후 로그인 화면으로 전환
+    }, 3200); // 총 6초 후 로그인 화면으로 전환
 
     return () => clearTimeout(timer);
   }, []);
@@ -90,7 +90,17 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
             position: 'absolute',
             transform: [{translateY: -deviceHeight * 0.1}],
           }}>
-          <WhiteLogoIcon />
+          {/* <WhiteLogoIcon /> */}
+          <Image
+            source={require('../../assets/png/shinedLogo.png')}
+            // style={[
+            //   tw`rounded-md`,
+            //   {
+            //     width: cardWidth,
+            //     height: cardWidth,
+            //   },
+            // ]}
+          />
         </Animated.View>
 
         {/* 첫 번째 텍스트 애니메이션 */}
