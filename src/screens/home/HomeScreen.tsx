@@ -42,8 +42,20 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
-  const handleOnSongPress = (songNumber: number, songId: number) => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
+  const handleOnSongPress = (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => {
+    navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+      songId,
+      songNumber,
+      songName,
+      singerName,
+      album,
+    });
   };
 
   const handleOnPressSetting = () => {

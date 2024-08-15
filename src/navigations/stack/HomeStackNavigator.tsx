@@ -106,7 +106,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.RECOMMENT}
         component={RecommentScreen}
-        options={({navigation}) => ({
+        options={() => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -131,7 +131,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.REPORT}
         component={ReportScreen}
-        options={({navigation}) => ({
+        options={() => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정

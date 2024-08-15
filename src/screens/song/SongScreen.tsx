@@ -33,9 +33,16 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  const songNumber = props.route?.params?.songNumber; //초기 카테고리
-  const songId = props.route?.params?.songId;
-  const songDetailHandler = useSongDetail(songNumber, songId);
+  const {songNumber, songId, songName, singerName, album} =
+    props.route?.params || {};
+  // const songId = props.route?.params?.songId;
+  const songDetailHandler = useSongDetail({
+    songId,
+    songNumber,
+    songName,
+    singerName,
+    album,
+  });
 
   const _onSongPress = (
     songId: number,
@@ -50,12 +57,24 @@ function SongScreen(props: SongScreenProps) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).push(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber, songId});
+        ).push(keepStackNavigations.KEEP_SONG_DETAIL, {
+          songId,
+          songNumber,
+          songName,
+          singerName,
+          album,
+        });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).push(homeStackNavigations.SONG_DETAIL, {songNumber, songId});
+        ).push(homeStackNavigations.SONG_DETAIL, {
+          songId,
+          songNumber,
+          songName,
+          singerName,
+          album,
+        });
       }
     }
   };
@@ -79,96 +98,73 @@ function SongScreen(props: SongScreenProps) {
   const renderHeader = () => {
     return (
       <View>
-        <View style={tw`border-b border-[${designatedColor.GRAY4}] py-6 px-3`}>
+        <View style={tw`border-b border-[${designatedColor.GRAY4}]`}>
           <View style={tw`justify-center items-center overflow-hidden`}>
             <View style={tw`w-full h-30 bg-[${designatedColor.GRAY}]`} />
             <View style={tw`w-full h-30 bg-black`} />
-            {!songDetailHandler.isInit ? (
+
+            {album == '' ? (
               <View
                 style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
                 <MusicIcon width={64} height={64} />
               </View>
             ) : (
-              <>
-                {songDetailHandler.songInfo?.album == '' ? (
-                  <View
-                    style={tw`absolute top-5 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
-                    <MusicIcon width={64} height={64} />
-                  </View>
-                ) : (
-                  <View
-                    style={tw`absolute top-5 w-50 h-50 rounded-lg justify-center items-center`}>
-                    <Image
-                      source={{uri: songDetailHandler.songInfo?.album}}
-                      style={tw`w-50 h-50 rounded-md`}
-                      resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
-                    />
-                  </View>
-                )}
-              </>
+              <View
+                style={tw`absolute top-5 w-50 h-50 rounded-lg justify-center items-center`}>
+                <Image
+                  source={{uri: album}}
+                  style={tw`w-50 h-50 rounded-md`}
+                  resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
+                />
+              </View>
             )}
           </View>
-          <View>
+          <View style={tw`pt-6 px-3 `}>
             <View style={tw`flex-row items-center mt-3`}>
-              {songDetailHandler.songInfo ? (
-                <Text
-                  style={tw`flex-1 text-white text-2xl font-bold`}
-                  numberOfLines={1}
-                  ellipsizeMode="tail">
-                  {songDetailHandler.songInfo.songName}
-                </Text>
-              ) : (
-                <View
-                  style={tw`bg-[${designatedColor.GRAY4}] w-[20] h-9 rounded-lg`}
-                />
-              )}
+              <Text
+                style={tw`flex-1 text-white text-2xl font-bold`}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {songName}
+              </Text>
             </View>
 
-            {songDetailHandler.songInfo ? (
-              <View style={tw`flex-row items-center mt-2`}>
-                <View style={tw`items-center justify-center`}>
-                  <Text style={tw`text-white text-[${designatedColor.PINK2}]`}>
-                    {songDetailHandler.songInfo.songNumber}
-                  </Text>
-                </View>
-
-                {/* <View
-                  style={tw`bg-[${designatedColor.GRAY4}] w-[12] h-9 rounded-lg`}
-                /> */}
-
-                <Text
-                  style={tw`text-white mx-2`}
-                  numberOfLines={1}
-                  ellipsizeMode="tail">
-                  {songDetailHandler.songInfo.singerName}
+            <View style={tw`flex-row items-center mt-2`}>
+              <View style={tw`items-center justify-center`}>
+                <Text style={tw`text-white text-[${designatedColor.PINK2}]`}>
+                  {songNumber}
                 </Text>
               </View>
-            ) : (
-              <View
-                style={tw`bg-[${designatedColor.GRAY4}] w-[12] h-6 rounded-lg mt-4`}
-              />
-            )}
 
-            {songDetailHandler.songInfo ? (
-              <View style={tw`flex-row items-center mt-4`}>
-                <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
-                {songDetailHandler.songInfo.octave == '' ? (
-                  <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
-                    없음
-                  </Text>
-                ) : (
-                  <Text style={tw`text-[${designatedColor.GREEN}]`}>
-                    {songDetailHandler.songInfo.octave}
-                  </Text>
-                )}
-              </View>
-            ) : (
+              <Text
+                style={tw`text-white mx-2`}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {singerName}
+              </Text>
+            </View>
+
+            {/* {songDetailHandler.songInfo ? ( */}
+            <View style={tw`flex-row items-center mt-4`}>
+              <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
+              {songDetailHandler.songInfo?.octave == '' ? (
+                <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+                  없음
+                </Text>
+              ) : (
+                <Text style={tw`text-[${designatedColor.GREEN}]`}>
+                  {songDetailHandler.songInfo?.octave}
+                </Text>
+              )}
+            </View>
+            {/* ) : (
               <View
                 style={tw`bg-[${designatedColor.GRAY4}] w-[28] mt-4 h-6 rounded-lg`}
               />
-            )}
+            )} */}
           </View>
-          <View style={tw`flex-row justify-between mt-6 items-center`}>
+          <View
+            style={tw`flex-row justify-between mt-6 items-center py-2 px-3`}>
             <View style={tw`flex-row items-center`}>
               {songDetailHandler.keepColor == designatedColor.KEEP_FILLED ? (
                 <>
@@ -224,11 +220,11 @@ function SongScreen(props: SongScreenProps) {
         </View>
 
         <View style={tw`px-3`}>
-          {songDetailHandler.songReviews ? (
-            <View>
-              <Text style={tw`text-white font-bold text-xl my-4`}>
-                이 노래는 어떻송
-              </Text>
+          <View>
+            <Text style={tw`text-white font-bold text-xl my-4`}>
+              이 노래는 어떻송
+            </Text>
+            {songDetailHandler.songReviews ? (
               <Reviewlist
                 reviewlistData={songDetailHandler.songReviews}
                 // isLikePressed={songDetailHandler.isLikePressed}
@@ -236,46 +232,55 @@ function SongScreen(props: SongScreenProps) {
                 // onAddPress={songDetailHandler.handleOnAddPressReviewlist}
                 // onRemovePress={songDetailHandler.handleOnRemovePressReviewlist}
               />
-
-              <View style={tw`flex-row items-center justify-between mx-2`}>
-                <View style={tw`flex-row items-center`}>
-                  <MusicIcon width={18} height={18} />
-                  <Text
-                    style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
-                    나의 평가는?
-                  </Text>
-                </View>
-                <View style={tw`flex-row`}>
-                  <LikeButton
-                    title="쉬워요"
-                    color={designatedColor.PINK}
-                    onPress={() => {
-                      songDetailHandler.handleOnAddPressReviewlist(1);
-                    }}
-                    Icon={LikeIcon}
-                    PressIcon={FilledLikeIcon}
-                    isPressed={songDetailHandler.isLikePressed}
-                  />
-                  <LikeButton
-                    title="어려워요"
-                    color={designatedColor.PINK}
-                    onPress={() => {
-                      songDetailHandler.handleOnAddPressReviewlist(2);
-                    }}
-                    Icon={DislikeIcon}
-                    PressIcon={FilledDislikeIcon}
-                    isPressed={songDetailHandler.isDislikePressed}
-                  />
-                </View>
+            ) : (
+              <View style={tw`my-2`}>
+                <View
+                  style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}] my-2`}
+                />
+                <View
+                  style={tw`w-full px-4 rounded-xl h-10 bg-[${designatedColor.GRAY4}] my-2`}
+                />
               </View>
-              <View
-                style={tw`mt-10 mb-4 border-t border-[${designatedColor.GRAY4}] py-4`}>
-                <Text style={tw`text-white font-bold text-xl`}>
-                  다른 노래는 어떻송
+            )}
+
+            <View style={tw`flex-row items-center justify-between mx-2`}>
+              <View style={tw`flex-row items-center`}>
+                <MusicIcon width={18} height={18} />
+                <Text style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
+                  나의 평가는?
                 </Text>
               </View>
+              <View style={tw`flex-row`}>
+                <LikeButton
+                  title="쉬워요"
+                  color={designatedColor.PINK}
+                  onPress={() => {
+                    songDetailHandler.handleOnAddPressReviewlist(1);
+                  }}
+                  Icon={LikeIcon}
+                  PressIcon={FilledLikeIcon}
+                  isPressed={songDetailHandler.isLikePressed}
+                />
+                <LikeButton
+                  title="어려워요"
+                  color={designatedColor.PINK}
+                  onPress={() => {
+                    songDetailHandler.handleOnAddPressReviewlist(2);
+                  }}
+                  Icon={DislikeIcon}
+                  PressIcon={FilledDislikeIcon}
+                  isPressed={songDetailHandler.isDislikePressed}
+                />
+              </View>
             </View>
-          ) : (
+            <View
+              style={tw`mt-10 mb-4 border-t border-[${designatedColor.GRAY4}] py-4`}>
+              <Text style={tw`text-white font-bold text-xl`}>
+                다른 노래는 어떻송
+              </Text>
+            </View>
+          </View>
+          {/* ) : (
             <View>
               <View
                 style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
@@ -291,7 +296,7 @@ function SongScreen(props: SongScreenProps) {
                 style={tw`w-20 h-7 bg-[${designatedColor.GRAY4}] rounded-xl mt-4 mb-2`}
               />
             </View>
-          )}
+          )} */}
         </View>
       </View>
     );
@@ -301,21 +306,19 @@ function SongScreen(props: SongScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-black`}>
       {/* {songDetailHandler.songRelated && ( */}
       <View style={tw`h-full w-full`}>
-        {songDetailHandler.songRelated && (
-          <Relatedlist
-            isLoading={songDetailHandler.isLoading}
-            relatedlistData={songDetailHandler.songRelated}
-            isShowKeepIcon={false}
-            onSongPress={_onSongPress}
-            // handleOnPressRelated
-            renderHeader={renderHeader}
-            handleRefreshRelatedSongs={
-              songDetailHandler.handleRefreshRelatedSongs
-            }
-          />
-        )}
+        {/* {songDetailHandler.songRelated && ( */}
+        <Relatedlist
+          isLoading={songDetailHandler.isLoading}
+          relatedlistData={songDetailHandler.songRelated}
+          isShowKeepIcon={false}
+          onSongPress={_onSongPress}
+          // handleOnPressRelated
+          renderHeader={renderHeader}
+          handleRefreshRelatedSongs={
+            songDetailHandler.handleRefreshRelatedSongs
+          }
+        />
       </View>
-      {/* )} */}
     </SafeAreaView>
   );
 }

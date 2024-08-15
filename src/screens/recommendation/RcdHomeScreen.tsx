@@ -40,8 +40,11 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     album: string,
   ) => {
     navigation.navigate(homeStackNavigations.SONG_DETAIL, {
-      songNumber,
       songId,
+      songNumber,
+      songName,
+      singerName,
+      album,
     });
   };
 

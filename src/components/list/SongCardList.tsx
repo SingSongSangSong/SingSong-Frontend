@@ -9,7 +9,13 @@ type SongCardListProps = {
   tag: string;
   onPress: (tag: string) => void;
   data: RcdHomeSong[];
-  onSongPress: (songNumber: number, songId: number) => void;
+  onSongPress: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => void;
 };
 
 const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
@@ -43,7 +49,15 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
               songNumber={song.songNumber}
               songName={song.songName}
               singerName={song.singerName}
-              onSongPress={() => onSongPress(song.songNumber, song.songId)}
+              onSongPress={() =>
+                onSongPress(
+                  song.songNumber,
+                  song.songId,
+                  song.songName,
+                  song.singerName,
+                  song.album,
+                )
+              }
               album={song.album}
             />
           ))}

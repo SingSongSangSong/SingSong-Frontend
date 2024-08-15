@@ -59,7 +59,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
     const timer = setTimeout(() => {
       handleNavigation();
       fetchDataHandler.fetchData();
-    }, 3000); // 총 6초 후 로그인 화면으로 전환
+    }, 2900); // 총 6초 후 로그인 화면으로 전환
 
     return () => clearTimeout(timer);
   }, []);
