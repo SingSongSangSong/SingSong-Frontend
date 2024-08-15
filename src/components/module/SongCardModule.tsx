@@ -25,7 +25,7 @@ const SongCardModule = ({
   return (
     <View>
       {!isEmptyObject(previewSongs) && (
-        <View style={tw`flex-wrap flex-row justify-center items-center`}>
+        <View style={tw`w-full flex-wrap flex-row justify-center items-center`}>
           {tags.map((tag, index) => (
             <View>
               <SongCardList

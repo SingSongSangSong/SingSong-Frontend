@@ -7,7 +7,7 @@ import {RecommentItem} from './RecommentItem';
 
 interface RecommentlistProps {
   parentComment: Comment;
-  recomments: {[recommentId: number]: Comment} | undefined; // 객체로 수정
+  recomments: Comment[]; // 객체로 수정
   onPressMoreInfo: (
     reportCommentId: number,
     reportSubjectMemberId: number,
@@ -18,14 +18,12 @@ interface RecommentlistProps {
 
 const Recommentlist: React.FC<RecommentlistProps> = ({
   parentComment,
-  recomments = {},
+  recomments = [],
   onPressMoreInfo,
   onPressCommentLikeButton,
   onPressRecommentLikeButton,
 }) => {
   // 객체를 배열로 변환
-  const recommentArray = Object.values(recomments);
-  console.log('recommentArray', recommentArray);
 
   const renderItem = ({item}: {item: Comment}) => (
     <View style={tw`px-4 py-2`}>
@@ -84,7 +82,7 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
 
   return (
     <FlatList
-      data={recommentArray} // 객체를 배열로 변환하여 FlatList에 전달
+      data={recomments} // 객체를 배열로 변환하여 FlatList에 전달
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
       keyExtractor={item => item.commentId.toString()} // commentId를 사용하여 고유한 키 생성

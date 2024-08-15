@@ -1,10 +1,9 @@
 import {create} from 'zustand';
 import {Comment} from '../types';
 
-// CommentState 인터페이스 정의
 interface CommentState {
-  comments: {[commentId: number]: Comment}; // commentId를 키로 사용하는 댓글 객체
-  recomments: {[commentId: number]: {[recommentId: number]: Comment}}; // commentId와 recommentId를 키로 사용하는 답글 객체
+  comments: Map<number, Comment>; // Map으로 변경
+  recomments: {[commentId: number]: Map<number, Comment>};
   setComments: (comments: Comment[]) => void; // 댓글 배열을 설정
   addComment: (comment: Comment) => void; // 댓글 추가
   updateIsLikedComment: (commentId: number, isLiked: boolean) => void;
@@ -17,31 +16,28 @@ interface CommentState {
   updateLikesRecomment: (commentId: number, recommentId: number) => void;
   addRecommentComment: (commentId: number, recomment: Comment) => void; // recomment 더하기
   getRecommentCount: (commentId: number) => number;
+  getOrderedComments: () => Comment[];
+  getOrderedRecomments: (commentId: number) => Comment[];
 }
 
 const useCommentStore = create<CommentState>((set, get) => ({
-  comments: {},
+  comments: new Map(),
   recomments: {},
 
   // 댓글 배열을 설정하는 함수
   setComments: (comments: Comment[]) => {
-    const commentsMap = comments.reduce((acc, comment) => {
-      acc[comment.commentId] = comment;
-      return acc;
-    }, {} as {[commentId: number]: Comment});
+    const commentsMap = new Map(
+      comments.map(comment => [comment.commentId, comment]),
+    );
 
     const recommentsMap = comments.reduce((acc, comment) => {
       if (comment.recomments.length > 0) {
-        acc[comment.commentId] = comment.recomments.reduce(
-          (reAcc, recomment) => {
-            reAcc[recomment.commentId] = recomment;
-            return reAcc;
-          },
-          {} as {[recommentId: number]: Comment},
+        acc[comment.commentId] = new Map(
+          comment.recomments.map(recomment => [recomment.commentId, recomment]),
         );
       }
       return acc;
-    }, {} as {[commentId: number]: {[recommentId: number]: Comment}});
+    }, {} as {[commentId: number]: Map<number, Comment>});
 
     set({
       comments: commentsMap,
@@ -49,40 +45,54 @@ const useCommentStore = create<CommentState>((set, get) => ({
     });
   },
 
-  // 새로운 댓글을 추가하는 함수
   addComment: (comment: Comment) => {
-    set(state => ({
-      comments: {
-        ...state.comments,
-        [comment.commentId]: comment,
-      },
-    }));
+    set(state => {
+      const newComments = new Map();
+      newComments.set(comment.commentId, comment); // 새 댓글을 먼저 추가
+      state.comments.forEach((value, key) => {
+        newComments.set(key, value); // 기존 댓글을 뒤에 추가
+      });
+      return {
+        comments: newComments,
+      };
+    });
+  },
+
+  getOrderedComments: () => {
+    return Array.from(get().comments.values());
+  },
+
+  getOrderedRecomments: (commentId: number) => {
+    const recommentsMap = get().recomments[commentId];
+    return recommentsMap ? Array.from(recommentsMap.values()) : [];
   },
 
   // 특정 댓글 ID의 좋아요 상태를 업데이트하는 함수
   updateIsLikedComment: (commentId: number, isLiked: boolean) => {
-    set(state => ({
-      comments: {
-        ...state.comments,
-        [commentId]: {
-          ...state.comments[commentId],
-          isLiked,
-        },
-      },
-    }));
+    set(state => {
+      const newComments = new Map(state.comments);
+      const comment = newComments.get(commentId);
+      if (comment) {
+        comment.isLiked = isLiked;
+      }
+      return {
+        comments: new Map(newComments),
+      };
+    });
   },
 
   // 특정 댓글 ID의 좋아요 개수를 1 증가시키는 함수
   updateLikesComment: (commentId: number) => {
-    set(state => ({
-      comments: {
-        ...state.comments,
-        [commentId]: {
-          ...state.comments[commentId],
-          likes: state.comments[commentId].likes + 1,
-        },
-      },
-    }));
+    set(state => {
+      const newComments = new Map(state.comments);
+      const comment = newComments.get(commentId);
+      if (comment) {
+        comment.likes += 1;
+      }
+      return {
+        comments: new Map(newComments),
+      };
+    });
   },
 
   // 특정 답글의 좋아요 상태를 업데이트하는 함수
@@ -91,52 +101,58 @@ const useCommentStore = create<CommentState>((set, get) => ({
     recommentId: number,
     isLiked: boolean,
   ) => {
-    set(state => ({
-      recomments: {
-        ...state.recomments,
-        [commentId]: {
-          ...state.recomments[commentId],
-          [recommentId]: {
-            ...state.recomments[commentId][recommentId],
-            isLiked,
-          },
+    set(state => {
+      const newRecomments = new Map(state.recomments[commentId]);
+      const recomment = newRecomments.get(recommentId);
+      if (recomment) {
+        recomment.isLiked = isLiked;
+      }
+      return {
+        recomments: {
+          ...state.recomments,
+          [commentId]: newRecomments,
         },
-      },
-    }));
+      };
+    });
   },
 
   // 특정 답글의 좋아요 개수를 1 증가시키는 함수
   updateLikesRecomment: (commentId: number, recommentId: number) => {
-    set(state => ({
-      recomments: {
-        ...state.recomments,
-        [commentId]: {
-          ...state.recomments[commentId],
-          [recommentId]: {
-            ...state.recomments[commentId][recommentId],
-            likes: state.recomments[commentId][recommentId].likes + 1,
-          },
+    set(state => {
+      const newRecomments = new Map(state.recomments[commentId]);
+      const recomment = newRecomments.get(recommentId);
+      if (recomment) {
+        recomment.likes += 1;
+      }
+      return {
+        recomments: {
+          ...state.recomments,
+          [commentId]: newRecomments,
         },
-      },
-    }));
+      };
+    });
   },
 
-  // 특정 댓글에 답글을 추가하는 함수
   addRecommentComment: (commentId: number, recomment: Comment) => {
-    set(state => ({
-      recomments: {
-        ...state.recomments,
-        [commentId]: {
-          ...state.recomments[commentId],
-          [recomment.commentId]: recomment,
+    set(state => {
+      const newRecomments = new Map(state.recomments[commentId]); // 기존 답글을 먼저 복사
+
+      // 새 답글을 뒤에 추가
+      newRecomments.set(recomment.commentId, recomment);
+
+      return {
+        recomments: {
+          ...state.recomments,
+          [commentId]: newRecomments,
         },
-      },
-    }));
+      };
+    });
   },
+
   getRecommentCount: (commentId: number) => {
     const state = get();
     const recommentsForComment = state.recomments[commentId];
-    return recommentsForComment ? Object.keys(recommentsForComment).length : 0;
+    return recommentsForComment ? recommentsForComment.size : 0;
   },
 }));
 

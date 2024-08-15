@@ -5,7 +5,7 @@ import {Comment} from '../../types';
 import {CommentItem} from './CommentItem';
 
 interface CommentlistProps {
-  commentData: {[commentId: number]: Comment};
+  commentData: Comment[];
   onPressRecomment: (comment: Comment) => void;
   onPressMoreInfo: (
     reportCommentId: number,
@@ -22,13 +22,14 @@ const Commentlist = ({
   onPressLikeButton,
   getRecommentCount,
 }: CommentlistProps) => {
-  console.log('commentData', commentData);
-
   // 객체를 배열로 변환
-  const commentArray = Object.values(commentData);
+  // console.log('commentData', commentData);
+  // const commentArray = Object.values(commentData);
+
+  // console.log('commentArray', commentArray);
 
   const renderItem = ({item}: {item: Comment}) => (
-    <View style={tw`px-4 py-2`}>
+    <View style={tw`px-2 py-2`}>
       <CommentItem
         commentId={item.commentId}
         content={item.content}
@@ -58,7 +59,7 @@ const Commentlist = ({
 
   return (
     <FlatList
-      data={commentArray} // 객체를 배열로 변환하여 FlatList에 전달
+      data={commentData} // 객체를 배열로 변환하여 FlatList에 전달
       renderItem={renderItem}
       keyExtractor={item => item.commentId.toString()}
     />

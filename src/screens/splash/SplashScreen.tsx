@@ -25,7 +25,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       // 데이터를 미리 가져오기 시작
       const isValidTokenPromise = userInfoHandler.getIsValidToken();
       const isValidToken = await isValidTokenPromise;
-      fetchDataHandler.fetchData();
+      await fetchDataHandler.fetchData();
       // 로고가 나타나는 애니메이션 (즉시 나타남)
       Animated.timing(logoOpacity, {
         toValue: 1,
@@ -36,7 +36,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           // fetchDataHandler.fetchRcdHomeSongs();
           setTimeout(() => {
             navigation.replace(appStackNavigations.MAIN);
-          }, 100);
+          }, 200);
 
           // }, 100); // 로고가 0.5초 동안 보인 후 메인 화면으로 이동
         } else {
