@@ -1,24 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {TouchableOpacity, Animated, StyleSheet, Easing} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 
 type ToggleButtonProps = {
-  isEnabled: boolean;
   toggleSwitch: () => void;
 };
 
-const ToggleButton = ({isEnabled, toggleSwitch}: ToggleButtonProps) => {
+const ToggleButton = ({toggleSwitch}: ToggleButtonProps) => {
+  const [isEnabled, setIsEnabled] = useState<boolean>(true);
   const [animationValue] = useState(new Animated.Value(isEnabled ? 1 : 0));
-
-  useEffect(() => {
-    Animated.timing(animationValue, {
-      toValue: isEnabled ? 1 : 0,
-      duration: 150,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-  }, [isEnabled]);
 
   const interpolateBackgroundColor = animationValue.interpolate({
     inputRange: [0, 1],
@@ -30,10 +21,21 @@ const ToggleButton = ({isEnabled, toggleSwitch}: ToggleButtonProps) => {
     outputRange: [-10, 10], // 스위치 thumb의 위치를 설정
   });
 
+  const handleOnToggleSwith = () => {
+    toggleSwitch();
+    Animated.timing(animationValue, {
+      toValue: !isEnabled ? 1 : 0,
+      duration: 150,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+    setIsEnabled(!isEnabled);
+  };
+
   return (
     <TouchableOpacity
       style={[tw`justify-center items-center`, styles.switchContainer]}
-      onPress={toggleSwitch}>
+      onPress={handleOnToggleSwith}>
       <Animated.View
         style={[styles.track, {backgroundColor: interpolateBackgroundColor}]}
       />

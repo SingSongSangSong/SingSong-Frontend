@@ -23,6 +23,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
 
   useEffect(() => {
     // 로고가 나타나는 애니메이션
+    fetchDataHandler.fetchData();
     Animated.timing(logoOpacity, {
       toValue: 1,
       duration: 1000, // 1초
@@ -58,7 +59,6 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
     // 애니메이션 완료 후 로그인 화면으로 전환
     const timer = setTimeout(() => {
       handleNavigation();
-      fetchDataHandler.fetchData();
     }, 2900); // 총 6초 후 로그인 화면으로 전환
 
     return () => clearTimeout(timer);

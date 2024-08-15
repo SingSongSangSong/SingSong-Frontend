@@ -14,44 +14,52 @@ const useFetchData = () => {
     setExploreSongs,
   } = useSongStore();
 
-  const fetchTags = async () => {
-    try {
-      const tagData = await getTags();
-      setTags(tagData.data);
-
-      // fetchRecommendTags를 태그 데이터를 설정한 후 호출
-      fetchRecommendTags(tagData.data);
-    } catch (error) {
-      console.error('Error fetching tags:', error);
-    }
-  };
-
-  const fetchRcdHomeSongs = async () => {
-    try {
-      const exploreSongData = await getRcdHomeSongs();
-      setExploreSongs(exploreSongData.data);
-    } catch (error) {
-      console.error('Error fetching rcd home songs:', error);
-    }
-  };
-
-  const fetchRecommendTags = async (fetchedTags: string[]) => {
-    try {
-      const songData: RcdHomeResponse = await postRcdHome({
-        tags: fetchedTags,
+  const fetchTags = () => {
+    return getTags()
+      .then(tagData => {
+        setTags(tagData.data);
+        return tagData.data;
+      })
+      .then(fetchedTags => {
+        // fetchRecommendTags를 태그 데이터를 설정한 후 호출
+        return fetchRecommendTags(fetchedTags);
+      })
+      .catch(error => {
+        console.error('Error fetching tags:', error);
       });
-
-      songData.data.forEach((songWithTags: RcdHomeSongWithTags) => {
-        setPreviewSongs(songWithTags.tag, songWithTags.songs);
-      });
-    } catch (error) {
-      console.error('Error fetching songs:', error);
-    }
   };
 
-  const fetchData = async () => {
-    await fetchTags();
-    // await fetchRcdHomeSongs();
+  const fetchRcdHomeSongs = () => {
+    return getRcdHomeSongs()
+      .then(exploreSongData => {
+        setExploreSongs(exploreSongData.data);
+      })
+      .catch(error => {
+        console.error('Error fetching rcd home songs:', error);
+      });
+  };
+
+  const fetchRecommendTags = (fetchedTags: string[]) => {
+    return postRcdHome({tags: fetchedTags})
+      .then((songData: RcdHomeResponse) => {
+        songData.data.forEach((songWithTags: RcdHomeSongWithTags) => {
+          setPreviewSongs(songWithTags.tag, songWithTags.songs);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching songs:', error);
+      });
+  };
+
+  const fetchData = () => {
+    return fetchTags()
+      .then(() => {
+        // fetchRcdHomeSongs를 호출하고 싶다면 여기서 처리합니다.
+        // return fetchRcdHomeSongs();
+      })
+      .catch(error => {
+        console.error('Error in fetchData:', error);
+      });
   };
 
   return {

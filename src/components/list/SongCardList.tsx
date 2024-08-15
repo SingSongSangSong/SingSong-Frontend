@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, ScrollView, Text, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {RcdHomeSong} from '../../types';
@@ -66,4 +66,6 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
   );
 };
 
-export {SongCardList};
+// React.memo를 사용하여 SongCardList 컴포넌트를 메모이제이션하고 내보내기
+export const MemoizedSongCardList = memo(SongCardList);
+export {MemoizedSongCardList as SongCardList};

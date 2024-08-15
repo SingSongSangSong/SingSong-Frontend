@@ -32,6 +32,7 @@ const SongItem = ({
   onKeepRemovePress = () => {},
 }: SongItemProps) => {
   const [isKeepPressed, setIsKeepPressed] = useState(isKeep);
+  // console.log(songId);
 
   const handleOnKeepPress = () => {
     if (isKeepPressed) {

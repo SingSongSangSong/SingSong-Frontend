@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
 import {HotTrending, IconButton, Taglist, TextButton} from '../../components';
@@ -9,11 +9,11 @@ import {designatedColor, homeStackNavigations} from '../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
 import SettingsIcon from '../../assets/svg/settings.svg';
 // import Carousel from '../../components/carousel/Carousel';
-import useUserInfo from '../../hooks/useUserInfo';
 import LogoIcon from '../../assets/svg/logo.svg';
 import {formatDateString} from '../../utils';
 import {ToggleButton} from '../../components/button/ToggleButton';
 import {SongCardList} from '../../components/list/SongCardList';
+import useHomeInfo from '../../hooks/useHomeInfo';
 // import HotTrending from './HotTrending';
 
 type HomeScreenProps = StackScreenProps<
@@ -22,16 +22,16 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
-  const userInfoHandler = useUserInfo();
+  const homeInfoHandler = useHomeInfo();
 
   useEffect(() => {
-    if (!userInfoHandler.isInit) {
-      userInfoHandler.fetchChart();
+    if (homeInfoHandler.isEmptyChart()) {
+      homeInfoHandler.fetchChart();
     }
 
-    if (isEmptyObject(userInfoHandler.memberInfo)) {
-      userInfoHandler.getUserInfo();
-    }
+    // if (isEmptyObject(homeInfoHandler.memberInfo)) {
+    //   homeInfoHandler.getUserInfo();
+    // }
   }, []);
 
   const isEmptyObject = (obj: Record<string, any>): boolean => {
@@ -113,30 +113,26 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
                   style={tw`text-[${designatedColor.PINK}] font-bold text-xl `}>
                   HOT TRENDING
                 </Text>
-                {userInfoHandler.time && (
+                {homeInfoHandler.time != '' && (
                   <Text
                     style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
-                    {formatDateString(userInfoHandler.time)}
+                    {formatDateString(homeInfoHandler.time)}
                   </Text>
                 )}
               </View>
               <View style={tw`flex-row items-center`}>
                 <Text style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
-                  {userInfoHandler.selectedGender &&
-                  userInfoHandler.selectedGender == 'FEMALE'
-                    ? '여'
-                    : '남'}
+                  {homeInfoHandler.selectedGender != '' &&
+                  homeInfoHandler.selectedGender == 'FEMALE'
+                    ? '여자'
+                    : '남자'}
                 </Text>
-                <ToggleButton
-                  isEnabled={userInfoHandler.isEnabled}
-                  toggleSwitch={userInfoHandler.toggleSwitch}
-                />
+                <ToggleButton toggleSwitch={homeInfoHandler.toggleSwitch} />
               </View>
             </View>
-            <HotTrending
-              data={userInfoHandler.charts}
-              selectedGender={userInfoHandler.selectedGender}
-            />
+            {homeInfoHandler.selectedGender != '' && (
+              <HotTrending selectedCharts={homeInfoHandler.selectedCharts} />
+            )}
           </View>
           <View
             style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 my-2`}>
@@ -152,19 +148,19 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
               />
             </View>
             <Taglist
-              tags={userInfoHandler.tags}
+              tags={homeInfoHandler.tags}
               handleOnTagButton={handleOnArrowPress}
             />
           </View>
-          {!isEmptyObject(userInfoHandler.previewSongs) && (
+          {!isEmptyObject(homeInfoHandler.previewSongs) && (
             <View style={tw`flex-wrap flex-row justify-center items-center`}>
-              {userInfoHandler.tags.map((tag, index) => (
+              {homeInfoHandler.tags.map((tag, index) => (
                 <View>
                   <SongCardList
                     tag={tag}
                     key={index}
                     onPress={handleOnArrowPress}
-                    data={userInfoHandler.previewSongs[tag]}
+                    data={homeInfoHandler.previewSongs[tag]}
                     onSongPress={handleOnSongPress}
                   />
                 </View>

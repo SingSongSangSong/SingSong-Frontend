@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {Chart, RcdExploreSong, RcdHomeSong, Song} from '../types';
+import {RcdExploreSong, RcdHomeSong, Song} from '../types';
 
 interface SongState {
   selectedTag: string;
@@ -7,17 +7,17 @@ interface SongState {
   previewSongs: {[tag: string]: RcdHomeSong[]};
   refreshSongs: {[tag: string]: Song[]};
   exploreSongs: RcdExploreSong[];
-  charts: {[gender: string]: Chart[]};
+  // charts: {[gender: string]: Chart[]};
   time: string;
   gender: string;
   // indexLst: {[tag: string]: number};
-  setCharts: (gender: string, charts: Chart[]) => void;
+  // setCharts: (gender: string, charts: Chart[]) => void;
   setTime: (time: string) => void;
   setGender: (gender: string) => void;
   setSelectedTag: (tag: string) => void;
   setTags: (tags: string[]) => void;
   setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
-  setRefreshSongs: (tag: string, songs: Song[]) => Song[];
+  setRefreshSongs: (tag: string, songs: Song[]) => void;
   setExploreSongs: (songs: RcdExploreSong[]) => void;
 
   updateRefreshSongs: (tag: string, songs: Song[]) => Song[];
@@ -82,7 +82,6 @@ const useSongStore = create<SongState>((set, get) => {
           [tag]: songs,
         },
       }));
-      return songs;
     },
 
     setExploreSongs: (songs: RcdExploreSong[]) => {
@@ -106,15 +105,6 @@ const useSongStore = create<SongState>((set, get) => {
         },
       }));
       return updatedSongs;
-    },
-
-    setCharts: (gender: string, charts: Chart[]) => {
-      set(state => ({
-        charts: {
-          ...state.charts, // 기존 상태를 유지
-          [gender]: charts, // 특정 gender의 차트를 업데이트
-        },
-      }));
     },
 
     setTime: (time: string) => {

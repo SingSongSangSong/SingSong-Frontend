@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import tw from 'twrnc';
 import {SongItem} from '..';
@@ -22,18 +22,15 @@ interface RefreshSongsListProps {
   refreshing: boolean;
 }
 
-const RefreshSongsList = ({
-  songlistData,
-  isShowKeepIcon = false,
-  onSongPress,
-  onKeepAddPress,
-  onKeepRemovePress,
-  handleRefreshSongs,
-  onRefresh,
-  isLoading,
-  refreshing,
-}: RefreshSongsListProps) => {
-  const renderItem = ({item}: {item: Song}) => (
+// 메모이제이션된 renderItem 함수
+const RenderItem = memo(
+  ({
+    item,
+    onSongPress,
+    onKeepAddPress,
+    onKeepRemovePress,
+    isShowKeepIcon,
+  }: any) => (
     <SongItem
       key={item.songNumber}
       songId={item.songId}
@@ -55,13 +52,35 @@ const RefreshSongsList = ({
       onKeepAddPress={() => onKeepAddPress(item.songId)}
       onKeepRemovePress={() => onKeepRemovePress(item.songId)}
     />
-  );
+  ),
+);
+
+const RefreshSongsList = ({
+  songlistData,
+  isShowKeepIcon = false,
+  onSongPress,
+  onKeepAddPress,
+  onKeepRemovePress,
+  handleRefreshSongs,
+  onRefresh,
+  isLoading,
+  refreshing,
+}: RefreshSongsListProps) => {
+  // console.log('RefreshSongsList rendered!');
 
   return (
     <FlatList
       data={songlistData}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={renderItem}
+      renderItem={({item}) => (
+        <RenderItem
+          item={item}
+          onSongPress={onSongPress}
+          onKeepAddPress={onKeepAddPress}
+          onKeepRemovePress={onKeepRemovePress}
+          isShowKeepIcon={isShowKeepIcon}
+        />
+      )}
       style={tw`h-[50%]`}
       contentContainerStyle={tw`flex-grow`}
       onEndReached={handleRefreshSongs}
@@ -80,4 +99,8 @@ const RefreshSongsList = ({
   );
 };
 
-export {RefreshSongsList};
+// 먼저 메모이제이션된 컴포넌트를 생성
+const MemoizedRefreshSongsList = memo(RefreshSongsList);
+
+// export 시에 중괄호를 사용
+export {MemoizedRefreshSongsList as RefreshSongsList};
