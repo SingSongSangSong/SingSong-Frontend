@@ -15,7 +15,7 @@ const TagDetailListItem = ({tag, Icon, onPress}: TagDetailListItemProps) => {
         {/* 아이콘을 감싸는 하얀색 동그라미 배경 */}
         <View
           style={tw`w-13 h-13 bg-white rounded-full justify-center items-center`}>
-          <Icon width={60} height={60} />
+          <Icon width={32} height={32} />
         </View>
         <Text style={tw`text-white ml-4`}>{tag}</Text>
       </View>
