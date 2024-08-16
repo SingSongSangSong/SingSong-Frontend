@@ -3,27 +3,26 @@ import {SearchRecentType} from '../types';
 
 interface SearchRecentState {
   searchRecent: Map<number, SearchRecentType>;
-  currentId: number; // 고유 ID를 관리하는 상태
+  currentId: number;
   addSearchRecent: (searchRecent: Omit<SearchRecentType, 'id'>) => void;
   deleteSearchRecent: (searchRecentId: number) => void;
-  getOrderedSearchRecents: () => SearchRecentType[];
+  orderedSearchRecents: SearchRecentType[]; // 최신 순서로 정렬된 검색 기록
 }
 
-const useSearchRecentStore = create<SearchRecentState>((set, get) => ({
+const useSearchRecentStore = create<SearchRecentState>(set => ({
   searchRecent: new Map(),
-  currentId: 1, // 초기 ID 값
+  currentId: 1,
 
   addSearchRecent: newSearchRecent =>
     set(state => {
       const newId = state.currentId;
       const updatedMap = new Map(state.searchRecent);
-
-      // 새로운 항목에 고유 ID를 부여하여 추가
       updatedMap.set(newId, {...newSearchRecent, id: newId});
 
       return {
         searchRecent: updatedMap,
-        currentId: newId + 1, // ID 증가
+        currentId: newId + 1,
+        orderedSearchRecents: Array.from(updatedMap.values()).reverse(),
       };
     }),
 
@@ -34,13 +33,11 @@ const useSearchRecentStore = create<SearchRecentState>((set, get) => ({
 
       return {
         searchRecent: updatedMap,
+        orderedSearchRecents: Array.from(updatedMap.values()).reverse(),
       };
     }),
 
-  getOrderedSearchRecents: () => {
-    // 저장된 순서대로 값을 가져옴
-    return Array.from(get().searchRecent.values());
-  },
+  orderedSearchRecents: [],
 }));
 
 export default useSearchRecentStore;

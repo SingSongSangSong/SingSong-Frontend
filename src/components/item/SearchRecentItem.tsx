@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import DeleteIcon from '../../assets/svg/delete.svg';
+import {formatDate} from '../../utils';
 
 interface SearchRecentItemProps {
   date: string;
@@ -19,15 +20,18 @@ const SearchRecentItem = ({
 }: SearchRecentItemProps) => {
   return (
     <TouchableOpacity
-      style={tw`flex-row justify-between p-2 border-b border-[${designatedColor.GRAY4}]`}
+      style={tw`w-full flex-row justify-between p-2 items-center`}
       onPress={onPress}>
-      <View>
-        <Text style={tw`text-white my-2`}>{recentText}</Text>
-        <Text style={tw`text-white`}>{date}</Text>
+      <Text style={tw`text-white`}>{recentText}</Text>
+      <View style={tw`flex-row items-center`}>
+        <Text style={tw`text-[${designatedColor.GRAY2}]`}>
+          {formatDate(date)}
+        </Text>
+
+        <TouchableOpacity style={tw`my-1 p-2`} onPress={onDeletePress}>
+          <DeleteIcon width={16} height={16} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={tw`my-4 p-2`} onPress={onDeletePress}>
-        <DeleteIcon width={16} height={16} />
-      </TouchableOpacity>
     </TouchableOpacity>
   );
 };

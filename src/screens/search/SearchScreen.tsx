@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {GetSearchSong, HomeStackParamList} from '../../types';
@@ -8,6 +8,7 @@ import {
   Keyboard,
   SafeAreaView,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import {
@@ -17,6 +18,7 @@ import {
   SearchResult,
 } from '../../components';
 import getSearch from '../../api/search/getSearch';
+import useSearchRecentStore from '../../store/useSearchRecentStore';
 
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -28,6 +30,9 @@ function SearchScreen({navigation}: SearchScreenProps) {
   const [searchData, setSearchData] = useState<GetSearchSong>();
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true); // 상태 추가
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const addSearchRecent = useSearchRecentStore(state => state.addSearchRecent);
+
+  const inputRef = useRef<TextInput>(null);
 
   const handleOnGoBack = () => {
     Keyboard.dismiss();
@@ -36,11 +41,14 @@ function SearchScreen({navigation}: SearchScreenProps) {
 
   const handleOnPressRecent = (searchText: string) => {
     setInputText(searchText);
-    setShowSearchResult(true); // 최근 검색어를 누르면 검색 결과가 다시 보이게 설정
+    inputRef.current?.focus();
+    // setShowSearchResult(true); // 최근 검색어를 누르면 검색 결과가 다시 보이게 설정
   };
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
+    const currentDate = new Date().toISOString();
+    addSearchRecent({recentText: inputText, date: currentDate});
     const tempSearchData = await getSearch(inputText);
     setSearchData(tempSearchData.data);
     setIsLoading(false);
@@ -63,9 +71,12 @@ function SearchScreen({navigation}: SearchScreenProps) {
         handleOnPressBack={handleOnGoBack}
         handleOnSubmit={handleOnSubmit}
         handleInputFocus={handleInputFocus} // 입력창에 포커스가 맞춰지면 호출
+        inputRef={inputRef}
       />
       {inputText === '' ? (
-        <SearchRecent onPressRecent={handleOnPressRecent} />
+        <View style={tw`flex-1`}>
+          <SearchRecent onPressRecent={handleOnPressRecent} />
+        </View>
       ) : (
         <>
           {isLoading ? (
@@ -77,7 +88,8 @@ function SearchScreen({navigation}: SearchScreenProps) {
           )}
         </>
       )}
-      {searchData &&
+      {inputText != '' &&
+        searchData &&
         showSearchResult && // 검색 결과를 조건부로 렌더링
         (isAllKeysEmpty(searchData) ? ( // isEmptyObject 대신 isAllKeysEmpty 사용
           <View style={tw`flex-1 justify-center items-center`}>

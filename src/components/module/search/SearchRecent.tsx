@@ -10,20 +10,18 @@ interface SearchRecentProps {
 }
 
 const SearchRecent = ({onPressRecent}: SearchRecentProps) => {
-  const getOrderedSearchRecents = useSearchRecentStore(
-    state => state.getOrderedSearchRecents,
+  const orderedSearchRecents = useSearchRecentStore(
+    state => state.orderedSearchRecents, // 최신 순서로 정렬된 검색 기록을 구독
   );
   const deleteSearchRecent = useSearchRecentStore(
     state => state.deleteSearchRecent,
   );
 
-  const recentlistData = getOrderedSearchRecents();
-
   return (
     <View style={tw`flex-1 justify-center items-center`}>
-      {recentlistData.length != 0 ? (
+      {orderedSearchRecents.length != 0 ? (
         <SearchRecentList
-          recentlistData={recentlistData}
+          recentlistData={orderedSearchRecents}
           onPress={onPressRecent}
           onDeletePress={deleteSearchRecent}
         />

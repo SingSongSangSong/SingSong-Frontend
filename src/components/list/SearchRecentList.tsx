@@ -2,6 +2,7 @@ import React from 'react';
 import {FlatList, View} from 'react-native';
 import {SearchRecentType} from '../../types';
 import {SearchRecentItem} from '..';
+import tw from 'twrnc';
 
 interface SearchRecentListProps {
   recentlistData: SearchRecentType[];
@@ -15,7 +16,7 @@ const SearchRecentList = ({
   onDeletePress,
 }: SearchRecentListProps) => {
   const renderItem = ({item}: {item: SearchRecentType}) => (
-    <View>
+    <View style={tw`w-full`}>
       <SearchRecentItem
         date={item.date}
         recentText={item.recentText}
