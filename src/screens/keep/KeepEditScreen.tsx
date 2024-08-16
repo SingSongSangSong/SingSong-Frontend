@@ -6,6 +6,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {KeepStackParamList} from '../../types';
 import useKeep from '../../hooks/useKeep';
 import {
+  AddTextButton,
   CheckButton,
   CustomModal,
   RemoveButton,
@@ -29,6 +30,7 @@ function KeepEditScreen({navigation}: KeepEditScreenProps) {
           isSelected={false}
           isDeleted={false}
         />
+        <AddTextButton title="곡 추가" onPress={() => {}} isCenter={true} />
       </View>
 
       <View style={tw`flex-1`}>

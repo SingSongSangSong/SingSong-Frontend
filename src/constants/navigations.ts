@@ -30,6 +30,7 @@ const homeStackNavigations = {
   REPORT: '_Report',
   TAG_DETAIL: '_TagDetail',
   BLACKLIST: '_Blacklist',
+  SEARCH: '_Search',
 } as const;
 
 const keepStackNavigations = {

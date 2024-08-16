@@ -1,4 +1,4 @@
-import {ActivityIndicator, Dimensions, Text, View} from 'react-native';
+import {ActivityIndicator, Dimensions, Image, Text, View} from 'react-native';
 import React from 'react';
 import {LargeButton} from '../../components';
 import useUserInfo from '../../hooks/useUserInfo';
@@ -34,16 +34,26 @@ function LoginScreen({navigation}: LoginScreenProps) {
         tw`w-full h-full bg-black items-center justify-start`,
         {paddingTop: deviceHeight * 0.1},
       ]}>
-      <View style={tw`items-center`}>
+      <View style={tw`items-center justify-center`}>
+        {/* Centered Image behind the Text */}
+        <Image
+          source={require('../../assets/png/effect.png')}
+          style={[
+            {width: 405 * 1.2, height: 140.81 * 1.2},
+            tw`absolute`,
+            {top: deviceHeight * 0.1 + 80}, // Adjust this value as necessary
+          ]}
+        />
         <View>
-          <Text style={tw`text-white font-bold text-3xl pt-50`}>
+          <Text style={tw`text-white font-bold text-3xl pt-50 z-10`}>
             싱숭생숭한 기분을
           </Text>
         </View>
       </View>
 
       <View style={{marginTop: deviceHeight * 0.01}}>
-        <Text style={tw`text-[${designatedColor.PINK}] font-bold text-3xl`}>
+        <Text
+          style={tw`text-[${designatedColor.PINK}] font-bold text-3xl z-10`}>
           싱송생송하게
         </Text>
       </View>

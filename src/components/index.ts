@@ -55,3 +55,8 @@ export * from './list/EmptyHotTrending';
 export * from './module/TaglistModule';
 export * from './module/SongCardModule';
 export * from './module/HotTrendingModule';
+export * from './module/search/SearchInput';
+export * from './list/SearchRecentList';
+export * from './item/SearchRecentItem';
+export * from './module/search/SearchRecent';
+export * from './module/search/SearchResult';

@@ -1,10 +1,5 @@
 import {create} from 'zustand';
-
-interface SearchRecentType {
-  id: number; // 고유 ID
-  date: string;
-  recentText: string;
-}
+import {SearchRecentType} from '../types';
 
 interface SearchRecentState {
   searchRecent: Map<number, SearchRecentType>;

@@ -14,6 +14,7 @@ import RecommentScreen from '../../screens/song/RecommentScreen';
 import ReportScreen from '../../screens/song/ReportScreen';
 import TagDetailScreen from '../../screens/home/TagDetailScreen';
 import BlacklistScreen from '../../screens/home/BlacklistScreen';
+import SearchScreen from '../../screens/search/SearchScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -183,6 +184,13 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.SEARCH}
+        component={SearchScreen}
+        options={() => ({
+          headerShown: false,
         })}
       />
       <Stack.Screen

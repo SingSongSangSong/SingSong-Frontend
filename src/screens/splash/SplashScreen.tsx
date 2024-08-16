@@ -74,6 +74,10 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   }, []);
 
   const deviceHeight = Dimensions.get('window').height;
+  const deviceWidth = Dimensions.get('window').width;
+
+  const imageWidth = 405 * 1.2;
+  const imageHeight = 140.81 * 1.2;
 
   return (
     <View
@@ -83,6 +87,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       ]}>
       <View style={tw`items-center`}>
         {/* 로고 애니메이션 */}
+
         <Animated.View
           style={{
             opacity: logoOpacity,
@@ -99,21 +104,29 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         <Animated.View
           style={{
             opacity: firstTextOpacity,
-            position: 'absolute',
           }}>
+          {/* <View style={tw`relative w-full h-full`}>
+            <Image
+              source={require('../../assets/png/effect.png')}
+              style={[
+                {width: imageWidth, height: imageHeight},
+                tw`absolute`,
+                {top: 0, left: 0}, // 수정된 부분
+              ]}
+            />
+          </View> */}
           <Text style={tw`text-white font-bold text-3xl`}>
             싱숭생숭한 기분을
           </Text>
         </Animated.View>
-      </View>
 
-      {/* 두 번째 텍스트 애니메이션 */}
-      <Animated.View
-        style={{opacity: secondTextOpacity, marginTop: deviceHeight * 0.05}}>
-        <Text style={tw`text-[${designatedColor.PINK}] font-bold text-3xl`}>
-          싱송생송하게
-        </Text>
-      </Animated.View>
+        {/* 두 번째 텍스트 애니메이션 */}
+        <Animated.View style={{opacity: secondTextOpacity, marginTop: 2}}>
+          <Text style={tw`text-[${designatedColor.PINK}] font-bold text-3xl`}>
+            싱송생송하게
+          </Text>
+        </Animated.View>
+      </View>
     </View>
   );
 }

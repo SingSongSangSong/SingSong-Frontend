@@ -12,7 +12,6 @@ import {
 import useSongDetail from '../../hooks/useSongDetail';
 import MusicIcon from '../../assets/svg/music.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {IconButton, Relatedlist, Reviewlist} from '../../components';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
@@ -33,6 +32,7 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
+  console.log('song screen');
   const {songNumber, songId, songName, singerName, album} =
     props.route?.params || {};
   // const songId = props.route?.params?.songId;

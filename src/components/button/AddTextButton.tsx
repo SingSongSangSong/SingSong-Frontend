@@ -1,7 +1,8 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import tw from 'twrnc';
-import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import PlusIcon from '../../assets/svg/plus.svg';
+import {designatedColor} from '../../constants';
 
 interface AddTextButtonProps {
   title: string;
@@ -18,11 +19,15 @@ const AddTextButton = ({
     <TouchableOpacity
       onPress={() => onPress(title)}
       style={[
-        tw`px-4 py-4 flex-row items-center`,
+        tw`px-4 py-2 flex-row items-center border border-[${designatedColor.GRAY4}] rounded-full`,
         isCenter && tw`justify-center items-center`,
-      ]}>
-      <Text style={tw`text-white text-sm font-semibold pr-1`}>{title}</Text>
-      <ArrowRightIcon width={32} height={32} />
+      ]}
+      activeOpacity={0.8}>
+      <PlusIcon width={18} height={18} />
+      <Text
+        style={tw`text-[${designatedColor.TEXT_WHITE}] text-sm font-semibold pr-1`}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
