@@ -16,6 +16,7 @@ import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
 import {isEmptyObject} from '../../utils';
+import SearchIcon from '../../assets/svg/search.svg';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -68,6 +69,10 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     navigation.navigate(homeStackNavigations.TAG_DETAIL);
   }, [navigation]);
 
+  const handleOnPressSearch = useCallback(() => {
+    navigation.navigate(homeStackNavigations.SEARCH);
+  }, [navigation]);
+
   return (
     <GestureRecognizer
       config={{
@@ -79,11 +84,21 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         <View
           style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
           <LogoIcon />
-          <IconButton
-            Icon={SettingsIcon}
-            onPress={handleOnPressSetting}
-            size={28}
-          />
+          <View style={tw`flex-row`}>
+            <View style={tw`mr-2`}>
+              <IconButton
+                Icon={SearchIcon}
+                onPress={handleOnPressSearch}
+                size={28}
+              />
+            </View>
+
+            <IconButton
+              Icon={SettingsIcon}
+              onPress={handleOnPressSetting}
+              size={28}
+            />
+          </View>
         </View>
         <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
           <HotTrendingModule />

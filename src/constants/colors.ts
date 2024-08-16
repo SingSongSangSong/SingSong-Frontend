@@ -35,6 +35,7 @@ const designatedColor = {
   WHITE: '#FFFFFF',
   ORANGE: '#FF7436',
   PURPLE: '#7A51E2',
+  TEXT_WHITE: '#F4EFEF',
 } as const;
 
 export {randomColor, designatedColor};

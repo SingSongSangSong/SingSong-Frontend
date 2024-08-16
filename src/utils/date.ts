@@ -38,4 +38,10 @@ const formatDateComment = (createdAt: string) => {
   }
 };
 
-export {formatDateString, formatDateComment};
+const formatDate = (createdAt: string): string => {
+  const date = new Date(createdAt);
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 2자리로 만듦 (01, 02, ..., 12)
+  const day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로 만듦 (01, 02, ..., 31)
+  return `${month}.${day}`; // MM.DD 형식으로 반환
+};
+export {formatDateString, formatDateComment, formatDate};

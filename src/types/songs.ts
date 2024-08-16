@@ -16,12 +16,24 @@ interface RcdHomeSong {
 
 interface Song {
   album: string;
-  isKeep: boolean;
+  isKeep?: boolean;
   singerName: string;
   songId: number;
   songName: string;
   songNumber: number;
-  tags: string[];
+  tags?: string[];
+  isMr: true;
+}
+
+interface GetSearchSong {
+  artistName: Song[];
+  songName: Song[];
+  songNumber: Song[];
+}
+
+interface GetSearchSongResponse {
+  data: GetSearchSong;
+  message: string;
 }
 
 interface RcdExploreSong {
@@ -185,4 +197,6 @@ export type {
   Chart,
   ChartResponse,
   SongParams,
+  GetSearchSong,
+  GetSearchSongResponse,
 };
