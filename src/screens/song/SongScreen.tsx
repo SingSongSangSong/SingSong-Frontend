@@ -4,7 +4,12 @@ import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
 import {homeStackNavigations, keepStackNavigations} from '../../constants';
-import {SongAdditionInfo, SongDefaultInfo, SongReview} from '../../components';
+import {
+  SongAdditionInfo,
+  SongComment,
+  SongDefaultInfo,
+  SongReview,
+} from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
 
 type SongScreenProps =
@@ -89,6 +94,11 @@ function SongScreen(props: SongScreenProps) {
           이 노래는 어떻송
         </Text>
         <SongReview songId={songId} />
+        <SongComment
+          handleOnPressComment={() => {
+            _onPressComment(songNumber, songId);
+          }}
+        />
       </View>
     </View>
   );

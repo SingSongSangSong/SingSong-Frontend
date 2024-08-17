@@ -12,6 +12,7 @@ import postKeep from '../../../api/keep/postKeep';
 import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
+import useCommentStore from '../../../store/useCommentStore';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -25,11 +26,14 @@ const SongAdditionInfo = ({
   const [songInfo, setSongInfo] = useState<SongInfo>();
   const setKeepList = useKeepListStore(state => state.setKeepList);
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const commentCount = useCommentStore(state => state.commentCount);
+  const setCommentCount = useCommentStore(state => state.setCommentCount);
 
   const setInitSongAdditionInfo = async (songId: number) => {
     try {
       const tempSongInfo = await getSongs(String(songId));
       setSongInfo(tempSongInfo.data);
+      setCommentCount(tempSongInfo.data.commentCount);
     } catch (error) {
       console.error('Error fetching song addition info:', error);
     } finally {
@@ -97,7 +101,7 @@ const SongAdditionInfo = ({
               onPress={handleOnPressComment}>
               <CommentCountIcon width={18} height={18} />
               <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-                {songInfo.commentCount}
+                {commentCount}
               </Text>
             </TouchableOpacity>
           </View>

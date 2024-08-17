@@ -60,7 +60,9 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
   return (
     <View
       style={tw`mt-10 mb-4 border-t border-[${designatedColor.GRAY4}] py-4 mx-2`}>
-      <Text style={tw`text-white font-bold text-xl`}>다른 노래는 어떻송</Text>
+      <Text style={tw`text-white font-bold text-xl my-2`}>
+        다른 노래는 어떻송
+      </Text>
       {songRelated && (
         <View style={tw`h-full w-full`}>
           {/* {songDetailHandler.songRelated && ( */}

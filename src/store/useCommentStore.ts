@@ -4,6 +4,7 @@ import {Comment} from '../types';
 interface CommentState {
   comments: Map<number, Comment>; // Map으로 변경
   recomments: {[commentId: number]: Map<number, Comment>};
+  commentCount: number;
   setComments: (comments: Comment[]) => void; // 댓글 배열을 설정
   addComment: (comment: Comment) => void; // 댓글 추가
   updateIsLikedComment: (commentId: number, isLiked: boolean) => void;
@@ -18,11 +19,14 @@ interface CommentState {
   getRecommentCount: (commentId: number) => number;
   getOrderedComments: () => Comment[];
   getOrderedRecomments: (commentId: number) => Comment[];
+  setCommentCount: (count: number) => void;
+  // addCommentCount: () => void;
 }
 
 const useCommentStore = create<CommentState>((set, get) => ({
   comments: new Map(),
   recomments: {},
+  commentCount: 0,
 
   // 댓글 배열을 설정하는 함수
   setComments: (comments: Comment[]) => {
@@ -54,9 +58,20 @@ const useCommentStore = create<CommentState>((set, get) => ({
       });
       return {
         comments: newComments,
+        commentCount: state.commentCount + 1,
       };
     });
   },
+
+  setCommentCount: (count: number) => {
+    set({commentCount: count});
+  },
+
+  // addCommentCount: () => {
+  //   set(state => {
+  //     return {commentCount: state.commentCount + 1};
+  //   });
+  // },
 
   getOrderedComments: () => {
     return Array.from(get().comments.values());
