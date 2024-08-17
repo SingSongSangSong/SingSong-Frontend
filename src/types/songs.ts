@@ -112,13 +112,15 @@ interface DeleteKeepResponse {
 interface SongInfo {
   album: string;
   description: string;
-  isKeep: true;
+  isKeep: boolean;
   octave: string;
   singerName: string;
   songId: number;
   songName: string;
   songNumber: number;
   tags: string[];
+  keepCount: number;
+  commentCount: number;
 }
 
 interface SongInfoResponse {

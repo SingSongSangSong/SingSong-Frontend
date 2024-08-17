@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 
@@ -43,31 +43,34 @@ const ReviewlistItem = ({
   };
 
   return (
-    // <TouchableOpacity onPress={handleOnPress}>
-    <View
-      style={[
-        tw`rounded-lg justify-between items-center relative overflow-hidden bg-[${designatedColor.GRAY4}] mb-3`,
-        // isPressed && tw`bg-white`,
-        // !isPressed && tw`bg-[${designatedColor.GRAY4}]`,
-      ]}>
-      {/* 퍼센테이지에 따른 색상 칠하기 */}
+    <TouchableOpacity onPress={handleOnPress}>
       <View
         style={[
-          tw`absolute top-0 left-0 h-full`,
-          {width: `${percentage}%`, backgroundColor: color},
-        ]}
-      />
-      <View style={tw`flex-row justify-between w-full z-10 p-3`}>
-        <Text
-          style={[tw`ml-4 text-[${titleColor}]`, isSelected && tw`font-bold`]}>
-          {title}
-        </Text>
-        <Text style={tw`text-black font-bold text-[${textColor}]`}>
-          {count}
-        </Text>
+          tw`rounded-lg justify-between items-center relative overflow-hidden bg-[${designatedColor.GRAY4}] mb-3`,
+          // isPressed && tw`bg-white`,
+          // !isPressed && tw`bg-[${designatedColor.GRAY4}]`,
+        ]}>
+        {/* 퍼센테이지에 따른 색상 칠하기 */}
+        <View
+          style={[
+            tw`absolute top-0 left-0 h-full`,
+            {width: `${percentage}%`, backgroundColor: color},
+          ]}
+        />
+        <View style={tw`flex-row justify-between w-full z-10 p-3`}>
+          <Text
+            style={[
+              tw`ml-4 text-[${titleColor}]`,
+              isSelected && tw`font-bold`,
+            ]}>
+            {title}
+          </Text>
+          <Text style={tw`text-black font-bold text-[${textColor}]`}>
+            {count}
+          </Text>
+        </View>
       </View>
-    </View>
-    // </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 

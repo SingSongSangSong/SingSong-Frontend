@@ -60,3 +60,6 @@ export * from './list/SearchRecentList';
 export * from './item/SearchRecentItem';
 export * from './module/search/SearchRecent';
 export * from './module/search/SearchResult';
+export * from './module/songDetail/SongDefaultInfo';
+export * from './module/songDetail/SongAdditionInfo';
+export * from './module/songDetail/SongReview';
