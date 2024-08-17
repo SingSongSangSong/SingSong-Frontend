@@ -15,15 +15,26 @@ import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 
 type SongAdditionInfoProps = {
   songId: number;
+  handleOnPressComment: () => void;
 };
-const SongAdditionInfo = ({songId}: SongAdditionInfoProps) => {
+
+const SongAdditionInfo = ({
+  songId,
+  handleOnPressComment,
+}: SongAdditionInfoProps) => {
   const [songInfo, setSongInfo] = useState<SongInfo>();
   const setKeepList = useKeepListStore(state => state.setKeepList);
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
 
-  const setInitSongAdditionInfo = (songId: number) => {
-    getSongs(String(songId)).then(tempSongInfo => {
+  const setInitSongAdditionInfo = async (songId: number) => {
+    try {
+      const tempSongInfo = await getSongs(String(songId));
       setSongInfo(tempSongInfo.data);
-    });
+    } catch (error) {
+      console.error('Error fetching song addition info:', error);
+    } finally {
+      setLoading(false); // 로딩 완료 후 로딩 상태 업데이트
+    }
   };
 
   const handleOnPressKeep = () => {
@@ -52,6 +63,20 @@ const SongAdditionInfo = ({songId}: SongAdditionInfoProps) => {
     setInitSongAdditionInfo(songId);
   }, []);
 
+  if (loading) {
+    // 로딩 중인 경우 로딩 스피너를 보여줌
+    return (
+      <View
+        style={[
+          tw`flex-1 justify-center items-center`,
+          {
+            height: 120,
+          },
+        ]}
+      />
+    );
+  }
+
   return (
     <View>
       {songInfo ? (
@@ -67,12 +92,14 @@ const SongAdditionInfo = ({songId}: SongAdditionInfoProps) => {
                 {songInfo.keepCount}
               </Text>
             </View>
-            <View style={tw`flex-row items-center`}>
+            <TouchableOpacity
+              style={tw`flex-row items-center`}
+              onPress={handleOnPressComment}>
               <CommentCountIcon width={18} height={18} />
               <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
                 {songInfo.commentCount}
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={tw`flex-row items-center py-1`}>
             <Text style={tw`text-white mr-2`}>최고 음역대 </Text>

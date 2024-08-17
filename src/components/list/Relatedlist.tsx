@@ -16,7 +16,6 @@ interface RelatedlistProps {
     album: string,
   ) => void;
   handleRefreshRelatedSongs: () => void;
-  renderHeader: () => React.ReactNode;
 }
 
 const Relatedlist: React.FC<RelatedlistProps> = ({
@@ -25,7 +24,6 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
   isShowKeepIcon,
   onSongPress,
   handleRefreshRelatedSongs,
-  renderHeader,
 }) => {
   const renderItem = ({item}: {item: Song}) => (
     <View>
@@ -54,7 +52,6 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
     <FlatList
       data={relatedlistData}
       renderItem={renderItem}
-      ListHeaderComponent={renderHeader}
       keyExtractor={item => item.songId.toString()}
       onEndReached={handleRefreshRelatedSongs}
       onEndReachedThreshold={0.1}
