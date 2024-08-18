@@ -15,6 +15,7 @@ import ReportScreen from '../../screens/song/ReportScreen';
 import TagDetailScreen from '../../screens/home/TagDetailScreen';
 import BlacklistScreen from '../../screens/home/BlacklistScreen';
 import SearchScreen from '../../screens/search/SearchScreen';
+import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -33,18 +34,17 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       initialRouteName={homeStackNavigations.RCD_HOME}
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
-        // animationEnabled: false,
       }}>
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{headerShown: false, gestureEnabled: false}}
       />
       <Stack.Screen
         name={homeStackNavigations.RCD_DETAIL}
         component={RcdHomeScreen}
         // initialParams={{tag}}
-        options={({route}) => ({
+        options={({route, navigation}) => ({
           headerShown: true,
           headerTitle: `${route?.params?.tag}`, //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -55,13 +55,19 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.SONG_DETAIL}
         component={SongScreen}
-        options={() => ({
-          animationEnabled: false,
+        options={({navigation}) => ({
           headerShown: true,
           headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -72,23 +78,19 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          // headerLeft: () => (
-          //   <IconButton
-          //     onPress={() =>
-          //       navigation.navigate(homeStackNavigations.RCD_DETAIL, {
-          //         tag: selectedTag,
-          //       })
-          //     }
-          //     size={24}
-          //     Icon={ArrowLeftIcon}
-          //   />
-          // ),
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.COMMENT}
         component={CommentScreen}
-        options={() => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -100,12 +102,19 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.RECOMMENT}
         component={RecommentScreen}
-        options={() => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -130,7 +139,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.REPORT}
         component={ReportScreen}
-        options={() => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -155,7 +164,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
       <Stack.Screen
         name={homeStackNavigations.SETTING}
         component={SettingScreen}
-        options={() => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '설정', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -167,12 +176,19 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.BLACKLIST}
         component={BlacklistScreen}
-        options={() => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글 차단 관리', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -184,20 +200,33 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.SEARCH}
         component={SearchScreen}
-        options={() => ({
+        options={({navigation}) => ({
           headerShown: false,
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={homeStackNavigations.TAG_DETAIL}
         component={TagDetailScreen}
-        options={() => ({
-          animationEnabled: false,
+        options={({navigation}) => ({
           headerShown: true,
           headerTitle: '노래 목록', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -208,6 +237,13 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
     </Stack.Navigator>

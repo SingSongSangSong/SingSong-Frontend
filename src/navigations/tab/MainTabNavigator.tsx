@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   designatedColor,
@@ -18,6 +18,7 @@ import StarIconActive from '../../assets/svg/selectedStar.svg'; // 활성화된 
 import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {BackHandler} from 'react-native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -38,6 +39,20 @@ const getTabBarIcon = (
 };
 
 const MainTabNavigator = () => {
+  useEffect(() => {
+    const backAction = () => {
+      // 아무 동작도 하지 않도록 함
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <Tab.Navigator
       initialRouteName={mainTabNavigations.HOME}
@@ -52,7 +67,12 @@ const MainTabNavigator = () => {
             routeName === keepStackNavigations.KEEP_RECOMMENT ||
             routeName === homeStackNavigations.REPORT ||
             routeName === keepStackNavigations.KEEP_REPORT ||
-            routeName === homeStackNavigations.SEARCH
+            routeName === homeStackNavigations.SEARCH ||
+            routeName === homeStackNavigations.RCD_DETAIL ||
+            routeName === homeStackNavigations.SONG_DETAIL ||
+            routeName === homeStackNavigations.SETTING ||
+            routeName === homeStackNavigations.BLACKLIST ||
+            routeName === keepStackNavigations.KEEP_SONG_DETAIL
           ) {
             return true;
           }
@@ -75,8 +95,8 @@ const MainTabNavigator = () => {
                 paddingTop: 5,
                 paddingBottom: 5,
               },
-          tabBarActiveTintColor: designatedColor.PINK, // 활성화된 탭 아이템 색상을 핑크색으로 설정
-          tabBarInactiveTintColor: 'gray', // 비활성화된 탭 아이템 색상을 회색으로 설정
+          tabBarActiveTintColor: designatedColor.PINK,
+          tabBarInactiveTintColor: 'gray',
           keyboardHidesTabBar: false,
         };
       }}>

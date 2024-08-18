@@ -110,12 +110,7 @@ function SongScreen(props: SongScreenProps) {
         data={[]} // Empty data for the main FlatList as we only need it for scrolling
         renderItem={null} // No need to render any items
         ListFooterComponent={
-          <SongRelated
-            songId={songId}
-            onSongPress={() =>
-              _onSongPress(songId, songNumber, songName, singerName, album)
-            }
-          />
+          <SongRelated songId={songId} onSongPress={_onSongPress} />
         }
         keyExtractor={(item, index) => index.toString()} // Key extractor for FlatList
       />

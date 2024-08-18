@@ -28,9 +28,15 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
     <Stack.Navigator
       initialRouteName={keepStackNavigations.KEEP}
       screenOptions={{
-        animationEnabled: false, // 애니메이션을 비활성화하여 TabNavigator와 유사한 전환 효과를 만듭니다
+        headerLeft: () => (
+          <IconButton
+            onPress={() => navigation.goBack()}
+            Icon={ArrowLeftIcon}
+            size={28}
+          />
+        ),
 
-        // ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
+        ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
       }}>
       <Stack.Screen
         name={keepStackNavigations.KEEP}
@@ -58,7 +64,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       <Stack.Screen
         name={keepStackNavigations.KEEP_SONG_DETAIL}
         component={SongScreen}
-        options={() => ({
+        options={({navigation}) => ({
           headerShown: true,
           headerTitle: '', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -71,7 +77,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.navigate(keepStackNavigations.KEEP)}
+              onPress={() => navigation.goBack()}
               Icon={ArrowLeftIcon}
               size={28}
             />
@@ -81,7 +87,8 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       <Stack.Screen
         name={keepStackNavigations.KEEP_COMMENT}
         component={CommentScreen}
-        options={() => ({
+        options={({navigation}) => ({
+          animationEnabled: false,
           headerShown: true,
           tabBarVisible: false,
           headerTitle: '댓글', // 헤더 제목을 비움
@@ -93,12 +100,20 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={keepStackNavigations.KEEP_RECOMMENT}
         component={RecommentScreen}
         options={({navigation}) => ({
+          animationEnabled: false,
           headerShown: true,
           tabBarVisible: false,
           headerTitle: '답글', // 헤더 제목을 비움
@@ -124,6 +139,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         name={keepStackNavigations.KEEP_REPORT}
         component={ReportScreen}
         options={({navigation}) => ({
+          animationEnabled: false,
           headerShown: true,
           tabBarVisible: false,
           headerTitle: '신고', // 헤더 제목을 비움
@@ -149,7 +165,8 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       <Stack.Screen
         name={keepStackNavigations.KEEP_EDIT}
         component={KeepEditScreen}
-        options={{
+        options={({navigation}) => ({
+          animationEnabled: false,
           headerShown: true,
           headerTitle: 'KEEP 편집', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -160,13 +177,20 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
           headerRight: () => (
             <NavButton
               onPress={() => navigation.navigate(keepStackNavigations.KEEP)}
               title={'완료'}
             />
           ),
-        }}
+        })}
       />
     </Stack.Navigator>
   );

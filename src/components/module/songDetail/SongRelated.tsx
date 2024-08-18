@@ -8,7 +8,13 @@ import getSongsRelated from '../../../api/songs/getSongsRelated';
 
 type SongRelatedProps = {
   songId: number;
-  onSongPress: () => void;
+  onSongPress: (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => void;
 };
 const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
   const [songRelated, setSongRelated] = useState<Song[]>();

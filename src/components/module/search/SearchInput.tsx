@@ -4,6 +4,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
+import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
 
 type SearchInputProps = {
   inputText: string;
@@ -24,8 +25,12 @@ const SearchInput = ({
 }: SearchInputProps) => {
   return (
     <View style={tw`flex-row items-center bg-black p-3`}>
-      <TouchableOpacity onPress={handleOnPressBack} activeOpacity={0.8}>
-        <Icon name="arrow-back" size={24} color="#FFFFFF" style={tw`mr-3`} />
+      <TouchableOpacity
+        onPress={handleOnPressBack}
+        activeOpacity={0.8}
+        style={tw`pr-3`}>
+        {/* <Icon name="arrow-back" size={24} color="#FFFFFF" style={tw`mr-3`} /> */}
+        <ArrowLeftIcon width={28} height={28} />
       </TouchableOpacity>
 
       <View
