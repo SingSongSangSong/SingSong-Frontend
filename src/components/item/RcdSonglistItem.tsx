@@ -32,7 +32,8 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
   const [keepColor, setKeepColor] = useState<string>(
     designatedColor.KEEP_EMPTY,
   );
-  const {keepList} = useKeepListStore();
+  // const {keepList} = useKeepListStore();
+  const keepList = useKeepListStore(state => state.keepList);
   const isStored = keepList.some(
     keepSong => keepSong.songNumber === songNumber,
   );

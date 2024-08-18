@@ -14,17 +14,37 @@ const useRecomment = (commentId: number) => {
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
 
-  const {
-    comments,
-    recomments,
-    setComments,
-    updateIsLikedComment,
-    updateLikesComment,
-    addRecommentComment,
-    updateIsLikedRecomment,
-    updateLikesRecomment,
-    getOrderedRecomments,
-  } = useCommentStore();
+  // const {
+  //   comments,
+  //   recomments,
+  //   setComments,
+  //   updateIsLikedComment,
+  //   updateLikesComment,
+  //   addRecommentComment,
+  //   updateIsLikedRecomment,
+  //   updateLikesRecomment,
+  //   getOrderedRecomments,
+  // } = useCommentStore();
+
+  const comments = useCommentStore(state => state.comments);
+  const recomments = useCommentStore(state => state.recomments);
+  const setComments = useCommentStore(state => state.setComments);
+  const updateIsLikedComment = useCommentStore(
+    state => state.updateIsLikedComment,
+  );
+  const updateLikesComment = useCommentStore(state => state.updateLikesComment);
+  const addRecommentComment = useCommentStore(
+    state => state.addRecommentComment,
+  );
+  const updateIsLikedRecomment = useCommentStore(
+    state => state.updateIsLikedRecomment,
+  );
+  const updateLikesRecomment = useCommentStore(
+    state => state.updateLikesRecomment,
+  );
+  const getOrderedRecomments = useCommentStore(
+    state => state.getOrderedRecomments,
+  );
 
   const orderedRecomments = getOrderedRecomments(commentId);
   // const keyboard = useKeyboard();ㄴ

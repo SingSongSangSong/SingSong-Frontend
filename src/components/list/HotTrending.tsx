@@ -7,7 +7,8 @@ import useChartStore from '../../store/useChartStore';
 
 const HotTrending = memo(() => {
   const itemsPerPage = 5;
-  const {selectedCharts} = useChartStore();
+  // const {selectedCharts} = useChartStore();
+  const selectedCharts = useChartStore(state => state.selectedCharts);
 
   const groupedCharts = [];
   for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {

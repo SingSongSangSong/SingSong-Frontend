@@ -20,7 +20,9 @@ const SongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
 }: SongCardModuleProps) => {
-  const {tags, previewSongs} = useSongStore();
+  // const {tags, previewSongs} = useSongStore();
+  const tags = useSongStore(state => state.tags);
+  const previewSongs = useSongStore(state => state.previewSongs);
 
   return (
     <View>

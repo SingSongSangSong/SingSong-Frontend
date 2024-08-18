@@ -15,15 +15,24 @@ const useComment = (songNumber: number, songId: number) => {
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    comments,
-    setComments,
-    addComment,
-    updateIsLikedComment,
-    updateLikesComment,
-    getRecommentCount,
-    getOrderedComments,
-  } = useCommentStore();
+  // const {
+  //   comments,
+  //   setComments,
+  //   addComment,
+  //   updateIsLikedComment,
+  //   updateLikesComment,
+  //   getRecommentCount,
+  //   getOrderedComments,
+  // } = useCommentStore();
+  const comments = useCommentStore(state => state.comments);
+  const setComments = useCommentStore(state => state.setComments);
+  const addComment = useCommentStore(state => state.addComment);
+  const updateIsLikedComment = useCommentStore(
+    state => state.updateIsLikedComment,
+  );
+  const updateLikesComment = useCommentStore(state => state.updateLikesComment);
+  const getRecommentCount = useCommentStore(state => state.getRecommentCount);
+  const getOrderedComments = useCommentStore(state => state.getOrderedComments);
 
   const orderedComments = getOrderedComments();
 

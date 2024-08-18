@@ -9,7 +9,9 @@ import Toast from 'react-native-toast-message';
 const useKeep = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [isAllDeleted, setIsAllDeleted] = useState(false);
-  const {keepList, setKeepList} = useKeepListStore();
+  // const {keepList, setKeepList} = useKeepListStore();
+  const keepList = useKeepListStore(state => state.keepList);
+  const setKeepList = useKeepListStore(state => state.setKeepList);
   const [removedSong, setRemovedSong] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);

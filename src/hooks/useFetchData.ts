@@ -5,14 +5,20 @@ import {RcdHomeResponse, RcdHomeSongWithTags} from '../types';
 import getRcdHomeSongs from '../api/recommendation/getRcdHomeSongs';
 
 const useFetchData = () => {
-  const {
-    tags,
-    setTags,
-    previewSongs,
-    setPreviewSongs,
-    exploreSongs,
-    setExploreSongs,
-  } = useSongStore();
+  // const {
+  //   tags,
+  //   setTags,
+  //   previewSongs,
+  //   setPreviewSongs,
+  //   exploreSongs,
+  //   setExploreSongs,
+  // } = useSongStore();
+  const tags = useSongStore(state => state.tags);
+  const setTags = useSongStore(state => state.setTags);
+  const previewSongs = useSongStore(state => state.previewSongs);
+  const setPreviewSongs = useSongStore(state => state.setPreviewSongs);
+  const exploreSongs = useSongStore(state => state.exploreSongs);
+  const setExploreSongs = useSongStore(state => state.setExploreSongs);
 
   const fetchTags = () => {
     return getTags()

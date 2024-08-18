@@ -14,7 +14,8 @@ const TaglistModule = ({
   onPressTotalButton,
   onPressTagButton,
 }: TaglistModuleProps) => {
-  const {tags} = useSongStore();
+  // const {tags} = useSongStore();
+  const tags = useSongStore(state => state.tags);
   return (
     <View
       style={tw` border-t-[1px] border-b-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 my-2`}>

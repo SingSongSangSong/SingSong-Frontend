@@ -7,8 +7,14 @@ import useChartStore from '../store/useChartStore';
 
 const useHomeInfo = () => {
   const {memberInfo, setMemberInfo} = useMemberStore();
-  const {setCharts, setUserGender, setSelectedGender, setTime, isEmptyChart} =
-    useChartStore();
+  // const {setCharts, setUserGender, setSelectedGender, setTime, isEmptyChart} =
+  //   useChartStore();
+
+  const setCharts = useChartStore(state => state.setCharts);
+  const setUserGender = useChartStore(state => state.setUserGender);
+  const setSelectedGender = useChartStore(state => state.setSelectedGender);
+  const setTime = useChartStore(state => state.setTime);
+  const isEmptyChart = useChartStore(state => state.isEmptyChart);
 
   const fetchChart = () => {
     return getChart()

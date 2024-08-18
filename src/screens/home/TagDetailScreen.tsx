@@ -13,7 +13,8 @@ type TagDetailScreenProps = StackScreenProps<
 >;
 
 function TagDetailScreen({navigation}: TagDetailScreenProps) {
-  const {tags} = useSongStore();
+  // const {tags} = useSongStore();
+  const tags = useSongStore(state => state.tags);
 
   const handleOnArrowPress = (tag: string) => {
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});

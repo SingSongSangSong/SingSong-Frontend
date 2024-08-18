@@ -7,17 +7,19 @@ import getMember from '../api/member/getMember';
 import useMemberStore from '../store/useMemberStore';
 import postMemberLogout from '../api/member/postMemberLogout';
 import postMemberWithdraw from '../api/member/postMemberWithdraw';
-import useSongStore from '../store/useSongStore';
-import getChart from '../api/songs/getChart';
+// import useSongStore from '../store/useSongStore';
+// import getChart from '../api/songs/getChart';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
-  const {memberInfo, setMemberInfo} = useMemberStore();
+  // const {memberInfo, setMemberInfo} = useMemberStore();
+  const memberInfo = useMemberStore(state => state.memberInfo);
+  const setMemberInfo = useMemberStore(state => state.setMemberInfo);
   const [isEnabled, setIsEnabled] = useState<boolean>(true);
   const [isInit, setIsInit] = useState<boolean>(false);
-  const {tags, previewSongs, time, gender, setTime, setGender} = useSongStore();
+  // const {tags, previewSongs, time, gender, setTime, setGender} = useSongStore();
 
-  const [selectedGender, setSelectedGender] = useState<string>();
+  // const [selectedGender, setSelectedGender] = useState<string>();
 
   // useEffect(() => {
   //   setSelectedGender(gender);
@@ -46,33 +48,33 @@ const useUserInfo = () => {
     }
   };
 
-  const fetchChart = async () => {
-    try {
-      setIsInit(true);
-      console.log('fetchChart request!!!!!!!!!!!!!!!!');
-      const chartData = await getChart();
-      setCharts('FEMALE', chartData.data.female); //chart 데이터 설정
-      setCharts('MALE', chartData.data.male);
-      setTime(chartData.data.time);
-      setGender(chartData.data.gender);
-      setSelectedGender(chartData.data.gender);
-    } catch (error) {
-      console.error('Error fetching chart:', error);
-    }
-  };
+  // const fetchChart = async () => {
+  //   try {
+  //     setIsInit(true);
+  //     console.log('fetchChart request!!!!!!!!!!!!!!!!');
+  //     const chartData = await getChart();
+  //     setCharts('FEMALE', chartData.data.female); //chart 데이터 설정
+  //     setCharts('MALE', chartData.data.male);
+  //     setTime(chartData.data.time);
+  //     setGender(chartData.data.gender);
+  //     setSelectedGender(chartData.data.gender);
+  //   } catch (error) {
+  //     console.error('Error fetching chart:', error);
+  //   }
+  // };
 
-  const changeGender = () => {
-    if (selectedGender == 'FEMALE') {
-      setSelectedGender('MALE');
-    } else {
-      setSelectedGender('FEMALE');
-    }
-  };
+  // const changeGender = () => {
+  //   if (selectedGender == 'FEMALE') {
+  //     setSelectedGender('MALE');
+  //   } else {
+  //     setSelectedGender('FEMALE');
+  //   }
+  // };
 
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
-    changeGender();
-  };
+  // const toggleSwitch = () => {
+  //   setIsEnabled(previousState => !previousState);
+  //   changeGender();
+  // };
 
   const handleKakaoLogout = async () => {
     try {
@@ -96,22 +98,20 @@ const useUserInfo = () => {
 
   return {
     isInit,
-    tags,
-    previewSongs,
-    time,
-    gender,
-    selectedGender,
+    // tags,
+    // previewSongs,
+    // time,
+    // gender,
+    // selectedGender,
     isEnabled,
-    toggleSwitch,
     memberInfo,
-    fetchChart,
     isLoggedProcess,
     handleKakaoLogin,
     handleKakaoLogout,
     handleWithdraw,
     getIsValidToken,
     getUserInfo,
-    setSelectedGender,
+    // setSelectedGender,
   };
 };
 

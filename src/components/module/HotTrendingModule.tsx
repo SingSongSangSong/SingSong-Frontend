@@ -9,7 +9,10 @@ import {HotTrending} from '..';
 import {EmptyHotTrending} from '..';
 
 const HotTrendingModule = () => {
-  const {selectedGender, setSelectedGender, time} = useChartStore();
+  // const {selectedGender, setSelectedGender, time} = useChartStore();
+  const selectedGender = useChartStore(state => state.selectedGender);
+  const setSelectedGender = useChartStore(state => state.setSelectedGender);
+  const time = useChartStore(state => state.time);
 
   const changeGender = () => {
     if (selectedGender === 'FEMALE') {

@@ -33,7 +33,8 @@ const useSongDetail = ({
   const [songRelated, setSongRelated] = useState<Song[]>();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const {setKeepList} = useKeepListStore();
+  // const {setKeepList} = useKeepListStore();
+  const setKeepList = useKeepListStore(state => state.setKeepList);
   const [keepColor, setKeepColor] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLikePressed, setIsLikePressed] = useState(false);
