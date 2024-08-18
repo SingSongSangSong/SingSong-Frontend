@@ -7,9 +7,9 @@ import {
   designatedColor,
   homeStackNavigations,
 } from '../../constants';
-import {Image, SafeAreaView, Text, View} from 'react-native';
+import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import useUserInfo from '../../hooks/useUserInfo';
-import {CustomModal, TextButton} from '../../components';
+import {CustomModal} from '../../components';
 import {CommonActions} from '@react-navigation/native';
 
 type SettingScreenProps = StackScreenProps<
@@ -60,48 +60,86 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 {userInfoHandler.memberInfo?.email}
               </Text>
             </View>
-            <TextButton
+            <TouchableOpacity
+              onPress={handleLogoutButton}
+              style={tw`py-2 px-3 border rounded-full border-[${designatedColor.GRAY3}]`}
+              activeOpacity={0.8}>
+              <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+                로그아웃
+              </Text>
+            </TouchableOpacity>
+            {/* <OutlineButton
+              title="로그아웃"
+              onPress={handleLogoutButton}
+              color={designatedColor.GRAY3}
+            /> */}
+            {/* <TextButton
               title="로그아웃"
               onPress={handleLogoutButton}
               color="white"
               size={3}
-            />
+            /> */}
           </View>
         </View>
         <View style={tw`m-4`}>
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
             개인 / 보안
           </Text>
-          <View style={tw`mt-4 ml-2`}>
+          <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
-              <TextButton
-                title="댓글 차단 관리"
-                onPress={handleOnBlacklistButton}
-                color="white"
-                size={4}
-              />
+              <TouchableOpacity
+                style={tw`p-2`}
+                activeOpacity={0.8}
+                onPress={handleOnBlacklistButton}>
+                <Text style={tw`text-white`}>댓글 차단 관리</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`p-2`}
+                activeOpacity={0.8}
+                onPress={() => setIsWithdraw(true)}>
+                <Text style={tw`text-white`}>회원 탈퇴</Text>
+              </TouchableOpacity>
             </View>
-            <View style={tw`items-start`}>
+            {/* <View style={tw`items-start`}>
               <TextButton
                 title="회원 탈퇴"
                 onPress={() => setIsWithdraw(true)}
                 color="white"
                 size={4}
               />
-            </View>
+            </View> */}
           </View>
         </View>
-        <CustomModal
-          visible={isWithdraw}
-          onClose={() => setIsWithdraw(false)}
-          message={
-            '탈퇴 후에는 다시 복구할 수 없습니다. \n그래도 계속 진행하시겠습니까?'
-          }
-          onConfirm={handleWithdrawButton}
-          onCancel={() => setIsWithdraw(false)}
-          confirmText="탈퇴"
-          cancelText="취소"
-        />
+        <View style={tw`m-4`}>
+          <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>기타</Text>
+          <View style={tw`mt-4`}>
+            <View style={tw`items-start mb-4`}>
+              <TouchableOpacity
+                style={tw`p-2`}
+                activeOpacity={0.8}
+                onPress={() => {}}>
+                <Text style={tw`text-white`}>앱 정보</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`p-2`}
+                activeOpacity={0.8}
+                onPress={() => setIsWithdraw(true)}>
+                <Text style={tw`text-white`}>서비스 정책</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <CustomModal
+            visible={isWithdraw}
+            onClose={() => setIsWithdraw(false)}
+            message={
+              '탈퇴 후에는 다시 복구할 수 없습니다. \n그래도 계속 진행하시겠습니까?'
+            }
+            onConfirm={handleWithdrawButton}
+            onCancel={() => setIsWithdraw(false)}
+            confirmText="탈퇴"
+            cancelText="취소"
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
