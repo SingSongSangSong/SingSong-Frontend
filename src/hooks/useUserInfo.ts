@@ -7,6 +7,7 @@ import getMember from '../api/member/getMember';
 import useMemberStore from '../store/useMemberStore';
 import postMemberLogout from '../api/member/postMemberLogout';
 import postMemberWithdraw from '../api/member/postMemberWithdraw';
+import Toast from 'react-native-toast-message';
 // import useSongStore from '../store/useSongStore';
 // import getChart from '../api/songs/getChart';
 
@@ -78,7 +79,14 @@ const useUserInfo = () => {
 
   const handleKakaoLogout = async () => {
     try {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '로그아웃 되었습니다.',
+        position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+        visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+      });
       const result = await postMemberLogout();
+
       console.log('Logout Result:', result);
     } catch (err) {
       console.error('Logout Failed', err);
@@ -86,6 +94,12 @@ const useUserInfo = () => {
   };
 
   const handleWithdraw = async () => {
+    Toast.show({
+      type: 'selectedToast',
+      text1: '탈퇴가 완료되었습니다. 그동안 이용해 주셔서 감사합니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
     await postMemberWithdraw();
   };
 

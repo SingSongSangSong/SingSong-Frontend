@@ -98,7 +98,8 @@ const SongAdditionInfo = ({
             </View>
             <TouchableOpacity
               style={tw`flex-row items-center`}
-              onPress={handleOnPressComment}>
+              onPress={handleOnPressComment}
+              activeOpacity={0.8}>
               <CommentCountIcon width={18} height={18} />
               <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
                 {commentCount}

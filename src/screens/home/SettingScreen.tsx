@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -9,7 +9,7 @@ import {
 } from '../../constants';
 import {Image, SafeAreaView, Text, View} from 'react-native';
 import useUserInfo from '../../hooks/useUserInfo';
-import {TextButton} from '../../components';
+import {CustomModal, TextButton} from '../../components';
 import {CommonActions} from '@react-navigation/native';
 
 type SettingScreenProps = StackScreenProps<
@@ -19,6 +19,7 @@ type SettingScreenProps = StackScreenProps<
 
 function SettingScreen({navigation}: SettingScreenProps) {
   const userInfoHandler = useUserInfo();
+  const [isWithdraw, setIsWithdraw] = useState(false);
 
   const handleLogoutButton = () => {
     userInfoHandler.handleKakaoLogout();
@@ -83,13 +84,24 @@ function SettingScreen({navigation}: SettingScreenProps) {
             <View style={tw`items-start`}>
               <TextButton
                 title="회원 탈퇴"
-                onPress={handleWithdrawButton}
+                onPress={() => setIsWithdraw(true)}
                 color="white"
                 size={4}
               />
             </View>
           </View>
         </View>
+        <CustomModal
+          visible={isWithdraw}
+          onClose={() => setIsWithdraw(false)}
+          message={
+            '탈퇴 후에는 다시 복구할 수 없습니다. \n그래도 계속 진행하시겠습니까?'
+          }
+          onConfirm={handleWithdrawButton}
+          onCancel={() => setIsWithdraw(false)}
+          confirmText="탈퇴"
+          cancelText="취소"
+        />
       </View>
     </SafeAreaView>
   );

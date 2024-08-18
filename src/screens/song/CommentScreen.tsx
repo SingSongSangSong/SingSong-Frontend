@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -9,7 +9,12 @@ import {
   keepStackNavigations,
 } from '../../constants';
 import useComment from '../../hooks/useComment';
-import {CommentKeyboard, Commentlist, TextButton} from '../../components';
+import {
+  CommentKeyboard,
+  Commentlist,
+  CustomModal,
+  TextButton,
+} from '../../components';
 import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
 import ErrorIcon from '../../assets/svg/error.svg';
@@ -137,7 +142,7 @@ function CommentScreen(props: CommentScreenProps) {
             <View style={tw`mt-3`}>
               <TextButton
                 title="차단하기"
-                onPress={commentHandler.handleOnPressBlacklist}
+                onPress={() => commentHandler.setIsBlacklist(true)}
                 color="white"
                 size={4}
               />
@@ -156,6 +161,17 @@ function CommentScreen(props: CommentScreenProps) {
           </View>
         </View>
       </Modal>
+      <CustomModal
+        visible={commentHandler.isBlacklist}
+        onClose={() => commentHandler.setIsBlacklist(false)}
+        message={
+          '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다.\n차단하시겠습니까?'
+        }
+        onConfirm={commentHandler.handleOnPressBlacklist}
+        onCancel={() => commentHandler.setIsBlacklist(false)}
+        confirmText="차단"
+        cancelText="취소"
+      />
     </SafeAreaView>
   );
 }

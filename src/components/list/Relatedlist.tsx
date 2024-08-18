@@ -3,6 +3,7 @@ import {ActivityIndicator, FlatList, View} from 'react-native';
 import tw from 'twrnc';
 import {Song} from '../../types';
 import {SongItem} from '..';
+import {designatedColor} from '../../constants';
 
 interface RelatedlistProps {
   isLoading: boolean;
@@ -58,7 +59,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
       ListFooterComponent={() =>
         isLoading ? (
           <View style={tw`py-10`}>
-            <ActivityIndicator size="large" color="white" />
+            <ActivityIndicator size="large" color={designatedColor.PINK2} />
           </View>
         ) : null
       }

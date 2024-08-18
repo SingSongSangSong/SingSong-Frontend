@@ -81,7 +81,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
         <>
           {isLoading ? (
             <View style={tw`flex-1 justify-center items-center`}>
-              <ActivityIndicator size="large" color="white" />
+              <ActivityIndicator size="large" color={designatedColor.PINK2} />
             </View>
           ) : (
             <View />

@@ -10,6 +10,7 @@ import {Alert} from 'react-native';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isBlacklist, setIsBlacklist] = useState(false);
   const [reportCommentId, setReportCommentId] = useState<number>(0);
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
@@ -115,32 +116,33 @@ const useRecomment = (commentId: number) => {
   };
 
   const handleOnPressBlacklist = () => {
-    Alert.alert(
-      '차단',
-      '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다. 차단하시겠습니까?',
-      [
-        {text: '취소', onPress: () => {}, style: 'cancel'},
-        {
-          text: '확인',
-          onPress: () => {
-            _handleOnPressBlacklist(reportSubjectMemberId);
-            setIsModalVisible(false);
-            setIsKeyboardVisible(true);
-            Toast.show({
-              type: 'selectedToast',
-              text1: '차단되었습니다.',
-              position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-              visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-            });
-          },
-          style: 'destructive',
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () => {},
-      },
-    );
+    _handleOnPressBlacklist(reportSubjectMemberId);
+    setIsBlacklist(false);
+    setIsModalVisible(false);
+    setIsKeyboardVisible(true);
+    Toast.show({
+      type: 'selectedToast',
+      text1: '차단되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+
+    // Alert.alert(
+    //   '차단',
+    //   '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다. 차단하시겠습니까?',
+    //   [
+    //     {text: '취소', onPress: () => {}, style: 'cancel'},
+    //     {
+    //       text: '확인',
+    //       onPress: () => {},
+    //       style: 'destructive',
+    //     },
+    //   ],
+    //   {
+    //     cancelable: true,
+    //     onDismiss: () => {},
+    //   },
+    // );
   };
 
   return {
@@ -158,6 +160,8 @@ const useRecomment = (commentId: number) => {
     handleOnPressRecommentLikeButton,
     handleOnPressBlacklist,
     orderedRecomments,
+    isBlacklist,
+    setIsBlacklist,
   };
 };
 

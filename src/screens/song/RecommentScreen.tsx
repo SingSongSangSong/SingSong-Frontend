@@ -8,7 +8,12 @@ import {
   homeStackNavigations,
   keepStackNavigations,
 } from '../../constants';
-import {CommentKeyboard, Recommentlist, TextButton} from '../../components';
+import {
+  CommentKeyboard,
+  CustomModal,
+  Recommentlist,
+  TextButton,
+} from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
@@ -113,7 +118,7 @@ function RecommentScreen(props: RecommentScreenProps) {
             <View style={tw`mt-3`}>
               <TextButton
                 title="차단하기"
-                onPress={recommentHandler.handleOnPressBlacklist}
+                onPress={() => recommentHandler.setIsBlacklist(true)}
                 color="white"
                 size={4}
               />
@@ -132,6 +137,17 @@ function RecommentScreen(props: RecommentScreenProps) {
           </View>
         </View>
       </Modal>
+      <CustomModal
+        visible={recommentHandler.isBlacklist}
+        onClose={() => recommentHandler.setIsBlacklist(false)}
+        message={
+          '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다.\n차단하시겠습니까?'
+        }
+        onConfirm={recommentHandler.handleOnPressBlacklist}
+        onCancel={() => recommentHandler.setIsBlacklist(false)}
+        confirmText="차단"
+        cancelText="취소"
+      />
     </SafeAreaView>
   );
 }

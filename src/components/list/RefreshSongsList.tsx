@@ -3,6 +3,7 @@ import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import tw from 'twrnc';
 import {SongItem} from '..';
 import {Song} from '../../types';
+import {designatedColor} from '../../constants';
 
 interface RefreshSongsListProps {
   songlistData: Song[];
@@ -88,12 +89,17 @@ const RefreshSongsList = ({
       ListFooterComponent={() =>
         isLoading ? (
           <View style={tw`py-10`}>
-            <ActivityIndicator size="large" color="white" />
+            <ActivityIndicator size="large" color={designatedColor.PINK2} />
           </View>
         ) : null
       }
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={designatedColor.PINK2} // RefreshControl indicator color (iOS)
+          colors={[designatedColor.PINK2]}
+        /> // RefreshControl indicator colors (Android)/>
       }
     />
   );
