@@ -39,20 +39,6 @@ const getTabBarIcon = (
 };
 
 const MainTabNavigator = () => {
-  useEffect(() => {
-    const backAction = () => {
-      // 아무 동작도 하지 않도록 함
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
-
   return (
     <Tab.Navigator
       initialRouteName={mainTabNavigations.HOME}
@@ -101,16 +87,17 @@ const MainTabNavigator = () => {
         };
       }}>
       <Tab.Screen
-        name={mainTabNavigations.PLAYGROUND}
-        component={PlaygroundScreen}
-      />
-      <Tab.Screen
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
+
       <Tab.Screen
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
+      />
+      <Tab.Screen
+        name={mainTabNavigations.PLAYGROUND}
+        component={PlaygroundScreen}
       />
     </Tab.Navigator>
   );
