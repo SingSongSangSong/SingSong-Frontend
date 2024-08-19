@@ -9,7 +9,6 @@ import {HotTrending} from '..';
 import {EmptyHotTrending} from '..';
 
 const HotTrendingModule = () => {
-  // const {selectedGender, setSelectedGender, time} = useChartStore();
   const selectedGender = useChartStore(state => state.selectedGender);
   const setSelectedGender = useChartStore(state => state.setSelectedGender);
   const time = useChartStore(state => state.time);
@@ -27,7 +26,7 @@ const HotTrendingModule = () => {
   };
 
   return (
-    <View>
+    <View style={tw`flex-1`}>
       {/* Header Section */}
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
@@ -49,7 +48,10 @@ const HotTrendingModule = () => {
       </View>
 
       {/* Trending Content */}
-      <View>{selectedGender ? <HotTrending /> : <EmptyHotTrending />}</View>
+
+      <View style={tw`flex-1`}>
+        {selectedGender != '' ? <HotTrending /> : <EmptyHotTrending />}
+      </View>
     </View>
   );
 };

@@ -1,79 +1,65 @@
-import getTags from '../api/tags/getTags';
-import useSongStore from '../store/useSongStore';
-import postRcdHome from '../api/recommendation/postRcdHome';
-import {RcdHomeResponse, RcdHomeSongWithTags} from '../types';
-import getRcdHomeSongs from '../api/recommendation/getRcdHomeSongs';
+// import postRcdHome from '../api/recommendation/postRcdHome';
+// import getTags from '../api/tags/getTags';
+// import useSongStore from '../store/useSongStore';
+// import {RcdHomeSongWithTags} from '../types';
+// import {useQuery} from '@tanstack/react-query';
+// import {useEffect} from 'react';
 
-const useFetchData = () => {
-  // const {
-  //   tags,
-  //   setTags,
-  //   previewSongs,
-  //   setPreviewSongs,
-  //   exploreSongs,
-  //   setExploreSongs,
-  // } = useSongStore();
-  const tags = useSongStore(state => state.tags);
-  const setTags = useSongStore(state => state.setTags);
-  const previewSongs = useSongStore(state => state.previewSongs);
-  const setPreviewSongs = useSongStore(state => state.setPreviewSongs);
-  const exploreSongs = useSongStore(state => state.exploreSongs);
-  const setExploreSongs = useSongStore(state => state.setExploreSongs);
+// const useFetchData = () => {
+//   // 태그 데이터를 가져오는 쿼리
+//   const tags = useSongStore(state => state.tags);
+//   const setTags = useSongStore(state => state.setTags);
+//   const previewSongs = useSongStore(state => state.previewSongs);
+//   const setPreviewSongs = useSongStore(state => state.setPreviewSongs);
+//   const {
+//     data: tempTags,
+//     error: tagsError,
+//     isFetching: isFetchingTags,
+//   } = useQuery({
+//     queryKey: ['tags'],
+//     queryFn: getTags,
+//     staleTime: 3600000, // 1시간 동안 캐시 유지
+//     select: data => data.data,
+//   });
 
-  const fetchTags = () => {
-    return getTags()
-      .then(tagData => {
-        setTags(tagData.data);
-        return tagData.data;
-      })
-      .then(fetchedTags => {
-        // fetchRecommendTags를 태그 데이터를 설정한 후 호출
-        return fetchRecommendTags(fetchedTags);
-      })
-      .catch(error => {
-        console.error('Error fetching tags:', error);
-      });
-  };
+//   // 추천 노래 데이터를 가져오는 쿼리
+//   const {
+//     data: tempRcdHomeSongs,
+//     error: rcdHomeSongsError,
+//     isFetching: isFetchingRcdHomeSongs,
+//   } = useQuery({
+//     queryKey: ['rcdHomeSongs'],
+//     queryFn: () => postRcdHome({tags: tempTags || []}),
+//     enabled: !!tempTags && tempTags.length > 0,
+//     staleTime: 3600000,
+//     select: data => data.data,
+//   });
 
-  const fetchRcdHomeSongs = () => {
-    return getRcdHomeSongs()
-      .then(exploreSongData => {
-        setExploreSongs(exploreSongData.data);
-      })
-      .catch(error => {
-        console.error('Error fetching rcd home songs:', error);
-      });
-  };
+//   // 태그 데이터를 상태에 저장
+//   useEffect(() => {
+//     if (tempTags) {
+//       setTags(tempTags);
+//     }
+//   }, [tempTags, setTags]);
 
-  const fetchRecommendTags = (fetchedTags: string[]) => {
-    return postRcdHome({tags: fetchedTags})
-      .then((songData: RcdHomeResponse) => {
-        songData.data.forEach((songWithTags: RcdHomeSongWithTags) => {
-          setPreviewSongs(songWithTags.tag, songWithTags.songs);
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching songs:', error);
-      });
-  };
+//   // 추천 노래 데이터를 상태에 저장
+//   useEffect(() => {
+//     console.log('tempRcdHomeSongs', tempRcdHomeSongs);
+//     if (tempRcdHomeSongs) {
+//       tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
+//         setPreviewSongs(songWithTags.tag, songWithTags.songs);
+//       });
+//     }
+//   }, [tempRcdHomeSongs, setPreviewSongs]);
 
-  const fetchData = () => {
-    return fetchTags()
-      .then(() => {
-        // fetchRcdHomeSongs를 호출하고 싶다면 여기서 처리합니다.
-        // return fetchRcdHomeSongs();
-      })
-      .catch(error => {
-        console.error('Error in fetchData:', error);
-      });
-  };
+//   return {
+//     tags,
+//     previewSongs,
+//     isFetchingTags,
+//     tagsError,
+//     isFetchingRcdHomeSongs,
+//     rcdHomeSongsError,
+//   };
+// };
 
-  return {
-    tags,
-    previewSongs,
-    exploreSongs,
-    fetchData,
-  };
-};
-
-export default useFetchData;
+// export default useFetchData;

@@ -68,17 +68,6 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 로그아웃
               </Text>
             </TouchableOpacity>
-            {/* <OutlineButton
-              title="로그아웃"
-              onPress={handleLogoutButton}
-              color={designatedColor.GRAY3}
-            /> */}
-            {/* <TextButton
-              title="로그아웃"
-              onPress={handleLogoutButton}
-              color="white"
-              size={3}
-            /> */}
           </View>
         </View>
         <View style={tw`m-4`}>

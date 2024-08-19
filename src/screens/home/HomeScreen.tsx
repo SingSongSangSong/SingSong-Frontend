@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {SafeAreaView, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -15,7 +15,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
-import {isEmptyObject} from '../../utils';
 import SearchIcon from '../../assets/svg/search.svg';
 
 type HomeScreenProps = StackScreenProps<
@@ -24,16 +23,15 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
-  const {fetchChart, isEmptyChart, memberInfo, getUserInfo} = useHomeInfo();
-  console.log('HomeScreen');
-  useEffect(() => {
-    if (isEmptyObject(memberInfo)) {
-      getUserInfo();
-    }
-    if (isEmptyChart()) {
-      fetchChart();
-    }
-  }, []);
+  // const {memberInfo, getUserInfo} = useHomeInfo();
+  // console.log('HomeScreen');
+  // useEffect(() => {
+  //   if (isEmptyObject(memberInfo)) {
+  //     getUserInfo();
+  //   }
+  // }, []);
+
+  const homeInfohandler = useHomeInfo();
 
   const handleOnArrowPress = useCallback(
     (tag: string) => {
@@ -106,6 +104,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             onPressTagButton={handleOnArrowPress}
             onPressTotalButton={handleOnPressTotalButton}
           />
+
           <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnArrowPress}

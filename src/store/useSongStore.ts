@@ -7,11 +7,8 @@ interface SongState {
   previewSongs: {[tag: string]: RcdHomeSong[]};
   refreshSongs: {[tag: string]: Song[]};
   exploreSongs: RcdExploreSong[];
-  // charts: {[gender: string]: Chart[]};
   time: string;
   gender: string;
-  // indexLst: {[tag: string]: number};
-  // setCharts: (gender: string, charts: Chart[]) => void;
   setTime: (time: string) => void;
   setGender: (gender: string) => void;
   setSelectedTag: (tag: string) => void;
@@ -21,11 +18,6 @@ interface SongState {
   setExploreSongs: (songs: RcdExploreSong[]) => void;
 
   updateRefreshSongs: (tag: string, songs: Song[]) => Song[];
-  // setIndexLst: (tag: string, index: number) => void;
-  // resetIndexLst: (tag: string) => void;
-  // recommendSongResults: Song[];
-  // setRecommendSongResults: (songs: Song[]) => void;
-  // getSliceSongs: (tag: string) => {songs: Song[]; isRefreshed: boolean}; //인덱스별로 노래 슬라이싱해서 보내기
 }
 
 const useSongStore = create<SongState>((set, get) => {
@@ -52,6 +44,7 @@ const useSongStore = create<SongState>((set, get) => {
     setTags: (tags: string[]) =>
       set(() => {
         // indexLst 객체를 초기화
+        console.log('setTags', tags);
         const newIndexLst: {[tag: string]: number} = {};
         tags.forEach(tag => {
           newIndexLst[tag] = 0;

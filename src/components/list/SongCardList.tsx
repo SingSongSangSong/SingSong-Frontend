@@ -4,12 +4,11 @@ import {
   ScrollView,
   Text,
   Dimensions,
-  Touchable,
   TouchableOpacity,
 } from 'react-native';
 import tw from 'twrnc';
 import {RcdHomeSong} from '../../types';
-import {SongCard, TextButton} from '..';
+import {SongCard} from '..';
 import {designatedColor} from '../../constants';
 
 type SongCardListProps = {
@@ -29,10 +28,9 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
   const deviceWidth = Dimensions.get('window').width;
 
   return (
-    <View
-      style={tw`w-full mt-2 border-b border-[${designatedColor.GRAY4}] my-2 py-4`}>
+    <View style={tw`w-full mx-2 mt-2 my-2`}>
       <View
-        style={tw`flex-row justify-between px-2 items-center px-4 mt-2 mb-6`}>
+        style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[1px] border-[${designatedColor.GRAY4}]`}>
         <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
         <TouchableOpacity
           onPress={() => onPress(tag)}

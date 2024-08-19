@@ -4,7 +4,6 @@ import {Text, View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations, designatedColor} from '../../constants';
-import useFetchData from '../../hooks/useFetchData';
 import useUserInfo from '../../hooks/useUserInfo';
 
 type SplashScreenProps = StackScreenProps<
@@ -13,7 +12,7 @@ type SplashScreenProps = StackScreenProps<
 >;
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
-  const fetchDataHandler = useFetchData();
+  // const fetchDataHandler = useFetchData();
   const userInfoHandler = useUserInfo();
 
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -25,7 +24,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       // 데이터를 미리 가져오기 시작
       const isValidTokenPromise = userInfoHandler.getIsValidToken();
       const isValidToken = await isValidTokenPromise;
-      await fetchDataHandler.fetchData();
+      // await fetchDataHandler.fetchData();
       // 로고가 나타나는 애니메이션 (즉시 나타남)
       Animated.timing(logoOpacity, {
         toValue: 1,
@@ -75,9 +74,6 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
 
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
-
-  const imageWidth = 405 * 1.2;
-  const imageHeight = 140.81 * 1.2;
 
   return (
     <View

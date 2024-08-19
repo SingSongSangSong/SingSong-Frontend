@@ -3,6 +3,7 @@ import axiosInstance from '../axiosIns';
 
 const postRcdHome = async (tags: TagProps) => {
   try {
+    console.log('tags!!!!!!!!!!!', tags);
     const response = await axiosInstance.post<RcdHomeResponse>(
       '/recommend/home',
       tags,

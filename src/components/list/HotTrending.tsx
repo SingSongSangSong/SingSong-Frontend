@@ -62,14 +62,14 @@
 // });
 
 // export {HotTrending};
-import React, {memo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
 import {designatedColor} from '../../constants';
 import useChartStore from '../../store/useChartStore';
 
-const HotTrending = memo(() => {
+const HotTrending = () => {
   const itemsPerPage = 5;
   const selectedCharts = useChartStore(state => state.selectedCharts);
 
@@ -144,6 +144,6 @@ const HotTrending = memo(() => {
       </View>
     </View>
   );
-});
+};
 
 export {HotTrending};
