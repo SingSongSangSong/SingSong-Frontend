@@ -1,5 +1,5 @@
 import {login, me} from '@react-native-kakao/user';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import postMemberLogin from '../api/member/postMemberLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
@@ -8,25 +8,34 @@ import useMemberStore from '../store/useMemberStore';
 import postMemberLogout from '../api/member/postMemberLogout';
 import postMemberWithdraw from '../api/member/postMemberWithdraw';
 import Toast from 'react-native-toast-message';
-// import useSongStore from '../store/useSongStore';
-// import getChart from '../api/songs/getChart';
+import {useQuery} from '@tanstack/react-query';
+import {isEmptyObject} from '../utils';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
-  // const {memberInfo, setMemberInfo} = useMemberStore();
   const memberInfo = useMemberStore(state => state.memberInfo);
   const setMemberInfo = useMemberStore(state => state.setMemberInfo);
   const [isEnabled, setIsEnabled] = useState<boolean>(true);
   const [isInit, setIsInit] = useState<boolean>(false);
-  // const {tags, previewSongs, time, gender, setTime, setGender} = useSongStore();
-
-  // const [selectedGender, setSelectedGender] = useState<string>();
-
-  // useEffect(() => {
-  //   setSelectedGender(gender);
-  // }, [gender]);
 
   const {setSecureValue, getIsValidToken} = TokenStore();
+
+  const {
+    data: tempMemberInfo,
+    error: memberInfoError,
+    isFetching: isFetchingMemberInfo,
+  } = useQuery({
+    queryKey: ['member'],
+    queryFn: getMember,
+    staleTime: 3600000,
+    select: data => data.data,
+  });
+
+  useEffect(() => {
+    if (isEmptyObject(memberInfo) && tempMemberInfo) {
+      setMemberInfo(tempMemberInfo);
+    }
+  }, [tempMemberInfo, setMemberInfo, memberInfo]);
 
   const handleKakaoLogin = async () => {
     try {
@@ -48,34 +57,6 @@ const useUserInfo = () => {
       // Alert.alert('Login Failed', err.message);
     }
   };
-
-  // const fetchChart = async () => {
-  //   try {
-  //     setIsInit(true);
-  //     console.log('fetchChart request!!!!!!!!!!!!!!!!');
-  //     const chartData = await getChart();
-  //     setCharts('FEMALE', chartData.data.female); //chart 데이터 설정
-  //     setCharts('MALE', chartData.data.male);
-  //     setTime(chartData.data.time);
-  //     setGender(chartData.data.gender);
-  //     setSelectedGender(chartData.data.gender);
-  //   } catch (error) {
-  //     console.error('Error fetching chart:', error);
-  //   }
-  // };
-
-  // const changeGender = () => {
-  //   if (selectedGender == 'FEMALE') {
-  //     setSelectedGender('MALE');
-  //   } else {
-  //     setSelectedGender('FEMALE');
-  //   }
-  // };
-
-  // const toggleSwitch = () => {
-  //   setIsEnabled(previousState => !previousState);
-  //   changeGender();
-  // };
 
   const handleKakaoLogout = async () => {
     try {
@@ -103,20 +84,8 @@ const useUserInfo = () => {
     await postMemberWithdraw();
   };
 
-  const getUserInfo = async () => {
-    const result = await getMember();
-    // setUserInfo(result.data);
-    setMemberInfo(result.data);
-    console.log('userInfo:', result.data);
-  };
-
   return {
     isInit,
-    // tags,
-    // previewSongs,
-    // time,
-    // gender,
-    // selectedGender,
     isEnabled,
     memberInfo,
     isLoggedProcess,
@@ -124,8 +93,6 @@ const useUserInfo = () => {
     handleKakaoLogout,
     handleWithdraw,
     getIsValidToken,
-    getUserInfo,
-    // setSelectedGender,
   };
 };
 

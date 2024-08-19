@@ -77,6 +77,7 @@ const useHomeInfo = () => {
   // 추천 노래 데이터를 상태에 저장
   useEffect(() => {
     if (tempRcdHomeSongs) {
+      console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
       tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
         setPreviewSongs(songWithTags.tag, songWithTags.songs);
       });
