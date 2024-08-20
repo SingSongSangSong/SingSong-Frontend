@@ -52,7 +52,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
   return (
     <SafeAreaView style={tw`h-full w-full bg-black`}>
       <View style={tw`w-full h-full pt-6`}>
-        {keepHandler.isLoading ? (
+        {keepHandler.isKeepLoading ? (
           <View style={tw`flex-1 justify-center items-center`}>
             <ActivityIndicator size="small" color={designatedColor.PINK2} />
           </View>

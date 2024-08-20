@@ -59,7 +59,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log('route name', route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -85,7 +85,8 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log('route name', route.name);
-                navigation.goBack();
+                // navigation.popToTop();
+                navigation.pop();
                 // navigation.reset({
                 //   index: 0,
                 //   routes: [{name: mainTabNavigations.HOME}],
@@ -116,7 +117,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -144,7 +145,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={DeleteIcon}
               size={24}
@@ -172,7 +173,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={DeleteIcon}
               size={24}
@@ -199,7 +200,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -226,7 +227,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -243,7 +244,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -269,7 +270,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
             <IconButton
               onPress={() => {
                 console.log(route.name);
-                navigation.goBack();
+                navigation.pop();
               }}
               Icon={ArrowLeftIcon}
               size={28}

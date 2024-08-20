@@ -16,7 +16,7 @@ const TOUCHABLE_OPACITY_HEIGHT = 50; // 높이를 50으로 설정, 필요에 따
 
 const SongReview = ({songId}: SongReviewProps) => {
   const [songReviews, setSongReviews] = useState<SongInfoReview[]>([]);
-  const [selectedId, setSelectedId] = useState<number | undefined>();
+  const [selectedId, setSelectedId] = useState<number>();
   const [maxCount, setMaxCount] = useState<number>(1); // 기본 분모는 1로 설정
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
   const [reviewOptions, setReviewOptions] = useState<string[]>([]);
@@ -44,6 +44,7 @@ const SongReview = ({songId}: SongReviewProps) => {
       const selectedItem = reviews.find(item => item.selected);
       if (selectedItem) {
         setSelectedId(selectedItem.songReviewOptionId);
+        console.log('selectedId', selectedId);
       }
     } catch (error) {
       console.error('Error fetching song reviews:', error);
@@ -53,6 +54,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   };
 
   const handleOnPressReview = async (songReviewOptionId: number) => {
+    console.log('selectedId', selectedId);
     if (selectedId === songReviewOptionId) {
       // 선택된 항목을 다시 누르면 해제하고 count 감소
       setSelectedId(undefined);
@@ -131,7 +133,7 @@ const SongReview = ({songId}: SongReviewProps) => {
               tw`flex-row justify-between items-center my-1 bg-[${designatedColor.GRAY4}] rounded-lg overflow-hidden`,
               {height: TOUCHABLE_OPACITY_HEIGHT}, // 상수로 설정한 높이 적용
             ]}
-            onPress={() => handleOnPressReview(index)} // 옵션의 인덱스를 사용하여 처리
+            onPress={() => handleOnPressReview(index + 1)} // 옵션의 인덱스를 사용하여 처리
             activeOpacity={0.9}>
             <View
               style={[

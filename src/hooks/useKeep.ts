@@ -5,6 +5,7 @@ import useKeepListStore from '../store/useKeepStore';
 import getKeep from '../api/keep/getKeep';
 import deleteKeep from '../api/keep/deleteKeep';
 import Toast from 'react-native-toast-message';
+import {useQuery} from '@tanstack/react-query';
 
 const useKeep = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -13,14 +14,30 @@ const useKeep = () => {
   const keepList = useKeepListStore(state => state.keepList);
   const setKeepList = useKeepListStore(state => state.setKeepList);
   const [removedSong, setRemovedSong] = useState<number[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isKeepLoading, setIsKeepLoading] = useState(true);
   const [isRemoved, setIsRemoved] = useState(false);
 
+  const {
+    data: tempKeepList,
+    error,
+    isLoading,
+  } = useQuery({
+    // 데이터를 가져오는 함수
+    queryKey: ['keepList'],
+    queryFn: getKeep,
+    staleTime: 3600000, // 1시간 동안 캐시 유지
+    select: data => data.data,
+  });
+
   useEffect(() => {
-    if (keepList.length == 0) {
-      setInitKeep();
+    // if (keepList.length == 0) {
+    //   setInitKeep();
+    // }
+    if (tempKeepList) {
+      setKeepList(tempKeepList);
+      setIsKeepLoading(false);
     }
-  }, []);
+  }, [tempKeepList]);
 
   // const handleOnPressSonglist = (songNumber: number) => {
   //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
@@ -37,12 +54,12 @@ const useKeep = () => {
     setIsAllDeleted(true);
   };
 
-  const setInitKeep = async () => {
-    setIsLoading(true);
-    const tempKeepList = await getKeep();
-    setKeepList(tempKeepList.data);
-    setIsLoading(false);
-  };
+  // const setInitKeep = async () => {
+  //   setIsLoading(true);
+  //   const tempKeepList = await getKeep();
+  //   setKeepList(tempKeepList.data);
+  //   setIsLoading(false);
+  // };
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
     console.log(songNumbers);
@@ -142,7 +159,7 @@ const useKeep = () => {
   return {
     isRemoved,
     setIsRemoved,
-    isLoading,
+    isKeepLoading,
     isAllSelected,
     isAllDeleted,
     keepList,
