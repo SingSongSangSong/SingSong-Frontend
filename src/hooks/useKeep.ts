@@ -14,30 +14,30 @@ const useKeep = () => {
   const keepList = useKeepListStore(state => state.keepList);
   const setKeepList = useKeepListStore(state => state.setKeepList);
   const [removedSong, setRemovedSong] = useState<number[]>([]);
-  const [isKeepLoading, setIsKeepLoading] = useState(true);
+  const [isKeepLoading, setIsKeepLoading] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
 
-  const {
-    data: tempKeepList,
-    error,
-    isLoading,
-  } = useQuery({
-    // 데이터를 가져오는 함수
-    queryKey: ['keepList'],
-    queryFn: getKeep,
-    staleTime: 3600000, // 1시간 동안 캐시 유지
-    select: data => data.data,
-  });
+  // const {
+  //   data: tempKeepList,
+  //   error,
+  //   isLoading,
+  // } = useQuery({
+  //   // 데이터를 가져오는 함수
+  //   queryKey: ['keepList'],
+  //   queryFn: getKeep,
+  //   staleTime: 3600000, // 1시간 동안 캐시 유지
+  //   select: data => data.data,
+  // });
 
   useEffect(() => {
-    // if (keepList.length == 0) {
-    //   setInitKeep();
-    // }
-    if (tempKeepList) {
-      setKeepList(tempKeepList);
-      setIsKeepLoading(false);
+    if (keepList.length == 0) {
+      setInitKeep();
     }
-  }, [tempKeepList]);
+    // if (tempKeepList) {
+    //   setKeepList(tempKeepList);
+    //   setIsKeepLoading(false);
+    // }
+  }, [keepList]);
 
   // const handleOnPressSonglist = (songNumber: number) => {
   //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
@@ -54,12 +54,12 @@ const useKeep = () => {
     setIsAllDeleted(true);
   };
 
-  // const setInitKeep = async () => {
-  //   setIsLoading(true);
-  //   const tempKeepList = await getKeep();
-  //   setKeepList(tempKeepList.data);
-  //   setIsLoading(false);
-  // };
+  const setInitKeep = async () => {
+    setIsKeepLoading(true);
+    const tempKeepList = await getKeep();
+    setKeepList(tempKeepList.data);
+    setIsKeepLoading(false);
+  };
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
     console.log(songNumbers);
