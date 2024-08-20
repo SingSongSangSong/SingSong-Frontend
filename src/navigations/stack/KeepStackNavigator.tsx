@@ -20,7 +20,7 @@ type KeepStackNavigatorProps = {
 };
 
 const handleOnPress = (navigation: any) => {
-  navigation.navigate(keepStackNavigations.KEEP_EDIT);
+  navigation.push(keepStackNavigations.KEEP_EDIT);
 };
 
 function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {

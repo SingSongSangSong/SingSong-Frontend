@@ -40,7 +40,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
     singerName: string,
     album: string,
   ) => {
-    navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
+    navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,
       songNumber,
       songName,

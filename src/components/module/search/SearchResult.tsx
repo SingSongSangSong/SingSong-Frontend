@@ -27,7 +27,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     singerName: string,
     album: string,
   ) => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+    navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,
       songName,

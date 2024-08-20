@@ -49,12 +49,12 @@ function CommentScreen(props: CommentScreenProps) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).navigate(keepStackNavigations.KEEP_RECOMMENT, {comment});
+        ).push(keepStackNavigations.KEEP_RECOMMENT, {comment});
       } else if (props.route.name === homeStackNavigations.COMMENT) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).navigate(homeStackNavigations.RECOMMENT, {comment});
+        ).push(homeStackNavigations.RECOMMENT, {comment});
       }
     }
   };
@@ -70,12 +70,12 @@ function CommentScreen(props: CommentScreenProps) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).navigate(keepStackNavigations.KEEP_REPORT, reportParams);
+        ).push(keepStackNavigations.KEEP_REPORT, reportParams);
       } else if (props.route.name === homeStackNavigations.COMMENT) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).navigate(homeStackNavigations.REPORT, reportParams);
+        ).push(homeStackNavigations.REPORT, reportParams);
       }
     }
   };

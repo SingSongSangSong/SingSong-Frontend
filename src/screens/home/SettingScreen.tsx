@@ -42,7 +42,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
   };
 
   const handleOnBlacklistButton = () => {
-    navigation.navigate(homeStackNavigations.BLACKLIST);
+    navigation.push(homeStackNavigations.BLACKLIST);
   };
 
   return (

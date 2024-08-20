@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import getSongsReviews from '../../../api/songs/getSongsReviews';
 import deleteSongsReviews from '../../../api/songs/deleteSongsReviews';
 import {SongInfoReview} from '../../../types';
 import {designatedColor} from '../../../constants';
 import putSongReviews from '../../../api/songs/putSongsReviews';
+import getSongReviewOptions from '../../../api/songs/getSongReviewOptions';
 
 type SongReviewProps = {
   songId: number;
@@ -14,11 +15,20 @@ type SongReviewProps = {
 const TOUCHABLE_OPACITY_HEIGHT = 50; // 높이를 50으로 설정, 필요에 따라 조정 가능
 
 const SongReview = ({songId}: SongReviewProps) => {
-  console.log('songReview!!');
   const [songReviews, setSongReviews] = useState<SongInfoReview[]>([]);
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  const [maxCount, setMaxCount] = useState<number | null>(null); // 기본 분모는 null로 설정
+  const [maxCount, setMaxCount] = useState<number>(1); // 기본 분모는 1로 설정
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [reviewOptions, setReviewOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchReviewOptions = async () => {
+      const options = await getSongReviewOptions();
+      setReviewOptions(options.data);
+    };
+
+    fetchReviewOptions();
+  }, []);
 
   const setInitSongReview = async (songId: number) => {
     try {
@@ -87,64 +97,64 @@ const SongReview = ({songId}: SongReviewProps) => {
 
   useEffect(() => {
     setInitSongReview(songId);
-  }, []);
+  }, [songId]);
 
-  if (loading) {
-    // 로딩 중인 경우 로딩 스피너를 보여줌
-    return (
-      <View
-        style={[
-          tw`flex-1 justify-center items-center bg-black`,
-          {height: TOUCHABLE_OPACITY_HEIGHT * 2},
-        ]}>
-        {/* <ActivityIndicator size="large" color={designatedColor.PINK2} /> */}
-      </View>
-    );
-  }
+  const getReviewCount = (option: string) => {
+    const review = songReviews.find(review => review.title === option);
+    return review ? review.count : 0;
+  };
+
+  const getReviewSelected = (option: string) => {
+    const review = songReviews.find(review => review.title === option);
+    return review ? review.selected : false;
+  };
 
   return (
     <View>
-      {maxCount !== null &&
-        songReviews.map(review => {
-          const percentage = (review.count / maxCount) * 100;
-          console.log('percentage:', percentage);
-          const isSelected = selectedId === review.songReviewOptionId;
-          const backgroundColor = isSelected
-            ? tw`bg-[${designatedColor.PINK2}]`
-            : tw`bg-[${designatedColor.GRAY3}]`;
-          const titleColor = isSelected
-            ? tw`text-black font-bold`
-            : tw`text-white`;
+      {reviewOptions.map((option, index) => {
+        const count = getReviewCount(option);
+        const percentage = (count / maxCount) * 100;
+        const isSelected = getReviewSelected(option);
+        const backgroundColor = isSelected
+          ? designatedColor.PINK2
+          : designatedColor.GRAY3;
+        const titleColor = isSelected ? 'black' : 'white';
+        const textColor = isSelected
+          ? designatedColor.PINK
+          : designatedColor.GRAY2;
+        const pinkWidth = percentage >= 100 ? 100 : percentage; // 100%를 넘지 않도록 제한
 
-          const textColor = isSelected
-            ? tw`text-[${designatedColor.PINK}]`
-            : tw`text-[${designatedColor.GRAY2}]`;
-          const pinkWidth = percentage >= 100 ? 100 : percentage; // 100%를 넘지 않도록 제한
-
-          return (
-            <TouchableOpacity
-              key={review.songReviewOptionId}
+        return (
+          <TouchableOpacity
+            key={index}
+            style={[
+              tw`flex-row justify-between items-center my-1 bg-[${designatedColor.GRAY4}] rounded-lg overflow-hidden`,
+              {height: TOUCHABLE_OPACITY_HEIGHT}, // 상수로 설정한 높이 적용
+            ]}
+            onPress={() => handleOnPressReview(index)} // 옵션의 인덱스를 사용하여 처리
+            activeOpacity={0.9}>
+            <View
               style={[
-                tw`flex-row justify-between items-center my-1 bg-[${designatedColor.GRAY4}] rounded-lg overflow-hidden`,
-                {height: TOUCHABLE_OPACITY_HEIGHT}, // 상수로 설정한 높이 적용
+                tw`absolute rounded-lg`,
+                {
+                  backgroundColor: backgroundColor,
+                  width: `${pinkWidth}%`,
+                  height: TOUCHABLE_OPACITY_HEIGHT, // 상수로 설정한 높이 적용
+                },
               ]}
-              onPress={() => handleOnPressReview(review.songReviewOptionId)}
-              activeOpacity={0.9}>
-              <View
-                style={[
-                  tw`absolute rounded-lg`,
-                  backgroundColor,
-                  {
-                    width: `${pinkWidth}%`,
-                    height: TOUCHABLE_OPACITY_HEIGHT, // 상수로 설정한 높이 적용
-                  },
-                ]}
-              />
-              <Text style={[titleColor, tw`ml-2`]}>{review.title}</Text>
-              <Text style={[textColor, tw`mr-2`]}>{review.count}</Text>
-            </TouchableOpacity>
-          );
-        })}
+            />
+            <Text
+              style={[
+                tw`ml-2`,
+                isSelected && tw`font-bold`,
+                {color: titleColor},
+              ]}>
+              {option}
+            </Text>
+            <Text style={[tw`mr-2`, {color: textColor}]}>{count}</Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };

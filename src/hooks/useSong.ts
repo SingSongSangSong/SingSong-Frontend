@@ -162,7 +162,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     singerName: string,
     album: string,
   ) => {
-    navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+    navigation.push(homeStackNavigations.SONG_DETAIL, {
       songNumber,
       songId,
       songName,

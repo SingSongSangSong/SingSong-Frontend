@@ -53,12 +53,12 @@ function RecommentScreen(props: RecommentScreenProps) {
         // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).navigate(keepStackNavigations.KEEP_REPORT, reportParams);
+        ).push(keepStackNavigations.KEEP_REPORT, reportParams);
       } else if (props.route.name === homeStackNavigations.RECOMMENT) {
         // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).navigate(homeStackNavigations.REPORT, reportParams);
+        ).push(homeStackNavigations.REPORT, reportParams);
       }
     }
   };

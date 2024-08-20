@@ -18,7 +18,7 @@ const TaglistModule = ({
   const tags = useSongStore(state => state.tags);
   return (
     <View
-      style={tw` border-t-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 my-2`}>
+      style={tw` border-t-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 mt-2`}>
       <View style={tw`justify-between flex-row mx-4 items-center mx-4`}>
         <Text style={tw`text-white text-sm font-bold my-2`}>
           어떤 노래를 찾으시나요?

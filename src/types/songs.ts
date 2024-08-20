@@ -173,6 +173,11 @@ interface SongParams {
   album: string;
 }
 
+interface GetSongReviewOptionsResponse {
+  data: string[];
+  message: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -201,4 +206,5 @@ export type {
   SongParams,
   GetSearchSong,
   GetSearchSongResponse,
+  GetSongReviewOptionsResponse,
 };

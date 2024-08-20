@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   designatedColor,
@@ -10,15 +10,14 @@ import {MainTabParamList} from '../../types';
 import PlaygroundScreen from '../../screens/playground/PlaygroundScreen';
 import HomeStackNavigator from '../stack/HomeStackNavigator';
 import HomeIcon from '../../assets/svg/recommendation.svg';
-import HomeIconActive from '../../assets/svg/selectedHome.svg'; // 활성화된 상태의 아이콘
+import HomeIconActive from '../../assets/svg/selectedHome.svg';
 import PlaygroundIcon from '../../assets/svg/play.svg';
-import PlaygroundIconActive from '../../assets/svg/selectedPlay.svg'; // 활성화된 상태의 아이콘
+import PlaygroundIconActive from '../../assets/svg/selectedPlay.svg';
 import StarIcon from '../../assets/svg/star.svg';
-import StarIconActive from '../../assets/svg/selectedStar.svg'; // 활성화된 상태의 아이콘
+import StarIconActive from '../../assets/svg/selectedStar.svg';
 import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -72,6 +71,7 @@ const MainTabNavigator = () => {
               <IconComponent width={size} height={size} fill={color} />
             ) : null;
           },
+          backBehavior: 'none',
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
             ? {display: 'none'}
@@ -90,7 +90,6 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
-
       <Tab.Screen
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}

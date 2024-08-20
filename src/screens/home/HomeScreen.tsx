@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   const handleOnArrowPress = useCallback(
     (tag: string) => {
-      navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+      navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
     },
     [navigation],
   );
@@ -48,7 +48,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
       singerName: string,
       album: string,
     ) => {
-      navigation.navigate(homeStackNavigations.SONG_DETAIL, {
+      navigation.push(homeStackNavigations.SONG_DETAIL, {
         songId,
         songNumber,
         songName,
@@ -60,15 +60,15 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   );
 
   const handleOnPressSetting = useCallback(() => {
-    navigation.navigate(homeStackNavigations.SETTING);
+    navigation.push(homeStackNavigations.SETTING);
   }, [navigation]);
 
   const handleOnPressTotalButton = useCallback(() => {
-    navigation.navigate(homeStackNavigations.TAG_DETAIL);
+    navigation.push(homeStackNavigations.TAG_DETAIL);
   }, [navigation]);
 
   const handleOnPressSearch = useCallback(() => {
-    navigation.navigate(homeStackNavigations.SEARCH);
+    navigation.push(homeStackNavigations.SEARCH);
   }, [navigation]);
 
   return (

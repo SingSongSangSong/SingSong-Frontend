@@ -81,78 +81,75 @@ const SongAdditionInfo = ({
     setInitSongAdditionInfo(songId);
   }, []);
 
-  if (loading) {
-    // 로딩 중인 경우 로딩 스피너를 보여줌
-    return (
-      <View
-        style={[
-          tw`flex-1 justify-center items-center`,
-          {
-            height: 120,
-          },
-        ]}
-      />
-    );
-  }
+  // if (loading) {
+  //   // 로딩 중인 경우 로딩 스피너를 보여줌
+  //   return (
+  //     <View
+  //       style={[
+  //         tw`flex-1 justify-center items-center`,
+  //         {
+  //           height: 120,
+  //         },
+  //       ]}
+  //     />
+  //   );
+  // }
 
   return (
     <View>
-      {songInfo ? (
-        <View style={tw`mx-2`}>
-          <View style={tw`flex-row py-2 mx-1`}>
-            <View style={tw`flex-row mr-4 items-center`}>
-              {songInfo.isKeep ? (
-                <OutlineKeepIcon width={18} height={18} />
-              ) : (
-                <KeepCountIcon width={18} height={18} />
-              )}
-              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-                {songInfo.keepCount}
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={tw`flex-row items-center`}
-              onPress={handleOnPressComment}
-              activeOpacity={0.8}>
-              <CommentCountIcon width={18} height={18} />
-              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-                {commentCount}
-              </Text>
-            </TouchableOpacity>
+      <View style={tw`mx-2`}>
+        <View style={tw`flex-row py-2 mx-1`}>
+          <View style={tw`flex-row mr-4 items-center`}>
+            {!songInfo || !songInfo.isKeep ? (
+              <KeepCountIcon width={18} height={18} />
+            ) : (
+              <OutlineKeepIcon width={18} height={18} />
+            )}
+            <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
+            </Text>
           </View>
-          <View style={tw`flex-row items-center py-1`}>
-            <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
-            {songInfo.octave == '' ? (
+          <TouchableOpacity
+            style={tw`flex-row items-center`}
+            onPress={handleOnPressComment}
+            activeOpacity={0.8}>
+            <CommentCountIcon width={18} height={18} />
+            <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              {commentCount}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={tw`flex-row items-center py-1`}>
+          <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
+          {songInfo &&
+            (songInfo.octave == '' ? (
               <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>없음</Text>
             ) : (
               <Text style={tw`text-[${designatedColor.GREEN}]`}>
                 {songInfo.octave}
               </Text>
-            )}
-          </View>
-          <View style={tw`m-1`}>
-            {songInfo.description && songInfo.description != '' ? (
-              <Text style={tw`text-[${designatedColor.PINK2}]`}>
-                {songInfo.description}
-              </Text>
-            ) : (
-              <Text>''</Text>
-            )}
-          </View>
-
-          <View style={tw`py-2 border-b border-[${designatedColor.GRAY4}]`}>
-            <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2`}>
-              {songInfo.isKeep ? (
-                <KeepFilledIcon width={24} height={24} />
-              ) : (
-                <KeepIcon width={24} height={24} />
-              )}
-            </TouchableOpacity>
-          </View>
+            ))}
         </View>
-      ) : (
-        <View style={tw`w-full h-30`} />
-      )}
+        <View style={tw`m-1`}>
+          {songInfo && songInfo.description != '' ? (
+            <Text style={tw`text-[${designatedColor.PINK2}]`}>
+              {songInfo.description}
+            </Text>
+          ) : (
+            <Text>''</Text>
+          )}
+        </View>
+
+        <View style={tw`py-2 border-b border-[${designatedColor.GRAY4}]`}>
+          <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2`}>
+            {!songInfo || !songInfo.isKeep ? (
+              <KeepIcon width={24} height={24} />
+            ) : (
+              <KeepFilledIcon width={24} height={24} />
+            )}
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
