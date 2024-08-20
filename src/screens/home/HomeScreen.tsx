@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {SafeAreaView, View} from 'react-native';
+import {ActivityIndicator, Modal, SafeAreaView, Text, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import tw from 'twrnc';
 import {
@@ -110,6 +110,22 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             onPressTotalButton={handleOnArrowPress}
           />
         </ScrollView>
+        <Modal
+          transparent={true}
+          visible={homeInfohandler.loadingVisible}
+          animationType="fade"
+          // onRequestClose={onClose}
+        >
+          <View
+            style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
+            <View style={tw`flex-row`}>
+              <ActivityIndicator size="small" color={designatedColor.PINK2} />
+              <Text style={tw`text-white font-bold ml-2`}>
+                잠시만 기다려주세요
+              </Text>
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     </GestureRecognizer>
   );

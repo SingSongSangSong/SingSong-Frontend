@@ -8,7 +8,7 @@ import useSongStore from '../store/useSongStore';
 import {useQuery} from '@tanstack/react-query';
 import getTags from '../api/tags/getTags';
 import postRcdHome from '../api/recommendation/postRcdHome';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {RcdHomeSongWithTags} from '../types';
 
 const useHomeInfo = () => {
@@ -20,6 +20,7 @@ const useHomeInfo = () => {
 
   const setTags = useSongStore(state => state.setTags);
   const setPreviewSongs = useSongStore(state => state.setPreviewSongs);
+  const [loadingVisible, setLoadingVisible] = useState(true);
 
   const {
     data: tempTags,
@@ -64,18 +65,12 @@ const useHomeInfo = () => {
       setUserGender(tempCharts.gender);
       console.log('userGender', tempCharts.gender);
     }
-  }, [tempCharts]);
 
-  // 태그 데이터를 상태에 저장
-  useEffect(() => {
     if (tempTags) {
       console.log('tempTags:', tempTags);
       setTags(tempTags);
     }
-  }, [tempTags]);
 
-  // 추천 노래 데이터를 상태에 저장
-  useEffect(() => {
     if (tempRcdHomeSongs) {
       console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
       tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
@@ -83,7 +78,21 @@ const useHomeInfo = () => {
       });
       console.log('setPreview Song completed!!!!!!!!!!!');
     }
-  }, [tempRcdHomeSongs]);
+
+    if (tempCharts && tempTags && tempRcdHomeSongs) {
+      setLoadingVisible(false);
+    }
+  }, [tempCharts, tempTags, tempRcdHomeSongs]);
+
+  // // 태그 데이터를 상태에 저장
+  // useEffect(() => {
+
+  // }, [tempTags]);
+
+  // // 추천 노래 데이터를 상태에 저장
+  // useEffect(() => {
+
+  // }, [tempRcdHomeSongs]);
 
   const handleKakaoLogout = async () => {
     try {
@@ -120,6 +129,7 @@ const useHomeInfo = () => {
     setSelectedGender,
     isFetchingRcdHomeSongs,
     tempRcdHomeSongs,
+    loadingVisible,
   };
 };
 
