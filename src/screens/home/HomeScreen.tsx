@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ActivityIndicator, Modal, SafeAreaView, Text, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -16,6 +16,7 @@ import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
 import SearchIcon from '../../assets/svg/search.svg';
+import useMemberStore from '../../store/useMemberStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -32,44 +33,39 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   // }, []);
 
   const homeInfohandler = useHomeInfo();
+  const memberInfo = useMemberStore(state => state.memberInfo);
 
-  const handleOnArrowPress = useCallback(
-    (tag: string) => {
-      navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
-    },
-    [navigation],
-  );
+  const handleOnArrowPress = (tag: string) => {
+    navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
+  };
 
-  const handleOnSongPress = useCallback(
-    (
-      songNumber: number,
-      songId: number,
-      songName: string,
-      singerName: string,
-      album: string,
-    ) => {
-      navigation.push(homeStackNavigations.SONG_DETAIL, {
-        songId,
-        songNumber,
-        songName,
-        singerName,
-        album,
-      });
-    },
-    [navigation],
-  );
+  const handleOnSongPress = (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+  ) => {
+    navigation.push(homeStackNavigations.SONG_DETAIL, {
+      songId,
+      songNumber,
+      songName,
+      singerName,
+      album,
+    });
+  };
 
-  const handleOnPressSetting = useCallback(() => {
+  const handleOnPressSetting = () => {
     navigation.push(homeStackNavigations.SETTING);
-  }, [navigation]);
+  };
 
-  const handleOnPressTotalButton = useCallback(() => {
+  const handleOnPressTotalButton = () => {
     navigation.push(homeStackNavigations.TAG_DETAIL);
-  }, [navigation]);
+  };
 
-  const handleOnPressSearch = useCallback(() => {
+  const handleOnPressSearch = () => {
     navigation.push(homeStackNavigations.SEARCH);
-  }, [navigation]);
+  };
 
   return (
     <GestureRecognizer
@@ -123,6 +119,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
               <Text style={tw`text-white font-bold ml-2`}>
                 잠시만 기다려주세요
               </Text>
+              {/* <Text style={tw`text-white font-bold ml-2`}>
+                {memberInfo.nickname}
+              </Text>
+              <Text style={tw`text-white font-bold ml-2`}>
+                {memberInfo.email}
+              </Text>
+              <Text style={tw`text-white font-bold ml-2`}>환영합니다!</Text> */}
             </View>
           </View>
         </Modal>

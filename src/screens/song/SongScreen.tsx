@@ -24,6 +24,7 @@ type SongScreenProps =
 
 function SongScreen(props: SongScreenProps) {
   console.log('songScreen!!');
+  console.log('props route', props.route?.name);
   const {songNumber, songId, songName, singerName, album} =
     props.route?.params || {};
 
