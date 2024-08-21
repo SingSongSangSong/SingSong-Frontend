@@ -30,14 +30,17 @@ function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
 
   const route = useRoute();
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      console.log('route name', route.name);
-      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  const state = navigation.getState();
+  console.log('Current Navigation State:', state);
 
-    return unsubscribe;
-  }, [navigation, route]);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation, route]);
 
   // const handleOnPressSonglist = (songNumber: number, songId: number) => {
   //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {

@@ -33,14 +33,14 @@ function RecommentScreen(props: RecommentScreenProps) {
   //   const commentHandler = useComment(songNumber, songId);
   const recommentHandler = useRecomment(commentId);
 
-  useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      console.log('route name', props.route.name);
-      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  // useEffect(() => {
+  //   const unsubscribe = props.navigation.addListener('focus', () => {
+  //     console.log('route name', props.route.name);
+  //     logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
 
-    return unsubscribe;
-  }, [props]);
+  //   return unsubscribe;
+  // }, [props]);
 
   useFocusEffect(
     React.useCallback(() => {

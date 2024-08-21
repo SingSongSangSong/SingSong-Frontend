@@ -16,6 +16,7 @@ const TaglistModule = ({
 }: TaglistModuleProps) => {
   // const {tags} = useSongStore();
   const tags = useSongStore(state => state.tags);
+  console.log('tagListMOdule');
   return (
     <View
       style={tw` border-t-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 mt-2`}>

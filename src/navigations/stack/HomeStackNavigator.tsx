@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
-import {homeStackNavigations} from '../../constants';
+import {homeStackNavigations, mainTabNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 import {NavigationProp} from '@react-navigation/native';
@@ -59,7 +59,9 @@ function HomeStackNavigator() {
             <IconButton
               onPress={() => {
                 // console.log('route name', route.name);
-                navigation.pop();
+                console.log('pop!!!!!!!!!!!!');
+                // navigation.pop();
+                navigation.navigate(homeStackNavigations.RCD_HOME);
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -86,10 +88,10 @@ function HomeStackNavigator() {
               onPress={() => {
                 // console.log('route name', route.name);
                 // navigation.popToTop();
-                navigation.pop();
+                navigation.navigate(homeStackNavigations.RCD_HOME);
                 // navigation.reset({
                 //   index: 0,
-                //   routes: [{name: mainTabNavigations.HOME}],
+                //   routes: [{name: homeStackNavigations.RCD_HOME}],
                 // });
               }}
               Icon={ArrowLeftIcon}
@@ -200,7 +202,8 @@ function HomeStackNavigator() {
             <IconButton
               onPress={() => {
                 // console.log(route.name);
-                navigation.pop();
+                // navigation.pop();
+                navigation.navigate(homeStackNavigations.RCD_HOME);
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -244,7 +247,8 @@ function HomeStackNavigator() {
             <IconButton
               onPress={() => {
                 // console.log(route.name);
-                navigation.pop();
+                // navigation.pop();
+                navigation.navigate(homeStackNavigations.RCD_HOME);
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -269,8 +273,9 @@ function HomeStackNavigator() {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                navigation.pop();
+                console.log('pop!!!!!!!!!!!!');
+                // navigation.pop();
+                navigation.navigate(homeStackNavigations.RCD_HOME);
               }}
               Icon={ArrowLeftIcon}
               size={28}

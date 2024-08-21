@@ -21,14 +21,14 @@ type RcdHomeScreenProps = {
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리
   const songHandler = useSong({initTag, navigation});
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      console.log('route name', route.name);
-      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
 
-    return unsubscribe;
-  }, [navigation, route]);
+  //   return unsubscribe;
+  // }, [navigation, route]);
 
   // console.log('RcdHomeScreen');
 

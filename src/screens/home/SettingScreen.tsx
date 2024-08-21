@@ -20,15 +20,15 @@ type SettingScreenProps = StackScreenProps<
 >;
 
 function SettingScreen({navigation}: SettingScreenProps) {
-  const route = useRoute();
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      console.log('route name', route.name);
-      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  // const route = useRoute();
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
 
-    return unsubscribe;
-  }, [navigation, route]);
+  //   return unsubscribe;
+  // }, [navigation, route]);
 
   const userInfoHandler = useUserInfo();
   const [isWithdraw, setIsWithdraw] = useState(false);

@@ -38,30 +38,33 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   // const navigation = useNavigation();
   const route = useRoute();
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      console.log('route name', route.name);
-      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  const state = navigation.getState();
+  console.log('Current Navigation State:', state);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
 
-    return unsubscribe;
-  }, [navigation, route]);
+  //   return unsubscribe;
+  // }, [navigation, route]);
 
   const homeInfohandler = useHomeInfo();
   const memberInfo = useMemberStore(state => state.memberInfo);
 
   const handleOnTagPress = (tag: string) => {
+    console.log('tag press!!');
     amplitude.track('Tag Press');
     logButtonClick('tag_button');
     logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
-    navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
+    navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnPreviewTagPress = (tag: string) => {
     amplitude.track('Preview Tag Press');
     logButtonClick('tag_preview_button');
     logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
-    navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
+    navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnSongPress = (
@@ -74,30 +77,34 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     amplitude.track('Song Preview Press');
     logButtonClick('song_preview_button');
     logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
-    navigation.push(homeStackNavigations.SONG_DETAIL, {
-      songId,
-      songNumber,
-      songName,
-      singerName,
-      album,
+    navigation.navigate({
+      key: 'MyUniqueKeyForSongDetail',
+      name: homeStackNavigations.SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album,
+      },
     });
   };
 
   const handleOnPressSetting = () => {
     amplitude.track('Setting Press');
-    navigation.push(homeStackNavigations.SETTING);
+    navigation.navigate(homeStackNavigations.SETTING);
   };
 
   const handleOnPressTotalButton = () => {
     amplitude.track('Tag Total Press');
     logButtonClick('tag_total_button');
     logNavigationClick(route.name, homeStackNavigations.TAG_DETAIL);
-    navigation.push(homeStackNavigations.TAG_DETAIL);
+    navigation.navigate(homeStackNavigations.TAG_DETAIL);
   };
 
   const handleOnPressSearch = () => {
     amplitude.track('Search Press');
-    navigation.push(homeStackNavigations.SEARCH);
+    navigation.navigate(homeStackNavigations.SEARCH);
   };
 
   return (

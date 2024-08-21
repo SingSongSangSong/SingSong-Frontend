@@ -11,6 +11,7 @@ type TaglistProps = {
 };
 
 const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
+  console.log('tagList');
   return (
     <View style={tw`w-full mt-2`}>
       <ScrollView

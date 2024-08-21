@@ -18,14 +18,14 @@ type LoginScreenProps = StackScreenProps<
 
 function LoginScreen({navigation}: LoginScreenProps) {
   const route = useRoute();
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      console.log('route name', route.name);
-      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+  //   });
 
-    return unsubscribe;
-  }, [navigation, route]);
+  //   return unsubscribe;
+  // }, [navigation, route]);
 
   const userInfoHandler = useUserInfo();
 

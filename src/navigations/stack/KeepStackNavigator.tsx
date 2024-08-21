@@ -77,7 +77,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
               Icon={ArrowLeftIcon}
               size={28}
             />
@@ -102,7 +102,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
               Icon={ArrowLeftIcon}
               size={28}
             />
@@ -124,7 +124,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerLeft: () => null,
           headerRight: () => (
             <IconButton
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
               Icon={DeleteIcon}
               size={24}
             />
@@ -150,7 +150,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerLeft: () => null,
           headerRight: () => (
             <IconButton
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
               Icon={DeleteIcon}
               size={24}
             />
@@ -179,16 +179,13 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.pop()}
               Icon={ArrowLeftIcon}
               size={28}
             />
           ),
           headerRight: () => (
-            <NavButton
-              onPress={() => navigation.navigate(keepStackNavigations.KEEP)}
-              title={'완료'}
-            />
+            <NavButton onPress={() => navigation.pop()} title={'완료'} />
           ),
         })}
       />
