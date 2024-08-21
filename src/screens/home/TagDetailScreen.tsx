@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -6,6 +6,8 @@ import {homeStackNavigations} from '../../constants';
 import {SafeAreaView} from 'react-native';
 import useSongStore from '../../store/useSongStore';
 import {TagDetailList} from '../../components';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type TagDetailScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -13,6 +15,16 @@ type TagDetailScreenProps = StackScreenProps<
 >;
 
 function TagDetailScreen({navigation}: TagDetailScreenProps) {
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   // const {tags} = useSongStore();
   const tags = useSongStore(state => state.tags);
 

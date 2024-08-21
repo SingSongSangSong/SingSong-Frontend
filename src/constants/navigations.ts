@@ -21,7 +21,7 @@ const appStackNavigations = {
 } as const;
 
 const homeStackNavigations = {
-  RCD_HOME: '_RcdHome',
+  RCD_HOME: '_Home',
   RCD_DETAIL: '_RcdDetail',
   SETTING: '_Setting',
   SONG_DETAIL: '_SongDetail',

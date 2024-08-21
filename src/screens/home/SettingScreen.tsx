@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -10,7 +10,8 @@ import {
 import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import useUserInfo from '../../hooks/useUserInfo';
 import {CustomModal} from '../../components';
-import {CommonActions} from '@react-navigation/native';
+import {CommonActions, useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -18,6 +19,16 @@ type SettingScreenProps = StackScreenProps<
 >;
 
 function SettingScreen({navigation}: SettingScreenProps) {
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   const userInfoHandler = useUserInfo();
   const [isWithdraw, setIsWithdraw] = useState(false);
 

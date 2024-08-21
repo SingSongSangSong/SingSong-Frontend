@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -7,6 +7,8 @@ import {SafeAreaView, Text, View} from 'react-native';
 import useBlacklist from '../../hooks/useBlacklist';
 import {BlacklistList, CustomModal} from '../../components';
 import ErrorIcon from '../../assets/svg/error.svg';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type BlacklistScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -14,6 +16,15 @@ type BlacklistScreenProps = StackScreenProps<
 >;
 
 function BlacklistScreen({navigation}: BlacklistScreenProps) {
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
   const blacklistHandler = useBlacklist();
 
   if (blacklistHandler.blacklist === null) {

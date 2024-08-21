@@ -1,5 +1,5 @@
 import {ActivityIndicator, Dimensions, Image, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LargeButton} from '../../components';
 import useUserInfo from '../../hooks/useUserInfo';
 import KaKaoIcon from '../../assets/svg/kakao.svg';
@@ -7,6 +7,8 @@ import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -14,6 +16,16 @@ type LoginScreenProps = StackScreenProps<
 >;
 
 function LoginScreen({navigation}: LoginScreenProps) {
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   const userInfoHandler = useUserInfo();
 
   const handleKakaoButton = async () => {

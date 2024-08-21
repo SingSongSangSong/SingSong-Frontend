@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {GetSearchSong, HomeStackParamList} from '../../types';
@@ -19,6 +19,8 @@ import {
 } from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -26,6 +28,16 @@ type SearchScreenProps = StackScreenProps<
 >;
 
 function SearchScreen({navigation}: SearchScreenProps) {
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   const [inputText, setInputText] = useState<string>('');
   const [searchData, setSearchData] = useState<GetSearchSong>();
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true); // 상태 추가

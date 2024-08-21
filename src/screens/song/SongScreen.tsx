@@ -1,5 +1,5 @@
 import {SafeAreaView, View, Text, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
@@ -11,6 +11,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
+import {logScreenView} from '../../utils';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -25,6 +26,16 @@ type SongScreenProps =
 function SongScreen(props: SongScreenProps) {
   console.log('songScreen!!');
   console.log('props route', props.route?.name);
+
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      console.log('route name', props.route.name);
+      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [props]);
+
   const {songNumber, songId, songName, singerName, album} =
     props.route?.params || {};
 

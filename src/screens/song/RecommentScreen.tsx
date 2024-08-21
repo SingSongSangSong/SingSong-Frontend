@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -17,6 +17,7 @@ import {
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -30,6 +31,15 @@ function RecommentScreen(props: RecommentScreenProps) {
 
   //   const commentHandler = useComment(songNumber, songId);
   const recommentHandler = useRecomment(commentId);
+
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      console.log('route name', props.route.name);
+      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [props]);
 
   useFocusEffect(
     React.useCallback(() => {

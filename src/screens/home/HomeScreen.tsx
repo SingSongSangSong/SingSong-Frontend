@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ActivityIndicator, Modal, SafeAreaView, Text, View} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -17,6 +17,9 @@ import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
 import SearchIcon from '../../assets/svg/search.svg';
 import useMemberStore from '../../store/useMemberStore';
+import {logButtonClick, logScreenView} from '../../utils';
+import {useNavigation, useRoute} from '@react-navigation/native';
+// import {firebase} from '@react-native-firebase/analytics';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -31,6 +34,17 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   //     getUserInfo();
   //   }
   // }, []);
+
+  // const navigation = useNavigation();
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
 
   const homeInfohandler = useHomeInfo();
   const memberInfo = useMemberStore(state => state.memberInfo);
@@ -56,6 +70,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSetting = () => {
+    logButtonClick('setting');
     navigation.push(homeStackNavigations.SETTING);
   };
 
@@ -64,6 +79,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSearch = () => {
+    logButtonClick('search');
     navigation.push(homeStackNavigations.SEARCH);
   };
 

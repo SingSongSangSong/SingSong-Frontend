@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {SongsList} from '../../components';
@@ -6,6 +6,8 @@ import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 // type KeepScreenNavigationProp = CompositeNavigationProp<
 //   StackNavigationProp<KeepStackParamList, typeof keepStackNavigations.KEEP>,
@@ -25,6 +27,16 @@ type KeepScreenProps = StackScreenProps<
 
 function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
+
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
 
   // const handleOnPressSonglist = (songNumber: number, songId: number) => {
   //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, Text, TextInput, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -10,6 +10,7 @@ import {
 } from '../../constants';
 import {OutlineButton, RadioButton} from '../../components';
 import useReport from '../../hooks/useReport';
+import {logScreenView} from '../../utils';
 
 type ReportScreenProps =
   | StackScreenProps<
@@ -19,6 +20,15 @@ type ReportScreenProps =
   | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.REPORT>;
 
 function ReportScreen(props: ReportScreenProps) {
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      console.log('route name', props.route.name);
+      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [props]);
+
   const commentId = props.route?.params?.reportCommentId; // 초기 카테고리
   const subjectMemberId = props.route?.params?.reportSubjectMemberId;
   const reportHandler = useReport(commentId, subjectMemberId);

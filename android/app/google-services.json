@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832235054048",
+    "project_id": "singsongsangsong-a6e03",
+    "storage_bucket": "singsongsangsong-a6e03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832235054048:android:da192ae515306f448f4185",
+        "android_client_info": {
+          "package_name": "com.singsongsangsong_frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWlEzetr0H7O_p6qnq3Uhsh-BF-aihzWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
 import {homeStackNavigations, mainTabNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
-import {NavigationProp} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
 import {IconButton} from '../../components';
@@ -16,18 +21,32 @@ import TagDetailScreen from '../../screens/home/TagDetailScreen';
 import BlacklistScreen from '../../screens/home/BlacklistScreen';
 import SearchScreen from '../../screens/search/SearchScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
+import {logScreenView} from '../../utils';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
 type HomeStackNavigatorProps = {
-  // route?: RouteProp<HomeStackParamList>; // route를 옵셔널로 변경
+  // route: RouteProp<HomeStackParamList>; // route를 옵셔널로 변경
   navigation: NavigationProp<HomeStackParamList>;
 };
-
-function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
+// {navigation}: HomeStackNavigatorProps
+function HomeStackNavigator() {
   // const {tag} = route.params;
   // const tag = route?.params?.tag ?? 'defaultTag';
   // const {selectedTag} = useSongStore();
+  // const navigation = useNavigation();
+  // const route = useRoute(); // 현재 route를 가져옴
+
+  // useEffect(() => {
+  //   console.log('route name', route.name);
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     // route.name을 사용하여 화면 이름을 동적으로 가져와 로깅
+  //     console.log('route name', route.name);
+  //     logScreenView(route.name);
+  //   });
+
+  //   return unsubscribe;
+  // }, [route.name]);
 
   return (
     <Stack.Navigator
@@ -58,7 +77,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log('route name', route.name);
+                // console.log('route name', route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}
@@ -84,7 +103,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log('route name', route.name);
+                // console.log('route name', route.name);
                 // navigation.popToTop();
                 navigation.pop();
                 // navigation.reset({
@@ -116,7 +135,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}
@@ -144,7 +163,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerRight: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={DeleteIcon}
@@ -172,7 +191,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerRight: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={DeleteIcon}
@@ -199,7 +218,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}
@@ -226,7 +245,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}
@@ -243,7 +262,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}
@@ -269,7 +288,7 @@ function HomeStackNavigator({navigation}: HomeStackNavigatorProps) {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log(route.name);
+                // console.log(route.name);
                 navigation.pop();
               }}
               Icon={ArrowLeftIcon}

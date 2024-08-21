@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -16,8 +16,9 @@ import {
   TextButton,
 } from '../../components';
 import Modal from 'react-native-modal';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import ErrorIcon from '../../assets/svg/error.svg';
+import {logScreenView} from '../../utils';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -31,6 +32,16 @@ function CommentScreen(props: CommentScreenProps) {
   const songId = props.route?.params?.songId;
 
   const commentHandler = useComment(songNumber, songId);
+
+  // const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      console.log('route name', props.route.name);
+      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [props]);
 
   useFocusEffect(
     React.useCallback(() => {

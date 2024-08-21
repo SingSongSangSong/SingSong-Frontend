@@ -5,6 +5,8 @@ import tw from 'twrnc';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations, designatedColor} from '../../constants';
 import useUserInfo from '../../hooks/useUserInfo';
+import {useRoute} from '@react-navigation/native';
+import {logScreenView} from '../../utils';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -13,6 +15,16 @@ type SplashScreenProps = StackScreenProps<
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
   // const fetchDataHandler = useFetchData();
+  const route = useRoute();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('route name', route.name);
+      logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   const userInfoHandler = useUserInfo();
 
   const logoOpacity = useRef(new Animated.Value(0)).current;
