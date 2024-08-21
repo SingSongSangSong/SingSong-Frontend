@@ -6,6 +6,7 @@ import {HomeStackParamList, Song} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
+import {logButtonClick, logRefresh} from '../utils';
 
 type UseSongProps = {
   initTag: string;
@@ -23,7 +24,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
     setRefreshing(true);
-    await handleOnRefreshSongs(); //아예 데이터 리스트를 바꿔야 할듯?
+    await handleOnRefreshSongs();
+    logRefresh('recommendation_up_songs');
     setRefreshing(false);
   };
 
@@ -58,8 +60,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       //20개 이상일 경우에만 api 호출
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        console.log('refresh!!!!!!!!!!!!!!!!!!!');
-        console.log(initTag);
+        logRefresh('recommendation_down_songs');
         postRcdRefresh(initTag)
           .then(response => {
             const songData = response.data;
@@ -87,6 +88,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     singerName: string,
     album: string,
   ) => {
+    logButtonClick('recommendation_song_button');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songNumber,
       songId,

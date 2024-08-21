@@ -7,6 +7,7 @@ import {SongInfoReview} from '../../../types';
 import {designatedColor} from '../../../constants';
 import putSongReviews from '../../../api/songs/putSongsReviews';
 import getSongReviewOptions from '../../../api/songs/getSongReviewOptions';
+import {logButtonClick} from '../../../utils';
 
 type SongReviewProps = {
   songId: number;
@@ -54,7 +55,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   };
 
   const handleOnPressReview = async (songReviewOptionId: number) => {
-    console.log('selectedId', selectedId);
+    logButtonClick('song_review_button');
     if (selectedId === songReviewOptionId) {
       // 선택된 항목을 다시 누르면 해제하고 count 감소
       setSelectedId(undefined);

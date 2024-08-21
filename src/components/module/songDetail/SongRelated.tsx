@@ -5,6 +5,7 @@ import tw from 'twrnc';
 import {Relatedlist} from '../../list/Relatedlist';
 import {Song} from '../../../types';
 import getSongsRelated from '../../../api/songs/getSongsRelated';
+import {logRefresh} from '../../../utils';
 
 type SongRelatedProps = {
   songId: number;
@@ -42,7 +43,7 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
       //20개 이상일 경우에만 api 호출
       if (songRelated) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        console.log('refresh!!!!!!!!!!!!!!!!!!!');
+        logRefresh('song_related_songs');
         getSongsRelated(String(songId), page, size)
           .then(response => {
             const newSongRelated = response.data.songs;

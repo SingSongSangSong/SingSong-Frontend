@@ -11,7 +11,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
-import {logScreenView} from '../../utils';
+import {logButtonClick, logScreenView} from '../../utils';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -62,6 +62,7 @@ function SongScreen(props: SongScreenProps) {
     singerName: string,
     album: string,
   ) => {
+    logButtonClick('related_song_button');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (

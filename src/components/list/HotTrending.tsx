@@ -62,12 +62,13 @@
 // });
 
 // export {HotTrending};
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
 import {designatedColor} from '../../constants';
 import useChartStore from '../../store/useChartStore';
+import {logSwipe} from '../../utils';
 
 const HotTrending = () => {
   const itemsPerPage = 5;
@@ -85,7 +86,13 @@ const HotTrending = () => {
   const handleScroll = event => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(contentOffsetX / screenWidth);
-    setCurrentPage(index); // 스크롤 위치에 따라 현재 페이지 업데이트
+    // setCurrentPage(index); // 스크롤 위치에 따라 현재 페이지 업데이트
+    if (index !== currentPage) {
+      setCurrentPage(index); // 스크롤 위치에 따라 현재 페이지 업데이트
+
+      // 페이지 변경 시 일반 로그 호출
+      logSwipe('hot_trending', index);
+    }
   };
 
   return (

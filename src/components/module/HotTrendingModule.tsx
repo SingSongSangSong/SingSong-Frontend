@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import tw from 'twrnc';
 import useChartStore from '../../store/useChartStore';
-import {formatDateString} from '../../utils';
+import {formatDateString, logToggleClick} from '../../utils';
 import {designatedColor} from '../../constants';
 import {ToggleButton} from '../button/ToggleButton';
 import {HotTrending} from '..';
@@ -22,6 +22,7 @@ const HotTrendingModule = () => {
   };
 
   const toggleSwitch = () => {
+    logToggleClick('hot_trending');
     changeGender();
   };
 

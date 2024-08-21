@@ -20,7 +20,7 @@ import {
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {useRoute} from '@react-navigation/native';
-import {logScreenView} from '../../utils';
+import {logButtonClick, logScreenView} from '../../utils';
 
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -52,6 +52,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
   };
 
   const handleOnPressRecent = (searchText: string) => {
+    logButtonClick('recent_search_button');
     setInputText(searchText);
     inputRef.current?.focus();
     // setShowSearchResult(true); // 최근 검색어를 누르면 검색 결과가 다시 보이게 설정

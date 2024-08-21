@@ -18,7 +18,7 @@ import useHomeInfo from '../../hooks/useHomeInfo';
 import SearchIcon from '../../assets/svg/search.svg';
 import useMemberStore from '../../store/useMemberStore';
 import {logButtonClick, logScreenView} from '../../utils';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 // import {firebase} from '@react-native-firebase/analytics';
 
 type HomeScreenProps = StackScreenProps<
@@ -49,7 +49,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const homeInfohandler = useHomeInfo();
   const memberInfo = useMemberStore(state => state.memberInfo);
 
-  const handleOnArrowPress = (tag: string) => {
+  const handleOnTagPress = (tag: string) => {
+    logButtonClick('tag_button');
+    navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
+  };
+
+  const handleOnPreviewTagPress = (tag: string) => {
+    logButtonClick('tag_preview_button');
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
@@ -60,6 +66,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     singerName: string,
     album: string,
   ) => {
+    logButtonClick('song_preview_button');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,
@@ -70,16 +77,15 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSetting = () => {
-    logButtonClick('setting');
     navigation.push(homeStackNavigations.SETTING);
   };
 
   const handleOnPressTotalButton = () => {
+    logButtonClick('tag_total_button');
     navigation.push(homeStackNavigations.TAG_DETAIL);
   };
 
   const handleOnPressSearch = () => {
-    logButtonClick('search');
     navigation.push(homeStackNavigations.SEARCH);
   };
 
@@ -113,16 +119,16 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
           <HotTrendingModule />
           <TaglistModule
-            onPressTagButton={handleOnArrowPress}
+            onPressTagButton={handleOnTagPress}
             onPressTotalButton={handleOnPressTotalButton}
           />
 
           <SongCardModule
             onPressSongButton={handleOnSongPress}
-            onPressTotalButton={handleOnArrowPress}
+            onPressTotalButton={handleOnPreviewTagPress}
           />
         </ScrollView>
-        {/* <Modal
+        <Modal
           transparent={true}
           visible={homeInfohandler.loadingVisible}
           animationType="fade"
@@ -137,7 +143,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
               </Text>
             </View>
           </View>
-        </Modal> */}
+        </Modal>
       </SafeAreaView>
     </GestureRecognizer>
   );

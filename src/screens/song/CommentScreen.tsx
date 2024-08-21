@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -16,7 +16,7 @@ import {
   TextButton,
 } from '../../components';
 import Modal from 'react-native-modal';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import ErrorIcon from '../../assets/svg/error.svg';
 import {logScreenView} from '../../utils';
 

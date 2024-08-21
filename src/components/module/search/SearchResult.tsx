@@ -4,6 +4,7 @@ import {OutlineButton, SongsList} from '../..';
 import {designatedColor, homeStackNavigations} from '../../../constants';
 import {View, Text, FlatList} from 'react-native';
 import tw from 'twrnc';
+import {logButtonClick} from '../../../utils';
 
 type SearchResultProps = {
   searchData: GetSearchSong;
@@ -27,6 +28,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     singerName: string,
     album: string,
   ) => {
+    logButtonClick('search_result_song_button');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,

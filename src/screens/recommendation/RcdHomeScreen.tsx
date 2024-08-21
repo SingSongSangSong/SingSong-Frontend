@@ -7,7 +7,7 @@ import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
-import {logScreenView} from '../../utils';
+import {logButtonClick, logScreenView} from '../../utils';
 
 type RcdHomeScreenProps = {
   route: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>;
@@ -50,6 +50,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     singerName: string,
     album: string,
   ) => {
+    logButtonClick('rcd_song_button');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,
