@@ -30,7 +30,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   //위로 당길 시 노래 리스트 새로고침하는 함수
   const handleOnRefreshSongs = async () => {
     try {
-      if (songLst && songLst.length >= 20) {
+      if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         const songData = await postRcdRefresh(initTag);
@@ -56,7 +56,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     try {
       setIsLoading(true);
       //20개 이상일 경우에만 api 호출
-      if (songLst && songLst.length >= 20) {
+      if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         console.log('refresh!!!!!!!!!!!!!!!!!!!');
         console.log(initTag);

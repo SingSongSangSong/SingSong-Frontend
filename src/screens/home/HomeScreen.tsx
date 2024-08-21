@@ -106,7 +106,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             onPressTotalButton={handleOnArrowPress}
           />
         </ScrollView>
-        <Modal
+        {/* <Modal
           transparent={true}
           visible={homeInfohandler.loadingVisible}
           animationType="fade"
@@ -119,16 +119,9 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
               <Text style={tw`text-white font-bold ml-2`}>
                 잠시만 기다려주세요
               </Text>
-              {/* <Text style={tw`text-white font-bold ml-2`}>
-                {memberInfo.nickname}
-              </Text>
-              <Text style={tw`text-white font-bold ml-2`}>
-                {memberInfo.email}
-              </Text>
-              <Text style={tw`text-white font-bold ml-2`}>환영합니다!</Text> */}
             </View>
           </View>
-        </Modal>
+        </Modal> */}
       </SafeAreaView>
     </GestureRecognizer>
   );
