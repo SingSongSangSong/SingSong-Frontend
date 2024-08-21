@@ -18,6 +18,7 @@ import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -53,6 +54,7 @@ function RecommentScreen(props: RecommentScreenProps) {
   );
 
   const handleOnPressReport = () => {
+    amplitude.track('Recomment Report Press');
     const reportParams = {
       reportCommentId: recommentHandler.reportCommentId,
       reportSubjectMemberId: recommentHandler.reportSubjectMemberId,

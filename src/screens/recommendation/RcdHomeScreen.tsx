@@ -8,6 +8,7 @@ import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type RcdHomeScreenProps = {
   route: RouteProp<HomeStackParamList, typeof homeStackNavigations.RCD_DETAIL>;
@@ -52,6 +53,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   ) => {
     logButtonClick('rcd_song_button');
     logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
+    amplitude.track('Rcd Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,

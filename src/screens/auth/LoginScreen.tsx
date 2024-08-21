@@ -9,6 +9,7 @@ import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -31,8 +32,8 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const handleKakaoButton = async () => {
     try {
       await userInfoHandler.handleKakaoLogin();
-
-      navigation.navigate(appStackNavigations.MAIN); //메인으로 이동
+      amplitude.track('MAIN');
+      navigation.replace(appStackNavigations.MAIN); //메인으로 이동
     } catch (err) {
       console.error('Login Failed', err);
     }

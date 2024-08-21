@@ -12,6 +12,7 @@ import {
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -41,6 +42,7 @@ function SongScreen(props: SongScreenProps) {
 
   const _onPressComment = (songNumber: number, songId: number) => {
     logNavigationClick(props.route.name, keepStackNavigations.KEEP_COMMENT);
+    amplitude.track('Song Comment Press');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         // KeepStack에서 왔을 때
@@ -63,6 +65,7 @@ function SongScreen(props: SongScreenProps) {
     singerName: string,
     album: string,
   ) => {
+    amplitude.track('Related Song Press');
     logButtonClick('related_song_button');
     logNavigationClick(props.route.name, homeStackNavigations.SONG_DETAIL);
     if ('navigate' in props.navigation) {

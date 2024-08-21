@@ -12,6 +12,7 @@ import useUserInfo from '../../hooks/useUserInfo';
 import {CustomModal} from '../../components';
 import {CommonActions, useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -34,6 +35,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const handleLogoutButton = () => {
     userInfoHandler.handleKakaoLogout();
+    amplitude.track('LOGOUT');
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -44,6 +46,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const handleWithdrawButton = () => {
     userInfoHandler.handleWithdraw();
+    amplitude.track('WITHDRAW');
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -53,6 +56,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
   };
 
   const handleOnBlacklistButton = () => {
+    amplitude.track('BLACKLIST');
     navigation.push(homeStackNavigations.BLACKLIST);
   };
 

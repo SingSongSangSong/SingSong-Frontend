@@ -8,6 +8,7 @@ import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 import {useRoute} from '@react-navigation/native';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 // type KeepScreenNavigationProp = CompositeNavigationProp<
 //   StackNavigationProp<KeepStackParamList, typeof keepStackNavigations.KEEP>,
@@ -54,6 +55,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
   ) => {
     logButtonClick('keep_song_button');
     logNavigationClick(route.name, keepStackNavigations.KEEP_SONG_DETAIL);
+    amplitude.track('Keep Song Press');
     navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,
       songNumber,

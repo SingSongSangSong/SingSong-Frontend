@@ -8,6 +8,7 @@ import useSongStore from '../../store/useSongStore';
 import {TagDetailList} from '../../components';
 import {useRoute} from '@react-navigation/native';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type TagDetailScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -31,6 +32,7 @@ function TagDetailScreen({navigation}: TagDetailScreenProps) {
   const handleOnArrowPress = (tag: string) => {
     logButtonClick('from_tagList_tag_button');
     logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
+    amplitude.track('Tag Press in Tag Detail');
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 

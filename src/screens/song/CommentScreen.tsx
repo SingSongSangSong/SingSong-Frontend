@@ -19,6 +19,7 @@ import Modal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
 import ErrorIcon from '../../assets/svg/error.svg';
 import {logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -55,6 +56,7 @@ function CommentScreen(props: CommentScreenProps) {
   );
 
   const handleOnPressRecomment = (comment: Comment) => {
+    amplitude.track('Recomment Press');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_COMMENT) {
         // KeepStack에서 왔을 때
@@ -71,6 +73,7 @@ function CommentScreen(props: CommentScreenProps) {
   };
 
   const handleOnPressReport = () => {
+    amplitude.track('Report Press');
     const reportParams = {
       reportCommentId: commentHandler.reportCommentId,
       reportSubjectMemberId: commentHandler.reportSubjectMemberId,

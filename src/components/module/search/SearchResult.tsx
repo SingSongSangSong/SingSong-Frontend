@@ -6,6 +6,7 @@ import {View, Text, FlatList} from 'react-native';
 import tw from 'twrnc';
 import {logButtonClick, logNavigationClick} from '../../../utils';
 import {useRoute} from '@react-navigation/native';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SearchResultProps = {
   searchData: GetSearchSong;
@@ -32,6 +33,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
   ) => {
     logButtonClick('search_result_song_button');
     logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
+    amplitude.track('Search Result Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,

@@ -7,6 +7,7 @@ import {appStackNavigations, designatedColor} from '../../constants';
 import useUserInfo from '../../hooks/useUserInfo';
 import {useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -46,6 +47,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         if (isValidToken) {
           // fetchDataHandler.fetchRcdHomeSongs();
           setTimeout(() => {
+            amplitude.track('MAIN');
             navigation.replace(appStackNavigations.MAIN);
           }, 200);
 
@@ -72,6 +74,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
                   duration: 1000, // 0.5초 동안 두 번째 텍스트가 나타남
                   useNativeDriver: true,
                 }).start(() => {
+                  amplitude.track('LOGIN');
                   navigation.replace(appStackNavigations.LOGIN);
                 });
               }, 1000); // 첫 번째 텍스트가 나타난 후 바로 두 번째 텍스트가 나타남

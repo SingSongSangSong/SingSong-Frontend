@@ -19,6 +19,7 @@ import SearchIcon from '../../assets/svg/search.svg';
 import useMemberStore from '../../store/useMemberStore';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 import {useRoute} from '@react-navigation/native';
+import * as amplitude from '@amplitude/analytics-react-native';
 // import {firebase} from '@react-native-firebase/analytics';
 
 type HomeScreenProps = StackScreenProps<
@@ -50,12 +51,14 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const memberInfo = useMemberStore(state => state.memberInfo);
 
   const handleOnTagPress = (tag: string) => {
+    amplitude.track('Tag Press');
     logButtonClick('tag_button');
     logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnPreviewTagPress = (tag: string) => {
+    amplitude.track('Preview Tag Press');
     logButtonClick('tag_preview_button');
     logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
@@ -68,6 +71,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     singerName: string,
     album: string,
   ) => {
+    amplitude.track('Song Preview Press');
     logButtonClick('song_preview_button');
     logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     navigation.push(homeStackNavigations.SONG_DETAIL, {
@@ -80,16 +84,19 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSetting = () => {
+    amplitude.track('Setting Press');
     navigation.push(homeStackNavigations.SETTING);
   };
 
   const handleOnPressTotalButton = () => {
+    amplitude.track('Tag Total Press');
     logButtonClick('tag_total_button');
     logNavigationClick(route.name, homeStackNavigations.TAG_DETAIL);
     navigation.push(homeStackNavigations.TAG_DETAIL);
   };
 
   const handleOnPressSearch = () => {
+    amplitude.track('Search Press');
     navigation.push(homeStackNavigations.SEARCH);
   };
 

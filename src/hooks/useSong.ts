@@ -8,6 +8,7 @@ import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logNavigationClick, logRefresh} from '../utils';
 import {useRoute} from '@react-navigation/native';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type UseSongProps = {
   initTag: string;
@@ -93,6 +94,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   ) => {
     logButtonClick('recommendation_song_button');
     logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
+    amplitude.track('Recommendation Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songNumber,
       songId,
