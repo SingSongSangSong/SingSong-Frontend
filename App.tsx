@@ -9,13 +9,19 @@ import queryClient from './src/api/queryClient';
 // import playlistNavigations from './src/constants/playlistConstants';
 // import GestureRecognizer from 'react-native-swipe-gestures';
 import crashlytics from '@react-native-firebase/crashlytics';
+import messaging from '@react-native-firebase/in-app-messaging';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
   //   navigation.navigate(playlistNavigations.PLAYLIST);
   // };
 
-  crashlytics().log('App started');
+  useEffect(() => {
+    // In-App Messaging 활성화
+    crashlytics().log('App started');
+    messaging().setMessagesDisplaySuppressed(false);
+    messaging().setAutomaticDataCollectionEnabled(true);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
