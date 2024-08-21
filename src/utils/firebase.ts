@@ -36,4 +36,19 @@ const logRefresh = async (refreshName: string) => {
   console.log(`Logged refresh: ${refreshName}`);
 };
 
-export {logButtonClick, logScreenView, logToggleClick, logSwipe, logRefresh};
+const logNavigationClick = async (fromPage: string, toPage: string) => {
+  await analytics().logEvent('navigation_click', {
+    from_page: fromPage,
+    to_page: toPage,
+  });
+  console.log(`Logged navigation from: ${fromPage} to: ${toPage}`);
+};
+
+export {
+  logButtonClick,
+  logScreenView,
+  logToggleClick,
+  logSwipe,
+  logRefresh,
+  logNavigationClick,
+};

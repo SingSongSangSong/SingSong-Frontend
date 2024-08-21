@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native';
 import useSongStore from '../../store/useSongStore';
 import {TagDetailList} from '../../components';
 import {useRoute} from '@react-navigation/native';
-import {logButtonClick, logScreenView} from '../../utils';
+import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 
 type TagDetailScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -30,6 +30,7 @@ function TagDetailScreen({navigation}: TagDetailScreenProps) {
 
   const handleOnArrowPress = (tag: string) => {
     logButtonClick('from_tagList_tag_button');
+    logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 

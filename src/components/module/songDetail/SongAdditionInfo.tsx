@@ -14,6 +14,7 @@ import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import useCommentStore from '../../../store/useCommentStore';
 import Toast from 'react-native-toast-message';
+import {logButtonClick} from '../../../utils';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -43,6 +44,7 @@ const SongAdditionInfo = ({
   };
 
   const handleOnPressKeep = () => {
+    logButtonClick('song_keep_button');
     if (songInfo!.isKeep) {
       setSongInfo({
         ...songInfo!,

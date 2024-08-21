@@ -7,7 +7,7 @@ import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 import {useRoute} from '@react-navigation/native';
-import {logButtonClick, logScreenView} from '../../utils';
+import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 
 // type KeepScreenNavigationProp = CompositeNavigationProp<
 //   StackNavigationProp<KeepStackParamList, typeof keepStackNavigations.KEEP>,
@@ -53,6 +53,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
     album: string,
   ) => {
     logButtonClick('keep_song_button');
+    logNavigationClick(route.name, keepStackNavigations.KEEP_SONG_DETAIL);
     navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,
       songNumber,

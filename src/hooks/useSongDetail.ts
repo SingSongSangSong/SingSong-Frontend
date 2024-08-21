@@ -9,6 +9,7 @@ import getSongsReviews from '../api/songs/getSongsReviews';
 import putSongReviews from '../api/songs/putSongsReviews';
 import deleteSongsReviews from '../api/songs/deleteSongsReviews';
 import getSongsRelated from '../api/songs/getSongsRelated';
+import {logButtonClick} from '../utils';
 
 const useSongDetail = ({
   songId,
@@ -115,6 +116,7 @@ const useSongDetail = ({
   };
 
   const handleOnPressKeep = async () => {
+    logButtonClick('song_keep_button');
     if (keepColor == designatedColor.KEEP_EMPTY) {
       setKeepColor(designatedColor.KEEP_FILLED);
       const tempKeepList = await postKeep([songId]);

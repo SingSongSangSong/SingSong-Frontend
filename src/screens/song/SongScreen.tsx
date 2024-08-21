@@ -11,7 +11,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
-import {logButtonClick, logScreenView} from '../../utils';
+import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -40,6 +40,7 @@ function SongScreen(props: SongScreenProps) {
     props.route?.params || {};
 
   const _onPressComment = (songNumber: number, songId: number) => {
+    logNavigationClick(props.route.name, keepStackNavigations.KEEP_COMMENT);
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         // KeepStack에서 왔을 때
@@ -63,6 +64,7 @@ function SongScreen(props: SongScreenProps) {
     album: string,
   ) => {
     logButtonClick('related_song_button');
+    logNavigationClick(props.route.name, homeStackNavigations.SONG_DETAIL);
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (

@@ -17,7 +17,7 @@ import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
 import SearchIcon from '../../assets/svg/search.svg';
 import useMemberStore from '../../store/useMemberStore';
-import {logButtonClick, logScreenView} from '../../utils';
+import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 import {useRoute} from '@react-navigation/native';
 // import {firebase} from '@react-native-firebase/analytics';
 
@@ -51,11 +51,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   const handleOnTagPress = (tag: string) => {
     logButtonClick('tag_button');
+    logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnPreviewTagPress = (tag: string) => {
     logButtonClick('tag_preview_button');
+    logNavigationClick(route.name, homeStackNavigations.RCD_DETAIL);
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
@@ -67,6 +69,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     album: string,
   ) => {
     logButtonClick('song_preview_button');
+    logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,
@@ -82,6 +85,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   const handleOnPressTotalButton = () => {
     logButtonClick('tag_total_button');
+    logNavigationClick(route.name, homeStackNavigations.TAG_DETAIL);
     navigation.push(homeStackNavigations.TAG_DETAIL);
   };
 

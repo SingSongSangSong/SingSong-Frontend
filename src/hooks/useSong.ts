@@ -6,7 +6,8 @@ import {HomeStackParamList, Song} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
-import {logButtonClick, logRefresh} from '../utils';
+import {logButtonClick, logNavigationClick, logRefresh} from '../utils';
+import {useRoute} from '@react-navigation/native';
 
 type UseSongProps = {
   initTag: string;
@@ -20,6 +21,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);
+
+  const route = useRoute();
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -89,6 +92,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     album: string,
   ) => {
     logButtonClick('recommendation_song_button');
+    logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songNumber,
       songId,
@@ -99,6 +103,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepAddPress = async (songId: number) => {
+    logButtonClick('recommendation_keep_button');
     await postKeep([songId]);
     // setKeepList(updatedSongs.data);
     Toast.show({
@@ -110,6 +115,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepRemovePress = async (songId: number) => {
+    logButtonClick('recommendation_keep_button');
     await deleteKeep([songId]);
     // setKeepList(updatedSongs.data);
     Toast.show({
