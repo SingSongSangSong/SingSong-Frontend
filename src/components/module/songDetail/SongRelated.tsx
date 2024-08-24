@@ -18,6 +18,7 @@ type SongRelatedProps = {
   ) => void;
 };
 const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
+  console.log('songRelated');
   const [songRelated, setSongRelated] = useState<Song[]>();
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);

@@ -32,6 +32,7 @@ const SongAdditionInfo = ({
   const setCommentCount = useCommentStore(state => state.setCommentCount);
 
   const setInitSongAdditionInfo = async (songId: number) => {
+    console.log('setInitSongAdditionInfo');
     try {
       const tempSongInfo = await getSongs(String(songId));
       setSongInfo(tempSongInfo.data);

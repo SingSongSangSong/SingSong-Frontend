@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';

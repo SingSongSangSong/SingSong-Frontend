@@ -26,7 +26,7 @@ const handleOnPress = (navigation: any) => {
 function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
   return (
     <Stack.Navigator
-      initialRouteName={keepStackNavigations.KEEP}
+      // initialRouteName={keepStackNavigations.KEEP}
       screenOptions={{
         headerLeft: () => (
           <IconButton

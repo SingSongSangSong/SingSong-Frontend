@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import useSongStore from '../../store/useSongStore';
 import {SongCardList} from '../list/SongCardList';
 import {isEmptyObject} from '../../utils';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {designatedColor} from '../../constants';
 
 interface SongCardModuleProps {

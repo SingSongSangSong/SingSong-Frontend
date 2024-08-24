@@ -1,11 +1,16 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
 import {homeStackNavigations, keepStackNavigations} from '../../constants';
 import {
-  IconButton,
   SongAdditionInfo,
   SongComment,
   SongDefaultInfo,
@@ -27,6 +32,7 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
+  console.log('songscreen!');
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       console.log('route name', props.route.name);
@@ -120,14 +126,14 @@ function SongScreen(props: SongScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View
-        style={tw`items-start py-1.5 absolute top-0 left-0 z-1 bg-black w-full`}>
-        <IconButton
+      <View style={tw`items-start absolute top-0 left-0 z-50 w-full bg-black`}>
+        <TouchableOpacity
           onPress={() => props.navigation.goBack()}
-          Icon={ArrowLeftIcon}
-          size={28}
-        />
+          style={tw`p-4`}>
+          <ArrowLeftIcon width={28} height={28} />
+        </TouchableOpacity>
       </View>
+
       <FlatList
         ListHeaderComponent={renderHeader}
         data={[]} // Empty data for the main FlatList as we only need it for scrolling

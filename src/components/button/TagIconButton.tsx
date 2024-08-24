@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type TagIconButtonProps = {
   tag: string;

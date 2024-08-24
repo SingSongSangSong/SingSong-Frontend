@@ -6,7 +6,6 @@
 // import com.facebook.react.defaults.DefaultReactActivityDelegate
 // import android.os.Bundle;
 // import com.facebook.react.ReactrootView;
-// import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 // class MainActivity : ReactActivity() {
 
@@ -33,7 +32,7 @@ package com.singsongsangsong_frontend
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.ReactRootView
-import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView
+// import com.swmansion.gesturehandler.react.RNHandlerEnabledRootView
 import android.os.Bundle
 
 class MainActivity : ReactActivity() {
@@ -46,17 +45,17 @@ class MainActivity : ReactActivity() {
     return "singsongsangsong_frontend"
   }
 
-  /**
-   * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
-   * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
-   */
-  override fun createReactActivityDelegate(): ReactActivityDelegate {
-    return object : ReactActivityDelegate(this, mainComponentName) {
-      override fun createRootView(): ReactRootView {
-        return RNGestureHandlerEnabledRootView(this@MainActivity)
-      }
-    }
-  }
+/**
+ * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
+ * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
+ */
+// override fun createReactActivityDelegate(): ReactActivityDelegate {
+//   return object : ReactActivityDelegate(this, getMainComponentName()) {
+//     override fun createRootView(): ReactRootView {
+//       return ReactRootView(this@MainActivity)
+//     }
+//   }
+// }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(null)

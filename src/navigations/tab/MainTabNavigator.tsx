@@ -40,8 +40,8 @@ const getTabBarIcon = (
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
-      // initialRouteName={mainTabNavigations.HOME}
-      backBehavior="history"
+      initialRouteName={mainTabNavigations.HOME}
+      backBehavior="none"
       screenOptions={({route}) => {
         const routeName = getFocusedRouteNameFromRoute(route) ?? route.name;
 
@@ -72,10 +72,9 @@ const MainTabNavigator = () => {
               <IconComponent width={size} height={size} fill={color} />
             ) : null;
           },
-          // backBehavior: 'none',
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
-            ? {display: 'none'}
+            ? {height: 0, overflow: 'hidden'}
             : {
                 height: 60,
                 backgroundColor: 'black',
@@ -84,7 +83,7 @@ const MainTabNavigator = () => {
               },
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
-          keyboardHidesTabBar: false,
+          // keyboardHidesTabBar: false,
         };
       }}>
       <Tab.Screen

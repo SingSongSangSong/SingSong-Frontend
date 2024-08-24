@@ -1,7 +1,13 @@
 import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {ActivityIndicator, Modal, SafeAreaView, Text, View} from 'react-native';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import {
+  ActivityIndicator,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import tw from 'twrnc';
 import {
   HotTrendingModule,
@@ -11,7 +17,6 @@ import {
 } from '../../components';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
-import {ScrollView} from 'react-native-gesture-handler';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import useHomeInfo from '../../hooks/useHomeInfo';
@@ -116,62 +121,62 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   return (
-    <GestureRecognizer
-      config={{
-        velocityThreshold: 0.5,
-        directionalOffsetThreshold: 80,
-      }}
-      style={tw`flex-1 bg-black`}>
-      <SafeAreaView style={tw`flex-1 bg-black`}>
-        <View
-          style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
-          <LogoIcon />
-          <View style={tw`flex-row`}>
-            <View style={tw`mr-2`}>
-              <IconButton
-                Icon={SearchIcon}
-                onPress={handleOnPressSearch}
-                size={28}
-              />
-            </View>
-
+    // <GestureRecognizer
+    //   config={{
+    //     velocityThreshold: 0.5,
+    //     directionalOffsetThreshold: 80,
+    //   }}
+    //   style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-black`}>
+      <View
+        style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
+        <LogoIcon />
+        <View style={tw`flex-row`}>
+          <View style={tw`mr-2`}>
             <IconButton
-              Icon={SettingsIcon}
-              onPress={handleOnPressSetting}
+              Icon={SearchIcon}
+              onPress={handleOnPressSearch}
               size={28}
             />
           </View>
-        </View>
-        <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
-          <HotTrendingModule />
-          <TaglistModule
-            onPressTagButton={handleOnTagPress}
-            onPressTotalButton={handleOnPressTotalButton}
-          />
 
-          <SongCardModule
-            onPressSongButton={handleOnSongPress}
-            onPressTotalButton={handleOnPreviewTagPress}
+          <IconButton
+            Icon={SettingsIcon}
+            onPress={handleOnPressSetting}
+            size={28}
           />
-        </ScrollView>
-        <Modal
-          transparent={true}
-          visible={homeInfohandler.loadingVisible}
-          animationType="fade"
-          // onRequestClose={onClose}
-        >
-          <View
-            style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
-            <View style={tw`flex-row`}>
-              <ActivityIndicator size="small" color={designatedColor.PINK2} />
-              <Text style={tw`text-white font-bold ml-2`}>
-                잠시만 기다려주세요
-              </Text>
-            </View>
+        </View>
+      </View>
+      <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
+        <HotTrendingModule />
+        <TaglistModule
+          onPressTagButton={handleOnTagPress}
+          onPressTotalButton={handleOnPressTotalButton}
+        />
+
+        <SongCardModule
+          onPressSongButton={handleOnSongPress}
+          onPressTotalButton={handleOnPreviewTagPress}
+        />
+      </ScrollView>
+      <Modal
+        transparent={true}
+        visible={homeInfohandler.loadingVisible}
+        animationType="fade"
+        // onRequestClose={onClose}
+      >
+        <View
+          style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
+          <View style={tw`flex-row`}>
+            <ActivityIndicator size="small" color={designatedColor.PINK2} />
+            <Text style={tw`text-white font-bold ml-2`}>
+              잠시만 기다려주세요
+            </Text>
           </View>
-        </Modal>
-      </SafeAreaView>
-    </GestureRecognizer>
+        </View>
+      </Modal>
+    </SafeAreaView>
+    // </GestureRecognizer>
   );
 };
 

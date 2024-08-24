@@ -38,7 +38,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
         component={HomeScreen}
-        options={{headerShown: false, gestureEnabled: false}}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={homeStackNavigations.RCD_DETAIL}
@@ -71,6 +71,7 @@ function HomeStackNavigator() {
         component={SongScreen}
         options={{
           headerShown: false,
+          // headerLeft: () => null,
         }}
       />
       <Stack.Screen

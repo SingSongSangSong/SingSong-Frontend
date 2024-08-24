@@ -1,9 +1,8 @@
 import React from 'react';
-import {Dimensions, Image, Text, View} from 'react-native';
+import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type SongCardProps = {
   songName: string;

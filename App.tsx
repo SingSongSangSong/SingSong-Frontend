@@ -5,9 +5,6 @@ import {QueryClientProvider} from '@tanstack/react-query';
 import AppStackNavigator from './src/navigations/stack/AppStackNavigator';
 import {CustomToast} from './src/components';
 import queryClient from './src/api/queryClient';
-// import {GestureHandlerRootView} from 'react-native-gesture-handler';
-// import playlistNavigations from './src/constants/playlistConstants';
-// import GestureRecognizer from 'react-native-swipe-gestures';
 import crashlytics from '@react-native-firebase/crashlytics';
 import messaging from '@react-native-firebase/in-app-messaging';
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
 interface PlaylistItemProps {

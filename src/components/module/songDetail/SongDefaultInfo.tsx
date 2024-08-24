@@ -16,6 +16,7 @@ const SongDefaultInfo = ({
   singerName,
   album,
 }: SongDefaultInfoProps) => {
+  console.log('songDefaultInfo');
   return (
     <View>
       <View style={tw`justify-center items-center overflow-hidden`}>

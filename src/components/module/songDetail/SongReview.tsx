@@ -32,6 +32,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   }, []);
 
   const setInitSongReview = async (songId: number) => {
+    console.log('setInitSongReview');
     try {
       const tempSongsReviews = await getSongsReviews(String(songId));
       const reviews = tempSongsReviews.data;
