@@ -44,16 +44,16 @@ function CommentScreen(props: CommentScreenProps) {
   //   return unsubscribe;
   // }, [props]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // 화면이 포커스될 때 실행
-      commentHandler.setIsKeyboardVisible(true);
-      return () => {
-        // 화면에서 벗어날 때 실행
-        // commentHandler.setIsKeyboardVisible(false);
-      };
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     // 화면이 포커스될 때 실행
+  //     commentHandler.setIsKeyboardVisible(true);
+  //     return () => {
+  //       // 화면에서 벗어날 때 실행
+  //       // commentHandler.setIsKeyboardVisible(false);
+  //     };
+  //   }, []),
+  // );
 
   const handleOnPressRecomment = (comment: Comment) => {
     amplitude.track('Recomment Press');

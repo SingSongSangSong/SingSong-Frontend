@@ -64,25 +64,9 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       <Stack.Screen
         name={keepStackNavigations.KEEP_SONG_DETAIL}
         component={SongScreen}
-        options={({navigation}) => ({
-          headerShown: true,
-          headerTitle: '', // 헤더 제목을 비움
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          headerLeft: () => (
-            <IconButton
-              onPress={() => navigation.pop()}
-              Icon={ArrowLeftIcon}
-              size={28}
-            />
-          ),
-        })}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name={keepStackNavigations.KEEP_COMMENT}
@@ -102,7 +86,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.pop()}
+              onPress={() => navigation.goBack()}
               Icon={ArrowLeftIcon}
               size={28}
             />
@@ -124,7 +108,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerLeft: () => null,
           headerRight: () => (
             <IconButton
-              onPress={() => navigation.pop()}
+              onPress={() => navigation.goBack()}
               Icon={DeleteIcon}
               size={24}
             />
@@ -150,7 +134,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerLeft: () => null,
           headerRight: () => (
             <IconButton
-              onPress={() => navigation.pop()}
+              onPress={() => navigation.goBack()}
               Icon={DeleteIcon}
               size={24}
             />
@@ -179,13 +163,13 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
-              onPress={() => navigation.pop()}
+              onPress={() => navigation.goBack()}
               Icon={ArrowLeftIcon}
               size={28}
             />
           ),
           headerRight: () => (
-            <NavButton onPress={() => navigation.pop()} title={'완료'} />
+            <NavButton onPress={() => navigation.goBack()} title={'완료'} />
           ),
         })}
       />

@@ -1,4 +1,3 @@
-// src/components/modules/SongCardModule.tsx
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import tw from 'twrnc';
@@ -28,23 +27,27 @@ const SongCardModule = ({
   const [loadedTags, setLoadedTags] = useState<number>(5); // 처음에는 5개의 태그만 로드
 
   const loadMoreTags = () => {
-    setLoadedTags(prev => Math.min(prev + 5, tags.length)); // 한번에 5개의 태그씩 로드
+    setLoadedTags(tags.length); // 한번에 5개의 태그씩 로드
   };
 
   return (
     <View>
       {!isEmptyObject(previewSongs) ? (
         <View style={tw`w-full flex-wrap flex-row justify-center items-center`}>
-          {tags.slice(0, loadedTags).map(tag => (
-            <View key={tag}>
-              <SongCardList
-                tag={tag}
-                onPress={onPressTotalButton}
-                data={previewSongs[tag]}
-                onSongPress={onPressSongButton}
-              />
-            </View>
-          ))}
+          {tags.slice(0, loadedTags).map(
+            tag =>
+              previewSongs[tag] &&
+              previewSongs[tag].length > 0 && ( // 길이가 1 이상인 경우에만 렌더링
+                <View key={tag}>
+                  <SongCardList
+                    tag={tag}
+                    onPress={onPressTotalButton}
+                    data={previewSongs[tag]}
+                    onSongPress={onPressSongButton}
+                  />
+                </View>
+              ),
+          )}
           {loadedTags < tags.length && (
             <TouchableOpacity
               onPress={loadMoreTags}

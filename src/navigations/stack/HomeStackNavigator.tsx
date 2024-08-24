@@ -1,10 +1,10 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
-import {homeStackNavigations, mainTabNavigations} from '../../constants';
+import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
-import {NavigationProp} from '@react-navigation/native';
+// import {NavigationProp} from '@react-navigation/native';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
 import {IconButton} from '../../components';
@@ -19,10 +19,10 @@ import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
-type HomeStackNavigatorProps = {
-  // route: RouteProp<HomeStackParamList>; // route를 옵셔널로 변경
-  navigation: NavigationProp<HomeStackParamList>;
-};
+// type HomeStackNavigatorProps = {
+//   // route: RouteProp<HomeStackParamList>; // route를 옵셔널로 변경
+//   navigation: NavigationProp<HomeStackParamList>;
+// };
 // {navigation}: HomeStackNavigatorProps
 function HomeStackNavigator() {
   // const {tag} = route.params;
@@ -58,10 +58,7 @@ function HomeStackNavigator() {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log('route name', route.name);
-                console.log('pop!!!!!!!!!!!!');
-                // navigation.pop();
-                navigation.navigate(homeStackNavigations.RCD_HOME);
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -72,38 +69,14 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.SONG_DETAIL}
         component={SongScreen}
-        options={({route, navigation}) => ({
-          headerShown: true,
-          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          headerLeft: () => (
-            <IconButton
-              onPress={() => {
-                // console.log('route name', route.name);
-                // navigation.popToTop();
-                navigation.navigate(homeStackNavigations.RCD_HOME);
-                // navigation.reset({
-                //   index: 0,
-                //   routes: [{name: homeStackNavigations.RCD_HOME}],
-                // });
-              }}
-              Icon={ArrowLeftIcon}
-              size={28}
-            />
-          ),
-        })}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name={homeStackNavigations.COMMENT}
         component={CommentScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -118,8 +91,7 @@ function HomeStackNavigator() {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                navigation.pop();
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -130,7 +102,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.RECOMMENT}
         component={RecommentScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -146,8 +118,7 @@ function HomeStackNavigator() {
           headerRight: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                navigation.pop();
+                navigation.goBack();
               }}
               Icon={DeleteIcon}
               size={24}
@@ -158,7 +129,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.REPORT}
         component={ReportScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -174,8 +145,7 @@ function HomeStackNavigator() {
           headerRight: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                navigation.pop();
+                navigation.goBack();
               }}
               Icon={DeleteIcon}
               size={24}
@@ -186,7 +156,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.SETTING}
         component={SettingScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '설정', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -201,9 +171,7 @@ function HomeStackNavigator() {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                // navigation.pop();
-                navigation.navigate(homeStackNavigations.RCD_HOME);
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -214,7 +182,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.BLACKLIST}
         component={BlacklistScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글 차단 관리', //route.params.tag, // 헤더 제목을 tag로 설정
@@ -230,7 +198,7 @@ function HomeStackNavigator() {
             <IconButton
               onPress={() => {
                 // console.log(route.name);
-                navigation.pop();
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -241,14 +209,12 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.SEARCH}
         component={SearchScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           headerShown: false,
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
-                // navigation.pop();
-                navigation.navigate(homeStackNavigations.RCD_HOME);
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}
@@ -259,7 +225,7 @@ function HomeStackNavigator() {
       <Stack.Screen
         name={homeStackNavigations.TAG_DETAIL}
         component={TagDetailScreen}
-        options={({route, navigation}) => ({
+        options={({navigation}) => ({
           headerShown: true,
           headerTitle: '노래 목록', //route.params.tag, // 헤더 제목을 tag로 설정
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
@@ -273,9 +239,7 @@ function HomeStackNavigator() {
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                console.log('pop!!!!!!!!!!!!');
-                // navigation.pop();
-                navigation.navigate(homeStackNavigations.RCD_HOME);
+                navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
               size={28}

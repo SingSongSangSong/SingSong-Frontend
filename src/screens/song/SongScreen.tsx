@@ -1,10 +1,11 @@
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
 import React, {useEffect} from 'react';
+import {SafeAreaView, View, Text, FlatList} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
 import {homeStackNavigations, keepStackNavigations} from '../../constants';
 import {
+  IconButton,
   SongAdditionInfo,
   SongComment,
   SongDefaultInfo,
@@ -13,6 +14,7 @@ import {
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
 import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -25,20 +27,14 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  console.log('songScreen!!');
-  console.log('props route', props.route?.name);
-  console.log(props.route);
-  const state = props.navigation.getState();
-  console.log('Current Navigation State:', state);
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      console.log('route name', props.route.name);
+      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
+    });
 
-  // useEffect(() => {
-  //   const unsubscribe = props.navigation.addListener('focus', () => {
-  //     console.log('route name', props.route.name);
-  //     logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [props]);
+    return unsubscribe;
+  }, [props]);
 
   const {songNumber, songId, songName, singerName, album} =
     props.route?.params || {};
@@ -48,12 +44,10 @@ function SongScreen(props: SongScreenProps) {
     amplitude.track('Song Comment Press');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
-        // KeepStack에서 왔을 때
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
         ).push(keepStackNavigations.KEEP_COMMENT, {songNumber, songId});
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
-        // HomeStack에서 왔을 때 처리
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.COMMENT, {songNumber, songId});
@@ -126,6 +120,14 @@ function SongScreen(props: SongScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
+      <View
+        style={tw`items-start py-1.5 absolute top-0 left-0 z-1 bg-black w-full`}>
+        <IconButton
+          onPress={() => props.navigation.goBack()}
+          Icon={ArrowLeftIcon}
+          size={28}
+        />
+      </View>
       <FlatList
         ListHeaderComponent={renderHeader}
         data={[]} // Empty data for the main FlatList as we only need it for scrolling

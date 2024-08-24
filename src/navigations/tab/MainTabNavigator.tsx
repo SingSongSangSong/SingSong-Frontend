@@ -40,7 +40,8 @@ const getTabBarIcon = (
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName={mainTabNavigations.HOME}
+      // initialRouteName={mainTabNavigations.HOME}
+      backBehavior="history"
       screenOptions={({route}) => {
         const routeName = getFocusedRouteNameFromRoute(route) ?? route.name;
 
@@ -71,7 +72,7 @@ const MainTabNavigator = () => {
               <IconComponent width={size} height={size} fill={color} />
             ) : null;
           },
-          backBehavior: 'none',
+          // backBehavior: 'none',
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
             ? {display: 'none'}
@@ -91,12 +92,12 @@ const MainTabNavigator = () => {
         component={HomeStackNavigator}
       />
       <Tab.Screen
-        name={mainTabNavigations.PLAYGROUND}
-        component={PlaygroundScreen}
-      />
-      <Tab.Screen
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
+      />
+      <Tab.Screen
+        name={mainTabNavigations.PLAYGROUND}
+        component={PlaygroundScreen}
       />
     </Tab.Navigator>
   );

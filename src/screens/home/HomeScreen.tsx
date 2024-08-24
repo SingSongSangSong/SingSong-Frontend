@@ -88,6 +88,14 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         album,
       },
     });
+
+    // navigation.push(homeStackNavigations.SONG_DETAIL, {
+    //   songId,
+    //   songNumber,
+    //   songName,
+    //   singerName,
+    //   album,
+    // });
   };
 
   const handleOnPressSetting = () => {
