@@ -17,7 +17,7 @@ import Config from 'react-native-config';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 initializeKakaoSDK(Config.KAKAO_API_KEY);
-amplitude.init('f4b6c72585b43fcc69106c54759efced');
+amplitude.init(Config.AMPLITUDE_KEY);
 
 const RootApp = () => <App />;
 
