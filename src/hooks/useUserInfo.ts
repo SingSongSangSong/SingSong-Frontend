@@ -9,10 +9,10 @@ import postMemberLogout from '../api/member/postMemberLogout';
 import postMemberWithdraw from '../api/member/postMemberWithdraw';
 import Toast from 'react-native-toast-message';
 import {useQuery} from '@tanstack/react-query';
-import {isEmptyObject} from '../utils';
+import {getCurrentVersion, isEmptyObject} from '../utils';
 import remoteConfig from '@react-native-firebase/remote-config';
 import {BackHandler, Linking} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import VersionStore from '../store/VersionStore';
 
 const useUserInfo = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
@@ -24,6 +24,8 @@ const useUserInfo = () => {
   const [isForced, setIsForced] = useState<boolean>(false);
   const [updateUrl, setUpdateUrl] = useState<string>('');
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
+  const setCurrentVersion = VersionStore(state => state.setCurrentVersion);
+
   const forceUpdateMessage = {
     title: '업데이트 필요',
     message: '앱의 최신 버전으로 업데이트가 필요합니다.',
@@ -103,12 +105,6 @@ const useUserInfo = () => {
     await postMemberWithdraw();
   };
 
-  const getCurrentVersion = async () => {
-    const version = DeviceInfo.getVersion();
-    console.log('현재 앱 버전:', version);
-    return version;
-  };
-
   const setRemoteConfig = async () => {
     await remoteConfig().setDefaults({
       latestVersion: '1.0.0',
@@ -139,6 +135,7 @@ const useUserInfo = () => {
 
       // 로컬에서 현재 버전 정보 가져오기
       const currentVersion = await getCurrentVersion();
+      setCurrentVersion(currentVersion);
 
       // Remote Config에서 최신 버전 정보 가져오기
       const latestVersion = remoteConfig().getString('latestVersion');

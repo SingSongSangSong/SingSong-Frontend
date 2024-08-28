@@ -110,14 +110,14 @@ function SearchScreen({navigation}: SearchScreenProps) {
               <Text style={tw`text-[${designatedColor.GRAY2}]`}>
                 검색 결과가 없습니다.
               </Text>
-              <Text style={tw`text-[${designatedColor.GRAY2}] mt-2 mb-6`}>
+              {/* <Text style={tw`text-[${designatedColor.GRAY2}] mt-2 mb-6`}>
                 원하는 노래가 없으신가요?
               </Text>
               <OutlineButton
                 title="새로운 노래 신청"
                 onPress={() => {}}
                 color={designatedColor.PINK2}
-              />
+              /> */}
             </View>
           </View>
         ) : (

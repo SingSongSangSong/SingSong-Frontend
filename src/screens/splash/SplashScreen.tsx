@@ -7,6 +7,7 @@ import {appStackNavigations, designatedColor} from '../../constants';
 import useUserInfo from '../../hooks/useUserInfo';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {CustomModal} from '../../components';
+// import ShinedLogoIcon from '../../assets/svg/logo/shinedLogo.svg';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -136,6 +137,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
             source={require('../../assets/png/shinedLogo.png')}
             style={{width: 246, height: 129}}
           />
+          {/* <ShinedLogoIcon /> */}
         </Animated.View>
 
         {/* 첫 번째 텍스트 애니메이션 */}

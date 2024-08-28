@@ -7,12 +7,20 @@ import {
   designatedColor,
   homeStackNavigations,
 } from '../../constants';
-import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Linking,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import useUserInfo from '../../hooks/useUserInfo';
 import {CustomModal} from '../../components';
 import {CommonActions, useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import VersionStore from '../../store/VersionStore';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -32,6 +40,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const userInfoHandler = useUserInfo();
   const [isWithdraw, setIsWithdraw] = useState(false);
+  const currentVersion = VersionStore(state => state.currentVersion);
 
   const handleLogoutButton = () => {
     userInfoHandler.handleKakaoLogout();
@@ -118,16 +127,28 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>기타</Text>
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
+              {/* <TouchableOpacity
+                style={tw`p-2`}
+                activeOpacity={0.8}
+                onPress={() => {}}> */}
+
+              <View
+                style={tw`w-full flex-row justify-between items-center p-2`}>
+                <Text style={tw`text-white`}>앱 버전 정보</Text>
+                <Text style={tw`text-[${designatedColor.GRAY3}]`}>
+                  {currentVersion}
+                </Text>
+              </View>
+
+              {/* </TouchableOpacity> */}
               <TouchableOpacity
                 style={tw`p-2`}
                 activeOpacity={0.8}
-                onPress={() => {}}>
-                <Text style={tw`text-white`}>앱 정보</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`p-2`}
-                activeOpacity={0.8}
-                onPress={() => setIsWithdraw(true)}>
+                onPress={() => {
+                  Linking.openURL(
+                    'https://piquant-leek-b2c.notion.site/3d562645e4e74abdbd8fd470541bf0a9?pvs=4',
+                  );
+                }}>
                 <Text style={tw`text-white`}>서비스 정책</Text>
               </TouchableOpacity>
             </View>
