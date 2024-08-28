@@ -19,9 +19,9 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
         onPress={onPress}
         style={tw`justify-center items-center`}
         activeOpacity={0.8}>
-        <Icon width={24} height={24} onPress={onPress} />
+        <Icon width={48} height={48} onPress={onPress} />
         <Text
-          style={tw`text-white text-[10px] mx-4 text-center mt-2`}
+          style={tw`text-white text-[9px] mx-4 text-center mt-2`}
           numberOfLines={2} // 최대 두 줄로 표시되도록 설정
           ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
         >

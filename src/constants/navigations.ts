@@ -11,7 +11,7 @@ const authNavigations = {
 const mainTabNavigations = {
   HOME: 'Home',
   PLAYGROUND: 'Playground',
-  KEEP: 'Keep',
+  KEEP: 'Memo',
 } as const;
 
 const appStackNavigations = {

@@ -50,7 +50,7 @@ const SongCardModule = ({
           {loadedTags < tags.length && (
             <TouchableOpacity
               onPress={loadMoreTags}
-              style={tw`w-full p-2 mb-2`}
+              style={tw`w-full p-2 mb-2 items-center`}
               activeOpacity={0.8}>
               <Text style={tw`text-[${designatedColor.GRAY3}]`}>더보기</Text>
             </TouchableOpacity>

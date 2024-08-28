@@ -62,6 +62,7 @@
 // });
 
 // export {HotTrending};
+
 import React, {useState} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
@@ -77,9 +78,9 @@ const HotTrending = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태 추가
 
   const groupedCharts = [];
-  for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
-    groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
-  }
+  // for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
+  //   groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
+  // }
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -94,6 +95,68 @@ const HotTrending = () => {
       logSwipe('hot_trending', index);
     }
   };
+
+  const tempChartData = [
+    {
+      artistName: 'aespa',
+      isMr: false,
+      new: 'old',
+      ranking: 1,
+      rankingChange: -1,
+      songId: 101,
+      songName: 'Supernova',
+      songNumber: 86820,
+      totalScore: 9500,
+    },
+    {
+      artistName: 'NewJeans',
+      isMr: false,
+      new: 'old',
+      ranking: 2,
+      rankingChange: 1,
+      songId: 102,
+      songName: 'Super Shy',
+      songNumber: 84091,
+      totalScore: 9200,
+    },
+    {
+      artistName: '프로미스나인',
+      isMr: false,
+      new: 'new',
+      ranking: 3,
+      rankingChange: 0,
+      songId: 103,
+      songName: 'Supersonic',
+      songNumber: 43117,
+      totalScore: 9100,
+    },
+    {
+      artistName: '(여자)아이들',
+      isMr: false,
+      new: 'old',
+      ranking: 4,
+      rankingChange: -1,
+      songId: 104,
+      songName: 'Super Lady',
+      songNumber: 85875,
+      totalScore: 8800,
+    },
+    {
+      artistName: 'NewJeans',
+      isMr: false,
+      new: 'old',
+      ranking: 5,
+      rankingChange: -1,
+      songId: 105,
+      songName: 'Supernatural',
+      songNumber: 52590,
+      totalScore: 8600,
+    },
+  ];
+
+  for (let i = 0; i < tempChartData.length; i += itemsPerPage) {
+    groupedCharts.push(tempChartData.slice(i, i + itemsPerPage));
+  }
 
   return (
     <View style={tw`flex-1`}>

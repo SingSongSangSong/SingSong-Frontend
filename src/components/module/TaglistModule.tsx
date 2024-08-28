@@ -19,8 +19,8 @@ const TaglistModule = ({
   console.log('tagListMOdule');
   return (
     <View
-      style={tw` border-t-[1px] border-[${designatedColor.GRAY4}] py-4 mx-2 mt-2`}>
-      <View style={tw`justify-between flex-row mx-4 items-center mx-4`}>
+      style={tw` border-t-[1px] border-[${designatedColor.GRAY4}] pt-4 mx-2 mt-2`}>
+      <View style={tw`justify-between flex-row mx-4 items-center mb-2`}>
         <Text style={tw`text-white text-sm font-bold my-2`}>
           어떤 노래를 찾으시나요?
         </Text>
