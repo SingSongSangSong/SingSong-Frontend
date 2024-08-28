@@ -5,9 +5,8 @@ import tw from 'twrnc';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations, designatedColor} from '../../constants';
 import useUserInfo from '../../hooks/useUserInfo';
-import {useRoute} from '@react-navigation/native';
-import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import {CustomModal} from '../../components';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -15,77 +14,84 @@ type SplashScreenProps = StackScreenProps<
 >;
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
-  // const fetchDataHandler = useFetchData();
-  // const route = useRoute();
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
   const userInfoHandler = useUserInfo();
-
   const logoOpacity = useRef(new Animated.Value(0)).current;
   const firstTextOpacity = useRef(new Animated.Value(0)).current;
   const secondTextOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const runAnimations = async () => {
-      // 데이터를 미리 가져오기 시작
-      const isValidTokenPromise = userInfoHandler.getIsValidToken();
-      const isValidToken = await isValidTokenPromise;
-      // await fetchDataHandler.fetchData();
-      // 로고가 나타나는 애니메이션 (즉시 나타남)
-      Animated.timing(logoOpacity, {
-        toValue: 1,
-        duration: 500, // 0.8초 동안 로고가 나타남
-        useNativeDriver: true,
-      }).start(() => {
-        if (isValidToken) {
-          // fetchDataHandler.fetchRcdHomeSongs();
-          setTimeout(() => {
-            amplitude.track('MAIN');
-            navigation.replace(appStackNavigations.MAIN);
-          }, 200);
+    // 로고 애니메이션 먼저 시작
+    Animated.timing(logoOpacity, {
+      toValue: 1,
+      duration: 500, // 0.8초 동안 로고가 나타남
+      useNativeDriver: true,
+    }).start();
 
-          // }, 100); // 로고가 0.5초 동안 보인 후 메인 화면으로 이동
-        } else {
-          // 로고가 완전히 나타난 후 0.5초 후에 사라지는 애니메이션 시작
-          setTimeout(() => {
-            Animated.timing(logoOpacity, {
-              toValue: 0,
-              duration: 1000, // 0.5초 동안 로고가 사라짐
-              useNativeDriver: true,
-            }).start(() => {
-              // 첫 번째 텍스트가 나타나는 애니메이션
-              Animated.timing(firstTextOpacity, {
-                toValue: 1,
-                duration: 1000, // 0.5초 동안 첫 번째 텍스트가 나타남
-                useNativeDriver: true,
-              }).start();
+    // 비동기적으로 버전 체크를 진행
+    const checkVersionAndProceed = async () => {
+      const shouldProceed = await userInfoHandler.versionCheck();
+      console.log('shouldProceed', shouldProceed);
+      if (!shouldProceed) {
+        console.log('stop!!!!!!!');
+        return; // 업데이트가 필요하므로 애니메이션 중단
+      }
 
-              // 두 번째 텍스트가 나타나는 애니메이션
-              setTimeout(() => {
-                Animated.timing(secondTextOpacity, {
-                  toValue: 1,
-                  duration: 1000, // 0.5초 동안 두 번째 텍스트가 나타남
-                  useNativeDriver: true,
-                }).start(() => {
-                  amplitude.track('LOGIN');
-                  navigation.replace(appStackNavigations.LOGIN);
-                });
-              }, 1000); // 첫 번째 텍스트가 나타난 후 바로 두 번째 텍스트가 나타남
-            });
-          }, 500); // 로고가 나타난 후 0.5초 후에 사라짐
-        }
-      });
+      // 애니메이션을 시작하기로 결정한 경우 실행
+      userInfoHandler.setShouldStartAnimation(true);
     };
 
-    runAnimations();
+    checkVersionAndProceed();
   }, []);
+
+  useEffect(() => {
+    if (userInfoHandler.shouldStartAnimation) {
+      console.log('start!!!!!!!');
+      const runActualAnimations = async () => {
+        const isValidTokenPromise = userInfoHandler.getIsValidToken();
+        const isValidToken = await isValidTokenPromise;
+
+        Animated.timing(logoOpacity, {
+          toValue: 1,
+          duration: 500, // 0.8초 동안 로고가 나타남
+          useNativeDriver: true,
+        }).start(() => {
+          if (isValidToken) {
+            setTimeout(() => {
+              amplitude.track('MAIN');
+              navigation.replace(appStackNavigations.MAIN);
+            }, 200);
+          } else {
+            setTimeout(() => {
+              Animated.timing(logoOpacity, {
+                toValue: 0,
+                duration: 1000, // 0.5초 동안 로고가 사라짐
+                useNativeDriver: true,
+              }).start(() => {
+                Animated.timing(firstTextOpacity, {
+                  toValue: 1,
+                  duration: 1000, // 0.5초 동안 첫 번째 텍스트가 나타남
+                  useNativeDriver: true,
+                }).start();
+
+                setTimeout(() => {
+                  Animated.timing(secondTextOpacity, {
+                    toValue: 1,
+                    duration: 1000, // 0.5초 동안 두 번째 텍스트가 나타남
+                    useNativeDriver: true,
+                  }).start(() => {
+                    amplitude.track('LOGIN');
+                    navigation.replace(appStackNavigations.LOGIN);
+                  });
+                }, 1000);
+              });
+            }, 500);
+          }
+        });
+      };
+
+      runActualAnimations();
+    }
+  }, [userInfoHandler.shouldStartAnimation]);
 
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
@@ -97,6 +103,27 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         {paddingTop: deviceHeight * 0.35},
       ]}>
       <View style={tw`items-center`}>
+        <CustomModal
+          visible={userInfoHandler.isModalVisible}
+          onClose={() => {}}
+          message={
+            userInfoHandler.isForced
+              ? userInfoHandler.forceUpdateMessage.message
+              : userInfoHandler.optionalUpdateMessage.message
+          }
+          onConfirm={userInfoHandler.handleOnConfirmButton}
+          onCancel={userInfoHandler.handleOnCancelButton}
+          confirmText={
+            userInfoHandler.isForced
+              ? userInfoHandler.forceUpdateMessage.buttonPositive
+              : userInfoHandler.optionalUpdateMessage.buttonPositive
+          }
+          cancelText={
+            userInfoHandler.isForced
+              ? userInfoHandler.forceUpdateMessage.buttonNegative
+              : userInfoHandler.optionalUpdateMessage.buttonNegative
+          }
+        />
         {/* 로고 애니메이션 */}
 
         <Animated.View
@@ -116,16 +143,6 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           style={{
             opacity: firstTextOpacity,
           }}>
-          {/* <View style={tw`relative w-full h-full`}>
-            <Image
-              source={require('../../assets/png/effect.png')}
-              style={[
-                {width: imageWidth, height: imageHeight},
-                tw`absolute`,
-                {top: 0, left: 0}, // 수정된 부분
-              ]}
-            />
-          </View> */}
           <Text style={tw`text-white font-bold text-3xl`}>
             싱숭생숭한 기분을
           </Text>

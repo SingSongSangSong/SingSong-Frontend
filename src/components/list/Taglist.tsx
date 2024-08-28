@@ -4,6 +4,7 @@ import tw from 'twrnc';
 // import Tag1Icon from '../../assets/svg/tags/tag1.svg';
 import PlayIcon from '../../assets/svg/play.svg';
 import {TagIconButton} from '../button/TagIconButton';
+import EarIcon from '../../assets/svg/tags/ear.svg';
 
 type TaglistProps = {
   tags: string[];
@@ -24,7 +25,7 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
               tag={tag}
               index={index}
               onPress={() => handleOnTagButton(tag)}
-              Icon={PlayIcon}
+              Icon={EarIcon}
             />
           </View>
         ))}

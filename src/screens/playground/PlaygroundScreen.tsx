@@ -2,9 +2,8 @@ import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import React, {useEffect} from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import {MainTabParamList} from '../../types';
-import {mainTabNavigations} from '../../constants';
+import {designatedColor, mainTabNavigations} from '../../constants';
 import tw from 'twrnc';
-import {useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
 
 type PlaygroundScreenProps = BottomTabScreenProps<
@@ -25,8 +24,18 @@ function PlaygroundScreen({navigation}: PlaygroundScreenProps) {
   //   return unsubscribe;
   // }, [navigation, route]);
   return (
-    <SafeAreaView style={tw`flex-1 bg-black justify-center items-center`}>
-      <Text style={tw`text-white font-bold text-lg`}>playground screen</Text>
+    <SafeAreaView
+      style={tw`flex-1 bg-black justify-start items-start pl-4 pt-8`}>
+      {/* <Text style={tw`text-white font-bold text-lg`}>playground screen</Text> */}
+      <Text style={tw`text-[${designatedColor.PINK}] text-[16] font-bold`}>
+        Coming
+      </Text>
+      <Text style={tw`text-[${designatedColor.PINK}] text-[16] font-bold`}>
+        Soon,
+      </Text>
+      <Text style={tw`text-[${designatedColor.GRAY3}] text-[8] mt-2`}>
+        We're preparing...
+      </Text>
     </SafeAreaView>
   );
 }
