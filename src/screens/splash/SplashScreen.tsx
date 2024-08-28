@@ -4,10 +4,9 @@ import {Text, View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
 import {AppStackParamList} from '../../types';
 import {appStackNavigations, designatedColor} from '../../constants';
-import useUserInfo from '../../hooks/useUserInfo';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {CustomModal} from '../../components';
-// import ShinedLogoIcon from '../../assets/svg/logo/shinedLogo.svg';
+import useInit from '../../hooks/useInit';
 
 type SplashScreenProps = StackScreenProps<
   AppStackParamList,
@@ -15,7 +14,7 @@ type SplashScreenProps = StackScreenProps<
 >;
 
 export default function SplashScreen({navigation}: SplashScreenProps) {
-  const userInfoHandler = useUserInfo();
+  const initHandler = useInit();
   const logoOpacity = useRef(new Animated.Value(0)).current;
   const firstTextOpacity = useRef(new Animated.Value(0)).current;
   const secondTextOpacity = useRef(new Animated.Value(0)).current;
@@ -30,7 +29,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
 
     // 비동기적으로 버전 체크를 진행
     const checkVersionAndProceed = async () => {
-      const shouldProceed = await userInfoHandler.versionCheck();
+      const shouldProceed = await initHandler.versionCheck();
       console.log('shouldProceed', shouldProceed);
       if (!shouldProceed) {
         console.log('stop!!!!!!!');
@@ -38,17 +37,16 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       }
 
       // 애니메이션을 시작하기로 결정한 경우 실행
-      userInfoHandler.setShouldStartAnimation(true);
+      initHandler.setShouldStartAnimation(true);
     };
 
     checkVersionAndProceed();
   }, []);
 
   useEffect(() => {
-    if (userInfoHandler.shouldStartAnimation) {
-      console.log('start!!!!!!!');
+    if (initHandler.shouldStartAnimation) {
       const runActualAnimations = async () => {
-        const isValidTokenPromise = userInfoHandler.getIsValidToken();
+        const isValidTokenPromise = initHandler.getIsValidToken();
         const isValidToken = await isValidTokenPromise;
 
         Animated.timing(logoOpacity, {
@@ -92,7 +90,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
 
       runActualAnimations();
     }
-  }, [userInfoHandler.shouldStartAnimation]);
+  }, [initHandler.shouldStartAnimation]);
 
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
@@ -105,24 +103,24 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       ]}>
       <View style={tw`items-center`}>
         <CustomModal
-          visible={userInfoHandler.isModalVisible}
+          visible={initHandler.isModalVisible}
           onClose={() => {}}
           message={
-            userInfoHandler.isForced
-              ? userInfoHandler.forceUpdateMessage.message
-              : userInfoHandler.optionalUpdateMessage.message
+            initHandler.isForced
+              ? initHandler.forceUpdateMessage.message
+              : initHandler.optionalUpdateMessage.message
           }
-          onConfirm={userInfoHandler.handleOnConfirmButton}
-          onCancel={userInfoHandler.handleOnCancelButton}
+          onConfirm={initHandler.handleOnConfirmButton}
+          onCancel={initHandler.handleOnCancelButton}
           confirmText={
-            userInfoHandler.isForced
-              ? userInfoHandler.forceUpdateMessage.buttonPositive
-              : userInfoHandler.optionalUpdateMessage.buttonPositive
+            initHandler.isForced
+              ? initHandler.forceUpdateMessage.buttonPositive
+              : initHandler.optionalUpdateMessage.buttonPositive
           }
           cancelText={
-            userInfoHandler.isForced
-              ? userInfoHandler.forceUpdateMessage.buttonNegative
-              : userInfoHandler.optionalUpdateMessage.buttonNegative
+            initHandler.isForced
+              ? initHandler.forceUpdateMessage.buttonNegative
+              : initHandler.optionalUpdateMessage.buttonNegative
           }
         />
         {/* 로고 애니메이션 */}

@@ -12,8 +12,6 @@ type PlaygroundScreenProps = BottomTabScreenProps<
 >;
 
 function PlaygroundScreen({navigation}: PlaygroundScreenProps) {
-  const state = navigation.getState();
-  console.log('Current Navigation State:', state);
   // const route = useRoute();
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener('focus', () => {

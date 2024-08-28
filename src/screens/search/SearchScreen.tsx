@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {GetSearchSong, HomeStackParamList} from '../../types';
@@ -11,12 +11,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {
-  OutlineButton,
-  SearchInput,
-  SearchRecent,
-  SearchResult,
-} from '../../components';
+import {SearchInput, SearchRecent, SearchResult} from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {useRoute} from '@react-navigation/native';

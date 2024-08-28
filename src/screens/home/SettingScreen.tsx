@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -15,12 +15,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import useUserInfo from '../../hooks/useUserInfo';
 import {CustomModal} from '../../components';
 import {CommonActions, useRoute} from '@react-navigation/native';
 import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import VersionStore from '../../store/VersionStore';
+import useSetting from '../../hooks/useSetting';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -38,12 +38,12 @@ function SettingScreen({navigation}: SettingScreenProps) {
   //   return unsubscribe;
   // }, [navigation, route]);
 
-  const userInfoHandler = useUserInfo();
+  const settingHandler = useSetting();
   const [isWithdraw, setIsWithdraw] = useState(false);
   const currentVersion = VersionStore(state => state.currentVersion);
 
   const handleLogoutButton = () => {
-    userInfoHandler.handleKakaoLogout();
+    settingHandler.handleKakaoLogout();
     amplitude.track('LOGOUT');
     navigation.dispatch(
       CommonActions.reset({
@@ -54,7 +54,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
   };
 
   const handleWithdrawButton = () => {
-    userInfoHandler.handleWithdraw();
+    settingHandler.handleWithdraw();
     amplitude.track('WITHDRAW');
     navigation.dispatch(
       CommonActions.reset({
@@ -81,7 +81,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 style={tw`w-4 h-4`}
               />
               <Text style={tw`text-white ml-2`}>
-                {userInfoHandler.memberInfo?.email}
+                {settingHandler.memberInfo?.email}
               </Text>
             </View>
             <TouchableOpacity
@@ -113,25 +113,12 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 <Text style={tw`text-white`}>회원 탈퇴</Text>
               </TouchableOpacity>
             </View>
-            {/* <View style={tw`items-start`}>
-              <TextButton
-                title="회원 탈퇴"
-                onPress={() => setIsWithdraw(true)}
-                color="white"
-                size={4}
-              />
-            </View> */}
           </View>
         </View>
         <View style={tw`m-4`}>
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>기타</Text>
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
-              {/* <TouchableOpacity
-                style={tw`p-2`}
-                activeOpacity={0.8}
-                onPress={() => {}}> */}
-
               <View
                 style={tw`w-full flex-row justify-between items-center p-2`}>
                 <Text style={tw`text-white`}>앱 버전 정보</Text>
@@ -139,8 +126,6 @@ function SettingScreen({navigation}: SettingScreenProps) {
                   {currentVersion}
                 </Text>
               </View>
-
-              {/* </TouchableOpacity> */}
               <TouchableOpacity
                 style={tw`p-2`}
                 activeOpacity={0.8}

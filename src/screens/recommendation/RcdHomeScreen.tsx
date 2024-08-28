@@ -66,16 +66,6 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
-        {/* <View style={tw`flex-row items-center m-4`}>
-          <ToggleButton
-            isEnabled={songHandler.isEnabled}
-            toggleSwitch={songHandler.toggleSwitch}
-          />
-          <Text style={tw`text-white ml-2 font-bold`}>
-            {songHandler.isEnabled ? '탐색' : `${initTag}`}
-          </Text>
-        </View> */}
-
         <View style={tw`flex-1 h-[50%]`}>
           {songHandler.songLst && (
             <RefreshSongsList
