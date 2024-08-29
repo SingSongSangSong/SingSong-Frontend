@@ -20,8 +20,8 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
       // // 로그인 성공 후 사용자 프로필 가져오기
       // const profile = await getProfile();
       // console.log('Profile:', profile);
-      const profile = await me();
-      console.log('Profile', profile);
+      // const profile = await me();
+      // console.log('Profile', profile);
 
       // Alert.alert('Login Success', `Welcome ${profile.nickname}`);
     } catch (err) {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {SongsList} from '../../components';
@@ -6,20 +6,8 @@ import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
-import {useRoute} from '@react-navigation/native';
-import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
-
-// type KeepScreenNavigationProp = CompositeNavigationProp<
-//   StackNavigationProp<KeepStackParamList, typeof keepStackNavigations.KEEP>,
-//   CompositeNavigationProp<
-//     StackNavigationProp<
-//       HomeStackParamList,
-//       typeof homeStackNavigations.RCD_HOME
-//     >,
-//     StackNavigationProp<HomeStackParamList>
-//   >
-// >;
 
 type KeepScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -29,26 +17,6 @@ type KeepScreenProps = StackScreenProps<
 function KeepScreen({navigation}: KeepScreenProps) {
   const keepHandler = useKeep();
 
-  const route = useRoute();
-  const state = navigation.getState();
-  console.log('Current Navigation State:', state);
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
-  // const handleOnPressSonglist = (songNumber: number, songId: number) => {
-  //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {
-  //     songNumber,
-  //     songId,
-  //   });
-  // };
-
   const _onSongPress = (
     songId: number,
     songNumber: number,
@@ -57,7 +25,6 @@ function KeepScreen({navigation}: KeepScreenProps) {
     album: string,
   ) => {
     logButtonClick('keep_song_button');
-    logNavigationClick(route.name, keepStackNavigations.KEEP_SONG_DETAIL);
     amplitude.track('Keep Song Press');
     navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,

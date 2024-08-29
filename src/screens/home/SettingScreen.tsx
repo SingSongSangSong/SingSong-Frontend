@@ -16,8 +16,7 @@ import {
   View,
 } from 'react-native';
 import {CustomModal} from '../../components';
-import {CommonActions, useRoute} from '@react-navigation/native';
-import {logScreenView} from '../../utils';
+import {CommonActions} from '@react-navigation/native';
 import * as amplitude from '@amplitude/analytics-react-native';
 import VersionStore from '../../store/VersionStore';
 import useSetting from '../../hooks/useSetting';
@@ -28,16 +27,6 @@ type SettingScreenProps = StackScreenProps<
 >;
 
 function SettingScreen({navigation}: SettingScreenProps) {
-  // const route = useRoute();
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
   const settingHandler = useSetting();
   const [isWithdraw, setIsWithdraw] = useState(false);
   const currentVersion = VersionStore(state => state.currentVersion);

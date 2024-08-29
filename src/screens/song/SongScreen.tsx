@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   View,
@@ -17,7 +17,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
-import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 
@@ -32,21 +32,10 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  console.log('songscreen!');
-  useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      console.log('route name', props.route.name);
-      logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-    });
-
-    return unsubscribe;
-  }, [props]);
-
   const {songNumber, songId, songName, singerName, album} =
     props.route?.params || {};
 
   const _onPressComment = (songNumber: number, songId: number) => {
-    logNavigationClick(props.route.name, keepStackNavigations.KEEP_COMMENT);
     amplitude.track('Song Comment Press');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
@@ -70,7 +59,6 @@ function SongScreen(props: SongScreenProps) {
   ) => {
     amplitude.track('Related Song Press');
     logButtonClick('related_song_button');
-    logNavigationClick(props.route.name, homeStackNavigations.SONG_DETAIL);
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (

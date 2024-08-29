@@ -4,8 +4,7 @@ import {OutlineButton, SongsList} from '../..';
 import {designatedColor, homeStackNavigations} from '../../../constants';
 import {View, Text, FlatList} from 'react-native';
 import tw from 'twrnc';
-import {logButtonClick, logNavigationClick} from '../../../utils';
-import {useRoute} from '@react-navigation/native';
+import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type SearchResultProps = {
@@ -22,7 +21,6 @@ const categories = [
 
 const SearchResult = ({searchData, navigation}: SearchResultProps) => {
   const [category, setCategory] = useState<string>('all');
-  const route = useRoute();
 
   const _onSongPress = (
     songId: number,
@@ -32,7 +30,6 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     album: string,
   ) => {
     logButtonClick('search_result_song_button');
-    logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     amplitude.track('Search Result Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,

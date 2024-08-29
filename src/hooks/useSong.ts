@@ -6,8 +6,7 @@ import {HomeStackParamList, Song} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
-import {logButtonClick, logNavigationClick, logRefresh} from '../utils';
-import {useRoute} from '@react-navigation/native';
+import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type UseSongProps = {
@@ -22,8 +21,6 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);
-
-  const route = useRoute();
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -93,7 +90,6 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     album: string,
   ) => {
     logButtonClick('recommendation_song_button');
-    logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     amplitude.track('Recommendation Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songNumber,

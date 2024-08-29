@@ -1,9 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
-import {keepStackNavigations} from '../../constants';
 import tw from 'twrnc';
-import {StackScreenProps} from '@react-navigation/stack';
-import {KeepStackParamList} from '../../types';
 import useKeep from '../../hooks/useKeep';
 import {
   CheckButton,
@@ -11,25 +8,9 @@ import {
   RemoveButton,
   SonglistEdit,
 } from '../../components';
-import {logScreenView} from '../../utils';
 
-type KeepEditScreenProps = StackScreenProps<
-  KeepStackParamList,
-  typeof keepStackNavigations.KEEP_EDIT
->;
-
-function KeepEditScreen({navigation}: KeepEditScreenProps) {
+function KeepEditScreen() {
   const keepHandler = useKeep();
-
-  // const route = useRoute();
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>

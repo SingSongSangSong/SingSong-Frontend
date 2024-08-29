@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -16,8 +16,6 @@ import {
 } from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
-import {useFocusEffect} from '@react-navigation/native';
-import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type RecommentScreenProps =
@@ -29,29 +27,7 @@ type RecommentScreenProps =
 
 function RecommentScreen(props: RecommentScreenProps) {
   const commentId = props.route?.params?.comment.commentId; // 초기 카테고리
-
-  //   const commentHandler = useComment(songNumber, songId);
   const recommentHandler = useRecomment(commentId);
-
-  // useEffect(() => {
-  //   const unsubscribe = props.navigation.addListener('focus', () => {
-  //     console.log('route name', props.route.name);
-  //     logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [props]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      // 화면이 포커스될 때 실행
-      recommentHandler.setIsKeyboardVisible(true);
-      return () => {
-        // 화면에서 벗어날 때 실행
-        // recommentHandler.setIsKeyboardVisible(false);
-      };
-    }, []),
-  );
 
   const handleOnPressReport = () => {
     amplitude.track('Recomment Report Press');
@@ -77,9 +53,6 @@ function RecommentScreen(props: RecommentScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      {/* <View style={tw`w-full justify-end m-0`}>
-        <CommentKeyboard onSendPress={commentHandler.handleOnPressSendButton} />
-      </View> */}
       <View style={tw`flex-1`}>
         {recommentHandler.parentComment ? (
           <Recommentlist

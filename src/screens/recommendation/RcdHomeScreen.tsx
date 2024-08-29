@@ -7,7 +7,7 @@ import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
 import {homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
-import {logButtonClick, logNavigationClick, logScreenView} from '../../utils';
+import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type RcdHomeScreenProps = {
@@ -21,27 +21,11 @@ type RcdHomeScreenProps = {
 function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   const initTag = route.params.tag; //초기 카테고리
   const songHandler = useSong({initTag, navigation});
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
-  // console.log('RcdHomeScreen');
-
-  // const unsubscribe = navigation.addListener('beforeRemove', () => {
-  //   songHandler.resetIndexLst(initTag);
-  //   // songHandler.reset();
-  // });
 
   useEffect(() => {
     if (!songHandler.songLst) {
       songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
-    // return unsubscribe;
   }, []);
 
   const _onSongPress = (
@@ -52,7 +36,6 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     album: string,
   ) => {
     logButtonClick('rcd_song_button');
-    logNavigationClick(route.name, homeStackNavigations.SONG_DETAIL);
     amplitude.track('Rcd Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,

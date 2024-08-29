@@ -14,25 +14,13 @@ import {
 import {SearchInput, SearchRecent, SearchResult} from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
-import {useRoute} from '@react-navigation/native';
-import {logButtonClick, logScreenView} from '../../utils';
-
+import {logButtonClick} from '../../utils';
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.SEARCH
 >;
 
 function SearchScreen({navigation}: SearchScreenProps) {
-  // const route = useRoute();
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
   const [inputText, setInputText] = useState<string>('');
   const [searchData, setSearchData] = useState<GetSearchSong>();
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true); // 상태 추가
@@ -50,7 +38,6 @@ function SearchScreen({navigation}: SearchScreenProps) {
     logButtonClick('recent_search_button');
     setInputText(searchText);
     inputRef.current?.focus();
-    // setShowSearchResult(true); // 최근 검색어를 누르면 검색 결과가 다시 보이게 설정
   };
 
   const handleOnSubmit = async () => {

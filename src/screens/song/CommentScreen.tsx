@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -16,9 +16,7 @@ import {
   TextButton,
 } from '../../components';
 import Modal from 'react-native-modal';
-import {useFocusEffect} from '@react-navigation/native';
 import ErrorIcon from '../../assets/svg/error.svg';
-import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type CommentScreenProps =
@@ -33,27 +31,6 @@ function CommentScreen(props: CommentScreenProps) {
   const songId = props.route?.params?.songId;
 
   const commentHandler = useComment(songNumber, songId);
-
-  // const route = useRoute();
-  // useEffect(() => {
-  //   const unsubscribe = props.navigation.addListener('focus', () => {
-  //     console.log('route name', props.route.name);
-  //     logScreenView(props.route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [props]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     // 화면이 포커스될 때 실행
-  //     commentHandler.setIsKeyboardVisible(true);
-  //     return () => {
-  //       // 화면에서 벗어날 때 실행
-  //       // commentHandler.setIsKeyboardVisible(false);
-  //     };
-  //   }, []),
-  // );
 
   const handleOnPressRecomment = (comment: Comment) => {
     amplitude.track('Recomment Press');
@@ -117,9 +94,6 @@ function CommentScreen(props: CommentScreenProps) {
             </View>
           )
         ) : (
-          // <View style={tw`flex-1 justify-center items-center`}>
-          //   <Text style={tw`text-[${}]`}>댓글을 불러오는 중...</Text>
-          // </View>
           <View style={tw`flex-1 justify-center items-center`}>
             <ActivityIndicator size="small" color={designatedColor.PINK2} />
           </View>

@@ -17,8 +17,6 @@ import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
-import {useRoute} from '@react-navigation/native';
-import {logScreenView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useLogin from '../../hooks/useLogin';
 
@@ -28,16 +26,6 @@ type LoginScreenProps = StackScreenProps<
 >;
 
 function LoginScreen({navigation}: LoginScreenProps) {
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('route name', route.name);
-  //     logScreenView(route.name); // 스크린이 포커스될 때 로그 이벤트 발생
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, route]);
-
-  // const userInfoHandler = useUserInfo();
   const loginHandler = useLogin();
 
   const handleKakaoButton = async () => {
