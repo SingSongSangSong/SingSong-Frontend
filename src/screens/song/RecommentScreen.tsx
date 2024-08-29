@@ -31,6 +31,8 @@ function RecommentScreen(props: RecommentScreenProps) {
 
   const handleOnPressReport = () => {
     amplitude.track('Recomment Report Press');
+    recommentHandler.setIsModalVisible(false);
+    recommentHandler.setIsKeyboardVisible(true);
     const reportParams = {
       reportCommentId: recommentHandler.reportCommentId,
       reportSubjectMemberId: recommentHandler.reportSubjectMemberId,

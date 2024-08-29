@@ -50,6 +50,8 @@ function CommentScreen(props: CommentScreenProps) {
   };
 
   const handleOnPressReport = () => {
+    commentHandler.setIsModalVisible(false);
+    commentHandler.setIsKeyboardVisible(true);
     amplitude.track('Report Press');
     const reportParams = {
       reportCommentId: commentHandler.reportCommentId,
