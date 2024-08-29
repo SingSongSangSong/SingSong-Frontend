@@ -19,8 +19,7 @@ const TOUCHABLE_OPACITY_HEIGHT = 50; // 높이를 50으로 설정, 필요에 따
 const SongReview = ({songId}: SongReviewProps) => {
   const [songReviews, setSongReviews] = useState<SongInfoReview[]>([]);
   const [selectedId, setSelectedId] = useState<number>();
-  const [maxCount, setMaxCount] = useState<number>(1); // 기본 분모는 1로 설정
-  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [maxSum, setMaxSum] = useState<number>(1); // 기본 분모는 1로 설정
   const [reviewOptions, setReviewOptions] = useState<string[]>([]);
 
   useEffect(() => {
@@ -38,11 +37,13 @@ const SongReview = ({songId}: SongReviewProps) => {
       const tempSongsReviews = await getSongsReviews(String(songId));
       const reviews = tempSongsReviews.data;
       setSongReviews(reviews);
-      const maxReviewCount = Math.max(
-        ...reviews.map(review => review.count),
-        1,
+
+      // 전체 리뷰 카운트의 총합을 계산
+      const totalReviewCount = reviews.reduce(
+        (sum, review) => sum + review.count,
+        0,
       );
-      setMaxCount(maxReviewCount); // 최대 count 값을 기준으로 설정
+      setMaxSum(totalReviewCount);
 
       const selectedItem = reviews.find(item => item.selected);
       if (selectedItem) {
@@ -51,8 +52,6 @@ const SongReview = ({songId}: SongReviewProps) => {
       }
     } catch (error) {
       console.error('Error fetching song reviews:', error);
-    } finally {
-      setLoading(false); // 로딩 완료 후 로딩 상태 업데이트
     }
   };
 
@@ -69,6 +68,7 @@ const SongReview = ({songId}: SongReviewProps) => {
             : review,
         ),
       );
+      setMaxSum(prevMaxSum => prevMaxSum - 1); // 전체 합계를 1 감소
       await handleOnRemovePressReviewlist();
     } else {
       // 다른 항목 선택 시 이전 선택 항목 해제 후 새 항목 선택 및 count 증가
@@ -80,6 +80,7 @@ const SongReview = ({songId}: SongReviewProps) => {
               : review,
           ),
         );
+        setMaxSum(prevMaxSum => prevMaxSum - 1); // 전체 합계를 1 감소 (기존 선택 해제)
       }
       setSelectedId(songReviewOptionId);
       setSongReviews(prevReviews =>
@@ -89,6 +90,7 @@ const SongReview = ({songId}: SongReviewProps) => {
             : review,
         ),
       );
+      setMaxSum(prevMaxSum => prevMaxSum + 1); // 전체 합계를 1 증가 (새 선택)
       await handleOnAddPressReviewlist(songReviewOptionId);
     }
   };
@@ -103,7 +105,7 @@ const SongReview = ({songId}: SongReviewProps) => {
 
   useEffect(() => {
     setInitSongReview(songId);
-  }, [songId]);
+  }, []);
 
   const getReviewCount = (option: string) => {
     const review = songReviews.find(review => review.title === option);
@@ -119,15 +121,11 @@ const SongReview = ({songId}: SongReviewProps) => {
     <View>
       {reviewOptions.map((option, index) => {
         const count = getReviewCount(option);
-        const percentage = (count / maxCount) * 100;
+        const percentage = (count / maxSum) * 100;
         const isSelected = getReviewSelected(option);
         const backgroundColor = isSelected
           ? designatedColor.PINK2
           : designatedColor.GRAY3;
-        const titleColor = isSelected ? 'black' : 'white';
-        const textColor = isSelected
-          ? designatedColor.PINK
-          : designatedColor.GRAY2;
         const pinkWidth = percentage >= 100 ? 100 : percentage; // 100%를 넘지 않도록 제한
 
         return (
@@ -153,11 +151,13 @@ const SongReview = ({songId}: SongReviewProps) => {
               style={[
                 tw`ml-2`,
                 isSelected && tw`font-bold`,
-                {color: titleColor},
+                {color: isSelected ? 'black' : 'white'},
               ]}>
               {option}
             </Text>
-            <Text style={[tw`mr-2`, {color: textColor}]}>{count}</Text>
+            <Text style={[tw`mr-2 font-bold text-[${designatedColor.PINK}]`]}>
+              {count}
+            </Text>
           </TouchableOpacity>
         );
       })}

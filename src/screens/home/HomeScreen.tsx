@@ -30,7 +30,6 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
-  // const homeInfohandler = useHomeInfo();
   const loadingVisible = useSongStore(state => state.loadingVisible);
   const handleOnTagPress = useCallback(
     (tag: string) => {
