@@ -1,14 +1,15 @@
-import {LoginResponse, LoginResult, ProfileResult} from '../../types';
+import {LoginResponse, LoginResult} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const postMemberLogin = async (
   results: LoginResult,
-  profile: ProfileResult,
+  birthYear: string,
+  gender: string,
 ) => {
   try {
     const response = await axiosInstance.post<LoginResponse>('/member/login', {
-      birthYear: profile.birthyear,
-      gender: profile.gender,
+      birthYear: birthYear,
+      gender: gender,
       idToken: results.idToken,
       provider: 'KAKAO_KEY',
     });

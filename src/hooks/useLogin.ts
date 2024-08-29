@@ -1,9 +1,9 @@
-import {isKakaoTalkLoginAvailable, login, me} from '@react-native-kakao/user';
+import {login} from '@react-native-kakao/user';
 import {useState} from 'react';
 import postMemberLogin from '../api/member/postMemberLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
-import {LoginResult, ProfileResult} from '../types';
+import {LoginResult} from '../types';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 // import {Linking} from 'react-native';
 
@@ -11,7 +11,13 @@ const useLogin = () => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [loginResult, setLoginResult] = useState<LoginResult>();
-  const [profile, setProfile] = useState<ProfileResult>();
+  const [step, setStep] = useState(1); // 현재 단계 (1: 입력, 2: 동의)
+  const [birthYear, setBirthYear] = useState('');
+  const [gender, setGender] = useState('');
+
+  const handleGenderToggle = (selectedGender: string) => {
+    setGender(selectedGender);
+  };
 
   const {setSecureValue} = TokenStore();
 
@@ -20,11 +26,8 @@ const useLogin = () => {
       setIsLoggedProcess(true); //true
       console.log('isLoggedProcess', isLoggedProcess);
       const result = await login();
+      console.log('result', result);
       setLoginResult(result);
-
-      const profile = await me();
-      setProfile(profile);
-
       setIsModalVisible(true);
     } catch (err) {
       console.error('Login Failed', err);
@@ -41,20 +44,35 @@ const useLogin = () => {
   };
 
   const _handleKakaoLogin = async () => {
-    if (loginResult && profile) {
-      const data = await postMemberLogin(loginResult, profile); //accessToken 받기, 설정해야됨
+    if (loginResult && birthYear != '' && gender != '') {
+      console.log('loginResult', loginResult);
+      console.log('birthYear', birthYear);
+      console.log('gender', gender);
+      const data = await postMemberLogin(loginResult, birthYear, gender); //accessToken 받기, 설정해야됨
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(!isLoggedProcess); //false
+    } else {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '모든 정보를 입력해주세요.',
+        position: 'bottom',
+      });
     }
   };
 
   return {
+    step,
+    birthYear,
+    setBirthYear,
     isLoggedProcess,
     handleKakaoLogin,
     isModalVisible,
     setIsModalVisible,
     _handleKakaoLogin,
+    gender,
+    handleGenderToggle,
+    setStep,
   };
 };
 
