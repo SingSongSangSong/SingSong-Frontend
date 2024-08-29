@@ -77,7 +77,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     songId: number,
     songName: string,
     singerName: string,
-    album: string,
+    album?: string,
   ) => {
     amplitude.track('Song Preview Press');
     logButtonClick('song_preview_button');
@@ -90,7 +90,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         songNumber,
         songName,
         singerName,
-        album,
+        album: album || '',
       },
     });
 
@@ -148,7 +148,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         </View>
       </View>
       <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
-        <HotTrendingModule />
+        <HotTrendingModule onPressSongButton={handleOnSongPress} />
         <TaglistModule
           onPressTagButton={handleOnTagPress}
           onPressTotalButton={handleOnPressTotalButton}

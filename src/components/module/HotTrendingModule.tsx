@@ -8,7 +8,16 @@ import {ToggleButton} from '../button/ToggleButton';
 import {HotTrending} from '..';
 import {EmptyHotTrending} from '..';
 
-const HotTrendingModule = () => {
+interface HotTrendingModuleProps {
+  onPressSongButton: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album?: string,
+  ) => void;
+}
+const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   const selectedGender = useChartStore(state => state.selectedGender);
   const setSelectedGender = useChartStore(state => state.setSelectedGender);
   const time = useChartStore(state => state.time);
@@ -51,7 +60,11 @@ const HotTrendingModule = () => {
       {/* Trending Content */}
 
       <View style={tw`flex-1`}>
-        {selectedGender != '' ? <HotTrending /> : <EmptyHotTrending />}
+        {selectedGender != '' ? (
+          <HotTrending onPressSongButton={onPressSongButton} />
+        ) : (
+          <EmptyHotTrending />
+        )}
       </View>
     </View>
   );

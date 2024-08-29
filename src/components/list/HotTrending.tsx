@@ -6,7 +6,16 @@ import {designatedColor} from '../../constants';
 import useChartStore from '../../store/useChartStore';
 import {logSwipe} from '../../utils';
 
-const HotTrending = () => {
+interface HotTrendingProps {
+  onPressSongButton: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album?: string,
+  ) => void;
+}
+const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
   const itemsPerPage = 5;
   const selectedCharts = useChartStore(state => state.selectedCharts);
 
@@ -118,6 +127,14 @@ const HotTrending = () => {
                     rankingChange={item.rankingChange}
                     songName={item.songName}
                     songNumber={item.songNumber}
+                    onPress={() => {
+                      onPressSongButton(
+                        item.songNumber,
+                        item.songId,
+                        item.songName,
+                        item.artistName,
+                      );
+                    }}
                   />
                 ) : (
                   <View
