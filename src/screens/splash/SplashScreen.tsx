@@ -3,7 +3,6 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
-import * as amplitude from '@amplitude/analytics-react-native';
 import {CustomModal} from '../../components';
 import useInit from '../../hooks/useInit';
 import {AppStackParamList} from '../../types';
@@ -31,9 +30,6 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           duration: 1000,
           useNativeDriver: true,
         }).start(async () => {
-          // amplitude 트래킹
-          amplitude.track('MAIN');
-
           // 버전 체크 실행
           const shouldProceed = await initHandler.versionCheck();
           if (!shouldProceed) {

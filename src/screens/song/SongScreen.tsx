@@ -36,7 +36,6 @@ function SongScreen(props: SongScreenProps) {
     props.route?.params || {};
 
   const _onPressComment = (songNumber: number, songId: number) => {
-    amplitude.track('Song Comment Press');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (
@@ -57,7 +56,7 @@ function SongScreen(props: SongScreenProps) {
     singerName: string,
     album: string,
   ) => {
-    amplitude.track('Related Song Press');
+    amplitude.track('related_song_button_click');
     logButtonClick('related_song_button_click');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {

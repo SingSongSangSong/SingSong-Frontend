@@ -16,7 +16,6 @@ import {
 } from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
-import * as amplitude from '@amplitude/analytics-react-native';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -30,7 +29,6 @@ function RecommentScreen(props: RecommentScreenProps) {
   const recommentHandler = useRecomment(commentId);
 
   const handleOnPressReport = () => {
-    amplitude.track('Recomment Report Press');
     recommentHandler.setIsModalVisible(false);
     recommentHandler.setIsKeyboardVisible(true);
     const reportParams = {

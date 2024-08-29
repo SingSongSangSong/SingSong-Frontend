@@ -8,6 +8,7 @@ import {designatedColor} from '../../../constants';
 import putSongReviews from '../../../api/songs/putSongsReviews';
 import getSongReviewOptions from '../../../api/songs/getSongReviewOptions';
 import {logButtonClick} from '../../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SongReviewProps = {
   songId: number;
@@ -56,6 +57,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   };
 
   const handleOnPressReview = async (songReviewOptionId: number) => {
+    amplitude.track('song_review_button_click');
     logButtonClick('song_review_button_click');
     if (selectedId === songReviewOptionId) {
       // 선택된 항목을 다시 누르면 해제하고 count 감소

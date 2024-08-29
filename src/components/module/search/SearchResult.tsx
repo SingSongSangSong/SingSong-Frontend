@@ -30,7 +30,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     album: string,
   ) => {
     logButtonClick('search_result_song_button_click');
-    amplitude.track('Search Result Song Press');
+    amplitude.track('search_result_song_button_click');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,

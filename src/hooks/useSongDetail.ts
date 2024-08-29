@@ -10,6 +10,7 @@ import putSongReviews from '../api/songs/putSongsReviews';
 import deleteSongsReviews from '../api/songs/deleteSongsReviews';
 import getSongsRelated from '../api/songs/getSongsRelated';
 import {logButtonClick} from '../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 const useSongDetail = ({
   songId,
@@ -116,8 +117,9 @@ const useSongDetail = ({
   };
 
   const handleOnPressKeep = async () => {
-    logButtonClick('song_keep_button_click');
     if (keepColor == designatedColor.KEEP_EMPTY) {
+      amplitude.track('song_keep_button_click');
+      logButtonClick('song_keep_button_click');
       setKeepColor(designatedColor.KEEP_FILLED);
       const tempKeepList = await postKeep([songId]);
       setKeepList(tempKeepList.data);

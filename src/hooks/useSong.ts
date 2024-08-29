@@ -81,24 +81,6 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     }
   };
 
-  // const handleOnPressSong = (
-  //   songNumber: number,
-  //   songId: number,
-  //   songName: string,
-  //   singerName: string,
-  //   album: string,
-  // ) => {
-  //   logButtonClick('recommendation_song_button_click');
-  //   amplitude.track('Recommendation Song Press');
-  //   navigation.push(homeStackNavigations.SONG_DETAIL, {
-  //     songNumber,
-  //     songId,
-  //     songName,
-  //     singerName,
-  //     album,
-  //   });
-  // };
-
   const _onKeepAddPress = async (songId: number) => {
     logButtonClick('recommendation_keep_button_click');
     await postKeep([songId]);

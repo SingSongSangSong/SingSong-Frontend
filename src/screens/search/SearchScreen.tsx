@@ -15,6 +15,8 @@ import {SearchInput, SearchRecent, SearchResult} from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {logButtonClick} from '../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
+
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.SEARCH
@@ -35,6 +37,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
   };
 
   const handleOnPressRecent = (searchText: string) => {
+    amplitude.track('recent_search_button_click');
     logButtonClick('recent_search_button_click');
     setInputText(searchText);
     inputRef.current?.focus();

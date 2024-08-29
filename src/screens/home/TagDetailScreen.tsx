@@ -19,7 +19,7 @@ function TagDetailScreen({navigation}: TagDetailScreenProps) {
 
   const handleOnArrowPress = (tag: string) => {
     logButtonClick('tagList_tag_button_click');
-    amplitude.track('Tag Press in Tag Detail');
+    amplitude.track('tagList_tag_button_click');
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };
 

@@ -17,7 +17,6 @@ import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
-import * as amplitude from '@amplitude/analytics-react-native';
 import useLogin from '../../hooks/useLogin';
 
 type LoginScreenProps = StackScreenProps<
@@ -31,7 +30,6 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const handleKakaoButton = async () => {
     try {
       await loginHandler.handleKakaoLogin();
-      amplitude.track('MAIN');
     } catch (err) {
       console.error('Login Failed', err);
     }

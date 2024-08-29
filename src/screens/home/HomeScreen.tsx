@@ -33,14 +33,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const homeInfohandler = useHomeInfo();
 
   const handleOnTagPress = (tag: string) => {
-    console.log('tag press!!');
-    amplitude.track('Tag Press');
+    amplitude.track('tag_button_click');
     logButtonClick('tag_button_click');
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnPreviewTagPress = (tag: string) => {
-    amplitude.track('Preview Tag Press');
+    amplitude.track('preview_tag_button_click');
     logButtonClick('preview_tag_button_click');
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
@@ -52,7 +51,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     singerName: string,
     album?: string,
   ) => {
-    amplitude.track('Song Preview Press');
+    amplitude.track('preview_song_button_click');
     logButtonClick('preview_song_button_click');
     navigation.navigate({
       key: 'MyUniqueKeyForSongDetail',
@@ -74,7 +73,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     singerName: string,
     album?: string,
   ) => {
-    amplitude.track('Song Preview Press');
+    amplitude.track('hot_trending_song_button_click');
     logButtonClick('hot_trending_song_button_click');
     navigation.navigate({
       key: 'MyUniqueKeyForSongDetail',
@@ -90,17 +89,14 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSetting = () => {
-    amplitude.track('Setting Press');
     navigation.navigate(homeStackNavigations.SETTING);
   };
 
   const handleOnPressTotalButton = () => {
-    amplitude.track('Tag Total Press');
     navigation.navigate(homeStackNavigations.TAG_DETAIL);
   };
 
   const handleOnPressSearch = () => {
-    amplitude.track('Search Press');
     navigation.navigate(homeStackNavigations.SEARCH);
   };
 
