@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {Taglist, TextButton} from '..'; // import TextButton component
 import {designatedColor} from '../../constants';
@@ -24,12 +24,22 @@ const TaglistModule = ({
         <Text style={tw`text-white text-sm font-bold my-2`}>
           어떤 노래를 찾으시나요?
         </Text>
-        <TextButton
+        {/* <TextButton
           title="전체보기"
           onPress={onPressTotalButton}
           color={designatedColor.GRAY3}
           size={3}
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={() => {
+            onPressTotalButton();
+          }}
+          activeOpacity={0.8}
+          style={tw`p-2`}>
+          <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+            전체보기
+          </Text>
+        </TouchableOpacity>
       </View>
       <Taglist tags={tags} handleOnTagButton={onPressTagButton} />
     </View>
