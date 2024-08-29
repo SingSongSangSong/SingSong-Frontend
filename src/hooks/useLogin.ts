@@ -16,9 +16,6 @@ const useLogin = () => {
   const {setSecureValue} = TokenStore();
 
   const handleKakaoLogin = async () => {
-    const result = await isKakaoTalkLoginAvailable();
-    console.log('result is', result);
-
     try {
       setIsLoggedProcess(true); //true
       console.log('isLoggedProcess', isLoggedProcess);
@@ -28,7 +25,7 @@ const useLogin = () => {
       const profile = await me();
       setProfile(profile);
 
-      setIsModalVisible(false);
+      setIsModalVisible(true);
     } catch (err) {
       console.error('Login Failed', err);
       setIsLoggedProcess(false);
