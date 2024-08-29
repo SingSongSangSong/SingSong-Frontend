@@ -1,9 +1,7 @@
 import analytics from '@react-native-firebase/analytics';
 
 const logButtonClick = async (buttonName: string) => {
-  await analytics().logEvent('button_click', {
-    button_name: buttonName,
-  });
+  await analytics().logEvent(buttonName);
   console.log(`Logged button click: ${buttonName}`);
 };
 

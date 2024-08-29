@@ -56,7 +56,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   };
 
   const handleOnPressReview = async (songReviewOptionId: number) => {
-    logButtonClick('song_review_button');
+    logButtonClick('song_review_button_click');
     if (selectedId === songReviewOptionId) {
       // 선택된 항목을 다시 누르면 해제하고 count 감소
       setSelectedId(undefined);

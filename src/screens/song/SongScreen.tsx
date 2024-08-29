@@ -58,7 +58,7 @@ function SongScreen(props: SongScreenProps) {
     album: string,
   ) => {
     amplitude.track('Related Song Press');
-    logButtonClick('related_song_button');
+    logButtonClick('related_song_button_click');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (

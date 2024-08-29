@@ -45,7 +45,7 @@ const SongAdditionInfo = ({
   };
 
   const handleOnPressKeep = () => {
-    logButtonClick('song_keep_button');
+    logButtonClick('song_keep_button_click');
     if (songInfo!.isKeep) {
       setSongInfo({
         ...songInfo!,

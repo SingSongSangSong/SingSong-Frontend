@@ -35,13 +35,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const handleOnTagPress = (tag: string) => {
     console.log('tag press!!');
     amplitude.track('Tag Press');
-    logButtonClick('tag_button');
+    logButtonClick('tag_button_click');
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnPreviewTagPress = (tag: string) => {
     amplitude.track('Preview Tag Press');
-    logButtonClick('tag_preview_button');
+    logButtonClick('preview_tag_button_click');
     navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
@@ -53,7 +53,29 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     album?: string,
   ) => {
     amplitude.track('Song Preview Press');
-    logButtonClick('song_preview_button');
+    logButtonClick('preview_song_button_click');
+    navigation.navigate({
+      key: 'MyUniqueKeyForSongDetail',
+      name: homeStackNavigations.SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album: album || '',
+      },
+    });
+  };
+
+  const handleOnHotTrendingSongPress = (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album?: string,
+  ) => {
+    amplitude.track('Song Preview Press');
+    logButtonClick('hot_trending_song_button_click');
     navigation.navigate({
       key: 'MyUniqueKeyForSongDetail',
       name: homeStackNavigations.SONG_DETAIL,
@@ -74,7 +96,6 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   const handleOnPressTotalButton = () => {
     amplitude.track('Tag Total Press');
-    logButtonClick('tag_total_button');
     navigation.navigate(homeStackNavigations.TAG_DETAIL);
   };
 
@@ -105,7 +126,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         </View>
       </View>
       <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
-        <HotTrendingModule onPressSongButton={handleOnSongPress} />
+        <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
         <TaglistModule
           onPressTagButton={handleOnTagPress}
           onPressTotalButton={handleOnPressTotalButton}

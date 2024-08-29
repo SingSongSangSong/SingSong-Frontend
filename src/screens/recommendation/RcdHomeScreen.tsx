@@ -35,7 +35,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     singerName: string,
     album: string,
   ) => {
-    logButtonClick('rcd_song_button');
+    logButtonClick('recommendation_song_button_click');
     amplitude.track('Rcd Song Press');
     navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,

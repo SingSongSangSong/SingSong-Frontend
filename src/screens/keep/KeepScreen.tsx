@@ -24,7 +24,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
     singerName: string,
     album: string,
   ) => {
-    logButtonClick('keep_song_button');
+    logButtonClick('keep_song_button_click');
     amplitude.track('Keep Song Press');
     navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,

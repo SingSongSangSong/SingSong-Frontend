@@ -7,7 +7,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
-import * as amplitude from '@amplitude/analytics-react-native';
 
 type UseSongProps = {
   initTag: string;
@@ -82,28 +81,27 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     }
   };
 
-  const handleOnPressSong = (
-    songNumber: number,
-    songId: number,
-    songName: string,
-    singerName: string,
-    album: string,
-  ) => {
-    logButtonClick('recommendation_song_button');
-    amplitude.track('Recommendation Song Press');
-    navigation.push(homeStackNavigations.SONG_DETAIL, {
-      songNumber,
-      songId,
-      songName,
-      singerName,
-      album,
-    });
-  };
+  // const handleOnPressSong = (
+  //   songNumber: number,
+  //   songId: number,
+  //   songName: string,
+  //   singerName: string,
+  //   album: string,
+  // ) => {
+  //   logButtonClick('recommendation_song_button_click');
+  //   amplitude.track('Recommendation Song Press');
+  //   navigation.push(homeStackNavigations.SONG_DETAIL, {
+  //     songNumber,
+  //     songId,
+  //     songName,
+  //     singerName,
+  //     album,
+  //   });
+  // };
 
   const _onKeepAddPress = async (songId: number) => {
-    logButtonClick('recommendation_keep_button');
+    logButtonClick('recommendation_keep_button_click');
     await postKeep([songId]);
-    // setKeepList(updatedSongs.data);
     Toast.show({
       type: 'selectedToast',
       text1: 'Memo에 추가되었습니다.',
@@ -113,9 +111,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepRemovePress = async (songId: number) => {
-    logButtonClick('recommendation_keep_button');
+    logButtonClick('recommendation_keep_button_click');
     await deleteKeep([songId]);
-    // setKeepList(updatedSongs.data);
     Toast.show({
       type: 'selectedToast',
       text1: 'Memo에서 삭제되었습니다.',
@@ -129,7 +126,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     songLst,
     setSongLst,
     handleRefreshSongs,
-    handleOnPressSong,
+    // handleOnPressSong,
     refreshing,
     onRefresh,
     setInitSongs,

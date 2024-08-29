@@ -35,7 +35,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
   };
 
   const handleOnPressRecent = (searchText: string) => {
-    logButtonClick('recent_search_button');
+    logButtonClick('recent_search_button_click');
     setInputText(searchText);
     inputRef.current?.focus();
   };

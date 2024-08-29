@@ -18,7 +18,7 @@ function TagDetailScreen({navigation}: TagDetailScreenProps) {
   const tags = useSongStore(state => state.tags);
 
   const handleOnArrowPress = (tag: string) => {
-    logButtonClick('from_tagList_tag_button');
+    logButtonClick('tagList_tag_button_click');
     amplitude.track('Tag Press in Tag Detail');
     navigation.push(homeStackNavigations.RCD_DETAIL, {tag});
   };

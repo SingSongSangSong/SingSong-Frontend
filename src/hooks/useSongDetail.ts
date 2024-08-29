@@ -116,7 +116,7 @@ const useSongDetail = ({
   };
 
   const handleOnPressKeep = async () => {
-    logButtonClick('song_keep_button');
+    logButtonClick('song_keep_button_click');
     if (keepColor == designatedColor.KEEP_EMPTY) {
       setKeepColor(designatedColor.KEEP_FILLED);
       const tempKeepList = await postKeep([songId]);
