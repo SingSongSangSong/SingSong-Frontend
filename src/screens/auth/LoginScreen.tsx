@@ -199,7 +199,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
                       activeOpacity={0.8}
                       onPress={handleOnModalCloseButton}>
                       <Text style={tw`text-white font-bold text-center`}>
-                        제출
+                        완료
                       </Text>
                     </TouchableOpacity>
                   </>

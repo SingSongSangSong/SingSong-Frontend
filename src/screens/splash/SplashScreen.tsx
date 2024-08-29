@@ -19,50 +19,71 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   const firstTextOpacity = useRef(new Animated.Value(0)).current;
   const secondTextOpacity = useRef(new Animated.Value(0)).current;
   const textFadeOutOpacity = useRef(new Animated.Value(1)).current;
-
-  const [showLogoImmediately, setShowLogoImmediately] = useState(false);
+  const [isValidToken, setIsValidToken] = useState(false);
 
   useEffect(() => {
     const runAnimations = async () => {
-      const isValidToken = await initHandler.getIsValidToken();
-      console.log('isValidToken', isValidToken);
-
-      if (isValidToken) {
-        setShowLogoImmediately(true); // 유효한 토큰이 있으면 로고를 즉시 표시
-        amplitude.track('MAIN');
-        setTimeout(() => {
-          navigation.replace(appStackNavigations.MAIN); // 즉시 메인 화면으로 이동
-        }, 500); // 잠시 로고가 보이도록 지연 시간 설정
-      } else {
-        // 유효한 토큰이 없으면 텍스트 애니메이션을 실행하고 로고를 나중에 표시
-        Animated.timing(firstTextOpacity, {
+      const tempIsValidToken = await initHandler.getIsValidToken();
+      setIsValidToken(tempIsValidToken);
+      if (tempIsValidToken) {
+        Animated.timing(logoOpacity, {
           toValue: 1,
           duration: 1000,
           useNativeDriver: true,
+        }).start(async () => {
+          // amplitude 트래킹
+          amplitude.track('MAIN');
+
+          // 버전 체크 실행
+          const shouldProceed = await initHandler.versionCheck();
+          if (!shouldProceed) {
+            // 업데이트가 필요한 경우, 모달을 표시하여 사용자가 업데이트를 진행하도록 유도
+            initHandler.setIsModalVisible(true);
+            return; // 업데이트가 필요하면 더 이상 진행하지 않음
+          }
+          // 버전 체크 통과 시 메인 화면으로 이동
+          setTimeout(() => {
+            navigation.replace(appStackNavigations.MAIN);
+          }, 500);
+        });
+      } else {
+        // 텍스트 애니메이션을 먼저 실행
+        Animated.timing(firstTextOpacity, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
         }).start(() => {
-          Animated.timing(secondTextOpacity, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: true,
-          }).start(() => {
-            setTimeout(() => {
-              Animated.timing(textFadeOutOpacity, {
-                toValue: 0,
-                duration: 500,
-                useNativeDriver: true,
-              }).start(() => {
-                // 문구가 사라진 후 로고 애니메이션 실행
-                Animated.timing(logoOpacity, {
-                  toValue: 1,
-                  duration: 1000,
+          setTimeout(() => {
+            Animated.timing(secondTextOpacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+            }).start(() => {
+              setTimeout(() => {
+                Animated.timing(textFadeOutOpacity, {
+                  toValue: 0,
+                  duration: 500,
                   useNativeDriver: true,
                 }).start(() => {
-                  amplitude.track('LOGIN');
-                  navigation.replace(appStackNavigations.LOGIN);
+                  // setShowLogo(true);
+                  Animated.timing(logoOpacity, {
+                    toValue: 1,
+                    duration: 1000,
+                    useNativeDriver: true,
+                  }).start(async () => {
+                    // 버전 체크 실행
+                    const shouldProceed = await initHandler.versionCheck();
+                    if (!shouldProceed) {
+                      // 업데이트가 필요한 경우, 모달을 표시하여 사용자가 업데이트를 진행하도록 유도
+                      initHandler.setIsModalVisible(true);
+                      return; // 업데이트가 필요하면 더 이상 진행하지 않음
+                    }
+                    navigation.replace(appStackNavigations.LOGIN);
+                  });
                 });
-              });
-            }, 1000);
-          });
+              }, 500);
+            });
+          }, 500);
         });
       }
     };
@@ -88,7 +109,16 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
               : initHandler.optionalUpdateMessage.message
           }
           onConfirm={initHandler.handleOnConfirmButton}
-          onCancel={initHandler.handleOnCancelButton}
+          onCancel={() => {
+            initHandler.handleOnCancelButton();
+            if (!initHandler.isForced) {
+              if (isValidToken) {
+                navigation.replace(appStackNavigations.MAIN);
+              } else {
+                navigation.replace(appStackNavigations.LOGIN);
+              }
+            }
+          }}
           confirmText={
             initHandler.isForced
               ? initHandler.forceUpdateMessage.buttonPositive
@@ -100,58 +130,41 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
               : initHandler.optionalUpdateMessage.buttonNegative
           }
         />
-
-        {/* 첫 번째 텍스트 애니메이션 (유효한 토큰이 없을 경우에만) */}
-        {!showLogoImmediately && (
-          <Animated.View
-            style={{
-              opacity: firstTextOpacity,
-            }}>
-            <Animated.Text
-              style={[
-                tw`text-white font-bold text-3xl`,
-                {opacity: textFadeOutOpacity},
-              ]}>
-              싱숭생숭한 기분을
-            </Animated.Text>
-          </Animated.View>
-        )}
-
-        {/* 두 번째 텍스트 애니메이션 (유효한 토큰이 없을 경우에만) */}
-        {!showLogoImmediately && (
-          <Animated.View
-            style={{
-              opacity: secondTextOpacity,
-              marginTop: 8,
-            }}>
-            <Animated.Text
-              style={[
-                tw`text-[${designatedColor.PINK}] font-bold text-3xl`,
-                {opacity: textFadeOutOpacity},
-              ]}>
-              싱송생송하게
-            </Animated.Text>
-          </Animated.View>
-        )}
-
-        {/* 로고 즉시 표시 또는 애니메이션 표시 */}
-        {showLogoImmediately ? (
+        <Animated.View
+          style={{
+            opacity: firstTextOpacity,
+          }}>
+          <Animated.Text
+            style={[
+              tw`text-white font-bold text-3xl`,
+              {opacity: textFadeOutOpacity},
+            ]}>
+            싱숭생숭한 기분을
+          </Animated.Text>
+        </Animated.View>
+        <Animated.View
+          style={{
+            opacity: secondTextOpacity,
+            marginTop: 8,
+          }}>
+          <Animated.Text
+            style={[
+              tw`text-[${designatedColor.PINK}] font-bold text-3xl`,
+              {opacity: textFadeOutOpacity},
+            ]}>
+            싱송생송하게
+          </Animated.Text>
+        </Animated.View>
+        <Animated.View
+          style={{
+            opacity: logoOpacity,
+            position: 'absolute',
+          }}>
           <Image
             source={require('../../assets/png/shinedLogo.png')}
             style={{width: 246, height: 129}}
           />
-        ) : (
-          <Animated.View
-            style={{
-              opacity: logoOpacity,
-              position: 'absolute',
-            }}>
-            <Image
-              source={require('../../assets/png/shinedLogo.png')}
-              style={{width: 246, height: 129}}
-            />
-          </Animated.View>
-        )}
+        </Animated.View>
       </View>
     </View>
   );

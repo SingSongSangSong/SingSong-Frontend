@@ -31,7 +31,7 @@ const HotTrendingItem = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.8}
+      activeOpacity={0.9}
       style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}]`}>
       <Text style={tw`text-white text-lg font-bold w-10 text-center`}>
         {ranking}
