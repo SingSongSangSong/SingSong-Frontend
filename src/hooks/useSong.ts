@@ -7,6 +7,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type UseSongProps = {
   initTag: string;
@@ -82,6 +83,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepAddPress = async (songId: number) => {
+    amplitude.track('recommendation_keep_button_click');
     logButtonClick('recommendation_keep_button_click');
     await postKeep([songId]);
     Toast.show({
@@ -93,7 +95,6 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepRemovePress = async (songId: number) => {
-    logButtonClick('recommendation_keep_button_click');
     await deleteKeep([songId]);
     Toast.show({
       type: 'selectedToast',

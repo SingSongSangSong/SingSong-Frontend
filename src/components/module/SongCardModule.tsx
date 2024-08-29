@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import useSongStore from '../../store/useSongStore';
 import {SongCardList} from '../list/SongCardList';
 import {isEmptyObject} from '../../utils';
 import {designatedColor} from '../../constants';
+import {useQuery} from '@tanstack/react-query';
+import postRcdHome from '../../api/recommendation/postRcdHome';
+import {RcdHomeSongWithTags} from '../../types';
 
 interface SongCardModuleProps {
   onPressTotalButton: (tag: string) => void;
@@ -21,13 +24,37 @@ const SongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
 }: SongCardModuleProps) => {
+  console.log('SongCardModule');
   const tags = useSongStore(state => state.tags);
   const previewSongs = useSongStore(state => state.previewSongs);
-  const [loadedTags, setLoadedTags] = useState<number>(5); // 처음에는 5개의 태그만 로드
+  const [loadedTags, setLoadedTags] = useState<number>(5);
+  const setPreviewSongs = useSongStore(state => state.setPreviewSongs);
 
   const loadMoreTags = () => {
     setLoadedTags(tags.length); // 한번에 5개의 태그씩 로드
   };
+
+  const {
+    data: tempRcdHomeSongs,
+    error: rcdHomeSongsError,
+    isFetching: isFetchingRcdHomeSongs,
+  } = useQuery({
+    queryKey: ['rcdHomeSongs'],
+    queryFn: () => postRcdHome({tags: tags || []}),
+    enabled: !!tags && tags.length > 0,
+    staleTime: 3600000,
+    select: data => data.data,
+  });
+
+  useEffect(() => {
+    if (tempRcdHomeSongs) {
+      console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
+      tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
+        setPreviewSongs(songWithTags.tag, songWithTags.songs);
+      });
+      console.log('setPreview Song completed!!!!!!!!!!!');
+    }
+  }, [tempRcdHomeSongs]);
 
   return (
     <View>

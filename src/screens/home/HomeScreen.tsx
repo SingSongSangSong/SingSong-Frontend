@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   ActivityIndicator,
@@ -19,10 +19,10 @@ import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
-import useHomeInfo from '../../hooks/useHomeInfo';
 import SearchIcon from '../../assets/svg/search.svg';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import useSongStore from '../../store/useSongStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -30,13 +30,16 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
-  const homeInfohandler = useHomeInfo();
-
-  const handleOnTagPress = (tag: string) => {
-    amplitude.track('tag_button_click');
-    logButtonClick('tag_button_click');
-    navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
-  };
+  // const homeInfohandler = useHomeInfo();
+  const loadingVisible = useSongStore(state => state.loadingVisible);
+  const handleOnTagPress = useCallback(
+    (tag: string) => {
+      amplitude.track('tag_button_click');
+      logButtonClick('tag_button_click');
+      navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+    },
+    [navigation],
+  );
 
   const handleOnPreviewTagPress = (tag: string) => {
     amplitude.track('preview_tag_button_click');
@@ -92,13 +95,13 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     navigation.navigate(homeStackNavigations.SETTING);
   };
 
-  const handleOnPressTotalButton = () => {
-    navigation.navigate(homeStackNavigations.TAG_DETAIL);
-  };
-
   const handleOnPressSearch = () => {
     navigation.navigate(homeStackNavigations.SEARCH);
   };
+
+  const handleOnPressTotalButton = useCallback(() => {
+    navigation.navigate(homeStackNavigations.TAG_DETAIL);
+  }, [navigation]);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
@@ -135,7 +138,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
       </ScrollView>
       <Modal
         transparent={true}
-        visible={homeInfohandler.loadingVisible}
+        visible={loadingVisible}
         animationType="fade"
         // onRequestClose={onClose}
       >

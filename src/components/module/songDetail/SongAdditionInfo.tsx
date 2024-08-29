@@ -15,6 +15,7 @@ import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import useCommentStore from '../../../store/useCommentStore';
 import Toast from 'react-native-toast-message';
 import {logButtonClick} from '../../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -45,6 +46,7 @@ const SongAdditionInfo = ({
   };
 
   const handleOnPressKeep = () => {
+    amplitude.track('song_keep_button_click');
     logButtonClick('song_keep_button_click');
     if (songInfo!.isKeep) {
       setSongInfo({
@@ -83,20 +85,6 @@ const SongAdditionInfo = ({
   useEffect(() => {
     setInitSongAdditionInfo(songId);
   }, []);
-
-  // if (loading) {
-  //   // 로딩 중인 경우 로딩 스피너를 보여줌
-  //   return (
-  //     <View
-  //       style={[
-  //         tw`flex-1 justify-center items-center`,
-  //         {
-  //           height: 120,
-  //         },
-  //       ]}
-  //     />
-  //   );
-  // }
 
   return (
     <View>
