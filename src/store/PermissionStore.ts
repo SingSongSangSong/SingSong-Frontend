@@ -19,9 +19,18 @@ const PermissionStore = () => {
     }
   };
 
+  const deletePermissionValue = async () => {
+    try {
+      await AsyncStorage.removeItem('@user_consent');
+    } catch (e) {
+      console.error('Failed to delete consent status', e);
+    }
+  };
+
   return {
     setPermissionValue,
     getPermissionValue,
+    deletePermissionValue,
   };
 };
 

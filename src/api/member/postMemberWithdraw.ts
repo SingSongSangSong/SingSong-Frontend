@@ -1,4 +1,5 @@
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
+import PermissionStore from '../../store/PermissionStore';
 import TokenStore from '../../store/TokenStore';
 import {DefaultResponse} from '../../types';
 import axiosInstance from '../axiosIns';
@@ -6,11 +7,13 @@ import axiosInstance from '../axiosIns';
 const postMemberWithdraw = async () => {
   try {
     const {getAccessToken, removeSecureValue, getSecureValue} = TokenStore();
+    const {deletePermissionValue} = PermissionStore();
     const accessToken = await getAccessToken();
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
 
     removeSecureValue(ACCESS_TOKEN);
     removeSecureValue(REFRESH_TOKEN);
+    deletePermissionValue();
 
     const response = await axiosInstance.post<DefaultResponse>(
       '/member/withdraw',
