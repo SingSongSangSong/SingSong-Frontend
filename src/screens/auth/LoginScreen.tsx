@@ -37,9 +37,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
 
   const handleOnModalCloseButton = async () => {
     console.log('press!!');
-    loginHandler.setIsModalVisible(false);
-    await loginHandler._handleKakaoLogin();
-    navigation.replace(appStackNavigations.MAIN); //메인으로 이동
+    const value = await loginHandler._handleKakaoLogin();
+    if (value) {
+      navigation.replace(appStackNavigations.MAIN); //메인으로 이동
+    }
   };
 
   const deviceHeight = Dimensions.get('window').height;
@@ -145,12 +146,13 @@ function LoginScreen({navigation}: LoginScreenProps) {
                             <Text style={tw`text-black`}>출생연도</Text>
                           </View>
                           <TextInput
-                            style={tw`border border-gray-400 rounded p-2`}
-                            placeholder="출생연도를 입력하세요"
+                            style={tw`border border-gray-400 rounded p-2 w-40`}
+                            placeholder="ex) 1990"
                             keyboardType="numeric"
                             value={loginHandler.birthYear}
                             onChangeText={loginHandler.setBirthYear}
                             maxLength={4}
+                            autoFocus={true}
                           />
                         </View>
                         <View style={tw`flex-row items-center`}>
@@ -159,7 +161,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
                             <Text style={tw`text-black`}>성별</Text>
                           </View>
 
-                          <View style={tw`flex-row justify-around px-2`}>
+                          <View style={tw`flex-row justify-around px-2 w-40`}>
                             <TouchableOpacity
                               style={[
                                 tw`px-4 py-2 rounded mr-4`,
@@ -167,9 +169,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
                                   ? tw`bg-black`
                                   : tw`bg-gray-300`,
                               ]}
-                              onPress={() =>
-                                loginHandler.handleGenderToggle('MALE')
-                              }>
+                              onPress={() => {
+                                Keyboard.dismiss();
+                                loginHandler.handleGenderToggle('MALE');
+                              }}>
                               <Text style={tw`text-white text-center`}>
                                 남성
                               </Text>
@@ -181,9 +184,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
                                   ? tw`bg-black`
                                   : tw`bg-gray-300`,
                               ]}
-                              onPress={() =>
-                                loginHandler.handleGenderToggle('FEMALE')
-                              }>
+                              onPress={() => {
+                                Keyboard.dismiss();
+                                loginHandler.handleGenderToggle('FEMALE');
+                              }}>
                               <Text style={tw`text-white text-center`}>
                                 여성
                               </Text>

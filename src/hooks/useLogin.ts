@@ -44,20 +44,29 @@ const useLogin = () => {
   };
 
   const _handleKakaoLogin = async () => {
-    if (loginResult && birthYear != '' && gender != '') {
-      console.log('loginResult', loginResult);
-      console.log('birthYear', birthYear);
-      console.log('gender', gender);
+    if (
+      loginResult &&
+      birthYear != '' &&
+      gender != '' &&
+      birthYear.length == 4
+    ) {
+      setIsModalVisible(false);
       const data = await postMemberLogin(loginResult, birthYear, gender); //accessToken 받기, 설정해야됨
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(!isLoggedProcess); //false
+      return true;
     } else {
+      let message = '모든 정보를 입력해주세요.';
+      if (gender != '' && birthYear != '' && birthYear.length != 4) {
+        message = '태어난 년도를 정확히 입력해주세요.';
+      }
       Toast.show({
         type: 'selectedToast',
-        text1: '모든 정보를 입력해주세요.',
+        text1: message,
         position: 'bottom',
       });
+      return false;
     }
   };
 
