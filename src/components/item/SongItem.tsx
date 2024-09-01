@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import KeepIcon from '../../assets/svg/keepIcon.svg';
 import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 import MusicIcon from '../../assets/svg/music.svg';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface SongItemProps {
   songId: number;
@@ -32,7 +33,14 @@ const SongItem = ({
   onKeepRemovePress = () => {},
 }: SongItemProps) => {
   const [isKeepPressed, setIsKeepPressed] = useState(isKeep);
-  // console.log(songId);
+  const [isPressed, setIsPressed] = useState(false);
+
+  // 포커스가 돌아올 때마다 isPressed 초기화
+  useFocusEffect(
+    useCallback(() => {
+      setIsPressed(false);
+    }, []),
+  );
 
   const handleOnKeepPress = () => {
     if (isKeepPressed) {
@@ -44,8 +52,15 @@ const SongItem = ({
     }
   };
 
+  const handleOnPress = () => {
+    if (!isPressed) {
+      setIsPressed(true);
+      onSongPress();
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={onSongPress} activeOpacity={0.9}>
+    <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
       <View
         style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
         <View style={tw`flex-row flex-1`}>
