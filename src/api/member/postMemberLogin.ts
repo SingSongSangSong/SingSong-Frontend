@@ -3,10 +3,12 @@ import axiosInstance from '../axiosIns';
 
 const postMemberLogin = async (
   results: LoginResult,
-  birthYear: string,
-  gender: string,
+  birthYear?: string,
+  gender?: string,
 ) => {
   try {
+    console.log('birthYear:', birthYear);
+    console.log('gender', gender);
     const response = await axiosInstance.post<LoginResponse>('/member/login', {
       birthYear: birthYear,
       gender: gender,

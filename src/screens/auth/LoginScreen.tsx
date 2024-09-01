@@ -35,10 +35,19 @@ function LoginScreen({navigation}: LoginScreenProps) {
     }
   };
 
+  const handleKakaoButton2 = async () => {
+    try {
+      await loginHandler.handleKakaoLogin2();
+      navigation.replace(appStackNavigations.MAIN);
+    } catch (err) {
+      console.error('Login Failed', err);
+    }
+  };
+
   const handleOnModalCloseButton = async () => {
-    console.log('press!!');
     const value = await loginHandler._handleKakaoLogin();
     if (value) {
+      loginHandler.setPermissionValue('true');
       navigation.replace(appStackNavigations.MAIN); //메인으로 이동
     }
   };
@@ -63,7 +72,9 @@ function LoginScreen({navigation}: LoginScreenProps) {
       <View style={tw`absolute bottom-0 mb-20 w-full`}>
         <LargeButton
           title="카카오로 로그인"
-          onPress={handleKakaoButton}
+          onPress={
+            loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
+          }
           color={designatedColor.KAKAO_YELLOW}
           Icon={KaKaoIcon}
         />
