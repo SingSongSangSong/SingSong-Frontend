@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   ActivityIndicator,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   View,
+  LayoutChangeEvent,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -30,7 +31,14 @@ type HomeScreenProps = StackScreenProps<
 >;
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
+  const [headerHeight, setHeaderHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
+
+  const handleOnLayout = (event: LayoutChangeEvent) => {
+    const {height} = event.nativeEvent.layout;
+    setHeaderHeight(height);
+  };
+
   const handleOnTagPress = useCallback(
     (tag: string) => {
       amplitude.track('tag_button_click');
@@ -105,7 +113,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
       <View
-        style={tw` bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}>
+        style={tw`bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}
+        onLayout={handleOnLayout}>
         <LogoIcon />
         <View style={tw`flex-row`}>
           <View style={tw`mr-2`}>
@@ -123,36 +132,40 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
           />
         </View>
       </View>
-      <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
-        <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
-        <TaglistModule
-          onPressTagButton={handleOnTagPress}
-          onPressTotalButton={handleOnPressTotalButton}
-        />
+      <View style={tw`flex-1`}>
+        <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
+          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
+          <TaglistModule
+            onPressTagButton={handleOnTagPress}
+            onPressTotalButton={handleOnPressTotalButton}
+          />
 
-        <SongCardModule
-          onPressSongButton={handleOnSongPress}
-          onPressTotalButton={handleOnPreviewTagPress}
-        />
-      </ScrollView>
-      <Modal
-        transparent={true}
-        visible={loadingVisible}
-        animationType="fade"
-        // onRequestClose={onClose}
-      >
-        <View
-          style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
-          <View style={tw`flex-row`}>
-            <ActivityIndicator size="small" color={designatedColor.PINK2} />
-            <Text style={tw`text-white font-bold ml-2`}>
-              잠시만 기다려주세요
-            </Text>
-          </View>
-        </View>
-      </Modal>
+          <SongCardModule
+            onPressSongButton={handleOnSongPress}
+            onPressTotalButton={handleOnPreviewTagPress}
+          />
+        </ScrollView>
+        {loadingVisible && (
+          <Modal
+            transparent={true}
+            visible={loadingVisible}
+            animationType="fade">
+            <View
+              style={[
+                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-black`,
+                {top: headerHeight},
+              ]}>
+              <View style={tw`flex-row`}>
+                <ActivityIndicator size="small" color={designatedColor.PINK2} />
+                <Text style={tw`text-white font-bold ml-2`}>
+                  잠시만 기다려주세요
+                </Text>
+              </View>
+            </View>
+          </Modal>
+        )}
+      </View>
     </SafeAreaView>
-    // </GestureRecognizer>
   );
 };
 
