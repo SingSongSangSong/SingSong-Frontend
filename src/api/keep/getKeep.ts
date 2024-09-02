@@ -12,7 +12,7 @@ const getKeep = async () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('data for getKeep response', response.data);
+    // console.log('data for getKeep response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getKeep:', error);

@@ -15,7 +15,7 @@ const getBlacklist = async () => {
         },
       },
     );
-    console.log('data for getBlacklist response', response.data);
+    // console.log('data for getBlacklist response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getBlacklist:', error);

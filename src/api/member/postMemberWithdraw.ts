@@ -27,7 +27,7 @@ const postMemberWithdraw = async () => {
         },
       },
     );
-    console.log('data for recommend member withdraw response', response.data);
+    // console.log('data for recommend member withdraw response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching member withdraw:', error);

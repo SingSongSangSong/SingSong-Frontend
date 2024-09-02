@@ -24,11 +24,11 @@ const useReport = (commentId: number, subjectMemberId: number) => {
       setIsEditable(false);
     }
     setReportReason(reportReason);
-    console.log(reportReason);
+    // console.log(reportReason);
   };
 
   const handleOnPressSubmit = async () => {
-    console.log(commentId, reportReason, subjectMemberId);
+    // console.log(commentId, reportReason, subjectMemberId);
     if (reportReason == '기타') {
       await postCommentReport(commentId, text, subjectMemberId);
     } else {

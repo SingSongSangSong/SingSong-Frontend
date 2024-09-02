@@ -47,14 +47,6 @@ const useInit = () => {
 
       const fetchedRemotely = await remoteConfig().fetchAndActivate();
 
-      if (fetchedRemotely) {
-        console.log(
-          'Remote Config values were fetched from the server and activated.',
-        );
-      } else {
-        console.log('Remote Config values were already up-to-date.');
-      }
-
       // 로컬에서 현재 버전 정보 가져오기
       const currentVersion = await getCurrentVersion();
       setCurrentVersion(currentVersion);
@@ -65,19 +57,19 @@ const useInit = () => {
       const updateUrl = remoteConfig().getString('updateUrl');
       setUpdateUrl(updateUrl);
 
-      console.log('현재 버전:', currentVersion);
-      console.log('최신 버전:', latestVersion);
-      console.log('강제 업데이트 버전:', forceUpdateVersion);
+      // console.log('현재 버전:', currentVersion);
+      // console.log('최신 버전:', latestVersion);
+      // console.log('강제 업데이트 버전:', forceUpdateVersion);
 
       // 강제 업데이트가 필요할 경우
       if (currentVersion < forceUpdateVersion) {
-        console.log('강제 업데이트가 필요합니다.');
+        // console.log('강제 업데이트가 필요합니다.');
         setIsForced(true);
         setIsModalVisible(true);
 
         return false; // 강제 업데이트가 필요하므로 false 반환
       } else if (currentVersion < latestVersion) {
-        console.log('선택적 업데이트를 권장합니다.');
+        // console.log('선택적 업데이트를 권장합니다.');
         setIsModalVisible(true);
         return false; // 선택적 업데이트일 경우 true 반환
       }

@@ -26,7 +26,7 @@ type LoginScreenProps = StackScreenProps<
 
 function LoginScreen({navigation}: LoginScreenProps) {
   const loginHandler = useLogin();
-  console.log('prvalue', loginHandler.prValue);
+  // console.log('prvalue', loginHandler.prValue);
 
   const handleKakaoButton = async () => {
     try {

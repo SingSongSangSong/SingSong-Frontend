@@ -11,7 +11,7 @@ type TaglistProps = {
 type IconNames = keyof typeof Icons;
 
 const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
-  console.log('tagList');
+  // console.log('tagList');
 
   // 아이콘 리스트를 생성
   // const icons = [SongsIcon, OneIcon, RoofIcon, EarIcon];

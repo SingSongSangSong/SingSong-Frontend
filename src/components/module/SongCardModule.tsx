@@ -24,7 +24,7 @@ const SongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
 }: SongCardModuleProps) => {
-  console.log('SongCardModule');
+  // console.log('SongCardModule');
   const tags = useSongStore(state => state.tags);
   const previewSongs = useSongStore(state => state.previewSongs);
   const [loadedTags, setLoadedTags] = useState<number>(5);
@@ -48,11 +48,11 @@ const SongCardModule = ({
 
   useEffect(() => {
     if (tempRcdHomeSongs) {
-      console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
+      // console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
       tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
         setPreviewSongs(songWithTags.tag, songWithTags.songs);
       });
-      console.log('setPreview Song completed!!!!!!!!!!!');
+      // console.log('setPreview Song completed!!!!!!!!!!!');
     }
   }, [tempRcdHomeSongs]);
 

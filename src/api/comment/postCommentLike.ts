@@ -16,7 +16,7 @@ const postCommentLike = async (commentId: string) => {
         },
       },
     );
-    console.log('data for postCommentLike response', response.data);
+    // console.log('data for postCommentLike response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postCommentLike:', error);

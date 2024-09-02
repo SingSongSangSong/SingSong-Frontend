@@ -15,7 +15,7 @@ const getSongsReviews = async (songNumber: string) => {
         },
       },
     );
-    console.log('data for getSongsReviews response', response.data);
+    // console.log('data for getSongsReviews response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getSongsReviews:', error);

@@ -44,7 +44,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
       setCharts('MALE', tempCharts.male, 5);
       setTime(tempCharts.time);
       setUserGender(tempCharts.gender);
-      console.log('userGender', tempCharts.gender);
+      // console.log('userGender', tempCharts.gender);
     }
   }, [tempCharts]);
 

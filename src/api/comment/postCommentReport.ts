@@ -24,7 +24,7 @@ const postCommentReport = async (
         },
       },
     );
-    console.log('data for postCommentReport response', response.data);
+    // console.log('data for postCommentReport response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postCommentReport:', error);

@@ -46,7 +46,7 @@ const useSongStore = create<SongState>((set, get) => {
     setTags: (tags: string[]) =>
       set(() => {
         // indexLst 객체를 초기화
-        console.log('setTags', tags);
+        // console.log('setTags', tags);
         const newIndexLst: {[tag: string]: number} = {};
         tags.forEach(tag => {
           newIndexLst[tag] = 0;
@@ -113,7 +113,7 @@ const useSongStore = create<SongState>((set, get) => {
       set(() => ({
         gender: gender,
       }));
-      console.log('gender in song store', gender);
+      // console.log('gender in song store', gender);
     },
   };
 });

@@ -9,7 +9,7 @@ const postRcdSongs = async (songs: number[]) => {
         songs: songs,
       },
     );
-    console.log('data for recommend song response', response.data);
+    // console.log('data for recommend song response', response.data);s
     return response.data;
   } catch (error) {
     console.error('Error fetching recommend song:', error);

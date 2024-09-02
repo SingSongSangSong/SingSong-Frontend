@@ -21,7 +21,7 @@ const useLogin = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getPermissionValue();
-      console.log('data', data);
+      // console.log('data', data);
       if (data) {
         setPrValue(data);
       }
@@ -38,15 +38,15 @@ const useLogin = () => {
   const handleKakaoLogin = async () => {
     try {
       setIsLoggedProcess(true); //true
-      console.log('isLoggedProcess', isLoggedProcess);
+      // console.log('isLoggedProcess', isLoggedProcess);
       const result = await login();
-      console.log('result', result);
+      // console.log('result', result);
       setLoginResult(result);
       setIsModalVisible(true);
     } catch (err) {
       console.error('Login Failed', err);
       setIsLoggedProcess(false);
-      console.log('isLoggedProcess', isLoggedProcess);
+      // console.log('isLoggedProcess', isLoggedProcess);
       Toast.show({
         type: 'selectedToast',
         text1:
@@ -60,7 +60,7 @@ const useLogin = () => {
   const handleKakaoLogin2 = async () => {
     try {
       setIsLoggedProcess(true); //true
-      console.log('isLoggedProcess', isLoggedProcess);
+      // console.log('isLoggedProcess', isLoggedProcess);
       const result = await login();
       const data = await postMemberLogin(result); //accessToken 받기, 설정해야됨
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
@@ -69,7 +69,7 @@ const useLogin = () => {
     } catch (err) {
       console.error('Login Failed', err);
       setIsLoggedProcess(false);
-      console.log('isLoggedProcess', isLoggedProcess);
+      // console.log('isLoggedProcess', isLoggedProcess);
       Toast.show({
         type: 'selectedToast',
         text1:

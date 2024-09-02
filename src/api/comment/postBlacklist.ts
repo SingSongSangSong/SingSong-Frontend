@@ -18,7 +18,7 @@ const postBlacklist = async (memberId: number) => {
         },
       },
     );
-    console.log('data for postBlacklist response', response.data);
+    // console.log('data for postBlacklist response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postBlacklist:', error);

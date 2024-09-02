@@ -8,7 +8,7 @@ type SongCommentProps = {
   handleOnPressComment: () => void;
 };
 const SongComment = ({handleOnPressComment}: SongCommentProps) => {
-  console.log('songComment');
+  // console.log('songComment');
   const commentCount = useCommentStore(state => state.commentCount);
   return (
     <View style={tw`w-full px-1 mt-4`}>

@@ -6,8 +6,8 @@ const postRcdRefresh = async (tag: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log(token);
-    console.log(tag);
+    // console.log(token);
+    // console.log(tag);
     const response = await axiosInstance.post<RcdRefreshResponse>(
       '/recommend/refresh',
       {tag: tag},
@@ -18,7 +18,7 @@ const postRcdRefresh = async (tag: string) => {
         },
       },
     );
-    console.log('data for recommend song refresh response', response.data);
+    // console.log('data for recommend song refresh response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching refresh:', error);

@@ -7,7 +7,7 @@ const postRcdHome = async (tags: TagProps) => {
       '/recommend/home',
       tags,
     );
-    console.log('data for recommend home response', response.data);
+    // console.log('data for recommend home response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching recommend home:', error);

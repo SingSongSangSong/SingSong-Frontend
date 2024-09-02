@@ -6,7 +6,7 @@ const getRcdHomeSongs = async () => {
     const response = await axiosInstance.get<RcdExploreResponse>(
       '/recommend/home/songs',
     );
-    console.log('data for rcd home song response', response.data);
+    // console.log('data for rcd home song response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching rcd home song:', error);

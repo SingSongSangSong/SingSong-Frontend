@@ -6,7 +6,7 @@ const postKeep = async (songNumbers: number[]) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log(songNumbers);
+    // console.log(songNumbers);
     const response = await axiosInstance.post<KeepResponse>(
       '/keep',
       {songId: songNumbers},
@@ -17,7 +17,7 @@ const postKeep = async (songNumbers: number[]) => {
         },
       },
     );
-    console.log('data for postKeep response', response.data);
+    // console.log('data for postKeep response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postKeep:', error);

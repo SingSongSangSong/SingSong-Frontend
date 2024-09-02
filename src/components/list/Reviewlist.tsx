@@ -21,7 +21,7 @@ const Reviewlist: React.FC<ReviewlistProps> = ({
     const selectedItem = reviewlistData.find(item => item.selected);
     if (selectedItem) {
       setSelectedId(selectedItem.songReviewOptionId);
-      console.log('selectedId:', selectedId);
+      // console.log('selectedId:', selectedId);
     }
   }, [reviewlistData]);
 

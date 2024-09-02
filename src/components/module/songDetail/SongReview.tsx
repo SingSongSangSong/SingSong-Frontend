@@ -32,7 +32,7 @@ const SongReview = ({songId}: SongReviewProps) => {
   }, []);
 
   const setInitSongReview = async (songId: number) => {
-    console.log('setInitSongReview');
+    // console.log('setInitSongReview');
     try {
       const tempSongsReviews = await getSongsReviews(String(songId));
       const reviews = tempSongsReviews.data;
@@ -48,7 +48,7 @@ const SongReview = ({songId}: SongReviewProps) => {
       const selectedItem = reviews.find(item => item.selected);
       if (selectedItem) {
         setSelectedId(selectedItem.songReviewOptionId);
-        console.log('selectedId', selectedId);
+        // console.log('selectedId', selectedId);
       }
     } catch (error) {
       console.error('Error fetching song reviews:', error);

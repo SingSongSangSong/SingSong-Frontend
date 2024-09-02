@@ -24,7 +24,7 @@ const postMemberLogout = async () => {
         },
       },
     );
-    console.log('data for recommend member logout response', response.data);
+    // console.log('data for recommend member logout response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching member logout:', error);

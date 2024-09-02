@@ -15,7 +15,7 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
     try {
       // 카카오 로그인 시작
       const result = await login();
-      console.log('Login Result:', result);
+      // console.log('Login Result:', result);
 
       // // 로그인 성공 후 사용자 프로필 가져오기
       // const profile = await getProfile();
@@ -33,7 +33,7 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
   const handleKakaoLogout = async () => {
     try {
       const result = await logout();
-      console.log('Logout Result:', result);
+      // console.log('Logout Result:', result);s
     } catch (err) {
       console.error('Logout Failed', err);
     }

@@ -161,7 +161,7 @@ const TokenStore = () => {
   const getIsValidToken = async (): Promise<boolean> => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-    console.log(accessToken, refreshToken);
+    // console.log(accessToken, refreshToken);
 
     // 토큰이 없는지 검사
     if (!accessToken || !refreshToken) {

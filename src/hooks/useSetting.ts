@@ -38,7 +38,7 @@ const useSetting = () => {
       });
       const result = await postMemberLogout();
 
-      console.log('Logout Result:', result);
+      // console.log('Logout Result:', result);
     } catch (err) {
       console.error('Logout Failed', err);
     }

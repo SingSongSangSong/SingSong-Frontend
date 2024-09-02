@@ -11,7 +11,7 @@ const postComment = async (
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log(content, isRecomment, parentCommentId, songId);
+    // console.log(content, isRecomment, parentCommentId, songId);
     const response = await axiosInstance.post<PostCommentResponse>(
       '/comment',
       {
@@ -27,7 +27,7 @@ const postComment = async (
         },
       },
     );
-    console.log('data for postComment response', response.data);
+    // console.log('data for postComment response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postComment:', error);

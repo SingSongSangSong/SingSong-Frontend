@@ -16,7 +16,7 @@ const TaglistModule = React.memo(
   ({onPressTotalButton, onPressTagButton}: TaglistModuleProps) => {
     const tags = useSongStore(state => state.tags);
     const setTags = useSongStore(state => state.setTags);
-    console.log('tagListMOdule');
+    // console.log('tagListMOdule');
 
     const {
       data: tempTags,
@@ -31,7 +31,7 @@ const TaglistModule = React.memo(
 
     useEffect(() => {
       if (tempTags) {
-        console.log('tempTags:', tempTags);
+        // console.log('tempTags:', tempTags);
         setTags(tempTags);
       }
     }, [tempTags]);

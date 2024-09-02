@@ -1,11 +1,9 @@
 import {useEffect, useState} from 'react';
-import {buttonItem} from '../types';
 import {Alert} from 'react-native';
 import useKeepListStore from '../store/useKeepStore';
 import getKeep from '../api/keep/getKeep';
 import deleteKeep from '../api/keep/deleteKeep';
 import Toast from 'react-native-toast-message';
-import {useQuery} from '@tanstack/react-query';
 
 const useKeep = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -60,7 +58,7 @@ const useKeep = () => {
   };
 
   const handleDeleteKeep = async (songNumbers: number[]) => {
-    console.log(songNumbers);
+    // console.log(songNumbers);
     const updatedSongs = await deleteKeep(songNumbers);
     setKeepList(updatedSongs.data); //keepList 업데이트
     // console.log(updatedSongs);
@@ -80,22 +78,14 @@ const useKeep = () => {
   //   }),
   // );
 
-  const buttonNames = ['전체', '최근', '인기', '신나는', '재밌는'];
+  // const buttonNames = ['전체', '최근', '인기', '신나는', '재밌는'];
 
-  const buttonItems: buttonItem[] = buttonNames.map(name => ({
-    name,
-    onPress: () => {
-      console.log(`${name} 버튼이 눌렸습니다.`);
-    },
-  }));
-
-  const handleFolderPress = (id: string) => {
-    console.log('폴더 클릭', id);
-  }; //폴더 로직 추가 구현 필요
-
-  // const getSonglist = (playlistName: string) => {
-  //   return playlists[playlistName];
-  // };
+  // const buttonItems: buttonItem[] = buttonNames.map(name => ({
+  //   name,
+  //   onPress: () => {
+  //     console.log(`${name} 버튼이 눌렸습니다.`);
+  //   },
+  // }));
 
   const handleRemoveButton = () => {
     Alert.alert(
@@ -109,7 +99,7 @@ const useKeep = () => {
             // removedSong.map(song => {
             //   removeSongFromKeep(song);
             // });
-            console.log('삭제');
+            // console.log('삭제');
             handleDeleteKeep(removedSong);
             setRemovedSong([]);
             Toast.show({
@@ -162,10 +152,8 @@ const useKeep = () => {
     isAllDeleted,
     keepList,
     removedSong,
-    buttonItems,
     handleIsAllSelected,
     handleIsAllDeleted,
-    handleFolderPress,
     handleRemoveButton,
     handleInCircleButton,
     handleOutCircleButton,

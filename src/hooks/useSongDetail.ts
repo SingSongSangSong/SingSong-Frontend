@@ -102,12 +102,12 @@ const useSongDetail = ({
           .map(review => review.songReviewOptionId) || [];
       if (selectedReview.includes(1)) {
         setIsLikePressed(true);
-        console.log('isLikePressed:', isLikePressed);
+        // console.log('isLikePressed:', isLikePressed);
       } else if (selectedReview.includes(2)) {
         setIsDislikePressed(true);
-        console.log('isDislikePressed:', isDislikePressed);
+        // console.log('isDislikePressed:', isDislikePressed);
       }
-      console.log(selectedReview);
+      // console.log(selectedReview);s
     });
 
     getSongsRelated(String(songId), page, size).then(tempSongRelated => {
@@ -201,7 +201,7 @@ const useSongDetail = ({
       //20개 이상일 경우에만 api 호출
       if (songRelated) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        console.log('refresh!!!!!!!!!!!!!!!!!!!');
+        // console.log('refresh!!!!!!!!!!!!!!!!!!!');s
         getSongsRelated(String(songId), page, size)
           .then(response => {
             const newSongRelated = response.data.songs;

@@ -6,7 +6,7 @@ const isEmptyObject = (obj: Record<string, any>): boolean => {
 
 const getCurrentVersion = async () => {
   const version = DeviceInfo.getVersion();
-  console.log('현재 앱 버전:', version);
+  // console.log('현재 앱 버전:', version);
   return version;
 };
 

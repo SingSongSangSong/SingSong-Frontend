@@ -6,8 +6,8 @@ const putSongReviews = async (
   songReviewOptionId: number,
 ) => {
   try {
-    console.log('songId:', songNumber);
-    console.log('songReviewOptionId:', songReviewOptionId);
+    // console.log('songId:', songNumber);
+    // console.log('songReviewOptionId:', songReviewOptionId);
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.put(

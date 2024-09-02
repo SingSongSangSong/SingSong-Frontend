@@ -35,7 +35,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
     try {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        console.log('on refresh!!!!!!!!!!!!!!!!!!!');
+        // console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         const songData = await postRcdRefresh(initTag);
         setSongLst(songData.data);
         // setRefreshSongs(initTag, songData.data);

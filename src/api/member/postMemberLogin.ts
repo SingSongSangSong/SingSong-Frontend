@@ -7,16 +7,16 @@ const postMemberLogin = async (
   gender?: string,
 ) => {
   try {
-    console.log('birthYear:', birthYear);
-    console.log('gender', gender);
-    console.log('idToken:', results.idToken);
+    // console.log('birthYear:', birthYear);
+    // console.log('gender', gender);
+    // console.log('idToken:', results.idToken);
     const response = await axiosInstance.post<LoginResponse>('/member/login', {
       birthYear: birthYear,
       gender: gender,
       idToken: results.idToken,
       provider: 'KAKAO_KEY',
     });
-    console.log('postLogin:', response.data);
+    // console.log('postLogin:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postLogin:', error);

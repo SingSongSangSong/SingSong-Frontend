@@ -12,7 +12,7 @@ const deleteBlacklist = async (memberIds: number[]) => {
       },
       data: {memberIds: memberIds},
     });
-    console.log('data for deleteBlacklist response', response.data);
+    // console.log('data for deleteBlacklist response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching deleteBlacklist:', error);
