@@ -30,8 +30,8 @@ function SettingScreen({navigation}: SettingScreenProps) {
   const [isWithdraw, setIsWithdraw] = useState(false);
   const currentVersion = VersionStore(state => state.currentVersion);
 
-  const handleLogoutButton = () => {
-    settingHandler.handleKakaoLogout();
+  const handleLogoutButton = async () => {
+    await settingHandler.handleKakaoLogout();
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -40,8 +40,8 @@ function SettingScreen({navigation}: SettingScreenProps) {
     );
   };
 
-  const handleWithdrawButton = () => {
-    settingHandler.handleWithdraw();
+  const handleWithdrawButton = async () => {
+    await settingHandler.handleWithdraw();
     navigation.dispatch(
       CommonActions.reset({
         index: 0,

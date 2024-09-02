@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     backgroundColor: 'white',
     position: 'absolute',
-    top: 2,
+    // top: 2,
   },
 });
 
