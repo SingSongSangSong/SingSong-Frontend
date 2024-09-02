@@ -30,7 +30,7 @@
 package com.singsongsangsong_frontend
 
 import com.facebook.react.ReactActivity
-import com.facebook.react.ReactActivityDelegate
+// import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.ReactRootView
 // import com.swmansion.gesturehandler.react.RNHandlerEnabledRootView
 import android.os.Bundle
