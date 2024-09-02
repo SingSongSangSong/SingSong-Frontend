@@ -52,7 +52,9 @@ function KeepScreen({navigation}: KeepScreenProps) {
               />
             ) : (
               <View style={tw`h-full w-full justify-center items-center`}>
-                <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
+                <Text style={tw`text-[${designatedColor.PINK2}] font-bold`}>
+                  Memo가 비어있어요
+                </Text>
               </View>
             )}
           </View>

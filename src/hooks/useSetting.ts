@@ -47,7 +47,7 @@ const useSetting = () => {
   const handleWithdraw = async () => {
     Toast.show({
       type: 'selectedToast',
-      text1: '탈퇴가 완료되었습니다. 그동안 이용해 주셔서 감사합니다.',
+      text1: '탈퇴가 완료되었습니다. \n그동안 이용해 주셔서 감사합니다.',
       position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
       visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
     });

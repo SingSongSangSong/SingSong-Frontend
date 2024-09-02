@@ -21,6 +21,7 @@ const useLogin = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getPermissionValue();
+      console.log('data', data);
       if (data) {
         setPrValue(data);
       }

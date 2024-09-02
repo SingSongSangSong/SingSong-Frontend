@@ -30,14 +30,12 @@ const useKeep = () => {
   // });
 
   useEffect(() => {
-    if (keepList.length == 0) {
-      setInitKeep();
-    }
+    setInitKeep();
     // if (tempKeepList) {
     //   setKeepList(tempKeepList);
     //   setIsKeepLoading(false);
     // }
-  }, [keepList]);
+  }, []);
 
   // const handleOnPressSonglist = (songNumber: number) => {
   //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});

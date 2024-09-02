@@ -8,22 +8,24 @@ import {
   RemoveButton,
   SonglistEdit,
 } from '../../components';
+import {designatedColor} from '../../constants';
 
 function KeepEditScreen() {
   const keepHandler = useKeep();
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={tw`flex-row items-center justify-between m-4`}>
-        <CheckButton
-          onPressIn={keepHandler.handleIsAllSelected}
-          onPressOut={keepHandler.handleIsAllDeleted}
-          isSelected={false}
-          isDeleted={false}
-        />
-        {/* <AddTextButton title="곡 추가" onPress={() => {}} isCenter={true} /> */}
-      </View>
-
+      {keepHandler.keepList.length > 0 && (
+        <View style={tw`flex-row items-center justify-between m-4`}>
+          <CheckButton
+            onPressIn={keepHandler.handleIsAllSelected}
+            onPressOut={keepHandler.handleIsAllDeleted}
+            isSelected={false}
+            isDeleted={false}
+          />
+          {/* <AddTextButton title="곡 추가" onPress={() => {}} isCenter={true} /> */}
+        </View>
+      )}
       <View style={tw`flex-1`}>
         {keepHandler.keepList.length > 0 ? (
           <SonglistEdit
@@ -35,7 +37,9 @@ function KeepEditScreen() {
           />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
-            <Text style={tw`text-white font-bold`}>Keep이 비어있어요</Text>
+            <Text style={tw`text-[${designatedColor.PINK2}] font-bold`}>
+              MEMO가 비어있어요
+            </Text>
           </View>
         )}
       </View>
