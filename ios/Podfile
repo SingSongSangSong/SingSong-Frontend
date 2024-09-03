@@ -16,9 +16,10 @@ end
 
 target 'singsongsangsong_frontend' do
   config = use_native_modules!
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

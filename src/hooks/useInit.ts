@@ -57,9 +57,9 @@ const useInit = () => {
       const updateUrl = remoteConfig().getString('updateUrl');
       setUpdateUrl(updateUrl);
 
-      // console.log('현재 버전:', currentVersion);
-      // console.log('최신 버전:', latestVersion);
-      // console.log('강제 업데이트 버전:', forceUpdateVersion);
+      console.log('현재 버전:', currentVersion);
+      console.log('최신 버전:', latestVersion);
+      console.log('강제 업데이트 버전:', forceUpdateVersion);
 
       // 강제 업데이트가 필요할 경우
       if (currentVersion < forceUpdateVersion) {
