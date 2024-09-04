@@ -6,19 +6,23 @@
 	<array>
 		<string>kakaoplus</string>
 		<string>kakaolink</string>
+		<string>storykompassauth</string>
 		<string>kakaokompassauth</string>
 	</array>
 	<key>CFBundleURLTypes</key>
-<array>
-    <dict>
-        <key>CFBundleURLName</key>
-        <string>com.singsongsangsong</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-            <string>kakao2de29a7b3583418860f9e5705cca20cf</string>
-        </array>
-    </dict>
-</array>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.singsongsangsong</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao2de29a7b3583418860f9e5705cca20cf</string>
+			</array>
+		</dict>
+	</array>
+	<key>KAKAO_APP_KEY</key>
+ 	<string>2de29a7b3583418860f9e5705cca20cf</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

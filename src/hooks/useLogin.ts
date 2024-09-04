@@ -61,7 +61,9 @@ const useLogin = () => {
     try {
       setIsLoggedProcess(true); //true
       // console.log('isLoggedProcess', isLoggedProcess);
+      console.log('before login');
       const result = await login();
+      console.log('after login', result);
       const data = await postMemberLogin(result); //accessToken 받기, 설정해야됨
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
