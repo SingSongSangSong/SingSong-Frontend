@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Platform,
 } from 'react-native';
 import React from 'react';
 import {LargeButton} from '../../components';
@@ -18,6 +19,8 @@ import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
+// import AppleIcon from '../../assets/svg/apple.svg';
+import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -45,8 +48,25 @@ function LoginScreen({navigation}: LoginScreenProps) {
     }
   };
 
+  const handleAppleButton = async () => {
+    try {
+      await loginHandler.handleAppleLogin();
+    } catch (err) {
+      console.error('Login Failed', err);
+    }
+  };
+
+  const handleAppleButton2 = async () => {
+    try {
+      await loginHandler.handleAppleLogin2();
+      navigation.replace(appStackNavigations.MAIN);
+    } catch (err) {
+      console.error('Login Failed', err);
+    }
+  };
+
   const handleOnModalCloseButton = async () => {
-    const value = await loginHandler._handleKakaoLogin();
+    const value = await loginHandler._handleLogin();
     if (value) {
       loginHandler.setPermissionValue('true');
       navigation.replace(appStackNavigations.MAIN); //메인으로 이동
@@ -58,7 +78,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
   return (
     <View
       style={[
-        tw`w-full h-full bg-black items-center justify-start`,
+        tw`w-full h-full bg-[${designatedColor.BACKGROUND_BLACK}] items-center justify-start`,
         {paddingTop: deviceHeight * 0.25},
       ]}>
       <View style={tw`items-center`}>
@@ -71,6 +91,24 @@ function LoginScreen({navigation}: LoginScreenProps) {
       </View>
 
       <View style={tw`absolute bottom-0 mb-20 w-full`}>
+        {Platform.OS === 'ios' && (
+          // <LargeButton
+          //   title="Apple로 로그인"
+          //   onPress={
+          //     loginHandler.prValue ? handleAppleButton2 : handleAppleButton
+          //   }
+          //   color={designatedColor.APPLE_BLACK}
+          //   Icon={AppleIcon}
+          // />
+          <AppleButton
+            buttonStyle={AppleButton.Style.BLACK}
+            buttonType={AppleButton.Type.SIGN_IN}
+            style={{width: 160, height: 45}}
+            onPress={
+              loginHandler.prValue ? handleAppleButton2 : handleAppleButton
+            }
+          />
+        )}
         <LargeButton
           title="카카오로 로그인"
           onPress={

@@ -1,8 +1,9 @@
-import {LoginResponse, LoginResult} from '../../types';
+import {LoginResponse} from '../../types';
 import axiosInstance from '../axiosIns';
 
 const postMemberLogin = async (
-  results: LoginResult,
+  idToken: string,
+  provider: string,
   birthYear?: string,
   gender?: string,
 ) => {
@@ -13,8 +14,8 @@ const postMemberLogin = async (
     const response = await axiosInstance.post<LoginResponse>('/member/login', {
       birthYear: birthYear,
       gender: gender,
-      idToken: results.idToken,
-      provider: 'KAKAO_KEY',
+      idToken: idToken,
+      provider: provider,
     });
     // console.log('postLogin:', response.data);
     return response.data;

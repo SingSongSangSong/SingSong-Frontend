@@ -22,6 +22,8 @@
 	</array>
 	<key>KAKAO_APP_KEY</key>
  	<string>2de29a7b3583418860f9e5705cca20cf</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need your permission to sign in with Apple.</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
