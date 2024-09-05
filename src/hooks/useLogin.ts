@@ -6,10 +6,11 @@ import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import PermissionStore from '../store/PermissionStore';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
+import useMemberStore from '../store/useMemberStore';
 // import {Linking} from 'react-native';
 
 const useLogin = () => {
-  const [provider, setProvider] = useState<string>();
+  // const [provider, setProvider] = useState<string>();
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [idToken, setIdToken] = useState<string>();
@@ -18,6 +19,7 @@ const useLogin = () => {
   const [gender, setGender] = useState('');
   const {getPermissionValue, setPermissionValue} = PermissionStore();
   const [prValue, setPrValue] = useState('');
+  const {provider, setProvider} = useMemberStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +146,7 @@ const useLogin = () => {
       console.log('idToken', identityToken);
       setIdToken(identityToken!);
 
-      const data = await postMemberLogin(provider!, identityToken!); //accessToken 받기, 설정해야됨
+      const data = await postMemberLogin(identityToken!, provider!); //accessToken 받기, 설정해야됨
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(!isLoggedProcess); //false

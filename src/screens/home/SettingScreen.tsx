@@ -19,6 +19,7 @@ import {CustomModal} from '../../components';
 import {CommonActions} from '@react-navigation/native';
 import VersionStore from '../../store/VersionStore';
 import useSetting from '../../hooks/useSetting';
+import AppleIcon from '../../assets/svg/apple.svg';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -61,12 +62,20 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>내 계정</Text>
           <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
             <View style={tw`flex-row items-center`}>
-              <Image
-                source={require('../../assets/png/kakaotalk.png')}
-                style={tw`w-4 h-4`}
-              />
+              {settingHandler.provider == 'KAKAO_KEY' ? (
+                <Image
+                  source={require('../../assets/png/kakaotalk.png')}
+                  style={tw`w-4 h-4`}
+                />
+              ) : (
+                // <Icon name="apple" size={30} color="#000" />
+                <AppleIcon />
+              )}
+
               <Text style={tw`text-white ml-2`}>
-                {settingHandler.memberInfo?.email}
+                {settingHandler.provider == 'KAKAO_KEY'
+                  ? settingHandler.memberInfo?.email
+                  : 'Apple'}
               </Text>
             </View>
             <TouchableOpacity

@@ -4,11 +4,14 @@ import {MemberInfo} from '../types';
 interface MemberState {
   memberInfo: MemberInfo;
   setMemberInfo: (memberInfo: MemberInfo) => void;
+  provider: string;
+  setProvider: (provider: string) => void;
 }
 
 const useMemberStore = create<MemberState>(set => {
   const initState = {
     memberInfo: {},
+    provider: '',
   };
 
   return {
@@ -17,6 +20,12 @@ const useMemberStore = create<MemberState>(set => {
     setMemberInfo: (memberInfo: MemberInfo) => {
       set(() => ({
         memberInfo: memberInfo,
+      }));
+    },
+
+    setProvider: (provider: string) => {
+      set(() => ({
+        provider: provider,
       }));
     },
   };

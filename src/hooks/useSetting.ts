@@ -10,6 +10,7 @@ import {isEmptyObject} from '../utils';
 const useSetting = () => {
   const memberInfo = useMemberStore(state => state.memberInfo);
   const setMemberInfo = useMemberStore(state => state.setMemberInfo);
+  const provider = useMemberStore(state => state.provider);
 
   const {
     data: tempMemberInfo,
@@ -56,6 +57,7 @@ const useSetting = () => {
 
   return {
     memberInfo,
+    provider,
     handleKakaoLogout,
     handleWithdraw,
   };
