@@ -74,13 +74,15 @@ const MainTabNavigator = () => {
           },
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
-            ? {height: 0, overflow: 'hidden'}
+            ? {height: 0, overflow: 'hidden', position: 'absolute'}
             : {
                 height: 60,
                 backgroundColor: 'black',
                 paddingTop: 5,
                 paddingBottom: 5,
+                position: 'absolute',
               },
+          tabBarSafeAreaInsets: {bottom: 0},
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
           // keyboardHidesTabBar: false,
