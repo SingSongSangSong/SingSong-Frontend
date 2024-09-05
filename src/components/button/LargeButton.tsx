@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import tw from 'twrnc';
 
 interface LargeButtonProps {
@@ -18,9 +18,17 @@ const LargeButton: React.FC<LargeButtonProps> = ({
   return (
     <Pressable
       onPress={onPress}
-      style={tw`py-4 bg-[${color}] rounded-sm  mx-6 justify-center items-center flex-row`}>
-      <Icon />
-      <Text style={tw`text-sm text-black mx-2`}>{title}</Text>
+      style={tw`bg-[${color}] rounded-xl justify-center items-center flex-row h-[56px] w-[280px]`}>
+      <View style={tw`flex-row items-center justify-center`}>
+        <Icon height="60px" />
+        <Text
+          style={[
+            tw`text-[19px] text-black`,
+            title == 'Sign in with Kakao' && tw`ml-4`,
+          ]}>
+          {title}
+        </Text>
+      </View>
     </Pressable>
   );
 };

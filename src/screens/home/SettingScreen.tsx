@@ -19,7 +19,7 @@ import {CustomModal} from '../../components';
 import {CommonActions} from '@react-navigation/native';
 import VersionStore from '../../store/VersionStore';
 import useSetting from '../../hooks/useSetting';
-import AppleIcon from '../../assets/svg/apple.svg';
+import AppleIcon from '../../assets/svg/appleWhiteLogo.svg';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -69,7 +69,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 />
               ) : (
                 // <Icon name="apple" size={30} color="#000" />
-                <AppleIcon />
+                <AppleIcon width={32} height={32} />
               )}
 
               <Text style={tw`text-white ml-2`}>

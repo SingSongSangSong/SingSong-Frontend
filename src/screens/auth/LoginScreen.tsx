@@ -19,8 +19,8 @@ import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
-// import AppleIcon from '../../assets/svg/apple.svg';
-import {AppleButton} from '@invertase/react-native-apple-authentication';
+import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
+// import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -90,27 +90,21 @@ function LoginScreen({navigation}: LoginScreenProps) {
         </View>
       </View>
 
-      <View style={tw`absolute bottom-0 mb-20 w-full`}>
-        {Platform.OS === 'ios' && (
-          // <LargeButton
-          //   title="Apple로 로그인"
-          //   onPress={
-          //     loginHandler.prValue ? handleAppleButton2 : handleAppleButton
-          //   }
-          //   color={designatedColor.APPLE_BLACK}
-          //   Icon={AppleIcon}
-          // />
-          <AppleButton
-            buttonStyle={AppleButton.Style.BLACK}
-            buttonType={AppleButton.Type.SIGN_IN}
-            style={{width: 160, height: 45}}
-            onPress={
-              loginHandler.prValue ? handleAppleButton2 : handleAppleButton
-            }
-          />
+      <View style={tw`absolute bottom-0 mb-20 w-full items-center`}>
+        {Platform.OS == 'ios' && (
+          <View style={tw`mb-4`}>
+            <LargeButton
+              title="Sign in with Apple"
+              onPress={
+                loginHandler.prValue ? handleAppleButton2 : handleAppleButton
+              }
+              color={designatedColor.WHITE}
+              Icon={AppleBlackIcon}
+            />
+          </View>
         )}
         <LargeButton
-          title="카카오로 로그인"
+          title="Sign in with Kakao"
           onPress={
             loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
           }
