@@ -113,13 +113,13 @@ function SongScreen(props: SongScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={tw`items-start absolute top-0 left-0 z-50 w-full bg-black`}>
+      {/* <View style={tw`items-start absolute top-0 left-0 z-50 w-full bg-black`}>
         <TouchableOpacity
           onPress={() => props.navigation.goBack()}
           style={tw`p-4`}>
           <ArrowLeftIcon width={28} height={28} />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <FlatList
         ListHeaderComponent={renderHeader}

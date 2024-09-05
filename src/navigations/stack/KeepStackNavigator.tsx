@@ -64,9 +64,22 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
       <Stack.Screen
         name={keepStackNavigations.KEEP_SONG_DETAIL}
         component={SongScreen}
-        options={{
-          headerShown: false,
-        }}
+        options={({navigation}) => ({
+          headerShown: true,
+          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
       />
       <Stack.Screen
         name={keepStackNavigations.KEEP_COMMENT}
