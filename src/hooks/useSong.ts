@@ -8,6 +8,7 @@ import {homeStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import useKeepListStore from '../store/useKeepStore';
 
 type UseSongProps = {
   initTag: string;
@@ -21,6 +22,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);
+  const setKeepList = useKeepListStore(state => state.setKeepList);
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -85,7 +87,8 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const _onKeepAddPress = async (songId: number) => {
     amplitude.track('recommendation_keep_button_click');
     logButtonClick('recommendation_keep_button_click');
-    await postKeep([songId]);
+    const tempKeepList = await postKeep([songId]);
+    setKeepList(tempKeepList.data);
     Toast.show({
       type: 'selectedToast',
       text1: 'Memo에 추가되었습니다.',
@@ -95,7 +98,9 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   };
 
   const _onKeepRemovePress = async (songId: number) => {
-    await deleteKeep([songId]);
+    // await deleteKeep([songId]);
+    const tempKeepList = await deleteKeep([songId]);
+    setKeepList(tempKeepList.data);
     Toast.show({
       type: 'selectedToast',
       text1: 'Memo에서 삭제되었습니다.',
