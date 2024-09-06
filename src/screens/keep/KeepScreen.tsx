@@ -8,6 +8,7 @@ import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type KeepScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -35,8 +36,18 @@ function KeepScreen({navigation}: KeepScreenProps) {
     });
   };
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={tw`h-full w-full bg-black`}>
+    <View
+      style={[
+        tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
+        {
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       <View style={tw`w-full h-full pt-6`}>
         {keepHandler.isKeepLoading ? (
           <View style={tw`flex-1 justify-center items-center`}>
@@ -60,7 +71,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

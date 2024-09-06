@@ -1,15 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
-import {homeStackNavigations, keepStackNavigations} from '../../constants';
+import {
+  designatedColor,
+  homeStackNavigations,
+  keepStackNavigations,
+} from '../../constants';
 import {
   SongAdditionInfo,
   SongComment,
@@ -19,7 +17,7 @@ import {
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
-import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type SongScreenProps =
   | StackScreenProps<
@@ -111,8 +109,18 @@ function SongScreen(props: SongScreenProps) {
     </View>
   );
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <View
+      style={[
+        tw`flex-1 bg-[${designatedColor.BLACK}]`,
+        {
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       {/* <View style={tw`items-start absolute top-0 left-0 z-50 w-full bg-black`}>
         <TouchableOpacity
           onPress={() => props.navigation.goBack()}
@@ -130,7 +138,7 @@ function SongScreen(props: SongScreenProps) {
         }
         keyExtractor={(item, index) => index.toString()} // Key extractor for FlatList
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

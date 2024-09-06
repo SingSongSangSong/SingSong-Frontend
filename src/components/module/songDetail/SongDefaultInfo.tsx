@@ -20,17 +20,17 @@ const SongDefaultInfo = ({
   return (
     <View>
       <View style={tw`justify-center items-center overflow-hidden`}>
-        <View style={tw`w-full h-50 bg-[${designatedColor.GRAY}]`} />
-        <View style={tw`w-full h-30 bg-black`} />
+        <View style={tw`w-full h-40 bg-[${designatedColor.GRAY}]`} />
+        <View style={tw`w-full h-30 bg-[${designatedColor.BLACK}]`} />
 
         {!album || album == '' ? (
           <View
-            style={tw`absolute top-20 w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
+            style={tw`absolute w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
             <MusicIcon width={64} height={64} />
           </View>
         ) : (
           <View
-            style={tw`absolute top-20 w-50 h-50 rounded-lg justify-center items-center`}>
+            style={tw`absolute w-50 h-50 rounded-lg justify-center items-center`}>
             <Image
               source={{uri: album}}
               style={tw`w-50 h-50 rounded-md`}

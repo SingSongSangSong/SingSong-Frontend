@@ -6,7 +6,7 @@ import AppStackNavigator from './src/navigations/stack/AppStackNavigator';
 import {CustomToast} from './src/components';
 import queryClient from './src/api/queryClient';
 import crashlytics from '@react-native-firebase/crashlytics';
-import messaging from '@react-native-firebase/in-app-messaging';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -16,17 +16,21 @@ function App(): React.JSX.Element {
   useEffect(() => {
     // In-App Messaging 활성화
     crashlytics().log('App started');
-    messaging().setMessagesDisplaySuppressed(false);
-    messaging().setAutomaticDataCollectionEnabled(true);
+    // messaging().setMessagesDisplaySuppressed(false);
+    // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <AppStackNavigator />
-        <CustomToast />
-      </NavigationContainer>
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      {/* <SafeAreaView style={{flex: 1}}> */}
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <AppStackNavigator />
+          <CustomToast />
+        </NavigationContainer>
+      </QueryClientProvider>
+      {/* </SafeAreaView> */}
+    </SafeAreaProvider>
   );
 }
 

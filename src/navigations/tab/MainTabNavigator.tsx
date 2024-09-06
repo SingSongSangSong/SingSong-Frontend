@@ -18,6 +18,8 @@ import StarIconActive from '../../assets/svg/selectedStar.svg';
 import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {TouchableOpacity} from 'react-native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -38,6 +40,7 @@ const getTabBarIcon = (
 };
 
 const MainTabNavigator = () => {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       initialRouteName={mainTabNavigations.HOME}
@@ -74,17 +77,27 @@ const MainTabNavigator = () => {
           },
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
-            ? {height: 0, overflow: 'hidden', position: 'absolute'}
-            : {
-                height: 60,
+            ? {
+                // height: insets.bottom,
+                // overflow: 'hidden',
+                // position: 'absolute',
+                // paddingBottom: insets.bottom,
+                display: 'none',
+              }
+            : // undefined
+              {
+                height: 80,
                 backgroundColor: 'black',
                 paddingTop: 5,
-                paddingBottom: 5,
                 position: 'absolute',
+                paddingBottom: insets.bottom,
               },
           tabBarSafeAreaInsets: {bottom: 0},
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
+          tabBarVisible: !shouldHideTabBar(),
+          tabBarButton: props =>
+            shouldHideTabBar() ? null : <TouchableOpacity {...props} />, // tabBarButton을 null로 설정
           // keyboardHidesTabBar: false,
         };
       }}>

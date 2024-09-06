@@ -24,6 +24,7 @@ import SearchIcon from '../../assets/svg/search.svg';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -110,8 +111,19 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     navigation.navigate(homeStackNavigations.TAG_DETAIL);
   }, [navigation]);
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <View
+      style={[
+        tw`flex-1 bg-black`,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       <View
         style={tw`bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}
         onLayout={handleOnLayout}>
@@ -152,7 +164,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             animationType="fade">
             <View
               style={[
-                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-black`,
+                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-black bg-opacity-50`,
                 {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>
@@ -165,7 +177,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
           </Modal>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -3,10 +3,21 @@ import {SafeAreaView, Text, View} from 'react-native';
 import {designatedColor} from '../../constants';
 import tw from 'twrnc';
 import MicIcon from '../../assets/svg/logMic.svg';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 function PlaygroundScreen() {
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={tw`flex-1 bg-black justify-center items-center`}>
+    <View
+      style={[
+        tw`flex-1 bg-black justify-center items-center`,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       {/* <Text style={tw`text-white font-bold text-lg`}>playground screen</Text> */}
       <View style={tw`items-center`}>
         <Text style={tw`text-[${designatedColor.PINK}] text-[10] font-bold`}>
@@ -25,7 +36,7 @@ function PlaygroundScreen() {
           기대해주세요!
         </Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
