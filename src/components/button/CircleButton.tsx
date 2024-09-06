@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {designatedColor} from '../../constants';
+import CheckIcon from '../../assets/svg/check.svg';
 
 interface CircleButtonProps {
   onPressIn: () => void;
@@ -46,7 +47,12 @@ const CircleButton = ({
       style={styles.button}
       activeOpacity={0.8}>
       <View style={[styles.circle, isPressed && styles.circlePressed]}>
-        {isPressed && <Icon name="check" size={12} color="black" />}
+        {isPressed &&
+          (Platform.OS === 'ios' ? (
+            <CheckIcon width={12} height={12} />
+          ) : (
+            <Icon name="check" size={12} color="black" />
+          ))}
       </View>
     </TouchableOpacity>
   );

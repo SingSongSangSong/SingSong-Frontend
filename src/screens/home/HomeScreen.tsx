@@ -119,7 +119,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         tw`flex-1 bg-black`,
         {
           paddingTop: insets.top,
-          paddingBottom: insets.bottom,
+          paddingBottom: 80,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },

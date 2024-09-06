@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity} from 'react-native';
+import {View, TextInput, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
 import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
+import SearchIcon from '../../../assets/svg/search.svg';
 
 type SearchInputProps = {
   inputText: string;
@@ -34,7 +35,11 @@ const SearchInput = ({
 
       <View
         style={tw`flex-1 flex-row items-center bg-gray-600 rounded-lg px-3`}>
-        <Icon name="search" size={20} color="#BEBEBE" style={tw`mr-3`} />
+        {Platform.OS === 'ios' ? (
+          <SearchIcon width={20} height={20} style={tw`mr-3`} />
+        ) : (
+          <Icon name="search" size={20} color="#BEBEBE" style={tw`mr-3`} />
+        )}
         <TextInput
           ref={inputRef}
           style={tw`flex-1 text-white h-10`}

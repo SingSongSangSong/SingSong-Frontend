@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import tw from 'twrnc';
 import useKeep from '../../hooks/useKeep';
 import {
@@ -9,12 +9,21 @@ import {
   SonglistEdit,
 } from '../../components';
 import {designatedColor} from '../../constants';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 function KeepEditScreen() {
   const keepHandler = useKeep();
-
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <View
+      style={[
+        tw`flex-1 bg-black`,
+        {
+          paddingBottom: 80,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       {keepHandler.keepList.length > 0 && (
         <View style={tw`flex-row items-center justify-between m-4`}>
           <CheckButton
@@ -64,7 +73,7 @@ function KeepEditScreen() {
         confirmText="삭제"
         cancelText="취소"
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
