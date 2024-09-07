@@ -11,7 +11,7 @@ interface MemberState {
 const useMemberStore = create<MemberState>(set => {
   const initState = {
     memberInfo: {},
-    provider: '',
+    provider: 'KAKAO_KEY',
   };
 
   return {

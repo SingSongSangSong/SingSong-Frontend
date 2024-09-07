@@ -67,7 +67,7 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
 
   return (
     <View
-      style={tw`mt-10 mb-4 border-t border-[${designatedColor.GRAY4}] py-4 mx-2`}>
+      style={tw`mt-10 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}] py-4 mx-2`}>
       {songRelated && songRelated.length > 0 && (
         <>
           <Text style={tw`text-white font-bold text-xl my-2`}>

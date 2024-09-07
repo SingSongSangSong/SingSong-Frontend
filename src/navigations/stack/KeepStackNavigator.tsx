@@ -156,7 +156,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          ...TransitionPresets.SlideFromRightIOS,
+          // ...TransitionPresets.SlideFromRightIOS,
         })}
       />
       <Stack.Screen

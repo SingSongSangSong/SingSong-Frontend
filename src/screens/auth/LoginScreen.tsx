@@ -104,7 +104,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
           </View>
         )}
         <LargeButton
-          title="카카오로 로그인"
+          title="Sign in with Kakao"
           onPress={
             loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
           }
