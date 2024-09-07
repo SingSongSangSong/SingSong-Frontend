@@ -1,5 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  Text,
+  View,
+} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
@@ -71,7 +77,7 @@ function CommentScreen(props: CommentScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <KeyboardAvoidingView style={tw`flex-1 bg-black`}>
       <View style={tw`flex-1`}>
         {!commentHandler.isLoading ? (
           commentHandler.orderedComments.length > 0 ? (
@@ -159,7 +165,7 @@ function CommentScreen(props: CommentScreenProps) {
         confirmText="차단"
         cancelText="취소"
       />
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
