@@ -75,30 +75,41 @@ const MainTabNavigator = () => {
               <IconComponent width={size} height={size} fill={color} />
             ) : null;
           },
+          // headerShown: false,
+          // tabBarStyle: shouldHideTabBar()
+          //   ? {
+          //       // height: insets.bottom,
+          //       // overflow: 'hidden',
+          //       // position: 'absolute',
+          //       // paddingBottom: insets.bottom,
+          //       display: 'none',
+          //     }
+          //   : // undefined
+          //     {
+          //       height: 60,
+          //       backgroundColor: 'black',
+          //       paddingTop: 5,
+          //       position: 'absolute',
+          //       paddingBottom: 5,
+          //     },
+          // tabBarSafeAreaInsets: {bottom: 0},
+          // tabBarActiveTintColor: designatedColor.PINK,
+          // tabBarInactiveTintColor: 'gray',
+          // tabBarVisible: !shouldHideTabBar(),
+          // tabBarButton: props =>
+          //   shouldHideTabBar() ? null : <TouchableOpacity {...props} />, // tabBarButton을 null로 설정
+          // // keyboardHidesTabBar: false,
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
-            ? {
-                // height: insets.bottom,
-                // overflow: 'hidden',
-                // position: 'absolute',
-                // paddingBottom: insets.bottom,
-                display: 'none',
-              }
-            : // undefined
-              {
-                height: 80,
+            ? {height: 0, overflow: 'hidden'}
+            : {
+                height: 60,
                 backgroundColor: 'black',
                 paddingTop: 5,
-                position: 'absolute',
-                paddingBottom: insets.bottom,
+                paddingBottom: 5,
               },
-          tabBarSafeAreaInsets: {bottom: 0},
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
-          tabBarVisible: !shouldHideTabBar(),
-          tabBarButton: props =>
-            shouldHideTabBar() ? null : <TouchableOpacity {...props} />, // tabBarButton을 null로 설정
-          // keyboardHidesTabBar: false,
         };
       }}>
       <Tab.Screen

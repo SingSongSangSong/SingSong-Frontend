@@ -62,7 +62,7 @@ const SongItem = ({
   return (
     <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
       <View
-        style={tw`flex-row items-center justify-between border-b border-[${designatedColor.GRAY4}] py-3 px-2 mx-2`}>
+        style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 mx-2`}>
         <View style={tw`flex-row flex-1`}>
           <View style={tw`items-center justify-center w-[12] h-[12]`}>
             {album == '' ? (
@@ -113,9 +113,9 @@ const SongItem = ({
               activeOpacity={0.8}
               style={tw`p-2`}>
               {isKeepPressed ? (
-                <KeepFilledIcon width={24} height={24} />
+                <KeepFilledIcon width={20} height={20} />
               ) : (
-                <KeepIcon width={24} height={24} />
+                <KeepIcon width={20} height={20} />
               )}
             </TouchableOpacity>
           )}
