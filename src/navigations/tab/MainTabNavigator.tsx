@@ -19,7 +19,7 @@ import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native';
+import {Platform, TouchableOpacity} from 'react-native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -41,6 +41,9 @@ const getTabBarIcon = (
 
 const MainTabNavigator = () => {
   const insets = useSafeAreaInsets();
+
+  const isIOS = Platform.OS === 'ios'; // 플랫폼이 iOS인지 확인
+
   return (
     <Tab.Navigator
       initialRouteName={mainTabNavigations.HOME}
@@ -77,28 +80,26 @@ const MainTabNavigator = () => {
           },
           headerShown: false,
           tabBarStyle: shouldHideTabBar()
+            ? {height: 0, overflow: 'hidden'} // 공통: 탭바 숨김
+            : isIOS // iOS일 때 스타일
             ? {
-                // height: insets.bottom,
-                // overflow: 'hidden',
-                // position: 'absolute',
-                // paddingBottom: insets.bottom,
-                display: 'none',
+                height: insets.bottom + 60,
+                backgroundColor: 'black',
+                paddingBottom: insets.bottom,
               }
-            : // undefined
+            : // Android일 때 스타일
               {
-                height: 80,
+                height: 60,
                 backgroundColor: 'black',
                 paddingTop: 5,
-                position: 'absolute',
-                paddingBottom: insets.bottom,
+                paddingBottom: 5,
               },
-          tabBarSafeAreaInsets: {bottom: 0},
+          tabBarButton: props =>
+            shouldHideTabBar() && isIOS ? null : ( // iOS일 때 숨길 때 버튼을 null로 처리
+              <TouchableOpacity {...props} />
+            ), // 버튼을 기본 Touchable로 사용
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
-          tabBarVisible: !shouldHideTabBar(),
-          tabBarButton: props =>
-            shouldHideTabBar() ? null : <TouchableOpacity {...props} />, // tabBarButton을 null로 설정
-          // keyboardHidesTabBar: false,
         };
       }}>
       <Tab.Screen

@@ -85,7 +85,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
 
       {/* Trending Content */}
 
-      <View style={tw`flex-1`}>
+      <View>
         {selectedGender != '' ? (
           <HotTrending onPressSongButton={onPressSongButton} />
         ) : (

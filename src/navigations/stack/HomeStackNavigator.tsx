@@ -1,5 +1,10 @@
 import React from 'react';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+  TransitionPresets,
+  TransitionSpecs,
+} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
 import {homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
@@ -33,8 +38,18 @@ function HomeStackNavigator() {
     <Stack.Navigator
       initialRouteName={homeStackNavigations.RCD_HOME}
       screenOptions={{
-        ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
-      }}>
+        gestureEnabled: true, // 슬라이드를 위한 제스처
+        gestureDirection: 'horizontal', // 슬라이드 방향
+        transitionSpec: {
+          open: TransitionSpecs.TransitionIOSSpec, // iOS 스타일의 슬라이드 애니메이션
+          close: TransitionSpecs.TransitionIOSSpec,
+        },
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, // 슬라이드 애니메이션을 적용
+      }}
+      // screenOptions={{
+      //   ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
+      // }}
+    >
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
         component={HomeScreen}

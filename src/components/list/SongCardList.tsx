@@ -30,7 +30,7 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
   return (
     <View style={tw`w-full mx-2 mt-2 my-2`}>
       <View
-        style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[1px] border-[${designatedColor.GRAY4}]`}>
+        style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
         <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
         <TouchableOpacity
           onPress={() => onPress(tag)}

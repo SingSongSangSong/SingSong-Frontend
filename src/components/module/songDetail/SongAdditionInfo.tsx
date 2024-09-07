@@ -131,7 +131,8 @@ const SongAdditionInfo = ({
           )}
         </View>
 
-        <View style={tw`py-2 border-b border-[${designatedColor.GRAY4}]`}>
+        <View
+          style={tw`py-2 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
           <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2`}>
             {!songInfo || !songInfo.isKeep ? (
               <KeepIcon width={24} height={24} />

@@ -8,6 +8,7 @@ import {
   Text,
   View,
   LayoutChangeEvent,
+  Platform,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -117,7 +118,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     <View
       style={[
         tw`flex-1 bg-black`,
-        {
+        Platform.OS === 'ios' && {
           paddingTop: insets.top,
           paddingBottom: 80,
           paddingLeft: insets.left,

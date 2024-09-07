@@ -103,7 +103,7 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
   // }
 
   return (
-    <View style={tw`flex-1`}>
+    <View>
       <ScrollView
         horizontal
         pagingEnabled
@@ -148,7 +148,7 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
       </ScrollView>
 
       {/* 페이지 인디케이터 */}
-      <View style={tw`flex-row justify-center my-2`}>
+      <View style={tw`flex-row justify-center my-4`}>
         {groupedCharts.map((_, index) => (
           <View
             key={index}
