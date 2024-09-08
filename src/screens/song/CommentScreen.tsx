@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+import {ActivityIndicator, FlatList, Text, View, Platform} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
@@ -141,7 +141,13 @@ function CommentScreen(props: CommentScreenProps) {
           commentHandler.setIsKeyboardVisible(true);
           commentHandler.setIsModalVisible(false);
         }}
-        style={{justifyContent: 'flex-end', margin: 0}}>
+        style={[
+          {
+            justifyContent: 'flex-end',
+            margin: 0,
+          },
+          Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+        ]}>
         <View style={tw`bg-black w-full px-4`}>
           <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
           <View
@@ -157,7 +163,15 @@ function CommentScreen(props: CommentScreenProps) {
             <View style={tw`mt-3`}>
               <TextButton
                 title="차단하기"
-                onPress={() => commentHandler.setIsBlacklist(true)}
+                onPress={() => {
+                  commentHandler.handleOnPressBlacklistForIOS();
+                  // commentHandler.setIsModalVisible(false);
+                  // setTimeout(() => {
+                  //   commentHandler.setIsBlacklist(true); // 두 번째 모달 열기
+                  // }, 300);
+                  // // commentHandler.setIsBlacklist(true);
+                  // console.log('차단하기');
+                }}
                 color="white"
                 size={4}
               />

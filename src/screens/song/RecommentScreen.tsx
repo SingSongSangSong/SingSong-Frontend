@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Platform, SafeAreaView, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
@@ -56,7 +56,14 @@ function RecommentScreen(props: RecommentScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={[tw`flex-1`, {paddingBottom: insets.bottom + 40}]}>
+      <View
+        style={[
+          tw`flex-1`,
+          Platform.OS == 'ios' && {
+            paddingTop: 5,
+            paddingBottom: insets.bottom + 40,
+          },
+        ]}>
         {recommentHandler.parentComment ? (
           <Recommentlist
             parentComment={recommentHandler.parentComment} //comments[commentId]
@@ -90,7 +97,10 @@ function RecommentScreen(props: RecommentScreenProps) {
           recommentHandler.setIsModalVisible(false);
           recommentHandler.setIsKeyboardVisible(true);
         }}
-        style={{justifyContent: 'flex-end', margin: 0}}>
+        style={[
+          {justifyContent: 'flex-end', margin: 0},
+          Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+        ]}>
         <View style={tw`bg-black w-full px-4`}>
           <Text style={tw`text-white font-bold text-xl my-4`}>답글</Text>
           <View
@@ -106,7 +116,10 @@ function RecommentScreen(props: RecommentScreenProps) {
             <View style={tw`mt-3`}>
               <TextButton
                 title="차단하기"
-                onPress={() => recommentHandler.setIsBlacklist(true)}
+                onPress={() => {
+                  // recommentHandler.setIsBlacklist(true)
+                  recommentHandler.handleOnPressBlacklistForIOS();
+                }}
                 color="white"
                 size={4}
               />

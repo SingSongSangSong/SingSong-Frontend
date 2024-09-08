@@ -83,7 +83,7 @@ const useRecomment = (commentId: number) => {
     reportSubjectMemberId: number,
   ) => {
     setIsModalVisible(true);
-    setIsKeyboardVisible(false);
+    // setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
   };
@@ -108,6 +108,19 @@ const useRecomment = (commentId: number) => {
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
     updateIsLikedComment(commentId, true); // 좋아요 상태를 true로 설정
     updateLikesComment(commentId); // 좋아요 개수를 증가
+  };
+
+  const handleOnPressBlacklistForIOS = () => {
+    _handleOnPressBlacklist(reportSubjectMemberId);
+    setIsModalVisible(false);
+    setIsKeyboardVisible(true);
+    // setIsBlacklist(false);
+    Toast.show({
+      type: 'selectedToast',
+      text1: '차단되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
   };
 
   const _handleOnPressBlacklist = async (reportSubjectMemberId: number) => {
@@ -162,6 +175,7 @@ const useRecomment = (commentId: number) => {
     orderedRecomments,
     isBlacklist,
     setIsBlacklist,
+    handleOnPressBlacklistForIOS,
   };
 };
 

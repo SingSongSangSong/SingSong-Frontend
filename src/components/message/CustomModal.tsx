@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Modal, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
@@ -22,6 +22,12 @@ const CustomModal = ({
   confirmText = '확인',
   cancelText = '취소',
 }: CustomModalProps) => {
+  console.log('CustomModal');
+
+  useEffect(() => {
+    console.log('visible', visible);
+  }, [visible]);
+
   return (
     <Modal
       transparent={true}

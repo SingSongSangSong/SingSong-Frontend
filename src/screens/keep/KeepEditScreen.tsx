@@ -19,7 +19,8 @@ function KeepEditScreen() {
       style={[
         tw`flex-1 bg-black`,
         {
-          paddingBottom: 80,
+          // paddingBottom: 80,
+          // paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },

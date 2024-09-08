@@ -17,7 +17,7 @@ const BlacklistItem = ({
 }: BlacklistItemProps) => {
   return (
     <View
-      style={tw`flex-row justify-between p-2 border-b border-[${designatedColor.GRAY4}]`}>
+      style={tw`flex-row justify-between p-2 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
       <View>
         <Text style={tw`text-white my-2`}>{nickname}</Text>
         <Text style={tw`text-white`}>{blockDate}</Text>

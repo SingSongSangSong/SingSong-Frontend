@@ -70,9 +70,22 @@ const useComment = (songNumber: number, songId: number) => {
     reportSubjectMemberId: number,
   ) => {
     setIsModalVisible(true);
-    setIsKeyboardVisible(false);
+    // setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
+  };
+
+  const handleOnPressBlacklistForIOS = () => {
+    _handleOnPressBlacklist(reportSubjectMemberId);
+    setIsModalVisible(false);
+    // setIsKeyboardVisible(true);
+    // setIsBlacklist(false);
+    Toast.show({
+      type: 'selectedToast',
+      text1: '차단되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
   };
 
   const handleOnPressBlacklist = () => {
@@ -128,6 +141,7 @@ const useComment = (songNumber: number, songId: number) => {
     getRecommentCount,
     handleOnPressBlacklist,
     orderedComments,
+    handleOnPressBlacklistForIOS,
   };
 };
 
