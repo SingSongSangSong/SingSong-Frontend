@@ -4,30 +4,41 @@ import useMemberStore from '../store/useMemberStore';
 import postMemberLogout from '../api/member/postMemberLogout';
 import postMemberWithdraw from '../api/member/postMemberWithdraw';
 import Toast from 'react-native-toast-message';
-import {useQuery} from '@tanstack/react-query';
+// import {useQuery} from '@tanstack/react-query';
 import {isEmptyObject} from '../utils';
 
 const useSetting = () => {
   const memberInfo = useMemberStore(state => state.memberInfo);
   const setMemberInfo = useMemberStore(state => state.setMemberInfo);
   const provider = useMemberStore(state => state.provider);
+  const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
+  const clearProvider = useMemberStore(state => state.clearProvider);
 
-  const {
-    data: tempMemberInfo,
-    error: memberInfoError,
-    isFetching: isFetchingMemberInfo,
-  } = useQuery({
-    queryKey: ['member'],
-    queryFn: getMember,
-    staleTime: 3600000,
-    select: data => data.data,
-  });
+  // const {
+  //   data: tempMemberInfo,
+  //   error: memberInfoError,
+  //   isFetching: isFetchingMemberInfo,
+  // } = useQuery({
+  //   queryKey: ['member'],
+  //   queryFn: getMember,
+  //   staleTime: 3600000,
+  //   select: data => data.data,
+  // });
 
   useEffect(() => {
-    if (isEmptyObject(memberInfo) && tempMemberInfo) {
-      setMemberInfo(tempMemberInfo);
+    if (isEmptyObject(memberInfo)) {
+      initMemberInfo();
     }
-  }, [tempMemberInfo, setMemberInfo, memberInfo]);
+  }, []);
+
+  const initMemberInfo = async () => {
+    try {
+      const result = await getMember();
+      setMemberInfo(result.data);
+    } catch (err) {
+      console.error('Get Member Failed', err);
+    }
+  };
 
   const handleKakaoLogout = async () => {
     try {
@@ -38,6 +49,8 @@ const useSetting = () => {
         visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
       });
       const result = await postMemberLogout();
+      clearMemberInfo();
+      clearProvider();
 
       // console.log('Logout Result:', result);
     } catch (err) {
@@ -53,6 +66,8 @@ const useSetting = () => {
       visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
     });
     await postMemberWithdraw();
+    clearMemberInfo();
+    clearProvider();
   };
 
   return {

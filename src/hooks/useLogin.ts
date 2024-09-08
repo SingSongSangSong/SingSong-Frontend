@@ -38,6 +38,7 @@ const useLogin = () => {
 
   const {setSecureValue} = TokenStore();
 
+  //회원가입인 경우
   const handleKakaoLogin = async () => {
     setProvider('KAKAO_KEY');
     try {
@@ -62,6 +63,7 @@ const useLogin = () => {
     }
   };
 
+  //그냥 로그인인 경우
   const handleKakaoLogin2 = async () => {
     setProvider('KAKAO_KEY');
     try {
@@ -69,9 +71,10 @@ const useLogin = () => {
       // console.log('isLoggedProcess', isLoggedProcess);
       console.log('before login');
       const result = await login();
-      // console.log('after login', result);
+      console.log('after login', result);
       if (result.idToken) {
-        const data = await postMemberLogin(result.idToken, provider!); //accessToken 받기, 설정해야됨
+        const data = await postMemberLogin(result.idToken, 'KAKAO_KEY'); //accessToken 받기, 설정해야됨
+        console.log('data', data.data);
         setSecureValue(ACCESS_TOKEN, data.data.accessToken);
         setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
         setIsLoggedProcess(!isLoggedProcess); //false
@@ -146,7 +149,8 @@ const useLogin = () => {
       console.log('idToken', identityToken);
       setIdToken(identityToken!);
 
-      const data = await postMemberLogin(identityToken!, provider!); //accessToken 받기, 설정해야됨
+      const data = await postMemberLogin(identityToken!, 'APPLE_KEY'); //accessToken 받기, 설정해야됨
+      console.log('data', data.data);
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(!isLoggedProcess); //false
