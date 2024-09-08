@@ -81,8 +81,8 @@ const RecommentItem = ({
           <Text style={tw`text-white ml-4`}>{content}</Text>
         </View>
 
-        <View style={tw`justify-between flex-row my-2`}>
-          <View style={tw`flex-row items-center`}>
+        <View style={tw`justify-between flex-row my-2 items-center`}>
+          {/* <View style={tw`flex-row items-center`}>
             {!isLiked ? (
               <TouchableOpacity
                 onPress={handleOnPressLikeButton}
@@ -95,7 +95,30 @@ const RecommentItem = ({
               </View>
             )}
             <Text style={tw`text-white`}>{likes}</Text>
-          </View>
+          </View> */}
+
+          <TouchableOpacity
+            onPress={handleOnPressLikeButton}
+            style={tw`flex-row items-center`}
+            activeOpacity={0.8}
+            disabled={isLiked}>
+            {!isLiked ? (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <LikeIcon width={20} height={20} />
+              </View>
+            ) : (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <FilledLikeIcon width={20} height={20} />
+              </View>
+            )}
+
+            <Text
+              style={
+                isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`
+              }>
+              {likes}
+            </Text>
+          </TouchableOpacity>
 
           {isVisibleRecomment && (
             <View style={tw`flex-row items-center`}>

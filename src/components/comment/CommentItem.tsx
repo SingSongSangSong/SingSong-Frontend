@@ -76,27 +76,33 @@ const CommentItem = ({
       </View>
 
       <View style={tw`justify-between flex-row my-2 items-center`}>
-        <View style={tw`flex-row items-center`}>
+        <TouchableOpacity
+          onPress={handleOnPressLikeButton}
+          style={tw`flex-row items-center`}
+          activeOpacity={0.8}
+          disabled={isLiked}>
           {!isLiked ? (
-            <TouchableOpacity
-              onPress={handleOnPressLikeButton}
-              style={tw`p-2 pr-1`}
-              activeOpacity={0.8}>
+            <View style={tw`p-2 pr-1 justify-center items-center`}>
               <LikeIcon width={20} height={20} />
-            </TouchableOpacity>
+            </View>
           ) : (
-            <View style={tw`p-2 pr-1`}>
+            <View style={tw`p-2 pr-1 justify-center items-center`}>
               <FilledLikeIcon width={20} height={20} />
             </View>
           )}
 
-          <Text style={tw`text-white`}>{likes}</Text>
-        </View>
+          <Text
+            style={
+              isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`
+            }>
+            {likes}
+          </Text>
+        </TouchableOpacity>
       </View>
       {isVisibleRecomment && (
         <TouchableOpacity
           onPress={onPressRecomment}
-          style={tw`flex-row items-center mx-2 py-2 px-2`}
+          style={tw`flex-row items-center mx-2 py-1 px-2`}
           activeOpacity={0.8}>
           {/* <IconButton
             Icon={RecommentIcon}
