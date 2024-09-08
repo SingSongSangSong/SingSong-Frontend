@@ -112,10 +112,10 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={mainTabNavigations.PLAYGROUND}
         component={PlaygroundScreen}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

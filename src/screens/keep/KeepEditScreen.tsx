@@ -17,7 +17,7 @@ function KeepEditScreen() {
   return (
     <View
       style={[
-        tw`flex-1 bg-black`,
+        tw`flex-1  bg-[${designatedColor.BACKGROUND_BLACK}]`,
         {
           // paddingBottom: 80,
           // paddingBottom: insets.bottom,

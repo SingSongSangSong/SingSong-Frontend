@@ -78,7 +78,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
   return (
     <View
       style={[
-        tw`w-full h-full bg-[${designatedColor.BACKGROUND_BLACK}] items-center justify-start`,
+        tw`w-full h-full bg-black items-center justify-start`,
         {paddingTop: deviceHeight * 0.25},
       ]}>
       <View style={tw`items-center`}>
