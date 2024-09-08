@@ -96,7 +96,7 @@ const CommentItem = ({
       {isVisibleRecomment && (
         <TouchableOpacity
           onPress={onPressRecomment}
-          style={tw`flex-row items-center mx-2`}
+          style={tw`flex-row items-center mx-2 py-2 px-2`}
           activeOpacity={0.8}>
           {/* <IconButton
             Icon={RecommentIcon}

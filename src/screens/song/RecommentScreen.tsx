@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import Modal from 'react-native-modal';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -51,9 +52,11 @@ function RecommentScreen(props: RecommentScreenProps) {
     }
   };
 
+  const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={tw`flex-1`}>
+      <View style={[tw`flex-1`, {paddingBottom: insets.bottom + 40}]}>
         {recommentHandler.parentComment ? (
           <Recommentlist
             parentComment={recommentHandler.parentComment} //comments[commentId]

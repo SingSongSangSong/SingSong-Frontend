@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
@@ -17,12 +11,13 @@ import {
 import useComment from '../../hooks/useComment';
 import {
   CommentKeyboard,
-  Commentlist,
+  CommentItem,
   CustomModal,
   TextButton,
 } from '../../components';
 import Modal from 'react-native-modal';
 import ErrorIcon from '../../assets/svg/error.svg';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -76,48 +71,75 @@ function CommentScreen(props: CommentScreenProps) {
     }
   };
 
+  const renderCommentItem = ({item}: {item: Comment}) => (
+    <View style={tw`px-2 py-2`}>
+      <CommentItem
+        commentId={item.commentId}
+        content={item.content}
+        createdAt={item.createdAt}
+        isLiked={item.isLiked}
+        likes={item.likes}
+        isRecomment={item.isRecomment}
+        memberId={item.memberId}
+        nickname={item.nickname}
+        parentCommentId={item.parentCommentId}
+        recomments={item.recomments}
+        songId={item.songId}
+        onPressRecomment={() => handleOnPressRecomment(item)}
+        onPressMoreInfo={() =>
+          commentHandler.handleOnPressMoreInfo(item.commentId, item.memberId)
+        }
+        onPressLikeButton={() =>
+          commentHandler.handleOnPressLikeButton(item.commentId)
+        }
+        isVisibleRecomment={true}
+        recommentCount={commentHandler.getRecommentCount(item.commentId)}
+      />
+    </View>
+  );
+
+  const insets = useSafeAreaInsets();
+
   return (
-    <KeyboardAvoidingView style={tw`flex-1 bg-black`}>
-      <View style={tw`flex-1`}>
+    <View style={tw`flex-1 bg-black`}>
+      <View style={[tw`flex-1`, {paddingBottom: insets.bottom + 70}]}>
         {!commentHandler.isLoading ? (
-          commentHandler.orderedComments.length > 0 ? (
-            <Commentlist
-              commentData={commentHandler.orderedComments}
-              onPressRecomment={handleOnPressRecomment}
-              onPressMoreInfo={commentHandler.handleOnPressMoreInfo}
-              onPressLikeButton={commentHandler.handleOnPressLikeButton}
-              getRecommentCount={commentHandler.getRecommentCount}
-            />
-          ) : (
-            <View style={tw`flex-1 justify-center items-center`}>
-              <View style={tw`flex-1 justify-center items-center`}>
-                <ErrorIcon width={50} height={50} />
-                <Text style={tw`text-[${designatedColor.PINK2}] mt-4`}>
-                  댓글이 없어요
-                </Text>
+          <FlatList
+            data={commentHandler.orderedComments}
+            renderItem={renderCommentItem}
+            keyExtractor={item => item.commentId.toString()}
+            ListEmptyComponent={
+              <View style={tw`w-full h-full justify-center items-center`}>
+                <View style={tw`flex-1 justify-center items-center`}>
+                  <ErrorIcon width={50} height={50} />
+                  <Text style={tw`text-[${designatedColor.PINK2}] mt-4`}>
+                    댓글이 없어요
+                  </Text>
+                </View>
               </View>
-            </View>
-          )
+            }
+            contentContainerStyle={[tw`flex-grow`, {paddingBottom: 20}]}
+          />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
             <ActivityIndicator size="small" color={designatedColor.PINK2} />
           </View>
         )}
       </View>
-      {commentHandler.isKeyboardVisible && (
-        <View style={tw`w-full justify-end m-0`}>
+      <View style={tw`w-full justify-end m-0 h-1`}>
+        {commentHandler.isKeyboardVisible && (
           <CommentKeyboard
             onSendPress={commentHandler.handleOnPressSendButton}
             text="댓글"
           />
-        </View>
-      )}
+        )}
+      </View>
 
       <Modal
         isVisible={commentHandler.isModalVisible}
         onBackdropPress={() => {
-          commentHandler.setIsModalVisible(false);
           commentHandler.setIsKeyboardVisible(true);
+          commentHandler.setIsModalVisible(false);
         }}
         style={{justifyContent: 'flex-end', margin: 0}}>
         <View style={tw`bg-black w-full px-4`}>
@@ -145,8 +167,8 @@ function CommentScreen(props: CommentScreenProps) {
             <TextButton
               title="닫기"
               onPress={() => {
-                commentHandler.setIsModalVisible(false);
                 commentHandler.setIsKeyboardVisible(true);
+                commentHandler.setIsModalVisible(false);
               }}
               color="white"
               size={4}
@@ -165,7 +187,7 @@ function CommentScreen(props: CommentScreenProps) {
         confirmText="차단"
         cancelText="취소"
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

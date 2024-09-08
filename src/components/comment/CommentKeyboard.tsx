@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, Keyboard} from 'react-native';
+import {View, TextInput, Keyboard, InputAccessoryView} from 'react-native';
 import tw from 'twrnc';
 import SendIcon from '../../assets/svg/send.svg';
 import {IconButton} from '../button/IconButton';
@@ -22,8 +22,8 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
   };
 
   return (
-    <View style={tw`w-full bg-black`}>
-      <View style={tw`flex-row items-center py-4`}>
+    <InputAccessoryView style={tw`w-full bg-black`}>
+      <View style={tw`flex-row items-center py-4 bg-black`}>
         <TextInput
           style={[
             tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mr-2`,
@@ -43,6 +43,6 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
           <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
         </View>
       </View>
-    </View>
+    </InputAccessoryView>
   );
 };
