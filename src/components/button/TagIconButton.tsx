@@ -14,7 +14,7 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
   const viewWidth = deviceWidth * 0.25; // 전체 너비의 80%로 제한
   // console.log('tagIcon Button');
   return (
-    <View style={[tw`justify-center items-center my-1`, {width: viewWidth}]}>
+    <View style={[tw`justify-center items-center my-1`, {width: 90}]}>
       <TouchableOpacity
         onPress={onPress}
         style={tw`justify-center items-center`}
