@@ -88,6 +88,10 @@ const MainTabNavigator = () => {
                 height: insets.bottom + 60,
                 backgroundColor: 'black',
                 paddingBottom: insets.bottom,
+                // 경계선 제거
+                borderTopWidth: 0,
+                // 그림자 제거
+                shadowColor: 'transparent',
               }
             : // Android일 때 탭바 스타일
               {
@@ -95,6 +99,7 @@ const MainTabNavigator = () => {
                 backgroundColor: 'black',
                 paddingTop: 5,
                 paddingBottom: 5,
+                borderTopWidth: 0,
               },
           tabBarButton: props =>
             shouldHideTabBar() && isIOS ? null : ( // iOS일 때 숨길 때 버튼을 null로 처리
@@ -112,10 +117,10 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name={mainTabNavigations.PLAYGROUND}
         component={PlaygroundScreen}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
