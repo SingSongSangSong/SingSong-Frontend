@@ -1,5 +1,12 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, Text, View, Platform} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  View,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
@@ -99,6 +106,7 @@ function CommentScreen(props: CommentScreenProps) {
   );
 
   const insets = useSafeAreaInsets();
+  // const {width} = useWindowDimensions();
 
   return (
     <View style={tw`flex-1 bg-black`}>
@@ -126,7 +134,7 @@ function CommentScreen(props: CommentScreenProps) {
           </View>
         )}
       </View>
-      <View style={tw`w-full justify-end m-0 h-1`}>
+      <View style={[tw`justify-end m-0 h-1 w-full`]}>
         {commentHandler.isKeyboardVisible && (
           <CommentKeyboard
             onSendPress={commentHandler.handleOnPressSendButton}

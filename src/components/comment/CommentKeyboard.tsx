@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, TextInput, Keyboard, InputAccessoryView} from 'react-native';
+import {
+  View,
+  TextInput,
+  Keyboard,
+  InputAccessoryView,
+  useWindowDimensions,
+} from 'react-native';
 import tw from 'twrnc';
 import SendIcon from '../../assets/svg/send.svg';
 import {IconButton} from '../button/IconButton';
@@ -21,8 +27,10 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
     Keyboard.dismiss();
   };
 
+  // const {width} = useWindowDimensions();
+
   return (
-    <InputAccessoryView style={tw`w-full bg-black`}>
+    <InputAccessoryView style={[tw`bg-black w-full`]}>
       <View style={tw`flex-row items-center py-4 bg-black`}>
         <TextInput
           style={[
