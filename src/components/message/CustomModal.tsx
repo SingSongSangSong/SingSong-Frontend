@@ -22,12 +22,6 @@ const CustomModal = ({
   confirmText = '확인',
   cancelText = '취소',
 }: CustomModalProps) => {
-  console.log('CustomModal');
-
-  useEffect(() => {
-    console.log('visible', visible);
-  }, [visible]);
-
   return (
     <Modal
       transparent={true}
