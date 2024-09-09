@@ -55,7 +55,8 @@ function KeepEditScreen() {
       </View>
 
       {keepHandler.removedSong.length > 0 && (
-        <View style={tw`justify-center items-center py-2 bg-black`}>
+        <View
+          style={tw`justify-center items-center py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <RemoveButton
             title={'삭제'}
             count={keepHandler.removedSong.length}

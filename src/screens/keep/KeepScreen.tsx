@@ -1,6 +1,6 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View, Platform} from 'react-native';
 import {SongsList} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
@@ -42,7 +42,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
     <View
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
-        {
+        Platform.OS === 'ios' && {
           paddingBottom: 80,
           paddingLeft: insets.left,
           paddingRight: insets.right,
