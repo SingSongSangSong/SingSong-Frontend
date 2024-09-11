@@ -64,3 +64,4 @@ export * from './module/songDetail/SongDefaultInfo';
 export * from './module/songDetail/SongAdditionInfo';
 export * from './module/songDetail/SongReview';
 export * from './module/songDetail/SongComment';
+export * from './tag/CommonTag';

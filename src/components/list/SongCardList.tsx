@@ -21,6 +21,7 @@ type SongCardListProps = {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
 };
 
@@ -63,9 +64,11 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
                   song.songName,
                   song.singerName,
                   song.album,
+                  song.isMr,
                 )
               }
               album={song.album}
+              isMr={song.isMr}
             />
           ))}
       </ScrollView>

@@ -28,6 +28,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => {
     logButtonClick('search_result_song_button_click');
     amplitude.track('search_result_song_button_click');
@@ -37,6 +38,7 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
       songName,
       singerName,
       album,
+      isMr,
     });
   };
 

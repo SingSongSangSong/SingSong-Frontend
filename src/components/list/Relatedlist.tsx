@@ -15,6 +15,7 @@ interface RelatedlistProps {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
   handleRefreshRelatedSongs: () => void;
 }
@@ -36,6 +37,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
         album={item.album}
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
+        isMr={item.isMr}
         onSongPress={() =>
           onSongPress(
             item.songId,
@@ -43,6 +45,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
             item.songName,
             item.singerName,
             item.album,
+            item.isMr,
           )
         }
       />

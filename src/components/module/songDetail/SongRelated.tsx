@@ -15,6 +15,7 @@ type SongRelatedProps = {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
 };
 const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {

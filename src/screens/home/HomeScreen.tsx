@@ -3,7 +3,6 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {
   ActivityIndicator,
   Modal,
-  SafeAreaView,
   ScrollView,
   Text,
   View,
@@ -61,7 +60,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     songId: number,
     songName: string,
     singerName: string,
-    album?: string,
+    album: string,
+    isMr: boolean,
   ) => {
     amplitude.track('preview_song_button_click');
     logButtonClick('preview_song_button_click');
@@ -74,6 +74,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         songName,
         singerName,
         album: album || '',
+        isMr,
       },
     });
   };
@@ -83,7 +84,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     songId: number,
     songName: string,
     singerName: string,
-    album?: string,
+    // album?: string,
+    isMr: boolean,
   ) => {
     amplitude.track('hot_trending_song_button_click');
     logButtonClick('hot_trending_song_button_click');
@@ -95,7 +97,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         songNumber,
         songName,
         singerName,
-        album: album || '',
+        album: '',
+        isMr,
       },
     });
   };

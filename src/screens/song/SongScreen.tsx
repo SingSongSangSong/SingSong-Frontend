@@ -30,7 +30,7 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  const {songNumber, songId, songName, singerName, album} =
+  const {songNumber, songId, songName, singerName, album, isMr} =
     props.route?.params || {};
 
   const _onPressComment = (songNumber: number, songId: number) => {
@@ -53,6 +53,7 @@ function SongScreen(props: SongScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => {
     amplitude.track('related_song_button_click');
     logButtonClick('related_song_button_click');
@@ -66,6 +67,7 @@ function SongScreen(props: SongScreenProps) {
           songName,
           singerName,
           album,
+          isMr,
         });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         (
@@ -76,6 +78,7 @@ function SongScreen(props: SongScreenProps) {
           songName,
           singerName,
           album,
+          isMr,
         });
       }
     }
@@ -88,6 +91,7 @@ function SongScreen(props: SongScreenProps) {
         songName={songName}
         singerName={singerName}
         album={album}
+        isMr={isMr}
       />
       <SongAdditionInfo
         songId={songId}

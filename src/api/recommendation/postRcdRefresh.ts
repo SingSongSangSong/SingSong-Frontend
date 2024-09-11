@@ -18,7 +18,7 @@ const postRcdRefresh = async (tag: string) => {
         },
       },
     );
-    // console.log('data for recommend song refresh response', response.data);
+    console.log('data for recommend song refresh response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching refresh:', error);

@@ -24,6 +24,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => {
     logButtonClick('keep_song_button_click');
     amplitude.track('keep_song_button_click');
@@ -33,6 +34,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
       songName,
       singerName,
       album,
+      isMr,
     });
   };
 

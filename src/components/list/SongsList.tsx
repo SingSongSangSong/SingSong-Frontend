@@ -12,6 +12,7 @@ interface SongsListProps {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
   onKeepAddPress?: (songId: number) => void;
   onKeepRemovePress?: (songId: number) => void;
@@ -34,6 +35,7 @@ const SongsList = ({
         album={item.album}
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
+        isMr={item.isMr}
         onSongPress={() =>
           onSongPress(
             item.songId,
@@ -41,6 +43,7 @@ const SongsList = ({
             item.songName,
             item.singerName,
             item.album,
+            item.isMr,
           )
         }
         onKeepAddPress={

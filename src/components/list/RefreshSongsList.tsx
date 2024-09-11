@@ -14,6 +14,7 @@ interface RefreshSongsListProps {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
   onKeepAddPress: (songId: number) => void;
   onKeepRemovePress: (songId: number) => void;
@@ -41,6 +42,7 @@ const RenderItem = memo(
       album={item.album}
       isKeep={item.isKeep}
       isShowKeepIcon={isShowKeepIcon}
+      isMr={item.isMr}
       onSongPress={() => {
         onSongPress(
           item.songId,
@@ -48,6 +50,7 @@ const RenderItem = memo(
           item.songName,
           item.singerName,
           item.album,
+          item.isMr,
         );
       }}
       onKeepAddPress={() => onKeepAddPress(item.songId)}

@@ -12,7 +12,8 @@ interface HotTrendingProps {
     songId: number,
     songName: string,
     singerName: string,
-    album?: string,
+    // album?: string,
+    isMr: boolean,
   ) => void;
 }
 const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
@@ -133,6 +134,7 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
                         item.songId,
                         item.songName,
                         item.artistName,
+                        item.isMr == 1 ? true : false,
                       );
                     }}
                   />

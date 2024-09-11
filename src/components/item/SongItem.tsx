@@ -6,6 +6,7 @@ import KeepIcon from '../../assets/svg/keepIcon.svg';
 import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 import MusicIcon from '../../assets/svg/music.svg';
 import {useFocusEffect} from '@react-navigation/native';
+import {CommonTag} from '../tag/CommonTag';
 
 interface SongItemProps {
   songId: number;
@@ -15,6 +16,7 @@ interface SongItemProps {
   album: string | undefined;
   isKeep: boolean | undefined;
   isShowKeepIcon: boolean;
+  isMr?: boolean;
   onSongPress: () => void;
   onKeepAddPress?: () => void | undefined;
   onKeepRemovePress?: () => void | undefined;
@@ -28,6 +30,7 @@ const SongItem = ({
   album = '',
   isKeep = true,
   isShowKeepIcon,
+  isMr = false,
   onSongPress,
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
@@ -58,6 +61,7 @@ const SongItem = ({
       onSongPress();
     }
   };
+  console.log(isMr);
 
   return (
     <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
@@ -91,8 +95,13 @@ const SongItem = ({
                 style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
                 {songNumber}
               </Text>
+              {isMr ? (
+                <CommonTag name="MR" color={designatedColor.PURPLE} />
+              ) : (
+                <View style={tw`mx-1`} />
+              )}
               <Text
-                style={tw`text-white text-sm ml-2 flex-1`}
+                style={tw`text-white text-sm flex-1`}
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {songName}

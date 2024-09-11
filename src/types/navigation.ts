@@ -34,6 +34,7 @@ type HomeStackParamList = {
     songName: string;
     singerName: string;
     album: string;
+    isMr: boolean;
   };
   [homeStackNavigations.COMMENT]: {songNumber: number; songId: number};
   [homeStackNavigations.RECOMMENT]: {comment: Comment};
@@ -55,6 +56,7 @@ type KeepStackParamList = {
     songName: string;
     singerName: string;
     album: string;
+    isMr: boolean;
   };
   [keepStackNavigations.KEEP_COMMENT]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_RECOMMENT]: {comment: Comment};

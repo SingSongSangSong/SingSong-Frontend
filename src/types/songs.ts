@@ -12,6 +12,7 @@ interface RcdHomeSong {
   songName: string;
   songNumber: number;
   tags: string[];
+  isMr: boolean;
 }
 
 interface Song {
@@ -22,7 +23,7 @@ interface Song {
   songName: string;
   songNumber: number;
   tags?: string[];
-  isMr: true;
+  isMr: boolean;
 }
 
 interface GetSearchSong {

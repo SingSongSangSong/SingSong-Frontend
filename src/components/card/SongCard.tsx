@@ -3,6 +3,7 @@ import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
+import {CommonTag} from '..';
 
 type SongCardProps = {
   songName: string;
@@ -10,6 +11,7 @@ type SongCardProps = {
   songNumber: number;
   onSongPress: () => void;
   album: string;
+  isMr: boolean;
 };
 
 const SongCard = ({
@@ -18,6 +20,7 @@ const SongCard = ({
   songNumber,
   onSongPress,
   album,
+  isMr,
 }: SongCardProps) => {
   const deviceWidth = Dimensions.get('window').width;
   const cardWidth = deviceWidth * 0.4;
@@ -67,16 +70,20 @@ const SongCard = ({
         </View>
       </View>
       <View style={tw`m-1 ml-2`}>
-        <Text
-          style={[
-            tw`text-white text-3`,
-            {width: cardWidth}, // 카드의 너비에 맞추어 텍스트 너비 설정
-          ]}
-          numberOfLines={1} // 최대 한 줄로 표시되도록 설정
-          ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
-        >
-          {songName}
-        </Text>
+        <View style={[tw`flex-row items-center my-0.5`, {width: cardWidth}]}>
+          {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+          <Text
+            style={[
+              tw`text-white text-3`, // 카드의 너비에 맞추어 텍스트 너비 설정
+              ,
+            ]}
+            numberOfLines={1} // 최대 한 줄로 표시되도록 설정
+            ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
+          >
+            {songName}
+          </Text>
+        </View>
+
         <Text
           style={[
             tw`text-[${designatedColor.GRAY3}] text-3`,

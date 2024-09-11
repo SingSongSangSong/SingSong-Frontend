@@ -17,6 +17,7 @@ interface SongCardModuleProps {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => void;
 }
 

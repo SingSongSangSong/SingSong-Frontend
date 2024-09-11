@@ -3,18 +3,21 @@ import {Image, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import MusicIcon from '../../../assets/svg/music.svg';
+import {CommonTag} from '../../tag/CommonTag';
 
 type SongDefaultInfoProps = {
   songNumber: number;
   songName: string;
   singerName: string;
   album: string;
+  isMr: boolean;
 };
 const SongDefaultInfo = ({
   songNumber,
   songName,
   singerName,
   album,
+  isMr,
 }: SongDefaultInfoProps) => {
   // console.log('songDefaultInfo');
   return (
@@ -41,6 +44,10 @@ const SongDefaultInfo = ({
       </View>
       <View style={tw`px-3 `}>
         <View style={tw`flex-row items-center mt-3`}>
+          <View style={tw`items-center`}>
+            {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+          </View>
+
           <Text
             style={tw`flex-1 text-white text-2xl font-bold`}
             numberOfLines={1}

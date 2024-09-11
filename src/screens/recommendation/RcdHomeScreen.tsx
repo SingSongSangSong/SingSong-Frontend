@@ -34,6 +34,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    isMr: boolean,
   ) => {
     logButtonClick('recommendation_song_button_click');
     amplitude.track('recommendation_song_button_click');
@@ -43,6 +44,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
       songName,
       singerName,
       album,
+      isMr,
     });
   };
 
