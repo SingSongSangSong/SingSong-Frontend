@@ -2,7 +2,7 @@ import {useState} from 'react';
 import TokenStore from '../store/TokenStore';
 import {getCurrentVersion} from '../utils';
 import remoteConfig from '@react-native-firebase/remote-config';
-import {BackHandler, Linking} from 'react-native';
+import {BackHandler, Linking, Platform} from 'react-native';
 import VersionStore from '../store/VersionStore';
 
 const useInit = () => {
@@ -31,8 +31,11 @@ const useInit = () => {
     await remoteConfig().setDefaults({
       latestVersion: '1.0.0',
       forceUpdateVersion: '1.0.0',
+      latestVersionForIOS: '1.0.0',
+      forceUpdateVersionForIOS: '1.0.0',
       updateUrl:
         'https://play.google.com/store/apps/details?id=com.example.app',
+      updateUrlForIOS: 'https://apps.apple.com/kr/app/id1234567890',
     });
 
     // Remote Config 설정
@@ -51,11 +54,26 @@ const useInit = () => {
       const currentVersion = await getCurrentVersion();
       setCurrentVersion(currentVersion);
 
+      let latestVersion;
+      let forceUpdateVersion;
+      let updateUrl;
+
       // Remote Config에서 최신 버전 정보 가져오기
-      const latestVersion = remoteConfig().getString('latestVersion');
-      const forceUpdateVersion = remoteConfig().getString('forceUpdateVersion');
-      const updateUrl = remoteConfig().getString('updateUrl');
-      setUpdateUrl(updateUrl);
+      // const latestVersion = remoteConfig().getString('latestVersion');
+      // const forceUpdateVersion = remoteConfig().getString('forceUpdateVersion');
+      if (Platform.OS === 'ios') {
+        latestVersion = remoteConfig().getString('latestVersionForIOS');
+        forceUpdateVersion = remoteConfig().getString(
+          'forceUpdateVersionForIOS',
+        );
+        updateUrl = remoteConfig().getString('updateUrlForIOS');
+      } else {
+        latestVersion = remoteConfig().getString('latestVersion');
+        forceUpdateVersion = remoteConfig().getString('forceUpdateVersion');
+        updateUrl = remoteConfig().getString('updateUrl');
+      }
+
+      setUpdateUrl(updateUrl!);
 
       console.log('현재 버전:', currentVersion);
       console.log('최신 버전:', latestVersion);
