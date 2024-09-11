@@ -22,7 +22,7 @@ function BlacklistScreen({navigation}: BlacklistScreenProps) {
   }
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-1`}>
         {blacklistHandler.blacklist &&
           (blacklistHandler.blacklist.length > 0 ? (

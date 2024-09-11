@@ -14,12 +14,12 @@ const EmptyHotTrending = memo(() => {
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
-      style={tw`bg-black`}>
+      style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={[tw`w-full`, {width: Dimensions.get('window').width}]}>
         {emptyCharts.map((_, idx) => (
           <View
             key={idx}
-            style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}] h-16`}
+            style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}] h-16`}
           />
         ))}
       </View>

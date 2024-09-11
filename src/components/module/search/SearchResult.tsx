@@ -24,9 +24,9 @@ type SearchResultProps = {
 
 const categories = [
   {title: '전체', value: 'all'},
-  {title: '노래방번호', value: 'songNumber'},
-  {title: '가수이름', value: 'artistName'},
   {title: '노래제목', value: 'songName'},
+  {title: '가수이름', value: 'artistName'},
+  {title: '노래방번호', value: 'songNumber'},
 ];
 
 const SearchResult = ({
@@ -184,7 +184,8 @@ const SearchResult = ({
   return (
     <View style={tw`flex-1`}>
       {/* 고정된 헤더 */}
-      <View style={tw`absolute top-0 left-0 right-0 z-10 bg-black`}>
+      <View
+        style={tw`absolute top-0 left-0 right-0 z-10 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         {renderHeader()}
       </View>
       {category === 'all' ? (

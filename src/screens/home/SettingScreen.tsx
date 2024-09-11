@@ -56,7 +56,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-1`}>
         <View style={tw`m-4`}>
           <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>내 계정</Text>

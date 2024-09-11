@@ -120,7 +120,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   return (
     <View
       style={[
-        tw`flex-1 bg-black`,
+        tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
         Platform.OS === 'ios' && {
           paddingTop: insets.top,
           // paddingBottom: 80,
@@ -130,7 +130,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         },
       ]}>
       <View
-        style={tw`bg-black border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}
+        style={tw`border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}
         onLayout={handleOnLayout}>
         <LogoIcon />
         <View style={tw`flex-row`}>
@@ -150,7 +150,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         </View>
       </View>
       <View style={tw`flex-1`}>
-        <ScrollView contentContainerStyle={tw`w-full flex-grow bg-black`}>
+        <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
           <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
           <TaglistModule
             onPressTagButton={handleOnTagPress}
@@ -169,7 +169,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             animationType="fade">
             <View
               style={[
-                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-black bg-opacity-50`,
+                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
                 {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>

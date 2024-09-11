@@ -62,7 +62,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <SearchInput
         inputText={inputText}
         setInputText={setInputText}

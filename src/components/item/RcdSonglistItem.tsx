@@ -64,7 +64,7 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
     <TouchableOpacity onPress={onPress} style={tw`w-full`}>
       <View
         style={[
-          tw`flex-row justify-between items-center p-2 border-b border-[${designatedColor.GRAY4}] bg-black`,
+          tw`flex-row justify-between items-center p-2 border-b border-[${designatedColor.GRAY4}]`,
           isPressed && tw`bg-gray-300`,
         ]}>
         <View style={tw`flex-row items-center flex-1`}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {keepStackNavigations} from '../../constants';
+import {designatedColor, keepStackNavigations} from '../../constants';
 import {NavigationProp} from '@react-navigation/native';
 import {KeepStackParamList} from '../../types';
 import KeepScreen from '../../screens/keep/KeepScreen';
@@ -35,6 +35,14 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
             size={28}
           />
         ),
+        headerStyle: {
+          backgroundColor: designatedColor.BACKGROUND_BLACK, // 공통 헤더 배경색
+        },
+        headerTintColor: 'white', // 공통 헤더 텍스트 색상
+        headerTitleAlign: 'center', // 공통 헤더 제목 가운데 정렬
+        headerTitleStyle: {
+          fontSize: 18, // 공통 헤더 제목 글씨 크기
+        },
 
         ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
       }}>
@@ -42,16 +50,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         name={keepStackNavigations.KEEP}
         component={KeepScreen}
         options={({navigation}) => ({
-          headerShown: true,
-          headerTitle: 'MEMO', // 헤더 제목을 비움
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: 'KEEP', // 헤더 제목을 비움
           headerRight: () => (
             <NavButton
               onPress={() => handleOnPress(navigation)}
@@ -65,11 +64,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         name={keepStackNavigations.KEEP_SONG_DETAIL}
         component={SongScreen}
         options={({navigation}) => ({
-          headerShown: true,
           headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -86,13 +81,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={CommentScreen}
         options={({navigation}) => ({
           animationEnabled: false,
-          headerShown: true,
-          tabBarVisible: false,
           headerTitle: '댓글', // 헤더 제목을 비움
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
           headerStyle: {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
@@ -111,8 +100,6 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={RecommentScreen}
         options={({navigation}) => ({
           animationEnabled: false,
-          headerShown: true,
-          tabBarVisible: false,
           headerTitle: '답글', // 헤더 제목을 비움
           headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
           headerTitleStyle: {
@@ -129,7 +116,6 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerStyle: {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
         })}
       />
       <Stack.Screen
@@ -137,13 +123,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={ReportScreen}
         options={({navigation}) => ({
           animationEnabled: false,
-          headerShown: true,
-          tabBarVisible: false,
           headerTitle: '신고', // 헤더 제목을 비움
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
           headerLeft: () => null,
           headerRight: () => (
             <IconButton
@@ -155,8 +135,6 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerStyle: {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          // ...TransitionPresets.SlideFromRightIOS,
         })}
       />
       <Stack.Screen
@@ -164,15 +142,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={KeepEditScreen}
         options={({navigation}) => ({
           animationEnabled: false,
-          headerShown: true,
-          headerTitle: 'MEMO 편집', // 헤더 제목을 비움
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
+          headerTitle: 'KEEP 편집', // 헤더 제목을 비움s
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton

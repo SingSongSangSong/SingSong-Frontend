@@ -6,7 +6,7 @@ import {
   TransitionSpecs,
 } from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
-import {homeStackNavigations} from '../../constants';
+import {designatedColor, homeStackNavigations} from '../../constants';
 import HomeScreen from '../../screens/home/HomeScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 // import {NavigationProp} from '@react-navigation/native';
@@ -38,18 +38,22 @@ function HomeStackNavigator() {
     <Stack.Navigator
       initialRouteName={homeStackNavigations.RCD_HOME}
       screenOptions={{
-        gestureEnabled: true, // 슬라이드를 위한 제스처
-        gestureDirection: 'horizontal', // 슬라이드 방향
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
         transitionSpec: {
-          open: TransitionSpecs.TransitionIOSSpec, // iOS 스타일의 슬라이드 애니메이션
+          open: TransitionSpecs.TransitionIOSSpec,
           close: TransitionSpecs.TransitionIOSSpec,
         },
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, // 슬라이드 애니메이션을 적용
-      }}
-      // screenOptions={{
-      //   ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
-      // }}
-    >
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        headerStyle: {
+          backgroundColor: designatedColor.BACKGROUND_BLACK, // 공통 헤더 배경색
+        },
+        headerTintColor: 'white', // 공통 헤더 텍스트 색상
+        headerTitleAlign: 'center', // 공통 헤더 제목 가운데 정렬
+        headerTitleStyle: {
+          fontSize: 18, // 공통 헤더 제목 글씨 크기
+        },
+      }}>
       <Stack.Screen
         name={homeStackNavigations.RCD_HOME}
         component={HomeScreen}
@@ -61,15 +65,7 @@ function HomeStackNavigator() {
         // initialParams={{tag}}
         options={({route, navigation}) => ({
           headerShown: true,
-          headerTitle: `${route?.params?.tag}`, //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: `${route?.params?.tag}`, // route.params.tag
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -86,10 +82,7 @@ function HomeStackNavigator() {
         component={SongScreen}
         options={({navigation}) => ({
           headerShown: true,
-          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
+          headerTitle: '', // 빈 제목
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -107,15 +100,7 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
-          headerTitle: '댓글', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: '댓글',
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -133,23 +118,14 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
-          headerTitle: '답글', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          headerLeft: () => null,
-          headerRight: () => (
+          headerTitle: '답글',
+          headerLeft: () => (
             <IconButton
               onPress={() => {
                 navigation.goBack();
               }}
-              Icon={DeleteIcon}
-              size={24}
+              Icon={ArrowLeftIcon}
+              size={28}
             />
           ),
         })}
@@ -160,23 +136,14 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
-          headerTitle: '신고', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
-          headerLeft: () => null,
-          headerRight: () => (
+          headerTitle: '신고',
+          headerLeft: () => (
             <IconButton
               onPress={() => {
                 navigation.goBack();
               }}
-              Icon={DeleteIcon}
-              size={24}
+              Icon={ArrowLeftIcon}
+              size={28}
             />
           ),
         })}
@@ -187,15 +154,7 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
-          headerTitle: '설정', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: '설정',
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -213,19 +172,10 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           animationEnabled: false,
           headerShown: true,
-          headerTitle: '댓글 차단 관리', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: '댓글 차단 관리',
           headerLeft: () => (
             <IconButton
               onPress={() => {
-                // console.log(route.name);
                 navigation.goBack();
               }}
               Icon={ArrowLeftIcon}
@@ -255,15 +205,7 @@ function HomeStackNavigator() {
         component={TagDetailScreen}
         options={({navigation}) => ({
           headerShown: true,
-          headerTitle: '노래 목록', //route.params.tag, // 헤더 제목을 tag로 설정
-          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
-          headerTitleStyle: {
-            fontSize: 18, // 헤더 글씨 크기를 줄임
-          },
-          headerStyle: {
-            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
-          },
-          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerTitle: '노래 목록',
           headerLeft: () => (
             <IconButton
               onPress={() => {

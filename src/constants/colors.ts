@@ -39,6 +39,7 @@ const designatedColor = {
   BACKGROUND_BLACK: '#0F0F0F',
   APPLE_BLACK: '#000000',
   BACKGROUND_GRAY: '#161616',
+  HOT_TRENDING_COLOR: '#373A40',
 } as const;
 
 export {randomColor, designatedColor};

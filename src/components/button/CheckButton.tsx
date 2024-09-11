@@ -45,7 +45,7 @@ const CheckButton = ({
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={tw`justify-center items-center bg-[${designatedColor.BLACK}]`}
+      style={tw`justify-center items-center bg-[${designatedColor.BACKGROUND_BLACK}]`}
       activeOpacity={0.8}>
       <View style={tw`flex-row items-center`}>
         {isPressed ? (

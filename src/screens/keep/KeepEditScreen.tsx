@@ -48,7 +48,7 @@ function KeepEditScreen() {
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
             <Text style={tw`text-[${designatedColor.PINK2}] font-bold`}>
-              MEMO가 비어있어요
+              KEEP이 비어있어요
             </Text>
           </View>
         )}

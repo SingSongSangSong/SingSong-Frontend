@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {designatedColor} from '../../constants';
 import tw from 'twrnc';
 import MicIcon from '../../assets/svg/logMic.svg';
@@ -10,7 +10,7 @@ function PlaygroundScreen() {
   return (
     <View
       style={[
-        tw`flex-1 bg-black justify-center items-center`,
+        tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}] justify-center items-center`,
         {
           paddingTop: insets.top,
           paddingBottom: insets.bottom,

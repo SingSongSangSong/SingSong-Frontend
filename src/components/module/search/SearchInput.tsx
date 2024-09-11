@@ -5,6 +5,7 @@ import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
 import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
 import SearchIcon from '../../../assets/svg/search.svg';
+import {designatedColor} from '../../../constants';
 
 type SearchInputProps = {
   inputText: string;
@@ -24,7 +25,8 @@ const SearchInput = ({
   inputRef,
 }: SearchInputProps) => {
   return (
-    <View style={tw`flex-row items-center bg-black p-3`}>
+    <View
+      style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] p-3`}>
       <TouchableOpacity
         onPress={handleOnPressBack}
         activeOpacity={0.8}

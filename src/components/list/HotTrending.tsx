@@ -109,7 +109,7 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        style={tw`bg-black`}
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
         onScroll={handleScroll}
         scrollEventThrottle={16} // 스크롤 이벤트 빈도 조절
       >

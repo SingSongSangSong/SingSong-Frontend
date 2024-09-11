@@ -5,7 +5,7 @@ import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
-import {homeStackNavigations} from '../../constants';
+import {designatedColor, homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
@@ -49,7 +49,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-1`}>
         <View style={tw`flex-1 h-[50%]`}>
           {songHandler.songLst && (

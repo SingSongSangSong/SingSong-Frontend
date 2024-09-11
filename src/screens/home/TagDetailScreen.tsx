@@ -2,7 +2,7 @@ import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
-import {homeStackNavigations} from '../../constants';
+import {designatedColor, homeStackNavigations} from '../../constants';
 import {SafeAreaView} from 'react-native';
 import useSongStore from '../../store/useSongStore';
 import {TagDetailList} from '../../components';
@@ -24,7 +24,7 @@ function TagDetailScreen({navigation}: TagDetailScreenProps) {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <TagDetailList tags={tags} onPress={handleOnArrowPress} />
     </SafeAreaView>
   );
