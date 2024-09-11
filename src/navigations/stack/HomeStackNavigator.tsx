@@ -101,6 +101,9 @@ function HomeStackNavigator() {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글',
+          headerStyle: {
+            backgroundColor: 'black', // 공통 헤더 배경색
+          },
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -119,6 +122,9 @@ function HomeStackNavigator() {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '답글',
+          headerStyle: {
+            backgroundColor: 'black', // 공통 헤더 배경색
+          },
           headerLeft: () => (
             <IconButton
               onPress={() => {
@@ -137,6 +143,9 @@ function HomeStackNavigator() {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '신고',
+          headerStyle: {
+            backgroundColor: 'black', // 공통 헤더 배경색
+          },
           headerLeft: () => (
             <IconButton
               onPress={() => {
