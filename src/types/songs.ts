@@ -37,6 +37,16 @@ interface GetSearchSongResponse {
   message: string;
 }
 
+interface DetailSearchSong {
+  nextPage: number;
+  songs: Song[];
+}
+
+interface GetDetailSearchSongResponse {
+  data: DetailSearchSong;
+  message: string;
+}
+
 interface RcdExploreSong {
   album: string;
   singerName: string;
@@ -208,4 +218,6 @@ export type {
   GetSearchSong,
   GetSearchSongResponse,
   GetSongReviewOptionsResponse,
+  GetDetailSearchSongResponse,
+  DetailSearchSong,
 };

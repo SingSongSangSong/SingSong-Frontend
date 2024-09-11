@@ -106,7 +106,11 @@ function SearchScreen({navigation}: SearchScreenProps) {
             </View>
           </View>
         ) : (
-          <SearchResult searchData={searchData} navigation={navigation} />
+          <SearchResult
+            inputText={inputText}
+            searchData={searchData}
+            navigation={navigation}
+          />
         ))}
     </SafeAreaView>
   );

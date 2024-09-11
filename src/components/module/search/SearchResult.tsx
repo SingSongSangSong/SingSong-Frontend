@@ -1,13 +1,23 @@
 import React, {useState} from 'react';
-import {GetSearchSong} from '../../../types';
+import {GetDetailSearchSongResponse, GetSearchSong, Song} from '../../../types';
 import {OutlineButton, SongsList} from '../..';
 import {designatedColor, homeStackNavigations} from '../../../constants';
-import {View, Text, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import tw from 'twrnc';
 import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import getSearchArtistName from '../../../api/search/getSearchArtistName';
+import getSearchSongNumber from '../../../api/search/getSearchSongNumber';
+import getSearchSongName from '../../../api/search/getSearchSongName';
 
 type SearchResultProps = {
+  inputText: string;
   searchData: GetSearchSong;
   navigation: any;
 };
@@ -19,8 +29,17 @@ const categories = [
   {title: '노래제목', value: 'songName'},
 ];
 
-const SearchResult = ({searchData, navigation}: SearchResultProps) => {
+const SearchResult = ({
+  inputText,
+  searchData,
+  navigation,
+}: SearchResultProps) => {
   const [category, setCategory] = useState<string>('all');
+  const [page, setPage] = useState<number>(1);
+  const [selectedDetailData, setSelectedDetailData] = useState<Song[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMoreLoading, setIsMoreLoading] = useState<boolean>(false);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
 
   const _onSongPress = (
     songId: number,
@@ -56,7 +75,8 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
             <OutlineButton
               title={categoryItem.title}
               onPress={() => {
-                setCategory(categoryItem.value);
+                // setCategory(categoryItem.value);
+                onTotalPress(categoryItem.value);
               }}
               color={
                 category === categoryItem.value
@@ -69,18 +89,59 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     </View>
   );
 
-  const renderItem = ({item}: {item: [string, any[]]}) => {
+  const functions: {
+    [key: string]: (
+      searchKeyword: string,
+      page: number,
+      size: number,
+    ) => Promise<GetDetailSearchSongResponse>;
+  } = {
+    artistName: getSearchArtistName,
+    songNumber: getSearchSongNumber,
+    songName: getSearchSongName,
+  };
+
+  const onTotalPress = async (value: string) => {
+    setIsEnd(false);
+    if (value != 'all') {
+      setCategory(value);
+      setIsLoading(true);
+      console.log('value', value);
+      const tempData = await functions[value](inputText, 1, 20); //누르면 그냥 1로 페이지 초기화
+      setSelectedDetailData(tempData.data.songs);
+      setPage(tempData.data.nextPage);
+      setIsLoading(false);
+      return;
+    } else {
+      setCategory(value);
+      return;
+    }
+  };
+
+  const renderItem = ({item}: {item: [string, Song[]]}) => {
     const [key, songs] = item;
     if (songs.length === 0) {
       return null;
     }
 
+    const title = categories.find(c => c.value === key)?.title;
+    const value = categories.find(c => c.value === key)?.value;
+
     return (
-      <View key={key} style={tw`mb-4`}>
+      <View key={key} style={tw`my-4`}>
         {category === 'all' && (
-          <Text style={tw`text-[${designatedColor.PINK}] mx-4 my-4`}>
-            {categories.find(c => c.value === key)?.title}
-          </Text>
+          <View style={tw`flex-row justify-between items-center my-2 px-2`}>
+            <Text style={tw`text-[${designatedColor.PINK}]`}>{title}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                onTotalPress(value!);
+              }}>
+              <Text
+                style={tw`text-[${designatedColor.GRAY3}] text-3 px-2 py-2`}>
+                전체보기
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
         <SongsList
           songlistData={songs}
@@ -91,8 +152,34 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
     );
   };
 
-  const selectedCategoryData =
-    searchData[category as keyof GetSearchSong] || [];
+  const handleRefreshSearchSongs = async () => {
+    if (isMoreLoading || isEnd) {
+      return;
+    }
+    try {
+      setIsMoreLoading(true);
+      if (selectedDetailData && selectedDetailData.length >= 20) {
+        const tempData = await functions[category](inputText, page, 20); //누르면 그냥 1로 페이지 초기화
+        setSelectedDetailData(prev => [
+          ...(prev || []),
+          ...tempData.data.songs,
+        ]);
+        setPage(tempData.data.nextPage);
+        if (tempData.data.songs.length === 0) {
+          setIsEnd(true);
+        }
+        setIsMoreLoading(false);
+      } else {
+        setIsMoreLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+      setIsMoreLoading(false);
+    }
+  };
+
+  // const selectedCategoryData =
+  //   searchData[category as keyof GetSearchSong] || [];
 
   return (
     <View style={tw`flex-1`}>
@@ -100,8 +187,6 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
       <View style={tw`absolute top-0 left-0 right-0 z-10 bg-black`}>
         {renderHeader()}
       </View>
-
-      {/* 스크롤 가능한 리스트 */}
       {category === 'all' ? (
         <FlatList
           data={Object.entries(searchData).filter(
@@ -111,18 +196,25 @@ const SearchResult = ({searchData, navigation}: SearchResultProps) => {
           keyExtractor={item => item[0]}
           contentContainerStyle={tw`pt-12 pb-4`} // pt-12로 고정된 헤더의 높이만큼 패딩 추가
         />
-      ) : selectedCategoryData.length === 0 ? (
-        <View style={tw`flex-1 justify-center items-center pt-12`}>
-          <Text style={tw`text-[${designatedColor.GRAY2}]`}>
-            검색 결과가 없어요.
-          </Text>
+      ) : isLoading ? (
+        <View style={tw`flex-1 justify-center items-center`}>
+          <ActivityIndicator size="large" color={designatedColor.PINK2} />
         </View>
       ) : (
         <FlatList
-          data={[[category, selectedCategoryData]]}
+          data={[[category, selectedDetailData!]]}
           renderItem={renderItem}
           keyExtractor={item => item[0]}
           contentContainerStyle={tw`pt-12 pb-4`} // pt-12로 고정된 헤더의 높이만큼 패딩 추가
+          onEndReached={handleRefreshSearchSongs}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={() =>
+            isMoreLoading ? (
+              <View style={tw`py-10`}>
+                <ActivityIndicator size="large" color={designatedColor.PINK2} />
+              </View>
+            ) : null
+          }
         />
       )}
     </View>

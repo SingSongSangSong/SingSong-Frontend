@@ -61,7 +61,7 @@ const SongItem = ({
       onSongPress();
     }
   };
-  console.log(isMr);
+  // console.log(isMr);
 
   return (
     <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
