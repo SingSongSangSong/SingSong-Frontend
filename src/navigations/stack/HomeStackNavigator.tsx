@@ -88,7 +88,7 @@ function HomeStackNavigator() {
         component={RcdRecommendationScreen}
         options={({navigation}) => ({
           headerShown: true,
-          headerTitle: 'AI가 골랐송', // route.params.tag
+          headerTitle: "AI's PICK",
           headerLeft: () => (
             <IconButton
               onPress={() => {

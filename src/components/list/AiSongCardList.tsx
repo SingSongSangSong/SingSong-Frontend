@@ -32,21 +32,25 @@ const AiSongCardList = ({
   onSongPress,
 }: AiSongCardListProps) => {
   const deviceWidth = Dimensions.get('window').width;
-  console.log('data:', data);
 
   return (
     <View style={tw`w-full mx-2 mt-2 my-2`}>
       <View
-        style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
-        <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
-        <TouchableOpacity
-          onPress={() => onPress()}
-          activeOpacity={0.8}
-          style={tw`p-2`}>
-          <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
-            전체보기
-          </Text>
-        </TouchableOpacity>
+        style={tw`px-2 px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
+        <View style={tw`flex-row justify-between items-center`}>
+          <Text style={tw`text-[${designatedColor.PINK}] text-lg`}>{tag}</Text>
+          <TouchableOpacity
+            onPress={() => onPress()}
+            activeOpacity={0.8}
+            style={tw`p-2`}>
+            <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+              전체보기
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={tw`text-[${designatedColor.GRAY1}]`}>
+          개인 맞춤 노래를 추천 받아보세요
+        </Text>
       </View>
 
       <ScrollView

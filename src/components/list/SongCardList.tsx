@@ -32,7 +32,7 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
     <View style={tw`w-full mx-2 mt-2 my-2`}>
       <View
         style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
-        <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
+        <Text style={tw`text-white text-sm`}>{tag}</Text>
         <TouchableOpacity
           onPress={() => onPress(tag)}
           activeOpacity={0.8}

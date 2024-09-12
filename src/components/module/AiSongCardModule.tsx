@@ -38,7 +38,7 @@ const AiSongCardModule = ({
         <View style={tw`w-full flex-wrap flex-row justify-center items-center`}>
           <View key="aiSong">
             <AiSongCardList
-              tag="AI가 골랐송"
+              tag="AI's PICK"
               onPress={onPressTotalButton}
               data={tempRcdRecommendationSongs}
               onSongPress={onPressSongButton}

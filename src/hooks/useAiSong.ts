@@ -39,9 +39,9 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         // console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         // const songData = await postRcdRefresh(initTag);
-        const songData = await getRcdRecommendation(1);
+        const songData = await getRcdRecommendation(pageId);
         setSongLst(songData.data.songs);
-        setPageId(2);
+        setPageId(pageId + 1);
         // setRefreshSongs(initTag, songData.data);
       }
     } catch (error) {
@@ -51,7 +51,7 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
 
   //초기 노래 리스트 세팅하는 함수
   const setInitSongs = async () => {
-    const initSongs = await getRcdRecommendation(1);
+    const initSongs = await getRcdRecommendation(pageId);
     setSongLst(initSongs.data.songs);
   };
 
@@ -66,7 +66,7 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('ai_recommendation_down_songs');
-        getRcdRecommendation(1)
+        getRcdRecommendation(pageId)
           .then(response => {
             const songData = response.data.songs;
             // const newSongLst = updateRefreshSongs(initTag, songData);
