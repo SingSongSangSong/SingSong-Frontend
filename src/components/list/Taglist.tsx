@@ -1,8 +1,9 @@
-import React from 'react';
-import {View, ScrollView} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Text, TouchableOpacity, ScrollView, Animated} from 'react-native';
 import tw from 'twrnc';
 import {TagIconButton} from '../button/TagIconButton';
 import * as Icons from '../../assets/svg/tags';
+import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
 type TaglistProps = {
   tags: string[];
@@ -11,25 +12,55 @@ type TaglistProps = {
 type IconNames = keyof typeof Icons;
 
 const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
-  // console.log('tagList');
+  const [expanded, setExpanded] = useState(false);
+  const rotateAnimation = useRef(new Animated.Value(0)).current;
 
-  // 아이콘 리스트를 생성
-  // const icons = [SongsIcon, OneIcon, RoofIcon, EarIcon];
+  // 태그 8개까지 보여주거나 전체 보여주기
+  const displayedTags = expanded ? tags : tags.slice(0, 8);
+
+  // 화살표 회전 애니메이션
+  const rotateArrow = () => {
+    Animated.timing(rotateAnimation, {
+      toValue: expanded ? 0 : 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+
+    // 상태를 반대로 설정
+    setExpanded(prev => !prev);
+  };
+
+  // 화살표 아이콘 회전 각도 설정
+  const rotate = rotateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '90deg'], // 0도에서 90도로 회전
+  });
 
   return (
-    <View style={tw`w-full mt-2`}>
+    <View style={tw`w-full`}>
+      <View style={tw`flex-row justify-between px-4 items-center mb-2`}>
+        <Text style={tw`text-white text-sm my-2`}>어떤 노래를 찾으시나요?</Text>
+        <TouchableOpacity
+          onPress={rotateArrow}
+          style={tw`items-center my-2`}
+          activeOpacity={0.8}>
+          <Animated.View style={{transform: [{rotate}]}}>
+            {/* <Text style={tw`text-white text-xl`}>➤</Text> */}
+            <ArrowRightIcon width={28} height={28} fill="white" />
+          </Animated.View>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={tw`flex-row`}>
-        {tags.map((tag, index) => {
-          // 인덱스를 아이콘 리스트의 길이로 모듈러 연산하여 아이콘 선택
-          // const Icon = icons[index % icons.length];
-          const iconName: IconNames = `Icon${index + 1}` as IconNames; // 타입 단언을 통해 아이콘 이름 생성
+        horizontal={false}
+        contentContainerStyle={tw`flex-row flex-wrap justify-center`}
+        showsVerticalScrollIndicator={false}>
+        {displayedTags.map((tag, index) => {
+          const iconName: IconNames = `Icon${index + 1}` as IconNames;
           const IconComponent = Icons[iconName];
 
           return (
-            <View key={index}>
+            <View key={index} style={tw`w-1/4 items-center mb-2`}>
               <TagIconButton
                 tag={tag}
                 index={index}

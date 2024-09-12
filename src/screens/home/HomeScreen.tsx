@@ -121,9 +121,9 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     navigation.navigate(homeStackNavigations.SEARCH);
   };
 
-  const handleOnPressTotalButton = useCallback(() => {
-    navigation.navigate(homeStackNavigations.TAG_DETAIL);
-  }, [navigation]);
+  // const handleOnPressTotalButton = useCallback(() => {
+  //   navigation.navigate(homeStackNavigations.TAG_DETAIL);
+  // }, [navigation]);
 
   const insets = useSafeAreaInsets();
 
@@ -192,7 +192,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
           <TaglistModule
             onPressTagButton={handleOnTagPress}
-            onPressTotalButton={handleOnPressTotalButton}
+            // onPressTotalButton={handleOnPressTotalButton}
           />
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
