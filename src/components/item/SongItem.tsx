@@ -1,15 +1,19 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import tw from 'twrnc';
+// import Animated, {
+//   useAnimatedStyle,
+//   interpolate,
+//   Extrapolation,
+// } from 'react-native-reanimated';
+import {useSharedValue} from 'react-native-reanimated';
 import {designatedColor} from '../../constants';
-import KeepIcon from '../../assets/svg/keepIcon.svg';
-import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 import MusicIcon from '../../assets/svg/music.svg';
-import {useFocusEffect} from '@react-navigation/native';
-import {CommonTag} from '../tag/CommonTag';
-// import {Swipeable} from 'react-native-gesture-handler';
+// import KeepIcon from '../../assets/svg/keepIcon.svg';
+// import KeepFilledWhiteIcon from '../../assets/svg/keepFilledWhite.svg';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-// import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {CommonTag} from '../tag/CommonTag';
+import LeftActionItem from './LeftActionItem';
 
 interface SongItemProps {
   songId: number;
@@ -41,12 +45,7 @@ const SongItem = ({
   const [isKeepPressed, setIsKeepPressed] = useState(isKeep);
   const [isPressed, setIsPressed] = useState(false);
 
-  // 포커스가 돌아올 때마다 isPressed 초기화
-  useFocusEffect(
-    useCallback(() => {
-      setIsPressed(false);
-    }, []),
-  );
+  const dragX = useSharedValue(0);
 
   const handleOnKeepPress = () => {
     if (isKeepPressed) {
@@ -65,35 +64,29 @@ const SongItem = ({
     }
   };
 
-  const renderLeftActions = () => (
-    <View
-      style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] justify-center w-16`}>
-      <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
-        {isKeepPressed ? (
-          <KeepFilledIcon width={24} height={24} />
-        ) : (
-          <KeepIcon width={24} height={24} />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-
   // const renderLeftActions = (progress, dragX) => {
-  //   const scale = dragX.interpolate({
-  //     inputRange: [0, 100],
-  //     outputRange: [0, 1],
-  //     extrapolate: 'clamp',
+  //   const animatedStyle = useAnimatedStyle(() => {
+  //     // Interpolating opacity to hide the action initially
+  //     const opacity = interpolate(
+  //       dragX.value,
+  //       [0, 50], // Opacity will be 0 initially and start increasing
+  //       [0, 1],
+  //       Extrapolation.CLAMP,
+  //     );
+  //     return {
+  //       opacity, // Dynamically changing opacity
+  //     };
   //   });
 
   //   return (
   //     <Animated.View
   //       style={[
-  //         tw`flex-row items-center justify-center bg-[${designatedColor.PINK}]`,
-  //         {transform: [{scale}]},
+  //         tw`flex-row items-center bg-[${designatedColor.PINK}] justify-center w-16`,
+  //         animatedStyle, // Apply animated style
   //       ]}>
   //       <TouchableOpacity onPress={handleOnKeepPress} style={tw`p-2`}>
   //         {isKeepPressed ? (
-  //           <KeepFilledIcon width={24} height={24} />
+  //           <KeepFilledWhiteIcon width={24} height={24} />
   //         ) : (
   //           <KeepIcon width={24} height={24} />
   //         )}
@@ -103,19 +96,26 @@ const SongItem = ({
   // };
 
   return (
-    // <Swipeable renderLeftActions={renderLeftActions}>
     <Swipeable
       friction={2}
-      enableTrackpadTwoFingerGesture
       leftThreshold={30}
       overshootLeft={false}
-      renderLeftActions={renderLeftActions}>
+      onSwipeableWillOpen={() => (dragX.value = 1)}
+      onSwipeableClose={() => (dragX.value = 0)}
+      // renderLeftActions={renderLeftActions}
+      renderLeftActions={(progress, dragX) => (
+        <LeftActionItem
+          dragX={dragX}
+          handleOnKeepPress={handleOnKeepPress}
+          isKeepPressed={isKeepPressed}
+        />
+      )}>
       <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
         <View
           style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 mx-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <View style={tw`flex-row flex-1`}>
             <View style={tw`items-center justify-center w-[12] h-[12]`}>
-              {album == '' ? (
+              {album === '' ? (
                 <View
                   style={[
                     {
