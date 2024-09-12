@@ -45,7 +45,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
         Platform.OS === 'ios' && {
-          paddingBottom: 80,
+          // paddingBottom: 80,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },

@@ -80,32 +80,32 @@ const MainTabNavigator = () => {
             ) : null;
           },
           headerShown: false,
-          tabBarStyle: shouldHideTabBar()
-            ? isIOS
-              ? {display: 'none'} // iOS일 때 탭바 숨기기
-              : {height: 0, overflow: 'hidden'} // Android일 때 탭바 숨기기
-            : isIOS // iOS일 때 탭바 스타일
-            ? {
-                height: insets.bottom + 60,
-                backgroundColor: 'black',
-                paddingBottom: insets.bottom,
-                // 경계선 제거
-                borderTopWidth: 0,
-                // 그림자 제거
-                shadowColor: 'transparent',
-              }
-            : // Android일 때 탭바 스타일
-              {
-                height: 60,
-                backgroundColor: 'black',
-                paddingTop: 5,
-                paddingBottom: 5,
-                borderTopWidth: 0,
-              },
-          tabBarButton: props =>
-            shouldHideTabBar() && isIOS ? null : ( // iOS일 때 숨길 때 버튼을 null로 처리
-              <TouchableOpacity {...props} />
-            ), // 버튼을 기본 Touchable로 사용
+          tabBarStyle: {
+            backgroundColor: 'black',
+            borderTopWidth: 0,
+            ...(shouldHideTabBar()
+              ? isIOS
+                ? {display: 'none'} // iOS일 때 탭바 숨기기
+                : {height: 0, overflow: 'hidden'} // Android일 때 탭바 숨기기
+              : isIOS // iOS일 때 탭바 스타일
+              ? {
+                  height: insets.bottom + 60,
+                  paddingBottom: insets.bottom,
+                  // 경계선 제거
+                  borderTopWidth: 0,
+                }
+              : // Android일 때 탭바 스타일
+                {
+                  height: 60,
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  borderTopWidth: 0,
+                }),
+          },
+          // tabBarButton: props =>
+          //   shouldHideTabBar() && isIOS ? null : ( // iOS일 때 숨길 때 버튼을 null로 처리
+          //     <TouchableOpacity {...props} />
+          //   ), // 버튼을 기본 Touchable로 사용
           tabBarActiveTintColor: designatedColor.PINK,
           tabBarInactiveTintColor: 'gray',
         };
@@ -118,10 +118,12 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
       />
-      <Tab.Screen
-        name={mainTabNavigations.PLAYGROUND}
-        component={PlaygroundScreen}
-      />
+      {Platform.OS != 'ios' && (
+        <Tab.Screen
+          name={mainTabNavigations.PLAYGROUND}
+          component={PlaygroundScreen}
+        />
+      )}
     </Tab.Navigator>
   );
 };

@@ -13,7 +13,6 @@ import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 import SettingScreen from '../../screens/home/SettingScreen';
 import SongScreen from '../../screens/song/SongScreen';
 import {IconButton} from '../../components';
-import DeleteIcon from '../../assets/svg/delete.svg';
 import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import ReportScreen from '../../screens/song/ReportScreen';
@@ -21,6 +20,7 @@ import TagDetailScreen from '../../screens/home/TagDetailScreen';
 import BlacklistScreen from '../../screens/home/BlacklistScreen';
 import SearchScreen from '../../screens/search/SearchScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
+import {Platform} from 'react-native';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -39,14 +39,19 @@ function HomeStackNavigator() {
       initialRouteName={homeStackNavigations.RCD_HOME}
       screenOptions={{
         gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        transitionSpec: {
-          open: TransitionSpecs.TransitionIOSSpec,
-          close: TransitionSpecs.TransitionIOSSpec,
-        },
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        ...(Platform.OS === 'ios'
+          ? {...TransitionPresets.SlideFromRightIOS} // iOS 전환 설정 (이미 gestureDirection 포함)
+          : {
+              transitionSpec: {
+                open: TransitionSpecs.TransitionIOSSpec,
+                close: TransitionSpecs.TransitionIOSSpec,
+              },
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+              gestureDirection: 'horizontal', // Android에서만 적용
+            }),
         headerStyle: {
           backgroundColor: designatedColor.BACKGROUND_BLACK, // 공통 헤더 배경색
+          borderBottomWidth: 0, // 모든 플랫폼에서 경계선 제거
         },
         headerTintColor: 'white', // 공통 헤더 텍스트 색상
         headerTitleAlign: 'center', // 공통 헤더 제목 가운데 정렬

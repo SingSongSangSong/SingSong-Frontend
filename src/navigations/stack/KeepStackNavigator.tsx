@@ -1,5 +1,10 @@
 import React from 'react';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+  TransitionPresets,
+  TransitionSpecs,
+} from '@react-navigation/stack';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import {NavigationProp} from '@react-navigation/native';
 import {KeepStackParamList} from '../../types';
@@ -12,6 +17,7 @@ import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import ReportScreen from '../../screens/song/ReportScreen';
+import {Platform} from 'react-native';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -26,7 +32,6 @@ const handleOnPress = (navigation: any) => {
 function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
   return (
     <Stack.Navigator
-      // initialRouteName={keepStackNavigations.KEEP}
       screenOptions={{
         headerLeft: () => (
           <IconButton
@@ -37,6 +42,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         ),
         headerStyle: {
           backgroundColor: designatedColor.BACKGROUND_BLACK, // 공통 헤더 배경색
+          borderBottomWidth: 0, // 모든 플랫폼에서 경계선 제거
         },
         headerTintColor: 'white', // 공통 헤더 텍스트 색상
         headerTitleAlign: 'center', // 공통 헤더 제목 가운데 정렬
@@ -44,7 +50,17 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           fontSize: 18, // 공통 헤더 제목 글씨 크기
         },
 
-        ...TransitionPresets.SlideFromRightIOS, // iOS 스타일의 슬라이드 애니메이션
+        gestureEnabled: true,
+        ...(Platform.OS === 'ios'
+          ? {...TransitionPresets.SlideFromRightIOS} // iOS 전환 설정 (이미 gestureDirection 포함)
+          : {
+              transitionSpec: {
+                open: TransitionSpecs.TransitionIOSSpec,
+                close: TransitionSpecs.TransitionIOSSpec,
+              },
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+              gestureDirection: 'horizontal', // Android에서만 적용
+            }),
       }}>
       <Stack.Screen
         name={keepStackNavigations.KEEP}
