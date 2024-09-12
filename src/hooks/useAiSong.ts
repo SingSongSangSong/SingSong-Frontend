@@ -53,6 +53,7 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
   const setInitSongs = async () => {
     const initSongs = await getRcdRecommendation(pageId);
     setSongLst(initSongs.data.songs);
+    setPageId(pageId + 1);
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
@@ -66,6 +67,7 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('ai_recommendation_down_songs');
+        console.log('pageId:', pageId);
         getRcdRecommendation(pageId)
           .then(response => {
             const songData = response.data.songs;
