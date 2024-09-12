@@ -8,6 +8,7 @@ import {
   View,
   LayoutChangeEvent,
   Platform,
+  Dimensions,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -34,6 +35,7 @@ type HomeScreenProps = StackScreenProps<
 const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
+  const screen = Dimensions.get('window');
 
   const handleOnLayout = (event: LayoutChangeEvent) => {
     const {height} = event.nativeEvent.layout;
@@ -121,6 +123,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     <View
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
+        {height: screen.height},
         Platform.OS === 'ios' && {
           paddingTop: insets.top,
           // paddingBottom: 80,

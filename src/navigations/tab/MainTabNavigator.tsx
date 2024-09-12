@@ -85,7 +85,7 @@ const MainTabNavigator = () => {
             borderTopWidth: 0,
             ...(shouldHideTabBar()
               ? isIOS
-                ? {display: 'none'} // iOS일 때 탭바 숨기기
+                ? {opacity: 0, height: 0} // iOS일 때 탭바 숨기기
                 : {height: 0, overflow: 'hidden'} // Android일 때 탭바 숨기기
               : isIOS // iOS일 때 탭바 스타일
               ? {
