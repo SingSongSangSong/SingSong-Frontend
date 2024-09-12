@@ -1,0 +1,87 @@
+import React, {memo} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import tw from 'twrnc';
+import {SongCard} from '..';
+import {designatedColor} from '../../constants';
+import {Song} from '../../types';
+
+type AiSongCardListProps = {
+  tag: string;
+  onPress: () => void;
+  data: Song[];
+  onSongPress: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    album: string,
+    isMr: boolean,
+  ) => void;
+};
+
+const AiSongCardList = ({
+  tag,
+  onPress,
+  data,
+  onSongPress,
+}: AiSongCardListProps) => {
+  const deviceWidth = Dimensions.get('window').width;
+  console.log('data:', data);
+
+  return (
+    <View style={tw`w-full mx-2 mt-2 my-2`}>
+      <View
+        style={tw`flex-row justify-between px-2 items-center px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
+        <Text style={tw`text-white text-sm font-bold`}>{tag}</Text>
+        <TouchableOpacity
+          onPress={() => onPress()}
+          activeOpacity={0.8}
+          style={tw`p-2`}>
+          <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+            전체보기
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={tw`px-2`}
+        snapToInterval={deviceWidth * 0.46}
+        decelerationRate="fast">
+        {data &&
+          data.slice(0, 10).map((song, index) => (
+            <SongCard
+              key={`${tag}-${index}`} // 고유한 key 생성
+              songNumber={song.songNumber}
+              songName={song.songName}
+              singerName={song.singerName}
+              onSongPress={() =>
+                onSongPress(
+                  song.songNumber,
+                  song.songId,
+                  song.songName,
+                  song.singerName,
+                  song.album,
+                  song.isMr,
+                )
+              }
+              album={song.album}
+              isMr={song.isMr}
+            />
+          ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+// React.memo를 사용하여 SongCardList 컴포넌트를 메모이제이션하고 내보내기
+export const MemoizedSongCardList = memo(AiSongCardList);
+export {MemoizedSongCardList as AiSongCardList};

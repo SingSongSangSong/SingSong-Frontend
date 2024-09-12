@@ -86,7 +86,7 @@ const SongCardModule = ({
           )}
         </View>
       ) : (
-        <View style={tw`h-[12%]`} />
+        <View />
       )}
     </View>
   );

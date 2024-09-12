@@ -21,6 +21,7 @@ import BlacklistScreen from '../../screens/home/BlacklistScreen';
 import SearchScreen from '../../screens/search/SearchScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import {Platform} from 'react-native';
+import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendationScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -71,6 +72,23 @@ function HomeStackNavigator() {
         options={({route, navigation}) => ({
           headerShown: true,
           headerTitle: `${route?.params?.tag}`, // route.params.tag
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.AI_RECOMMENDATION}
+        component={RcdRecommendationScreen}
+        options={({navigation}) => ({
+          headerShown: true,
+          headerTitle: 'AI가 골랐송', // route.params.tag
           headerLeft: () => (
             <IconButton
               onPress={() => {

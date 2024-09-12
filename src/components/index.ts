@@ -65,3 +65,5 @@ export * from './module/songDetail/SongAdditionInfo';
 export * from './module/songDetail/SongReview';
 export * from './module/songDetail/SongComment';
 export * from './tag/CommonTag';
+export * from './module/AiSongCardModule';
+export * from './list/AiSongCardList';

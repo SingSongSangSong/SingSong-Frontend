@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import tw from 'twrnc';
 import {
+  AiSongCardModule,
   HotTrendingModule,
   IconButton,
   SongCardModule,
@@ -81,6 +82,11 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         isMr,
       },
     });
+  };
+
+  const handleOnPressAiTotalButton = () => {
+    navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
+    console.log('AI 추천 전체보기 버튼 클릭');
   };
 
   const handleOnHotTrendingSongPress = (
@@ -180,15 +186,17 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
       </View>
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
-          {!isGuest && (
-            <HotTrendingModule
-              onPressSongButton={handleOnHotTrendingSongPress}
-            />
-          )}
+          {/* {!isGuest && ( */}
+          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
+          {/* )} */}
 
           <TaglistModule
             onPressTagButton={handleOnTagPress}
             onPressTotalButton={handleOnPressTotalButton}
+          />
+          <AiSongCardModule
+            onPressTotalButton={handleOnPressAiTotalButton}
+            onPressSongButton={handleOnSongPress}
           />
           <SongCardModule
             onPressSongButton={handleOnSongPress}

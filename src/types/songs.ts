@@ -189,6 +189,11 @@ interface GetSongReviewOptionsResponse {
   message: string;
 }
 
+interface GetRcdRecommendationResponse {
+  data: {songs: Song[]};
+  message: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -220,4 +225,5 @@ export type {
   GetSongReviewOptionsResponse,
   GetDetailSearchSongResponse,
   DetailSearchSong,
+  GetRcdRecommendationResponse,
 };
