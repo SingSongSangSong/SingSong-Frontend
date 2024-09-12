@@ -7,6 +7,8 @@ import {CustomToast} from './src/components';
 import queryClient from './src/api/queryClient';
 import crashlytics from '@react-native-firebase/crashlytics';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import 'react-native-reanimated'; // 꼭 추가하세요.
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -21,16 +23,18 @@ function App(): React.JSX.Element {
   }, []);
 
   return (
-    <SafeAreaProvider>
-      {/* <SafeAreaView style={{flex: 1}}> */}
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <AppStackNavigator />
-          <CustomToast />
-        </NavigationContainer>
-      </QueryClientProvider>
-      {/* </SafeAreaView> */}
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SafeAreaProvider>
+        {/* <SafeAreaView style={{flex: 1}}> */}
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+            <AppStackNavigator />
+            <CustomToast />
+          </NavigationContainer>
+        </QueryClientProvider>
+        {/* </SafeAreaView> */}
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 
