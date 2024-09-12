@@ -26,6 +26,7 @@ import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import GuestStore from '../../store/GuestStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -35,6 +36,7 @@ type HomeScreenProps = StackScreenProps<
 const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
+  const isGuest = GuestStore(state => state.isGuest);
   const screen = Dimensions.get('window');
 
   const handleOnLayout = (event: LayoutChangeEvent) => {
@@ -133,33 +135,61 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         },
       ]}>
       <View
-        style={tw`border-[${designatedColor.BACKGROUND}] border-b justify-between flex-row p-3 items-center`}
+        style={tw`border-[${designatedColor.BACKGROUND}] border-b  `}
         onLayout={handleOnLayout}>
-        <LogoIcon />
-        <View style={tw`flex-row`}>
-          <View style={tw`mr-2`}>
-            <IconButton
-              Icon={SearchIcon}
-              onPress={handleOnPressSearch}
-              size={28}
-            />
-          </View>
+        <View style={tw`justify-between flex-row p-3 items-center`}>
+          <LogoIcon />
+          <View style={tw`flex-row`}>
+            {isGuest ? (
+              <View style={tw`py-6`} />
+            ) : (
+              <>
+                <View style={tw`mr-2`}>
+                  <IconButton
+                    Icon={SearchIcon}
+                    onPress={handleOnPressSearch}
+                    size={28}
+                  />
+                </View>
 
-          <IconButton
-            Icon={SettingsIcon}
-            onPress={handleOnPressSetting}
-            size={28}
-          />
+                <IconButton
+                  Icon={SettingsIcon}
+                  onPress={handleOnPressSetting}
+                  size={28}
+                />
+              </>
+            )}
+          </View>
         </View>
+        {/* <View style={tw`bg-[${designatedColor.PINK}] p-2 items-center py-3`}>
+          <Text style={tw`text-black font-bold`}>
+            로그인 후 사용하시면 더욱 멋진 경험을 할 수 있습니다
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: appStackNavigations.LOGIN}],
+                }),
+              )
+            }>
+            <Text>로그인하러 가기</Text>
+          </TouchableOpacity>
+        </View> */}
       </View>
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
-          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
+          {!isGuest && (
+            <HotTrendingModule
+              onPressSongButton={handleOnHotTrendingSongPress}
+            />
+          )}
+
           <TaglistModule
             onPressTagButton={handleOnTagPress}
             onPressTotalButton={handleOnPressTotalButton}
           />
-
           <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnPreviewTagPress}

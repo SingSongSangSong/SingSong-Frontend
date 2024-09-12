@@ -28,7 +28,7 @@ const HotTrendingItem = ({
   songNumber,
   onPress,
 }: HotTrendingItemProps) => {
-  console.log(isMr);
+  // console.log(isMr);
   return (
     <TouchableOpacity
       onPress={onPress}

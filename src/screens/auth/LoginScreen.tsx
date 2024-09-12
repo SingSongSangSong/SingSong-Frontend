@@ -20,6 +20,7 @@ import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
 import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
+import GuestStore from '../../store/GuestStore';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 type LoginScreenProps = StackScreenProps<
@@ -30,6 +31,7 @@ type LoginScreenProps = StackScreenProps<
 function LoginScreen({navigation}: LoginScreenProps) {
   const loginHandler = useLogin();
   // console.log('prvalue', loginHandler.prValue);
+  const setIsGuest = GuestStore(state => state.setIsGuest);
 
   const handleKakaoButton = async () => {
     try {
@@ -73,6 +75,11 @@ function LoginScreen({navigation}: LoginScreenProps) {
     }
   };
 
+  const handleGuestButton = () => {
+    setIsGuest(true);
+    navigation.replace(appStackNavigations.MAIN);
+  };
+
   const deviceHeight = Dimensions.get('window').height;
 
   return (
@@ -103,14 +110,24 @@ function LoginScreen({navigation}: LoginScreenProps) {
             />
           </View>
         )}
-        <LargeButton
-          title="카카오로 로그인"
-          onPress={
-            loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
-          }
-          color={designatedColor.KAKAO_YELLOW}
-          Icon={KaKaoIcon}
-        />
+        <View style={tw`mb-4`}>
+          <LargeButton
+            title={
+              Platform.OS == 'ios' ? 'Sign in with Kakao' : '카카오로 로그인'
+            }
+            onPress={
+              loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
+            }
+            color={designatedColor.KAKAO_YELLOW}
+            Icon={KaKaoIcon}
+          />
+        </View>
+
+        {/* <LargeButton
+          title="Guest"
+          onPress={handleGuestButton}
+          color="#C9CCD5"
+        /> */}
       </View>
       {loginHandler.isLoggedProcess && (
         <View
