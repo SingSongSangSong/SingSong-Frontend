@@ -1,9 +1,18 @@
-import React, {memo} from 'react';
-import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
+import React, {memo, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
 import tw from 'twrnc';
-import {SongItem} from '..';
+import {SongItem, TextButton} from '..';
 import {Song} from '../../types';
 import {designatedColor} from '../../constants';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Modal from 'react-native-modal';
 
 interface RefreshSongsListProps {
   songlistData: Song[];
@@ -32,7 +41,8 @@ const RenderItem = memo(
     onKeepAddPress,
     onKeepRemovePress,
     isShowKeepIcon,
-  }: any) => (
+  }: // setIsModalVisible,
+  any) => (
     <SongItem
       key={item.songNumber}
       songId={item.songId}
@@ -45,6 +55,7 @@ const RenderItem = memo(
       isMr={item.isMr}
       keepCount={item.keepCount}
       commentCount={item.commentCount}
+      // setIsModalVisible={setIsModalVisible}
       onSongPress={() => {
         onSongPress(
           item.songId,
@@ -73,40 +84,82 @@ const RefreshSongsList = ({
   refreshing,
 }: RefreshSongsListProps) => {
   // console.log('RefreshSongsList rendered!');
+  // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const insets = useSafeAreaInsets();
 
   return (
-    <FlatList
-      data={songlistData}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({item}) => (
-        <RenderItem
-          item={item}
-          onSongPress={onSongPress}
-          onKeepAddPress={onKeepAddPress}
-          onKeepRemovePress={onKeepRemovePress}
-          isShowKeepIcon={isShowKeepIcon}
-        />
-      )}
-      style={tw`h-[50%]`}
-      contentContainerStyle={tw`flex-grow`}
-      onEndReached={handleRefreshSongs}
-      onEndReachedThreshold={0.1}
-      ListFooterComponent={() =>
-        isLoading ? (
-          <View style={tw`py-10`}>
-            <ActivityIndicator size="large" color={designatedColor.PINK2} />
+    <>
+      <FlatList
+        data={songlistData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => (
+          <RenderItem
+            item={item}
+            onSongPress={onSongPress}
+            onKeepAddPress={onKeepAddPress}
+            onKeepRemovePress={onKeepRemovePress}
+            isShowKeepIcon={isShowKeepIcon}
+            // setIsModalVisible={setIsModalVisible}
+          />
+        )}
+        style={tw`h-[50%]`}
+        contentContainerStyle={tw`flex-grow`}
+        onEndReached={handleRefreshSongs}
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={() =>
+          isLoading ? (
+            <View style={tw`py-10`}>
+              <ActivityIndicator size="large" color={designatedColor.PINK2} />
+            </View>
+          ) : null
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={designatedColor.PINK2} // RefreshControl indicator color (iOS)
+            colors={[designatedColor.PINK2]}
+          /> // RefreshControl indicator colors (Android)/>
+        }
+      />
+      {/* <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => {
+          setIsModalVisible(false);
+        }}
+        style={[
+          {
+            justifyContent: 'flex-end',
+            margin: 0,
+          },
+          Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+        ]}>
+        <View style={tw`bg-black w-full px-4`}>
+          <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
+          <View
+            style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+            <View style={tw`mb-3`}>
+              <TextButton
+                title="KEEP에 추가"
+                onPress={() => {}}
+                color="white"
+                size={4}
+              />
+            </View>
           </View>
-        ) : null
-      }
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor={designatedColor.PINK2} // RefreshControl indicator color (iOS)
-          colors={[designatedColor.PINK2]}
-        /> // RefreshControl indicator colors (Android)/>
-      }
-    />
+          <View style={tw`py-4`}>
+            <TextButton
+              title="닫기"
+              onPress={() => {
+                setIsModalVisible(false);
+              }}
+              color="white"
+              size={4}
+            />
+          </View>
+        </View>
+      </Modal> */}
+    </>
   );
 };
 
