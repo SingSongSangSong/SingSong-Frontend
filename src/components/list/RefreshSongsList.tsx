@@ -43,6 +43,8 @@ const RenderItem = memo(
       isKeep={item.isKeep}
       isShowKeepIcon={isShowKeepIcon}
       isMr={item.isMr}
+      keepCount={item.keepCount}
+      commentCount={item.commentCount}
       onSongPress={() => {
         onSongPress(
           item.songId,

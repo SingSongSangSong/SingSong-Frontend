@@ -24,6 +24,8 @@ interface Song {
   songNumber: number;
   tags?: string[];
   isMr: boolean;
+  keepCount?: number;
+  commentCount?: number;
 }
 
 interface GetSearchSong {

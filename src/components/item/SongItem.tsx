@@ -7,6 +7,8 @@ import MusicIcon from '../../assets/svg/music.svg';
 import {CommonTag} from '../tag/CommonTag';
 import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../assets/svg/keepIcon.svg';
+import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
+import CommentIcon from '../../assets/svg/commentGray.svg';
 
 interface SongItemProps {
   songId: number;
@@ -17,6 +19,8 @@ interface SongItemProps {
   isKeep: boolean | undefined;
   isShowKeepIcon: boolean;
   isMr?: boolean;
+  keepCount?: number;
+  commentCount?: number;
   onSongPress: () => void;
   onKeepAddPress?: () => void | undefined;
   onKeepRemovePress?: () => void | undefined;
@@ -31,6 +35,8 @@ const SongItem = ({
   isKeep = true,
   isShowKeepIcon,
   isMr = false,
+  keepCount = 0,
+  commentCount = 0,
   onSongPress,
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
@@ -61,8 +67,8 @@ const SongItem = ({
     <TouchableOpacity onPress={handleOnPress} activeOpacity={0.9}>
       <View
         style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
-        <View style={tw`flex-row flex-1`}>
-          <View style={tw`items-center justify-center w-[12] h-[12]`}>
+        <View style={tw`flex-row items-center`}>
+          <View style={tw`items-center justify-center w-[16] h-[16]`}>
             {album === '' ? (
               <View
                 style={[
@@ -84,43 +90,72 @@ const SongItem = ({
           </View>
 
           <View style={tw`flex-1 h-full ml-4 mr-2`}>
-            <View style={tw`flex-row items-center`}>
-              <Text
-                style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
-                {songNumber}
-              </Text>
-              {isMr ? (
-                <CommonTag name="MR" color={designatedColor.PURPLE} />
-              ) : (
-                <View style={tw`mx-1`} />
-              )}
-              <Text
-                style={tw`text-white text-sm flex-1`}
-                numberOfLines={1}
-                ellipsizeMode="tail">
-                {songName}
-              </Text>
-            </View>
-            <Text
-              style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
-              numberOfLines={1}
-              ellipsizeMode="tail">
-              {singerName}
-            </Text>
-          </View>
-          <View>
-            {isShowKeepIcon && (
-              <TouchableOpacity
-                onPress={handleOnKeepPress}
-                activeOpacity={0.8}
-                style={tw`p-2`}>
-                {isKeepPressed ? (
-                  <KeepFilledIcon width={20} height={20} />
+            <View style={tw`flex-row items-center mt-2 justify-between`}>
+              <View style={tw`flex-row items-center flex-1`}>
+                <View
+                  style={tw`px-2 py-0.3 rounded-full items-center justify-center bg-[${designatedColor.GRAY5}]`}>
+                  <Text style={tw`text-white text-[3] text-white`}>
+                    {songNumber}
+                  </Text>
+                </View>
+
+                {isMr ? (
+                  <CommonTag name="MR" color={designatedColor.PURPLE} />
                 ) : (
-                  <KeepIcon width={20} height={20} />
+                  <View style={tw`mx-1`} />
                 )}
+                <Text
+                  style={tw`text-white text-sm flex-1`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
+                  {songName}
+                </Text>
+              </View>
+              <TouchableOpacity style={tw`p-3 w-[6]`}>
+                <MoreVerticalIcon width={16} height={16} />
               </TouchableOpacity>
-            )}
+            </View>
+            <View>
+              <View style={tw`flex-row items-center`}>
+                <Text
+                  style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
+                  {singerName}
+                </Text>
+                {isShowKeepIcon && (
+                  <TouchableOpacity
+                    onPress={handleOnKeepPress}
+                    activeOpacity={0.8}
+                    style={tw`p-2`}>
+                    {isKeepPressed ? (
+                      <View style={tw`flex-row items-center`}>
+                        <KeepFilledIcon width={12} height={12} />
+                        <Text
+                          style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
+                          {keepCount}
+                        </Text>
+                      </View>
+                    ) : (
+                      <View style={tw`flex-row items-center`}>
+                        <KeepIcon width={12} height={12} />
+                        <Text
+                          style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
+                          {keepCount}
+                        </Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                )}
+                <View style={tw`flex-row items-center`}>
+                  <CommentIcon width={12} height={12} />
+                  <Text
+                    style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
+                    {commentCount}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </View>
