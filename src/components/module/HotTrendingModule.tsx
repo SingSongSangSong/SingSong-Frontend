@@ -20,6 +20,7 @@ interface HotTrendingModuleProps {
     isMr: boolean,
   ) => void;
 }
+
 const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   const selectedGender = useChartStore(state => state.selectedGender);
   const setSelectedGender = useChartStore(state => state.setSelectedGender);
@@ -85,10 +86,12 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
       </View>
 
       {/* Trending Content */}
-
       <View>
         {selectedGender != '' ? (
-          <HotTrending onPressSongButton={onPressSongButton} />
+          <HotTrending
+            key={selectedGender} // 성별이 바뀔 때마다 컴포넌트 재마운트
+            onPressSongButton={onPressSongButton}
+          />
         ) : (
           <EmptyHotTrending />
         )}

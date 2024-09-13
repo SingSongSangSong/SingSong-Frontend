@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
@@ -12,15 +12,14 @@ interface HotTrendingProps {
     songId: number,
     songName: string,
     singerName: string,
-    // album?: string,
     isMr: boolean,
   ) => void;
 }
+
 const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
   const itemsPerPage = 5;
   const selectedCharts = useChartStore(state => state.selectedCharts);
-
-  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 상태 추가
+  const [currentPage, setCurrentPage] = useState(0);
 
   const groupedCharts = [];
   for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
@@ -32,76 +31,16 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
   const handleScroll = event => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(contentOffsetX / screenWidth);
-    // setCurrentPage(index); // 스크롤 위치에 따라 현재 페이지 업데이트
     if (index !== currentPage) {
       setCurrentPage(index); // 스크롤 위치에 따라 현재 페이지 업데이트
-
-      // 페이지 변경 시 일반 로그 호출
-      logSwipe('hot_trending', index);
+      logSwipe('hot_trending', index); // 로그 기록
     }
   };
 
-  const tempChartData = [
-    {
-      artistName: 'aespa',
-      isMr: false,
-      new: 'old',
-      ranking: 1,
-      rankingChange: -1,
-      songId: 101,
-      songName: 'Supernova',
-      songNumber: 86820,
-      totalScore: 9500,
-    },
-    {
-      artistName: 'NewJeans',
-      isMr: false,
-      new: 'old',
-      ranking: 2,
-      rankingChange: 1,
-      songId: 102,
-      songName: 'Super Shy',
-      songNumber: 84091,
-      totalScore: 9200,
-    },
-    {
-      artistName: '프로미스나인',
-      isMr: false,
-      new: 'new',
-      ranking: 3,
-      rankingChange: 0,
-      songId: 103,
-      songName: 'Supersonic',
-      songNumber: 43117,
-      totalScore: 9100,
-    },
-    {
-      artistName: '(여자)아이들',
-      isMr: false,
-      new: 'old',
-      ranking: 4,
-      rankingChange: -1,
-      songId: 104,
-      songName: 'Super Lady',
-      songNumber: 85875,
-      totalScore: 8800,
-    },
-    {
-      artistName: 'NewJeans',
-      isMr: false,
-      new: 'old',
-      ranking: 5,
-      rankingChange: -1,
-      songId: 105,
-      songName: 'Supernatural',
-      songNumber: 52590,
-      totalScore: 8600,
-    },
-  ];
-
-  // for (let i = 0; i < tempChartData.length; i += itemsPerPage) {
-  //   groupedCharts.push(tempChartData.slice(i, i + itemsPerPage));
-  // }
+  useEffect(() => {
+    // 성별 변경 시 currentPage를 0으로 초기화
+    setCurrentPage(0);
+  }, [selectedCharts]);
 
   return (
     <View>
@@ -111,8 +50,7 @@ const HotTrending = ({onPressSongButton}: HotTrendingProps) => {
         showsHorizontalScrollIndicator={false}
         style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
         onScroll={handleScroll}
-        scrollEventThrottle={16} // 스크롤 이벤트 빈도 조절
-      >
+        scrollEventThrottle={16}>
         {groupedCharts.map((group, index) => (
           <View
             key={`group-${index}`}
