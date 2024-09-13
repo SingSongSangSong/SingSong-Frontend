@@ -68,3 +68,6 @@ export * from './tag/CommonTag';
 export * from './module/AiSongCardModule';
 export * from './list/AiSongCardList';
 export * from './item/LeftActionItem';
+export * from './item/SearchSongItem';
+export * from './list/SearchSongsList';
+export * from './list/KeepSongsList';

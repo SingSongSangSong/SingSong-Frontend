@@ -24,6 +24,7 @@ interface SongItemProps {
   isMr?: boolean;
   keepCount?: number;
   commentCount?: number;
+  isShowInfo?: boolean;
   // setIsModalVisible?: (value: boolean) => void;
   onSongPress: () => void;
   onKeepAddPress?: () => void | undefined;
@@ -41,6 +42,7 @@ const SongItem = ({
   isMr = false,
   keepCount = 0,
   commentCount = 0,
+  isShowInfo = true,
   onSongPress,
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
@@ -110,12 +112,6 @@ SongItemProps) => {
                       {songNumber}
                     </Text>
                   </View>
-
-                  {isMr ? (
-                    <CommonTag name="MR" color={designatedColor.PURPLE} />
-                  ) : (
-                    <View />
-                  )}
                   {isShowKeepIcon && (
                     <TouchableOpacity
                       onPress={handleOnKeepPress}
@@ -127,6 +123,11 @@ SongItemProps) => {
                         <KeepIcon width={14} height={14} />
                       )}
                     </TouchableOpacity>
+                  )}
+                  {isMr ? (
+                    <CommonTag name="MR" color={designatedColor.PURPLE} />
+                  ) : (
+                    <View />
                   )}
                   <Text
                     style={tw`text-white text-sm flex-1`}
@@ -144,46 +145,49 @@ SongItemProps) => {
                   <MoreVerticalIcon width={16} height={16} />
                 </TouchableOpacity> */}
               </View>
-              <View>
-                <View style={tw`flex-row items-center`}>
-                  <Text
-                    style={tw`text-white text-sm flex-1 text-[${designatedColor.GRAY2}]`}
-                    numberOfLines={1}
-                    ellipsizeMode="tail">
-                    {singerName}
-                  </Text>
-                  {isShowKeepIcon && (
-                    <TouchableOpacity
-                      onPress={handleOnKeepPress}
-                      activeOpacity={0.8}
-                      style={tw`p-2`}>
-                      {isKeepPressed ? (
-                        <View style={tw`flex-row items-center`}>
-                          <KeepFilledIcon width={12} height={12} />
-                          <Text
-                            style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
-                            {keepCounts}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View style={tw`flex-row items-center`}>
-                          <KeepIcon width={12} height={12} />
-                          <Text
-                            style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
-                            {keepCounts}
-                          </Text>
-                        </View>
-                      )}
-                    </TouchableOpacity>
-                  )}
-                  <View style={tw`flex-row items-center`}>
-                    <CommentIcon width={12} height={12} />
-                    <Text
-                      style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
-                      {commentCount}
-                    </Text>
-                  </View>
-                </View>
+              <View style={tw`flex-row items-center mt-1 ml-1`}>
+                <Text
+                  style={tw`text-white text-sm flex-1 text-[${designatedColor.GRAY2}]`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail">
+                  {singerName}
+                </Text>
+                {isShowInfo && (
+                  <>
+                    {isShowKeepIcon && (
+                      <TouchableOpacity
+                        onPress={handleOnKeepPress}
+                        activeOpacity={0.8}
+                        style={tw`p-2`}>
+                        {isKeepPressed ? (
+                          <View style={tw`flex-row items-center`}>
+                            <KeepFilledIcon width={12} height={12} />
+                            <Text
+                              style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
+                              {keepCounts}
+                            </Text>
+                          </View>
+                        ) : (
+                          <View style={tw`flex-row items-center`}>
+                            <KeepIcon width={12} height={12} />
+                            <Text
+                              style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
+                              {keepCounts}
+                            </Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    )}
+
+                    <View style={tw`flex-row items-center`}>
+                      <CommentIcon width={12} height={12} />
+                      <Text
+                        style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
+                        {commentCount}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
             </View>
           </View>

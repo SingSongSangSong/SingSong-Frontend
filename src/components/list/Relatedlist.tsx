@@ -43,6 +43,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
         isMr={item.isMr}
+        isShowInfo={false}
         onSongPress={() =>
           onSongPress(
             item.songId,

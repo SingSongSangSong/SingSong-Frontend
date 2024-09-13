@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {GetDetailSearchSongResponse, GetSearchSong, Song} from '../../../types';
-import {OutlineButton, SongsList} from '../..';
+import {OutlineButton, SearchSongsList, SongsList} from '../..';
 import {designatedColor, homeStackNavigations} from '../../../constants';
 import {
   View,
@@ -143,7 +143,7 @@ const SearchResult = ({
             </TouchableOpacity>
           </View>
         )}
-        <SongsList
+        <SearchSongsList
           songlistData={songs}
           isShowKeepIcon={false}
           onSongPress={_onSongPress}

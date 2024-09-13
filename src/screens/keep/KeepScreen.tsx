@@ -1,7 +1,7 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ActivityIndicator, Text, View, Platform} from 'react-native';
-import {SongsList} from '../../components';
+import {KeepSongsList, SongsList} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
@@ -58,7 +58,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
         ) : (
           <View>
             {keepHandler.keepList.length > 0 ? (
-              <SongsList
+              <KeepSongsList
                 songlistData={keepHandler.keepList}
                 isShowKeepIcon={false}
                 onSongPress={_onSongPress}
