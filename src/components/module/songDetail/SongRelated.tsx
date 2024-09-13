@@ -5,7 +5,12 @@ import tw from 'twrnc';
 import {Relatedlist} from '../../list/Relatedlist';
 import {Song} from '../../../types';
 import getSongsRelated from '../../../api/songs/getSongsRelated';
-import {logRefresh} from '../../../utils';
+import {logButtonClick, logRefresh} from '../../../utils';
+import * as amplitude from '@amplitude/analytics-react-native';
+import Toast from 'react-native-toast-message';
+import postKeep from '../../../api/keep/postKeep';
+import useKeepListStore from '../../../store/useKeepStore';
+import deleteKeep from '../../../api/keep/deleteKeep';
 
 type SongRelatedProps = {
   songId: number;
@@ -24,6 +29,7 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
   const size = 10;
+  const setKeepList = useKeepListStore(state => state.setKeepList);
 
   const setInitSongReview = () => {
     getSongsRelated(String(songId), page, size).then(tempSongRelated => {
@@ -66,9 +72,34 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
     }
   };
 
+  const handleOnKeepAddPress = async (songId: number) => {
+    amplitude.track('recommendation_keep_button_click');
+    logButtonClick('recommendation_keep_button_click');
+    const tempKeepList = await postKeep([songId]);
+    setKeepList(tempKeepList.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'KEEP에 추가되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
+  const handleOnKeepRemovePress = async (songId: number) => {
+    // await deleteKeep([songId]);
+    const tempKeepList = await deleteKeep([songId]);
+    setKeepList(tempKeepList.data);
+    Toast.show({
+      type: 'selectedToast',
+      text1: 'KEEP에서 삭제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
   return (
     <View
-      style={tw`mt-10 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}] py-4 mx-2`}>
+      style={tw`mt-10 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {songRelated && songRelated.length > 0 && (
         <>
           <Text style={tw`text-white font-bold text-xl my-2`}>
@@ -79,9 +110,11 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
             <Relatedlist
               isLoading={isLoading}
               relatedlistData={songRelated}
-              isShowKeepIcon={false}
+              isShowKeepIcon={true}
               onSongPress={onSongPress}
               handleRefreshRelatedSongs={handleRefreshRelatedSongs}
+              onKeepAddPress={handleOnKeepAddPress}
+              onKeepRemovePress={handleOnKeepRemovePress}
             />
           </View>
         </>

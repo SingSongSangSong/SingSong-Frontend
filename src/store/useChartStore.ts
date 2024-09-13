@@ -22,8 +22,11 @@ const useChartStore = create<ChartState>((set, get) => ({
   selectedGender: '',
   time: '',
 
-  setCharts: (gender: string, charts: Chart[], itemsPerPage: number) => {
-    const filledCharts = [...charts];
+  setCharts: (gender: string, charts: Chart[] | null, itemsPerPage: number) => {
+    // charts가 null일 경우 빈 배열로 초기화
+    const filledCharts = [...(charts ?? [])];
+
+    // itemsPerPage의 배수로 맞추기 위해 빈 데이터를 채워넣음
     while (filledCharts.length % itemsPerPage !== 0) {
       filledCharts.push({
         songId: 0,
@@ -35,6 +38,7 @@ const useChartStore = create<ChartState>((set, get) => ({
       } as Chart);
     }
 
+    // 상태 업데이트
     set(state => ({
       charts: {
         ...state.charts,

@@ -118,7 +118,7 @@ function SongScreen(props: SongScreenProps) {
   return (
     <View
       style={[
-        tw`flex-1 bg-[${designatedColor.BLACK}]`,
+        tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
         {
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,

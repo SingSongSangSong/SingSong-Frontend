@@ -4,7 +4,7 @@ import axiosInstance from '../axiosIns';
 const getRcdHomeSongs = async () => {
   try {
     const response = await axiosInstance.get<RcdExploreResponse>(
-      '/recommend/home/songs',
+      '/recommend/home',
     );
     // console.log('data for rcd home song response', response.data);
     return response.data;

@@ -23,8 +23,10 @@ const SongDefaultInfo = ({
   return (
     <View>
       <View style={tw`justify-center items-center overflow-hidden`}>
-        <View style={tw`w-full h-40 bg-[${designatedColor.GRAY}]`} />
-        <View style={tw`w-full h-30 bg-[${designatedColor.BLACK}]`} />
+        <View style={tw`w-full h-40 bg-[${designatedColor.GRAY5}]`} />
+        <View
+          style={tw`w-full h-30 bg-[${designatedColor.BACKGROUND_BLACK}]`}
+        />
 
         {!album || album == '' ? (
           <View

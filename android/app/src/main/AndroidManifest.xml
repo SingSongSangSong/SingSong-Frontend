@@ -35,11 +35,11 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <!-- <data android:host="oauth"
-                android:scheme="kakao2de29a7b3583418860f9e5705cca20cf" /> -->
+        <data android:host="oauth"
+                android:scheme="kakao2de29a7b3583418860f9e5705cca20cf" />
                
-                <data android:host="oauth"
-                android:scheme="kakaof49435b653bfac4465d49d522c08c438" />
+                <!-- <data android:host="oauth"
+                android:scheme="kakaof49435b653bfac4465d49d522c08c438" /> -->
     </intent-filter>
 </activity>
     </application>

@@ -18,6 +18,8 @@ interface RelatedlistProps {
     isMr: boolean,
   ) => void;
   handleRefreshRelatedSongs: () => void;
+  onKeepAddPress: (songId: number) => void;
+  onKeepRemovePress: (songId: number) => void;
 }
 
 const Relatedlist: React.FC<RelatedlistProps> = ({
@@ -26,10 +28,13 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
   isShowKeepIcon,
   onSongPress,
   handleRefreshRelatedSongs,
+  onKeepAddPress,
+  onKeepRemovePress,
 }) => {
   const renderItem = ({item}: {item: Song}) => (
     <View>
       <SongItem
+        key={item.songNumber}
         songId={item.songId}
         songNumber={item.songNumber}
         songName={item.songName}
@@ -48,6 +53,8 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
             item.isMr,
           )
         }
+        onKeepAddPress={() => onKeepAddPress(item.songId)}
+        onKeepRemovePress={() => onKeepRemovePress(item.songId)}
       />
     </View>
   );
