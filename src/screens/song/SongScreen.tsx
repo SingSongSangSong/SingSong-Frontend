@@ -99,10 +99,10 @@ function SongScreen(props: SongScreenProps) {
           _onPressComment(songNumber, songId);
         }}
       />
-      <View style={tw`mx-2`}>
-        <Text style={tw`text-white font-bold text-xl my-4`}>
+      <View>
+        {/* <Text style={tw`text-white font-bold text-xl my-4`}>
           이 노래는 어떻송
-        </Text>
+        </Text> */}
         <SongReview songId={songId} />
         <SongComment
           handleOnPressComment={() => {

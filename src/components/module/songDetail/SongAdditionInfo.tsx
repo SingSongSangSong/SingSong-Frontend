@@ -87,41 +87,52 @@ const SongAdditionInfo = ({
   }, []);
 
   return (
-    <View>
-      <View style={tw`mx-2`}>
-        <View style={tw`flex-row py-2 mx-1`}>
-          <View style={tw`flex-row mr-4 items-center`}>
-            {!songInfo || !songInfo.isKeep ? (
-              <KeepCountIcon width={18} height={18} />
-            ) : (
-              <OutlineKeepIcon width={18} height={18} />
-            )}
-            <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-              {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={tw`flex-row items-center`}
-            onPress={handleOnPressComment}
-            activeOpacity={0.8}>
-            <CommentCountIcon width={18} height={18} />
-            <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-              {commentCount}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={tw`flex-row items-center py-1`}>
-          <Text style={tw`text-white mr-2`}>최고 음역대 </Text>
-          {songInfo &&
-            (songInfo.octave == '' ? (
-              <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>없음</Text>
-            ) : (
-              <Text style={tw`text-[${designatedColor.GREEN}]`}>
-                {songInfo.octave}
+    <View style={tw` border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
+      <View style={tw`flex-row items-center justify-between mx-2`}>
+        <View>
+          <View style={tw`flex-row py-2 mx-1`}>
+            <View style={tw`flex-row mr-4 items-center`}>
+              {!songInfo || !songInfo.isKeep ? (
+                <KeepCountIcon width={18} height={18} />
+              ) : (
+                <OutlineKeepIcon width={18} height={18} />
+              )}
+              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+                {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
               </Text>
-            ))}
+            </View>
+            <TouchableOpacity
+              style={tw`flex-row items-center`}
+              onPress={handleOnPressComment}
+              activeOpacity={0.8}>
+              <CommentCountIcon width={18} height={18} />
+              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+                {commentCount}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={tw`flex-row items-center py-1 pb-4`}>
+            <Text style={tw`text-white text-[3] mr-2`}>최고 음역대 </Text>
+            {songInfo &&
+              (songInfo.octave == '' ? (
+                <Text style={tw`text-[3] text-[${designatedColor.DARK_GRAY}]`}>
+                  없음
+                </Text>
+              ) : (
+                <Text style={tw`text-[3] text-[${designatedColor.GREEN}]`}>
+                  {songInfo.octave}
+                </Text>
+              ))}
+          </View>
         </View>
-        <View style={tw`m-1`}>
+        <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2 pr-4`}>
+          {!songInfo || !songInfo.isKeep ? (
+            <KeepIcon width={24} height={24} />
+          ) : (
+            <KeepFilledIcon width={24} height={24} />
+          )}
+        </TouchableOpacity>
+        {/* <View style={tw`m-1`}>
           {songInfo && songInfo.description != '' ? (
             <Text style={tw`text-[${designatedColor.PINK2}]`}>
               {songInfo.description}
@@ -129,18 +140,7 @@ const SongAdditionInfo = ({
           ) : (
             <Text>''</Text>
           )}
-        </View>
-
-        <View
-          style={tw`py-2 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
-          <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2`}>
-            {!songInfo || !songInfo.isKeep ? (
-              <KeepIcon width={24} height={24} />
-            ) : (
-              <KeepFilledIcon width={24} height={24} />
-            )}
-          </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );

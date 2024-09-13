@@ -27,17 +27,17 @@ const LikeButton: React.FC<LikeButtonProps> = ({
         isPressed && tw`border-[${color}]`,
       ]}>
       <TouchableOpacity
-        style={tw`flex-row justify-center items-center px-4 py-2`}
+        style={tw`flex-row justify-center items-center px-3 py-2`}
         onPress={onPress}
         activeOpacity={0.8}>
         {isPressed ? (
-          <PressIcon width={20} height={20} />
+          <PressIcon width={16} height={16} />
         ) : (
-          <Icon width={20} height={20} />
+          <Icon width={16} height={16} />
         )}
         <Text
           style={[
-            tw`text-white text-sm text-[${designatedColor.GRAY1}] ml-1`,
+            tw`text-white text-[3] text-[${designatedColor.GRAY1}] ml-1`,
             isPressed && tw`text-[${color}]`,
           ]}>
           {title}

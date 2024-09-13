@@ -45,7 +45,7 @@ const SongDefaultInfo = ({
         )}
       </View>
       <View style={tw`px-3 `}>
-        <View style={tw`flex-row items-center mt-3`}>
+        <View style={tw`flex-row items-center`}>
           <View style={tw`items-center`}>
             {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
           </View>
