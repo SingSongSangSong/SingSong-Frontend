@@ -150,15 +150,27 @@ const SongReview = ({songId}: SongReviewProps) => {
             //     {hardPercentage}% 어려워요
             //   </Text>
             // </View>
-            <Text
-              style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
-              부르기 쉬워요 {easyPercentage}%
-            </Text>
+            <View style={tw`flex-row items-center`}>
+              <Text
+                style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
+                부르기 쉬워요
+              </Text>
+              <Text
+                style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
+                {easyPercentage}%
+              </Text>
+            </View>
           ) : (
-            <Text
-              style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
-              부르기 어려워요 {hardPercentage}%
-            </Text>
+            <View style={tw`flex-row items-center`}>
+              <Text
+                style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
+                부르기 어려워요
+              </Text>
+              <Text
+                style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
+                {hardPercentage}%
+              </Text>
+            </View>
           )}
         </View>
         <Text style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[3]`}>

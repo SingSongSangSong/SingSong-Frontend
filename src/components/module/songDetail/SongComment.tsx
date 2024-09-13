@@ -11,7 +11,7 @@ const SongComment = ({handleOnPressComment}: SongCommentProps) => {
   // console.log('songComment');
   const commentCount = useCommentStore(state => state.commentCount);
   return (
-    <View style={tw`w-full px-1 mt-4`}>
+    <View style={tw`w-full px-2 mt-4`}>
       <View style={tw`flex-row my-2 items-center`}>
         <Text
           style={tw`text-[${designatedColor.TEXT_WHITE}] mr-2 text-lg font-bold`}>
