@@ -99,10 +99,10 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
 
   return (
     <View
-      style={tw`mt-10 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
+      style={tw`mt-7 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {songRelated && songRelated.length > 0 && (
         <>
-          <Text style={tw`text-white font-bold text-xl my-2`}>
+          <Text style={tw`text-white font-bold text-lg my-2`}>
             다른 노래는 어떻송
           </Text>
           <View style={tw`h-full w-full`}>

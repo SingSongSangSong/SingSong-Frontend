@@ -38,18 +38,18 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
 
   return (
     <View style={tw`w-full`}>
-      <View style={tw`flex-row justify-between px-4 items-center mb-2`}>
+      <TouchableOpacity
+        onPress={rotateArrow}
+        activeOpacity={0.8}
+        style={tw`flex-row justify-between px-4 items-center mb-2`}>
         <Text style={tw`text-white text-sm my-2`}>어떤 노래를 찾으시나요?</Text>
-        <TouchableOpacity
-          onPress={rotateArrow}
-          style={tw`items-center my-2`}
-          activeOpacity={0.8}>
+        <View style={tw`items-center my-2`}>
           <Animated.View style={{transform: [{rotate}]}}>
             {/* <Text style={tw`text-white text-xl`}>➤</Text> */}
             <ArrowRightIcon width={28} height={28} fill="white" />
           </Animated.View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
 
       <ScrollView
         horizontal={false}

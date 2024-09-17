@@ -22,7 +22,7 @@ const SongComment = ({handleOnPressComment}: SongCommentProps) => {
         </Text>
       </View>
       <TouchableOpacity
-        style={tw`flex-row items-center p-3 rounded-lg bg-[${designatedColor.GRAY5}]`}
+        style={tw`flex-row items-center p-2 rounded-lg bg-[${designatedColor.GRAY5}]`}
         onPress={handleOnPressComment}
         activeOpacity={0.8}>
         <Text style={tw`text-[${designatedColor.GRAY1}]`}>댓글 추가...</Text>
