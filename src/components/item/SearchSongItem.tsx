@@ -7,6 +7,7 @@ import KeepFilledIcon from '../../assets/svg/keepFilledIcon.svg';
 import MusicIcon from '../../assets/svg/music.svg';
 import {useFocusEffect} from '@react-navigation/native';
 import {CommonTag} from '../tag/CommonTag';
+import CustomText from '../text/CustomText';
 
 interface SearchSongItemProps {
   songId: number;
@@ -90,28 +91,28 @@ const SearchSongItem = ({
 
           <View style={tw`flex-1 h-full ml-4 mr-2`}>
             <View style={tw`flex-row items-center`}>
-              <Text
+              <CustomText
                 style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
                 {songNumber}
-              </Text>
+              </CustomText>
               {isMr ? (
                 <CommonTag name="MR" color={designatedColor.PURPLE} />
               ) : (
                 <View style={tw`mx-1`} />
               )}
-              <Text
+              <CustomText
                 style={tw`text-white text-sm flex-1`}
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {songName}
-              </Text>
+              </CustomText>
             </View>
-            <Text
+            <CustomText
               style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {singerName}
-            </Text>
+            </CustomText>
           </View>
         </View>
         <View>

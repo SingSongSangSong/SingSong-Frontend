@@ -1,6 +1,7 @@
 import Slider from '@react-native-community/slider';
 import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomText from '../text/CustomText';
 
 interface CustomSliderProps {
   value: number;
@@ -14,9 +15,9 @@ const CustomSlider: React.FC<CustomSliderProps> = ({
 }) => {
   return (
     <>
-      <Text>
+      <CustomText>
         {label}: {value}
-      </Text>
+      </CustomText>
       <View style={styles.sliderContainer}>
         <LinearGradient
           colors={['#d3d3d3', '#000000']}

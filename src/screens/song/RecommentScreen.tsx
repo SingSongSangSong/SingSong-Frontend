@@ -23,6 +23,7 @@ import {
 } from '../../components';
 import useRecomment from '../../hooks/useRecomment';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CustomText from '../../components/text/CustomText';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -84,7 +85,7 @@ function RecommentScreen(props: RecommentScreenProps) {
           />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
-            <Text style={tw`text-white`}>답글이 없어요</Text>
+            <CustomText style={tw`text-white`}>답글이 없어요</CustomText>
           </View>
         )}
       </View>
@@ -118,9 +119,9 @@ function RecommentScreen(props: RecommentScreenProps) {
           <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
             <TouchableWithoutFeedback>
               <View style={tw`bg-black`}>
-                <Text style={tw`text-white font-bold text-xl my-4 px-4`}>
+                <CustomText style={tw`text-white font-bold text-xl my-4 px-4`}>
                   답글
-                </Text>
+                </CustomText>
                 <View
                   style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
                   <View style={tw`mb-3`}>

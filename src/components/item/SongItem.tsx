@@ -13,6 +13,7 @@ import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TextButton} from '..';
 import {useFocusEffect} from '@react-navigation/native';
+import CustomText from '../text/CustomText';
 
 interface SongItemProps {
   songId: number;
@@ -114,9 +115,9 @@ SongItemProps) => {
                 <View style={tw`flex-row items-center flex-1`}>
                   <View
                     style={tw`px-2 py-0.3 rounded-full items-center justify-center bg-[${designatedColor.GRAY5}]`}>
-                    <Text style={tw`text-white text-[3] text-white`}>
+                    <CustomText style={tw`text-white text-[3] text-white`}>
                       {songNumber}
-                    </Text>
+                    </CustomText>
                   </View>
                   {isShowKeepIcon && (
                     <TouchableOpacity
@@ -135,12 +136,12 @@ SongItemProps) => {
                   ) : (
                     <View />
                   )}
-                  <Text
+                  <CustomText
                     style={tw`text-white text-sm flex-1`}
                     numberOfLines={1}
                     ellipsizeMode="tail">
                     {songName}
-                  </Text>
+                  </CustomText>
                 </View>
 
                 {/* <TouchableOpacity
@@ -152,12 +153,12 @@ SongItemProps) => {
                 </TouchableOpacity> */}
               </View>
               <View style={tw`flex-row items-center mt-1 ml-1`}>
-                <Text
+                <CustomText
                   style={tw`text-white text-sm flex-1 text-[${designatedColor.GRAY2}]`}
                   numberOfLines={1}
                   ellipsizeMode="tail">
                   {singerName}
-                </Text>
+                </CustomText>
                 {isShowInfo && (
                   <>
                     {isShowKeepIcon && (
@@ -168,18 +169,18 @@ SongItemProps) => {
                         {isKeepPressed ? (
                           <View style={tw`flex-row items-center`}>
                             <KeepFilledIcon width={12} height={12} />
-                            <Text
+                            <CustomText
                               style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
                               {keepCounts}
-                            </Text>
+                            </CustomText>
                           </View>
                         ) : (
                           <View style={tw`flex-row items-center`}>
                             <KeepIcon width={12} height={12} />
-                            <Text
+                            <CustomText
                               style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
                               {keepCounts}
-                            </Text>
+                            </CustomText>
                           </View>
                         )}
                       </TouchableOpacity>
@@ -187,10 +188,10 @@ SongItemProps) => {
 
                     <View style={tw`flex-row items-center`}>
                       <CommentIcon width={12} height={12} />
-                      <Text
+                      <CustomText
                         style={tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`}>
                         {commentCount}
-                      </Text>
+                      </CustomText>
                     </View>
                   </>
                 )}

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import CustomText from '../text/CustomText';
 
 interface PlaylistItemProps {
   playlistName: string;
@@ -28,10 +29,12 @@ const PlaylistItem = ({
             style={tw`w-15 h-15 rounded-lg`}
           />
           <View style={tw`h-full ml-4`}>
-            <Text style={tw`text-white text-sm mt-1`}>{playlistName}</Text>
-            <Text style={tw`text-white text-sm mt-2`}>
+            <CustomText style={tw`text-white text-sm mt-1`}>
+              {playlistName}
+            </CustomText>
+            <CustomText style={tw`text-white text-sm mt-2`}>
               Playlist {'\u00B7'} {playlistLen} songs
-            </Text>
+            </CustomText>
           </View>
         </View>
         <TouchableOpacity onPress={onPress}>

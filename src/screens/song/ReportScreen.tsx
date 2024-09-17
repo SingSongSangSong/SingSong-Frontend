@@ -10,6 +10,7 @@ import {
 } from '../../constants';
 import {OutlineButton, RadioButton} from '../../components';
 import useReport from '../../hooks/useReport';
+import CustomText from '../../components/text/CustomText';
 
 type ReportScreenProps =
   | StackScreenProps<
@@ -25,9 +26,9 @@ function ReportScreen(props: ReportScreenProps) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black px-4`}>
-      <Text style={tw`text-white font-bold text-lg my-10`}>
+      <CustomText style={tw`text-white font-bold text-lg my-10`}>
         신고 사유를 적어주세요
-      </Text>
+      </CustomText>
       <RadioButton handleOnPress={reportHandler.handleOnPressRadioButton} />
       <TextInput
         ref={reportHandler.textInputRef}

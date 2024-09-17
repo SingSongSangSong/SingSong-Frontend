@@ -175,6 +175,7 @@ import {designatedColor} from '../../constants';
 import useChartV2Store from '../../store/useChartV2Store';
 // import {logSwipe} from '../../utils';
 import ErrorIcon from '../../assets/svg/error.svg';
+import CustomText from '../text/CustomText';
 
 interface HotTrendingV2Props {
   onPressSongButton: (
@@ -261,7 +262,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                 borderBottomColor: designatedColor.PINK,
               },
             ]}>
-            <Text
+            <CustomText
               style={[
                 tw`text-sm font-bold`,
                 {
@@ -272,7 +273,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                 },
               ]}>
               {showAgeGroup(ageGroup)}
-            </Text>
+            </CustomText>
           </TouchableOpacity>
         ))}
       </View>
@@ -335,9 +336,9 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                     {width: itemWidth},
                   ]}>
                   <ErrorIcon width={36} height={36} />
-                  <Text style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
+                  <CustomText style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
                     곧 업데이트 예정이에요
-                  </Text>
+                  </CustomText>
                 </View>
               )}
             </View>
@@ -349,9 +350,9 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
               {width: itemWidth},
             ]}>
             <ErrorIcon width={36} height={36} />
-            <Text style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
+            <CustomText style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
               곧 업데이트 예정이에요
-            </Text>
+            </CustomText>
           </View>
         )}
       </ScrollView>

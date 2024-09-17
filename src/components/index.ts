@@ -72,3 +72,4 @@ export * from './item/SearchSongItem';
 export * from './list/SearchSongsList';
 export * from './list/KeepSongsList';
 export * from './list/HotTrendingV2';
+export * from './text/CustomText';

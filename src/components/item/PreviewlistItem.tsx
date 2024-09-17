@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import CustomText from '../text/CustomText';
 
 interface PreviewlistItemProps {
   songNumber: number;
@@ -15,10 +16,10 @@ const PreviewlistItem: React.FC<PreviewlistItemProps> = ({
   return (
     <View style={[styles.innerContainer]}>
       <View style={styles.textContainer}>
-        <Text style={[styles.songNumber]}>{songNumber}</Text>
+        <CustomText style={[styles.songNumber]}>{songNumber}</CustomText>
         <View>
-          <Text style={[styles.songName]}>{songName}</Text>
-          <Text style={[styles.singerName]}>{singerName}</Text>
+          <CustomText style={[styles.songName]}>{songName}</CustomText>
+          <CustomText style={[styles.singerName]}>{singerName}</CustomText>
         </View>
       </View>
     </View>

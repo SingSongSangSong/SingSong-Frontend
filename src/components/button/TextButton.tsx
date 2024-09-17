@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
+import CustomText from '../text/CustomText';
 
 type TextButtonProps = {
   title: string;
@@ -21,7 +22,9 @@ const TextButton: React.FC<TextButtonProps> = ({
         style={tw`w-full flex-row justify-center items-center`}
         onPress={onPress}
         activeOpacity={0.8}>
-        <Text style={tw`text-[${color}] text-[${size}]`}>{title}</Text>
+        <CustomText style={tw`text-[${color}] text-[${size}]`}>
+          {title}
+        </CustomText>
       </TouchableOpacity>
     </View>
   );

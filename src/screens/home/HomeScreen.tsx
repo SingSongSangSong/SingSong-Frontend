@@ -28,6 +28,7 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import GuestStore from '../../store/GuestStore';
+import CustomText from '../../components/text/CustomText';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -210,14 +211,14 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             animationType="fade">
             <View
               style={[
-                tw`absolute inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
+                tw`absolute bg-black inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
                 {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>
                 <ActivityIndicator size="small" color={designatedColor.PINK2} />
-                <Text style={tw`text-white font-bold ml-2`}>
+                <CustomText style={tw`text-white font-bold ml-2`}>
                   잠시만 기다려주세요
-                </Text>
+                </CustomText>
               </View>
             </View>
           </Modal>

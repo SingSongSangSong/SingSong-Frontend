@@ -4,6 +4,7 @@ import {designatedColor} from '../../constants';
 import CheckIcon from '../../assets/svg/check.svg';
 import CheckFilledIcon from '../../assets/svg/checkFilled.svg';
 import tw from 'twrnc';
+import CustomText from '../text/CustomText';
 
 interface CheckButtonProps {
   onPressIn: () => void;
@@ -53,13 +54,13 @@ const CheckButton = ({
         ) : (
           <CheckIcon width={18} height={18} />
         )}
-        <Text
+        <CustomText
           style={[
             tw`text-[${designatedColor.TEXT_WHITE}] ml-2`,
             isPressed && tw`text-[${designatedColor.PINK2}]`,
           ]}>
           {isPressed ? '선택 해제' : '전체 선택'}
-        </Text>
+        </CustomText>
       </View>
     </TouchableOpacity>
   );

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {View, Text, Modal, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 type CustomModalProps = {
   visible: boolean;
@@ -32,17 +33,23 @@ const CustomModal = ({
         style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
         <View style={tw`bg-white p-5 rounded-2xl w-4/5 h-1/5 justify-between`}>
           <View />
-          <Text style={tw`text-black text-sm mb-4 text-center`}>{message}</Text>
+          <CustomText style={tw`text-black text-sm mb-4 text-center`}>
+            {message}
+          </CustomText>
           <View style={tw`flex-row justify-end`}>
             <TouchableOpacity
               style={tw`bg-gray-300 py-2 px-4 rounded-lg mr-2`}
               onPress={onCancel}>
-              <Text style={tw`text-black text-center`}>{cancelText}</Text>
+              <CustomText style={tw`text-black text-center`}>
+                {cancelText}
+              </CustomText>
             </TouchableOpacity>
             <TouchableOpacity
               style={tw`bg-black py-2 px-4 rounded-lg`}
               onPress={onConfirm}>
-              <Text style={tw`text-white text-center`}>{confirmText}</Text>
+              <CustomText style={tw`text-white text-center`}>
+                {confirmText}
+              </CustomText>
             </TouchableOpacity>
           </View>
         </View>

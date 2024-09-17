@@ -20,6 +20,7 @@ import {CommonActions} from '@react-navigation/native';
 import VersionStore from '../../store/VersionStore';
 import useSetting from '../../hooks/useSetting';
 import AppleIcon from '../../assets/svg/appleWhiteLogo.svg';
+import CustomText from '../../components/text/CustomText';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -59,7 +60,9 @@ function SettingScreen({navigation}: SettingScreenProps) {
     <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-1`}>
         <View style={tw`m-4`}>
-          <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>내 계정</Text>
+          <CustomText style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+            내 계정
+          </CustomText>
           <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
             <View style={tw`flex-row items-center`}>
               {settingHandler.provider == 'KAKAO_KEY' ? (
@@ -72,53 +75,55 @@ function SettingScreen({navigation}: SettingScreenProps) {
                 <AppleIcon width={32} height={32} />
               )}
 
-              <Text style={tw`text-white ml-2`}>
+              <CustomText style={tw`text-white ml-2`}>
                 {settingHandler.provider == 'KAKAO_KEY'
                   ? settingHandler.memberInfo?.email
                   : 'Apple'}
-              </Text>
+              </CustomText>
             </View>
             <TouchableOpacity
               onPress={handleLogoutButton}
               style={tw`py-2 px-3 border rounded-full border-[${designatedColor.GRAY3}]`}
               activeOpacity={0.8}>
-              <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+              <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
                 로그아웃
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
         </View>
         <View style={tw`m-4`}>
-          <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+          <CustomText style={tw`text-[${designatedColor.DARK_GRAY}]`}>
             개인 / 보안
-          </Text>
+          </CustomText>
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
               <TouchableOpacity
                 style={tw`p-2`}
                 activeOpacity={0.8}
                 onPress={handleOnBlacklistButton}>
-                <Text style={tw`text-white`}>댓글 차단 관리</Text>
+                <CustomText style={tw`text-white`}>댓글 차단 관리</CustomText>
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`p-2`}
                 activeOpacity={0.8}
                 onPress={() => setIsWithdraw(true)}>
-                <Text style={tw`text-white`}>회원 탈퇴</Text>
+                <CustomText style={tw`text-white`}>회원 탈퇴</CustomText>
               </TouchableOpacity>
             </View>
           </View>
         </View>
         <View style={tw`m-4`}>
-          <Text style={tw`text-[${designatedColor.DARK_GRAY}]`}>기타</Text>
+          <CustomText style={tw`text-[${designatedColor.DARK_GRAY}]`}>
+            기타
+          </CustomText>
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
               <View
                 style={tw`w-full flex-row justify-between items-center p-2`}>
-                <Text style={tw`text-white`}>앱 버전 정보</Text>
-                <Text style={tw`text-[${designatedColor.GRAY3}]`}>
+                <CustomText style={tw`text-white`}>앱 버전 정보</CustomText>
+                <CustomText style={tw`text-[${designatedColor.GRAY3}]`}>
                   {currentVersion}
-                </Text>
+                </CustomText>
               </View>
               <TouchableOpacity
                 style={tw`p-2`}
@@ -128,7 +133,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
                     'https://piquant-leek-b2c.notion.site/3d562645e4e74abdbd8fd470541bf0a9?pvs=4',
                   );
                 }}>
-                <Text style={tw`text-white`}>서비스 정책</Text>
+                <CustomText style={tw`text-white`}>서비스 정책</CustomText>
               </TouchableOpacity>
             </View>
           </View>

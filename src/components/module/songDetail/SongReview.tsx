@@ -14,6 +14,7 @@ import LikeIcon from '../../../assets/svg/like.svg';
 import FilledLikeIcon from '../../../assets/svg/filledLike.svg';
 import DislikeIcon from '../../../assets/svg/dislike.svg';
 import FilledDislikeIcon from '../../../assets/svg/filledDislike.svg';
+import CustomText from '../../text/CustomText';
 
 type SongReviewProps = {
   songId: number;
@@ -151,37 +152,37 @@ const SongReview = ({songId}: SongReviewProps) => {
             //   </Text>
             // </View>
             <View style={tw`flex-row items-center`}>
-              <Text
+              <CustomText
                 style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
                 부르기 쉬워요
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
                 {easyPercentage}%
-              </Text>
+              </CustomText>
             </View>
           ) : (
             <View style={tw`flex-row items-center`}>
-              <Text
+              <CustomText
                 style={tw`text-[${designatedColor.GRAY5}] font-bold text-[3]`}>
                 부르기 어려워요
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
                 {hardPercentage}%
-              </Text>
+              </CustomText>
             </View>
           )}
         </View>
-        <Text style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[3]`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[3]`}>
           {maxSum}명 참여
-        </Text>
+        </CustomText>
       </View>
       <View style={tw`flex-row items-center pt-4 pl-4`}>
         <MusicIcon width={24} height={24} />
-        <Text style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-2 text-sm`}>
           나의 평가는?
-        </Text>
+        </CustomText>
       </View>
       <View style={tw`items-end mr-4`}>
         <View style={tw`flex-row`}>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, Pressable} from 'react-native';
 import tw from 'twrnc';
 import {randomColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 type ClickableTagProps = {
   tag: string;
@@ -16,7 +17,7 @@ const ClickableTag = ({tag, index, onPress}: ClickableTagProps) => {
         randomColor[index % randomColor.length]
       }] p-2 rounded-lg flex-row items-center m-1`}
       onPress={() => onPress(index)}>
-      <Text style={tw`mr-2 font-bold text-black`}>{tag}</Text>
+      <CustomText style={tw`mr-2 font-bold text-black`}>{tag}</CustomText>
     </Pressable>
   );
 };

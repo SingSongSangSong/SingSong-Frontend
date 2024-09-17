@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 interface RelatedlistItemProps {
   songNumber: number;
@@ -28,26 +29,26 @@ const RelatedlistItem = ({
           style={tw`w-12 h-12 rounded-sm`}
         /> */}
         <View style={tw`justify-center items-center w-[12]`}>
-          <Text
+          <CustomText
             style={tw`text-white text-sm text-[${designatedColor.GREEN}] font-bold`}>
             {songNumber}
-          </Text>
+          </CustomText>
         </View>
 
         <View style={tw`flex-1 ml-4`}>
           <View style={tw`flex-row`}>
-            <Text
+            <CustomText
               style={tw`text-white text-sm flex-1`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {songName}
-            </Text>
+            </CustomText>
           </View>
 
-          <Text
+          <CustomText
             style={tw`text-white text-sm mt-1 text-[${designatedColor.DARK_GRAY}]`}>
             {singerName}
-          </Text>
+          </CustomText>
         </View>
       </View>
     </TouchableOpacity>

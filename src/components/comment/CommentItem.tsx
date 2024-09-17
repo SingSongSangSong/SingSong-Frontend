@@ -8,6 +8,7 @@ import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import {formatDateComment} from '../../utils';
+import CustomText from '../text/CustomText';
 
 interface CommentItemProps {
   commentId: number;
@@ -60,10 +61,11 @@ const CommentItem = ({
         style={tw`flex-row justify-between mb-2 items-center 
         `}>
         <View style={tw`flex-row items-center`}>
-          <Text style={tw`text-white ml-2`}>{nickname}</Text>
-          <Text style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
+          <CustomText style={tw`text-white ml-2`}>{nickname}</CustomText>
+          <CustomText
+            style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
             {formatDateComment(createdAt)}
-          </Text>
+          </CustomText>
         </View>
         <IconButton
           Icon={MoreVerticalIcon}
@@ -72,7 +74,7 @@ const CommentItem = ({
         />
       </View>
       <View>
-        <Text style={tw`text-white ml-4`}>{content}</Text>
+        <CustomText style={tw`text-white ml-4`}>{content}</CustomText>
       </View>
 
       <View style={tw`justify-between flex-row my-2 items-center`}>
@@ -91,12 +93,12 @@ const CommentItem = ({
             </View>
           )}
 
-          <Text
+          <CustomText
             style={
               isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`
             }>
             {likes}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
       </View>
       {isVisibleRecomment && (
@@ -110,11 +112,13 @@ const CommentItem = ({
             onPress={onPressRecomment}
           /> */}
           {recommentCount > 0 ? (
-            <Text style={tw`text-[${designatedColor.PINK}]`}>
+            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
               답글 {recommentCount}개 모두 보기
-            </Text>
+            </CustomText>
           ) : (
-            <Text style={tw`text-[${designatedColor.PINK}]`}>답글</Text>
+            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
+              답글
+            </CustomText>
           )}
 
           <TouchableOpacity onPress={onPressRecomment} />

@@ -10,6 +10,7 @@ import {
 } from '../../components';
 import {designatedColor} from '../../constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CustomText from '../../components/text/CustomText';
 
 function KeepEditScreen() {
   const keepHandler = useKeep();
@@ -47,9 +48,9 @@ function KeepEditScreen() {
           />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
-            <Text style={tw`text-[${designatedColor.PINK2}] font-bold`}>
+            <CustomText style={tw`text-[${designatedColor.PINK2}] font-bold`}>
               KEEP이 비어있어요
-            </Text>
+            </CustomText>
           </View>
         )}
       </View>

@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import {SearchRecentList} from '../..';
 import useSearchRecentStore from '../../../store/useSearchRecentStore';
+import CustomText from '../../text/CustomText';
 
 interface SearchRecentProps {
   onPressRecent: (searchText: string) => void;
@@ -26,9 +27,9 @@ const SearchRecent = ({onPressRecent}: SearchRecentProps) => {
           onDeletePress={deleteSearchRecent}
         />
       ) : (
-        <Text style={tw`text-[${designatedColor.GRAY2}]`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY2}]`}>
           최근 검색이 없습니다
-        </Text>
+        </CustomText>
       )}
     </View>
   );

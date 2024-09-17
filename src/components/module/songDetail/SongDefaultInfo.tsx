@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import MusicIcon from '../../../assets/svg/music.svg';
 import {CommonTag} from '../../tag/CommonTag';
+import CustomText from '../../text/CustomText';
 
 type SongDefaultInfoProps = {
   songNumber: number;
@@ -50,26 +51,26 @@ const SongDefaultInfo = ({
             {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
           </View>
 
-          <Text
+          <CustomText
             style={tw`flex-1 text-white text-2xl font-bold`}
             numberOfLines={1}
             ellipsizeMode="tail">
             {songName}
-          </Text>
+          </CustomText>
         </View>
 
         <View style={tw`flex-row items-center mt-2`}>
           <View style={tw`items-center justify-center`}>
-            <Text style={tw`text-white text-[${designatedColor.PINK2}]`}>
+            <CustomText style={tw`text-white text-[${designatedColor.PINK2}]`}>
               {songNumber}
-            </Text>
+            </CustomText>
           </View>
-          <Text
+          <CustomText
             style={tw`text-white mx-2`}
             numberOfLines={1}
             ellipsizeMode="tail">
             {singerName}
-          </Text>
+          </CustomText>
         </View>
       </View>
     </View>

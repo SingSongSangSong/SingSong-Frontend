@@ -3,6 +3,7 @@ import {ScrollView, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {KeeplistItem} from '..';
 import {KeepSong} from '../../types';
+import CustomText from '../text/CustomText';
 
 interface KeeplistProps {
   keeplistData: {[key: number]: KeepSong} | null;
@@ -33,7 +34,7 @@ const Keeplist: React.FC<KeeplistProps> = ({keeplistData, onPress}) => {
         </ScrollView>
       ) : (
         <View style={tw`w-full h-full justify-center items-center`}>
-          <Text style={tw`text-white`}>저장한 노래가 없어요</Text>
+          <CustomText style={tw`text-white`}>저장한 노래가 없어요</CustomText>
         </View>
       )}
     </>

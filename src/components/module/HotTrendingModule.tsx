@@ -20,6 +20,7 @@ import useChartV2Store from '../../store/useChartV2Store';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
 import CheckIcon from '../../assets/svg/check.svg';
 import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
+import CustomText from '../text/CustomText';
 interface HotTrendingModuleProps {
   onPressSongButton: (
     songNumber: number,
@@ -138,22 +139,24 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
       {/* Header Section */}
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
-          <Text style={tw`text-[${designatedColor.PINK}] font-bold text-xl`}>
+          <CustomText
+            style={tw`text-[${designatedColor.PINK}] font-bold text-xl`}>
             HOT TRENDING
-          </Text>
+          </CustomText>
           {time && (
-            <Text style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
+            <CustomText
+              style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
               {formatDateString(time)}
-            </Text>
+            </CustomText>
           )}
         </View>
         <TouchableOpacity
           style={tw`flex-row items-center rounded-lg bg-[${designatedColor.GRAY5}] px-2`}
           activeOpacity={0.8}
           onPress={handleOnPressGender}>
-          <Text style={tw`text-white text-[10px]`}>
+          <CustomText style={tw`text-white text-[10px]`}>
             {showGender(selectedGender)}
-          </Text>
+          </CustomText>
           <View style={tw`ml-2`}>
             <ArrowBottomIcon width={12} height={12} />
           </View>
@@ -193,9 +196,9 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
               <View style={tw`bg-black p-6 rounded-t-xl`}>
                 {/* 상단 헤더 */}
                 <View style={tw`flex-row justify-between items-center`}>
-                  <Text style={tw`text-white text-lg font-bold`}>
+                  <CustomText style={tw`text-white text-lg font-bold`}>
                     성별 변경
-                  </Text>
+                  </CustomText>
                   {/* <TouchableOpacity onPress={() => setIsModalVisible(false)}>
                     <Text style={tw`text-white text-lg`}>✕</Text>
                   </TouchableOpacity> */}
@@ -216,7 +219,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                           }}
                           style={tw`flex-row justify-between mt-2 mx-2 p-2`}
                           activeOpacity={0.8}>
-                          <Text
+                          <CustomText
                             style={[
                               tw`text-sm`,
                               gender === selectedGender
@@ -224,7 +227,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                                 : tw`text-white`, // 그 외에는 기본 흰색
                             ]}>
                             {showGender(gender)}
-                          </Text>
+                          </CustomText>
                           {gender === selectedGender ? (
                             <CheckFilled2Icon width={16} height={16} />
                           ) : (
@@ -241,7 +244,9 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                 <TouchableOpacity
                   onPress={() => setIsModalVisible(false)}
                   style={tw`mt-4 py-2 border-t border-gray-600`}>
-                  <Text style={tw`text-center text-white`}>닫기</Text>
+                  <CustomText style={tw`text-center text-white`}>
+                    닫기
+                  </CustomText>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>

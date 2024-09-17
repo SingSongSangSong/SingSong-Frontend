@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
+import CustomText from '../text/CustomText';
 
 type TagIconButtonProps = {
   tag: string;
@@ -32,13 +33,13 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
         style={tw`justify-center items-center`}
         activeOpacity={0.8}>
         <Icon width={48} height={48} onPress={onPress} />
-        <Text
+        <CustomText
           style={tw`text-white text-[9px] mx-4 text-center mt-2`}
           numberOfLines={2} // 최대 두 줄로 표시되도록 설정
           ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
         >
           {splitTextToTwoLines(tag, maxLength)}
-        </Text>
+        </CustomText>
       </TouchableOpacity>
     </View>
   );

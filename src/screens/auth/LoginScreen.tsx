@@ -21,6 +21,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
 import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
 import GuestStore from '../../store/GuestStore';
+import CustomText from '../../components/text/CustomText';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 type LoginScreenProps = StackScreenProps<
@@ -149,38 +150,42 @@ function LoginScreen({navigation}: LoginScreenProps) {
                 {loginHandler.step === 1 ? (
                   <>
                     <View style={{flex: 1}}>
-                      <Text style={tw`text-black text-lg font-bold my-4`}>
+                      <CustomText style={tw`text-black text-lg font-bold my-4`}>
                         개인정보 처리방침 및 데이터 수집 동의
-                      </Text>
-                      <Text style={tw`text-black my-2`}>
+                      </CustomText>
+                      <CustomText style={tw`text-black my-2`}>
                         앱을 사용하기 위해서는 개인정보 처리방침과 데이터 수집
                         방침에 동의해주셔야 합니다.
-                      </Text>
-                      <Text style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
+                      </CustomText>
+                      <CustomText
+                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
                         - 개인정보 수집 및 사용 목적: 본 앱은 회원 가입, 로그인,
                         서비스 제공, 고객 지원, 마케팅 및 분석 목적으로 최소한의
                         개인정보를 수집합니다.
-                      </Text>
-                      <Text style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
+                      </CustomText>
+                      <CustomText
+                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
                         - 본 단계에서 출생연도와 성별 정보를 수집합니다. 이
                         정보는 사용자 맞춤형 서비스 제공과 분석 목적으로
                         사용됩니다.
-                      </Text>
-                      <Text style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
+                      </CustomText>
+                      <CustomText
+                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
                         - 데이터 수집 및 사용: 본 앱은 Firebase, Amplitude 등과
                         같은 분석 도구를 사용하여 사용자의 앱 내 행동 데이터를
                         수집합니다. 이 데이터는 서비스 개선, 사용자 경험 향상,
                         개인 맞춤형 콘텐츠 제공을 위해 사용됩니다.
-                      </Text>
-                      <Text style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
+                      </CustomText>
+                      <CustomText
+                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
                         - 데이터 제3자 제공: 수집된 데이터는 앱 성능 분석 및
                         마케팅 목적으로 Firebase, Amplitude와 같은 제3자 서비스
                         제공자에게 공유될 수 있습니다.
-                      </Text>
-                      <Text style={tw`text-black my-4`}>
+                      </CustomText>
+                      <CustomText style={tw`text-black my-4`}>
                         위 내용을 확인하였으며, 개인정보 처리방침과 데이터 수집
                         방침에 동의합니다.
-                      </Text>
+                      </CustomText>
                     </View>
                     <TouchableOpacity
                       style={tw`my-6 mx-8 bg-black p-2 rounded`}
@@ -188,23 +193,25 @@ function LoginScreen({navigation}: LoginScreenProps) {
                       onPress={() => {
                         loginHandler.setStep(2);
                       }}>
-                      <Text style={tw`text-white font-bold text-center`}>
+                      <CustomText style={tw`text-white font-bold text-center`}>
                         동의하고 다음 단계로
-                      </Text>
+                      </CustomText>
                     </TouchableOpacity>
                   </>
                 ) : (
                   <>
                     <View style={tw`flex-1 items-center justify-center`}>
-                      <Text style={tw`text-black text-lg font-bold my-4`}>
+                      <CustomText style={tw`text-black text-lg font-bold my-4`}>
                         출생연도와 성별을 입력해주세요
-                      </Text>
+                      </CustomText>
                       <View style={tw`mx-3`}>
                         {/* 출생연도 입력 */}
                         <View style={tw`flex-row items-center`}>
                           <View
                             style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                            <Text style={tw`text-black`}>출생연도</Text>
+                            <CustomText style={tw`text-black`}>
+                              출생연도
+                            </CustomText>
                           </View>
                           <TextInput
                             style={tw`border border-gray-400 rounded p-2 w-40`}
@@ -219,7 +226,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
                         <View style={tw`flex-row items-center`}>
                           <View
                             style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                            <Text style={tw`text-black`}>성별</Text>
+                            <CustomText style={tw`text-black`}>성별</CustomText>
                           </View>
 
                           <View style={tw`flex-row justify-around px-2 w-40`}>
@@ -234,9 +241,9 @@ function LoginScreen({navigation}: LoginScreenProps) {
                                 Keyboard.dismiss();
                                 loginHandler.handleGenderToggle('MALE');
                               }}>
-                              <Text style={tw`text-white text-center`}>
+                              <CustomText style={tw`text-white text-center`}>
                                 남성
-                              </Text>
+                              </CustomText>
                             </TouchableOpacity>
                             <TouchableOpacity
                               style={[
@@ -249,9 +256,9 @@ function LoginScreen({navigation}: LoginScreenProps) {
                                 Keyboard.dismiss();
                                 loginHandler.handleGenderToggle('FEMALE');
                               }}>
-                              <Text style={tw`text-white text-center`}>
+                              <CustomText style={tw`text-white text-center`}>
                                 여성
-                              </Text>
+                              </CustomText>
                             </TouchableOpacity>
                           </View>
                         </View>
@@ -261,9 +268,9 @@ function LoginScreen({navigation}: LoginScreenProps) {
                       style={tw`my-6 mx-8 bg-black p-2 rounded`}
                       activeOpacity={0.8}
                       onPress={handleOnModalCloseButton}>
-                      <Text style={tw`text-white font-bold text-center`}>
+                      <CustomText style={tw`text-white font-bold text-center`}>
                         완료
-                      </Text>
+                      </CustomText>
                     </TouchableOpacity>
                   </>
                 )}

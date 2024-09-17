@@ -6,6 +6,7 @@ import MediumIcon from '../../assets/svg/medium.svg';
 import UpIcon from '../../assets/svg/up.svg';
 import DownIcon from '../../assets/svg/down.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import CustomText from '../text/CustomText';
 
 type HotTrendingItemProps = {
   artistName: string;
@@ -40,10 +41,10 @@ const HotTrendingItem = ({
       // border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}]
       //
       style={tw`flex-row items-center p-2 mx-2 my-1 border-b-[0.5px] border-[${designatedColor.GRAY5}] rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}]`}>
-      <Text
+      <CustomText
         style={tw`text-[${designatedColor.PINK}] text-lg font-bold w-10 text-center`}>
         {ranking}
-      </Text>
+      </CustomText>
       {rankingChange == 0 ? (
         <MediumIcon width={14} height={14} />
       ) : (
@@ -69,44 +70,48 @@ const HotTrendingItem = ({
               {isNew && (
                 <View
                   style={tw`border border-[${designatedColor.ORANGE}] rounded-sm py-0.4 px-1 mr-2`}>
-                  <Text style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
+                  <CustomText
+                    style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
                     NEW
-                  </Text>
+                  </CustomText>
                 </View>
               )}
               {isMr && (
                 <View
                   style={tw`border border-[${designatedColor.PURPLE}] rounded-sm py-0.4 px-1 mr-2`}>
-                  <Text style={tw`text-[${designatedColor.PURPLE}] text-xs`}>
+                  <CustomText
+                    style={tw`text-[${designatedColor.PURPLE}] text-xs`}>
                     MR
-                  </Text>
+                  </CustomText>
                 </View>
               )}
               {isLive && (
                 <View
                   style={tw`border border-[${designatedColor.RED2}] rounded-sm py-0.4 px-1 mr-2`}>
-                  <Text style={tw`text-[${designatedColor.RED2}] text-xs`}>
+                  <CustomText
+                    style={tw`text-[${designatedColor.RED2}] text-xs`}>
                     LIVE
-                  </Text>
+                  </CustomText>
                 </View>
               )}
-              <Text
+              <CustomText
                 style={tw`text-white flex-1`}
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {songName}
-              </Text>
+              </CustomText>
             </View>
             <View style={tw`flex-row items-center`}>
-              <Text style={tw`text-[${designatedColor.PINK}] mr-2 text-[3]`}>
+              <CustomText
+                style={tw`text-[${designatedColor.PINK}] mr-2 text-[3]`}>
                 {songNumber}
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={tw`text-[${designatedColor.GRAY3}] flex-1 text-[3]`} // flex-1을 추가하여 가로 확장을 제한
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {artistName}
-              </Text>
+              </CustomText>
             </View>
           </View>
         </View>

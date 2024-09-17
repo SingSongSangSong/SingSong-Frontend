@@ -27,6 +27,7 @@ import {
 // import Modal from 'react-native-modal';
 import ErrorIcon from '../../assets/svg/error.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CustomText from '../../components/text/CustomText';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -122,9 +123,9 @@ function CommentScreen(props: CommentScreenProps) {
               <View style={tw`w-full h-full justify-center items-center`}>
                 <View style={tw`flex-1 justify-center items-center`}>
                   <ErrorIcon width={50} height={50} />
-                  <Text style={tw`text-[${designatedColor.PINK2}] mt-4`}>
+                  <CustomText style={tw`text-[${designatedColor.PINK2}] mt-4`}>
                     댓글이 없어요
-                  </Text>
+                  </CustomText>
                 </View>
               </View>
             }
@@ -229,9 +230,9 @@ function CommentScreen(props: CommentScreenProps) {
             <TouchableWithoutFeedback>
               {/* View로 감싸서 여러 자식을 포함 */}
               <View style={tw`bg-black`}>
-                <Text style={tw`text-white font-bold text-xl my-4 px-4`}>
+                <CustomText style={tw`text-white font-bold text-xl my-4 px-4`}>
                   댓글
-                </Text>
+                </CustomText>
                 <View
                   style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
                   <View style={tw`mb-3`}>

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {designatedColor} from '../../constants';
 import tw from 'twrnc';
 import useKeepListStore from '../../store/useKeepStore';
+import CustomText from '../text/CustomText';
 
 interface RcdSonglistItemProps {
   songNumber: number;
@@ -69,28 +70,28 @@ const RcdSonglistItem: React.FC<RcdSonglistItemProps> = ({
         ]}>
         <View style={tw`flex-row items-center flex-1`}>
           <View style={tw`w-[12] justify-center items-center mr-3`}>
-            <Text
+            <CustomText
               style={[
                 tw`font-bold text-sm text-white text-[${designatedColor.GREEN}] `,
                 isPressed && tw`text-black`,
               ]}>
               {songNumber}
-            </Text>
+            </CustomText>
           </View>
 
           <View style={tw`flex-1`}>
-            <Text
+            <CustomText
               style={[tw`font-bold text-white`, isPressed && tw`text-black`]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {songName}
-            </Text>
-            <Text
+            </CustomText>
+            <CustomText
               style={[tw`text-white`, isPressed && tw`text-black`]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {singerName}
-            </Text>
+            </CustomText>
           </View>
         </View>
         {showKeepIcon && (

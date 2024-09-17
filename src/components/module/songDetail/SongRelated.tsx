@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message';
 import postKeep from '../../../api/keep/postKeep';
 import useKeepListStore from '../../../store/useKeepStore';
 import deleteKeep from '../../../api/keep/deleteKeep';
+import CustomText from '../../text/CustomText';
 
 type SongRelatedProps = {
   songId: number;
@@ -102,9 +103,9 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
       style={tw`mt-7 mb-4 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {songRelated && songRelated.length > 0 && (
         <>
-          <Text style={tw`text-white font-bold text-lg my-2`}>
+          <CustomText style={tw`text-white font-bold text-lg my-2`}>
             다른 노래는 어떻송
-          </Text>
+          </CustomText>
           <View style={tw`h-full w-full`}>
             {/* {songDetailHandler.songRelated && ( */}
             <Relatedlist

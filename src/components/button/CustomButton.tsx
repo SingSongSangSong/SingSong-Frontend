@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
+import CustomText from '../text/CustomText';
 
 interface CustomButtonProps {
   title: string;
@@ -14,7 +15,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   return (
     <Pressable style={[styles.container, styles[style]]} onPress={onPress}>
-      <Text style={styles[`${style}Text`]}>{title}</Text>
+      <CustomText style={styles[`${style}Text`]}>{title}</CustomText>
     </Pressable>
   );
 };

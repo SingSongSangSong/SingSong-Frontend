@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 interface ReviewlistItemProps {
   title: string;
@@ -58,16 +59,16 @@ const ReviewlistItem = ({
           ]}
         />
         <View style={tw`flex-row justify-between w-full z-10 p-3`}>
-          <Text
+          <CustomText
             style={[
               tw`ml-4 text-[${titleColor}]`,
               isSelected && tw`font-bold`,
             ]}>
             {title}
-          </Text>
-          <Text style={tw`text-black font-bold text-[${textColor}]`}>
+          </CustomText>
+          <CustomText style={tw`text-black font-bold text-[${textColor}]`}>
             {count}
-          </Text>
+          </CustomText>
         </View>
       </View>
     </TouchableOpacity>

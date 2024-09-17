@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {CircleButton} from '..';
 import MusicIcon from '../../assets/svg/music.svg';
+import CustomText from '../text/CustomText';
 
 interface SonglistEditItemProps {
   songId: number;
@@ -92,24 +93,24 @@ const SonglistEditItem = ({
 
         <View style={tw`flex-1 h-full ml-4 mr-2`}>
           <View style={tw`flex-row items-center`}>
-            <Text
+            <CustomText
               style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
               {songNumber}
-            </Text>
-            <Text
+            </CustomText>
+            <CustomText
               style={tw`text-white text-sm ml-2 flex-1`}
               numberOfLines={1}
               ellipsizeMode="tail">
               {songName}
-            </Text>
+            </CustomText>
           </View>
 
-          <Text
+          <CustomText
             style={tw`text-white text-sm mt-1 flex-1 text-[${designatedColor.GRAY2}]`}
             numberOfLines={1}
             ellipsizeMode="tail">
             {singerName}
-          </Text>
+          </CustomText>
         </View>
       </View>
     </TouchableOpacity>

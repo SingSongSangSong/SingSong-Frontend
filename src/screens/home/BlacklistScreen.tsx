@@ -7,6 +7,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 import useBlacklist from '../../hooks/useBlacklist';
 import {BlacklistList} from '../../components';
 import ErrorIcon from '../../assets/svg/error.svg';
+import CustomText from '../../components/text/CustomText';
 
 type BlacklistScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -34,10 +35,10 @@ function BlacklistScreen({navigation}: BlacklistScreenProps) {
             <View style={tw`flex-1 justify-center items-center`}>
               <View style={tw`flex-1 items-center justify-center`}>
                 <ErrorIcon width={50} height={50} />
-                <Text
+                <CustomText
                   style={tw`text-[${designatedColor.PINK2}] font-bold mt-4`}>
                   차단한 유저가 없어요
-                </Text>
+                </CustomText>
               </View>
             </View>
           ))}

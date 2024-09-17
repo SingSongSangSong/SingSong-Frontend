@@ -1,6 +1,7 @@
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import tw from 'twrnc';
+import CustomText from '../text/CustomText';
 
 interface LargeButtonProps {
   title: string;
@@ -21,14 +22,14 @@ const LargeButton: React.FC<LargeButtonProps> = ({
       style={tw`bg-[${color}] rounded-xl justify-center items-center flex-row h-[56px] w-[280px]`}>
       <View style={tw`flex-row items-center justify-center`}>
         {Icon && <Icon height="60px" />}
-        <Text
+        <CustomText
           style={[
             tw`text-[16px] text-black`,
             title == 'Sign in with Kakao' && tw`ml-4`,
             title == '카카오로 로그인' && tw`ml-4`,
           ]}>
           {title}
-        </Text>
+        </CustomText>
       </View>
     </Pressable>
   );

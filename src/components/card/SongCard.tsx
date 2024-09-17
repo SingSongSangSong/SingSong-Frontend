@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
 import {CommonTag} from '..';
+import CustomText from '../text/CustomText';
 
 type SongCardProps = {
   songName: string;
@@ -64,15 +65,16 @@ const SongCard = ({
       <View style={tw`flex-row m-1`}>
         <View
           style={tw`px-3 py-0.5 border border-[${designatedColor.PINK2}] rounded-full`}>
-          <Text style={tw`text-[${designatedColor.PINK2}] text-center text-3`}>
+          <CustomText
+            style={tw`text-[${designatedColor.PINK2}] text-center text-3`}>
             {songNumber}
-          </Text>
+          </CustomText>
         </View>
       </View>
       <View style={tw`m-1 ml-2`}>
         <View style={[tw`flex-row items-center my-0.5`, {width: cardWidth}]}>
           {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
-          <Text
+          <CustomText
             style={[
               tw`text-white text-3`, // 카드의 너비에 맞추어 텍스트 너비 설정
               ,
@@ -81,10 +83,10 @@ const SongCard = ({
             ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
           >
             {songName}
-          </Text>
+          </CustomText>
         </View>
 
-        <Text
+        <CustomText
           style={[
             tw`text-[${designatedColor.GRAY3}] text-3`,
             {width: cardWidth}, // 카드의 너비에 맞추어 텍스트 너비 설정
@@ -93,7 +95,7 @@ const SongCard = ({
           ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
         >
           {singerName}
-        </Text>
+        </CustomText>
       </View>
     </TouchableOpacity>
   );

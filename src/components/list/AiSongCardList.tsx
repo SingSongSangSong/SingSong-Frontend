@@ -10,6 +10,7 @@ import tw from 'twrnc';
 import {SongCard} from '..';
 import {designatedColor} from '../../constants';
 import {Song} from '../../types';
+import CustomText from '../text/CustomText';
 
 type AiSongCardListProps = {
   tag: string;
@@ -38,19 +39,21 @@ const AiSongCardList = ({
       <View
         style={tw`px-2 px-8 mt-2 mb-6 my-4 py-4  border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
         <View style={tw`flex-row justify-between items-center`}>
-          <Text style={tw`text-[${designatedColor.PINK}] text-lg`}>{tag}</Text>
+          <CustomText style={tw`text-[${designatedColor.PINK}] text-lg`}>
+            {tag}
+          </CustomText>
           <TouchableOpacity
             onPress={() => onPress()}
             activeOpacity={0.8}
             style={tw`p-2`}>
-            <Text style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+            <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
               전체보기
-            </Text>
+            </CustomText>
           </TouchableOpacity>
         </View>
-        <Text style={tw`text-[${designatedColor.GRAY1}]`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
           개인 맞춤 노래를 추천 받아보세요
-        </Text>
+        </CustomText>
       </View>
 
       <ScrollView

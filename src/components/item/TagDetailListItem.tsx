@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {useFocusEffect} from '@react-navigation/native';
+import CustomText from '../text/CustomText';
 
 interface TagDetailListItemProps {
   tag: string;
@@ -34,7 +35,7 @@ const TagDetailListItem = ({tag, Icon, onPress}: TagDetailListItemProps) => {
         <View style={tw`w-13 h-13 rounded-full justify-center items-center`}>
           <Icon width={48} height={48} />
         </View>
-        <Text style={tw`text-white ml-4`}>{tag}</Text>
+        <CustomText style={tw`text-white ml-4`}>{tag}</CustomText>
       </View>
     </TouchableOpacity>
   );

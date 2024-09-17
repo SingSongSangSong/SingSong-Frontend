@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import {formatDate} from '../../utils';
+import CustomText from '../text/CustomText';
 
 interface SearchRecentItemProps {
   date: string;
@@ -22,11 +23,11 @@ const SearchRecentItem = ({
     <TouchableOpacity
       style={tw`w-full flex-row justify-between p-2 items-center`}
       onPress={onPress}>
-      <Text style={tw`text-white`}>{recentText}</Text>
+      <CustomText style={tw`text-white`}>{recentText}</CustomText>
       <View style={tw`flex-row items-center`}>
-        <Text style={tw`text-[${designatedColor.GRAY2}]`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY2}]`}>
           {formatDate(date)}
-        </Text>
+        </CustomText>
 
         <TouchableOpacity style={tw`my-1 p-2`} onPress={onDeletePress}>
           <DeleteIcon width={16} height={16} />

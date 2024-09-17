@@ -8,6 +8,7 @@ import {designatedColor} from '../../constants';
 import {useQuery} from '@tanstack/react-query';
 import postRcdHome from '../../api/recommendation/postRcdHome';
 import {RcdHomeSongWithTags} from '../../types';
+import CustomText from '../text/CustomText';
 
 interface SongCardModuleProps {
   onPressTotalButton: (tag: string) => void;
@@ -80,7 +81,9 @@ const SongCardModule = ({
               onPress={loadMoreTags}
               style={tw`w-full p-2 mb-4 items-center`}
               activeOpacity={0.8}>
-              <Text style={tw`text-[${designatedColor.GRAY3}]`}>더보기</Text>
+              <CustomText style={tw`text-[${designatedColor.GRAY3}]`}>
+                더보기
+              </CustomText>
             </TouchableOpacity>
             // <Button title="Load More" onPress={loadMoreTags} />
           )}

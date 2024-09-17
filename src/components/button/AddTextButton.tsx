@@ -1,8 +1,9 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import PlusIcon from '../../assets/svg/plus.svg';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 interface AddTextButtonProps {
   title: string;
@@ -24,10 +25,10 @@ const AddTextButton = ({
       ]}
       activeOpacity={0.8}>
       <PlusIcon width={18} height={18} />
-      <Text
+      <CustomText
         style={tw`text-[${designatedColor.TEXT_WHITE}] text-sm font-semibold pr-1`}>
         {title}
-      </Text>
+      </CustomText>
     </TouchableOpacity>
   );
 };

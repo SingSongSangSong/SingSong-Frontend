@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 type RemoveButtonProps = {
   title: string;
@@ -16,11 +17,13 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({title, count, onPress}) => {
         style={tw`p-2 flex-row justify-center items-center`}
         onPress={onPress}
         activeOpacity={0.8}>
-        <Text style={tw`text-white font-bold text-sm mr-2`}>{title}</Text>
-        <Text
+        <CustomText style={tw`text-white font-bold text-sm mr-2`}>
+          {title}
+        </CustomText>
+        <CustomText
           style={tw`text-white font-bold text-sm text-[${designatedColor.RED}] `}>
           {count}
-        </Text>
+        </CustomText>
       </TouchableOpacity>
     </View>
   );

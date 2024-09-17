@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import tw from 'twrnc';
 import {LargeButton} from '../button/LargeButton';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 export default function CarouselItem({
   item,
@@ -45,9 +46,9 @@ export default function CarouselItem({
       />
       <View
         style={tw`absolute bottom-0 w-full p-4 justify-center items-center`}>
-        <Text style={tw`text-white mb-2 text-xl`}>
+        <CustomText style={tw`text-white mb-2 text-xl`}>
           {item.songName} - {item.singerName}
-        </Text>
+        </CustomText>
         <View style={tw`w-full`}>
           <LargeButton
             title="탐색하기"

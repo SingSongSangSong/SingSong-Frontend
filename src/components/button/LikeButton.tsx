@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
+import CustomText from '../text/CustomText';
 
 type LikeButtonProps = {
   title: string;
@@ -35,13 +36,13 @@ const LikeButton: React.FC<LikeButtonProps> = ({
         ) : (
           <Icon width={16} height={16} />
         )}
-        <Text
+        <CustomText
           style={[
             tw`text-white text-[3] text-[${designatedColor.GRAY1}] ml-1`,
             isPressed && tw`text-[${color}]`,
           ]}>
           {title}
-        </Text>
+        </CustomText>
       </TouchableOpacity>
     </View>
   );

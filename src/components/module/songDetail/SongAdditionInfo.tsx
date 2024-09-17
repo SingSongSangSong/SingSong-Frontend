@@ -16,6 +16,7 @@ import useCommentStore from '../../../store/useCommentStore';
 import Toast from 'react-native-toast-message';
 import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import CustomText from '../../text/CustomText';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -97,31 +98,35 @@ const SongAdditionInfo = ({
               ) : (
                 <OutlineKeepIcon width={18} height={18} />
               )}
-              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
                 {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
-              </Text>
+              </CustomText>
             </View>
             <TouchableOpacity
               style={tw`flex-row items-center`}
               onPress={handleOnPressComment}
               activeOpacity={0.8}>
               <CommentCountIcon width={18} height={18} />
-              <Text style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
                 {commentCount}
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
           <View style={tw`flex-row items-center py-1 pb-4`}>
-            <Text style={tw`text-white text-[3] mr-2`}>최고 음역대 </Text>
+            <CustomText style={tw`text-white text-[3] mr-2`}>
+              최고 음역대{' '}
+            </CustomText>
             {songInfo &&
               (songInfo.octave == '' ? (
-                <Text style={tw`text-[3] text-[${designatedColor.DARK_GRAY}]`}>
+                <CustomText
+                  style={tw`text-[3] text-[${designatedColor.DARK_GRAY}]`}>
                   없음
-                </Text>
+                </CustomText>
               ) : (
-                <Text style={tw`text-[3] text-[${designatedColor.GREEN}]`}>
+                <CustomText
+                  style={tw`text-[3] text-[${designatedColor.GREEN}]`}>
                   {songInfo.octave}
-                </Text>
+                </CustomText>
               ))}
           </View>
         </View>

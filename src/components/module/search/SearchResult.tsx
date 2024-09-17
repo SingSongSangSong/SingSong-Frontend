@@ -15,6 +15,7 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import getSearchArtistName from '../../../api/search/getSearchArtistName';
 import getSearchSongNumber from '../../../api/search/getSearchSongNumber';
 import getSearchSongName from '../../../api/search/getSearchSongName';
+import CustomText from '../../text/CustomText';
 
 type SearchResultProps = {
   inputText: string;
@@ -131,15 +132,17 @@ const SearchResult = ({
       <View key={key} style={tw`my-4`}>
         {category === 'all' && (
           <View style={tw`flex-row justify-between items-center my-2 px-2`}>
-            <Text style={tw`text-[${designatedColor.PINK}]`}>{title}</Text>
+            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
+              {title}
+            </CustomText>
             <TouchableOpacity
               onPress={() => {
                 onTotalPress(value!);
               }}>
-              <Text
+              <CustomText
                 style={tw`text-[${designatedColor.GRAY3}] text-3 px-2 py-2`}>
                 전체보기
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
         )}

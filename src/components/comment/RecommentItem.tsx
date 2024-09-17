@@ -10,6 +10,7 @@ import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import {formatDateComment} from '../../utils';
+import CustomText from '../text/CustomText';
 
 interface RecommentItemProps {
   commentId: number;
@@ -66,10 +67,11 @@ const RecommentItem = ({
           style={tw`flex-row justify-between mb-2 items-center 
         `}>
           <View style={tw`flex-row items-center`}>
-            <Text style={tw`text-white ml-2`}>{nickname}</Text>
-            <Text style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
+            <CustomText style={tw`text-white ml-2`}>{nickname}</CustomText>
+            <CustomText
+              style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
               {formatDateComment(createdAt)}
-            </Text>
+            </CustomText>
           </View>
           <IconButton
             Icon={MoreVerticalIcon}
@@ -78,7 +80,7 @@ const RecommentItem = ({
           />
         </View>
         <View>
-          <Text style={tw`text-white ml-4`}>{content}</Text>
+          <CustomText style={tw`text-white ml-4`}>{content}</CustomText>
         </View>
 
         <View style={tw`justify-between flex-row my-2 items-center`}>
@@ -112,12 +114,12 @@ const RecommentItem = ({
               </View>
             )}
 
-            <Text
+            <CustomText
               style={
                 isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`
               }>
               {likes}
-            </Text>
+            </CustomText>
           </TouchableOpacity>
 
           {isVisibleRecomment && (
@@ -127,7 +129,9 @@ const RecommentItem = ({
                 size={20}
                 onPress={onPressRecomment}
               />
-              <Text style={tw`text-white`}>{recomments.length}</Text>
+              <CustomText style={tw`text-white`}>
+                {recomments.length}
+              </CustomText>
             </View>
           )}
         </View>

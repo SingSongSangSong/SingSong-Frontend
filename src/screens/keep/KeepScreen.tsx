@@ -9,6 +9,7 @@ import useKeep from '../../hooks/useKeep';
 import {logButtonClick} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CustomText from '../../components/text/CustomText';
 
 type KeepScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -65,9 +66,10 @@ function KeepScreen({navigation}: KeepScreenProps) {
               />
             ) : (
               <View style={tw`h-full w-full justify-center items-center`}>
-                <Text style={tw`text-[${designatedColor.PINK2}] font-bold`}>
+                <CustomText
+                  style={tw`text-[${designatedColor.PINK2}] font-bold`}>
                   KEEP이 비어있어요
-                </Text>
+                </CustomText>
               </View>
             )}
           </View>
