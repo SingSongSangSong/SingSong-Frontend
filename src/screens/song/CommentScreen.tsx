@@ -6,6 +6,8 @@ import {
   View,
   Platform,
   useWindowDimensions,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
@@ -22,7 +24,7 @@ import {
   CustomModal,
   TextButton,
 } from '../../components';
-import Modal from 'react-native-modal';
+// import Modal from 'react-native-modal';
 import ErrorIcon from '../../assets/svg/error.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -143,9 +145,74 @@ function CommentScreen(props: CommentScreenProps) {
         )}
       </View>
 
+      {/* <Modal
+        animationType="fade"
+        transparent={true}
+        visible={commentHandler.isModalVisible}
+        onRequestClose={() => {
+          commentHandler.setIsKeyboardVisible(true);
+          commentHandler.setIsModalVisible(false);
+        }}
+        // style={[
+        //   {
+        //     justifyContent: 'flex-end',
+        //     margin: 0,
+        //   },
+        //   Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+        // ]}
+      >
+        <TouchableWithoutFeedback
+          onPress={() => commentHandler.setIsModalVisible(false)}>
+          <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
+            <TouchableWithoutFeedback>
+              <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
+              <View
+                style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+                <View style={tw`mb-3`}>
+                  <TextButton
+                    title="신고하기"
+                    onPress={handleOnPressReport}
+                    color="white"
+                    size={4}
+                  />
+                </View>
+                <View style={tw`mt-3`}>
+                  <TextButton
+                    title="차단하기"
+                    onPress={() => {
+                      commentHandler.handleOnPressBlacklistForIOS();
+                      // commentHandler.setIsModalVisible(false);
+                      // setTimeout(() => {
+                      //   commentHandler.setIsBlacklist(true); // 두 번째 모달 열기
+                      // }, 300);
+                      // // commentHandler.setIsBlacklist(true);
+                      // console.log('차단하기');
+                    }}
+                    color="white"
+                    size={4}
+                  />
+                </View>
+              </View>
+              <View style={tw`py-4`}>
+                <TextButton
+                  title="닫기"
+                  onPress={() => {
+                    commentHandler.setIsKeyboardVisible(true);
+                    commentHandler.setIsModalVisible(false);
+                  }}
+                  color="white"
+                  size={4}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal> */}
       <Modal
-        isVisible={commentHandler.isModalVisible}
-        onBackdropPress={() => {
+        animationType="fade"
+        transparent={true}
+        visible={commentHandler.isModalVisible}
+        onRequestClose={() => {
           commentHandler.setIsKeyboardVisible(true);
           commentHandler.setIsModalVisible(false);
         }}
@@ -156,47 +223,57 @@ function CommentScreen(props: CommentScreenProps) {
           },
           Platform.OS == 'ios' && {paddingBottom: insets.bottom},
         ]}>
-        <View style={tw`bg-black w-full px-4`}>
-          <Text style={tw`text-white font-bold text-xl my-4`}>댓글</Text>
-          <View
-            style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <View style={tw`mb-3`}>
-              <TextButton
-                title="신고하기"
-                onPress={handleOnPressReport}
-                color="white"
-                size={4}
-              />
-            </View>
-            <View style={tw`mt-3`}>
-              <TextButton
-                title="차단하기"
-                onPress={() => {
-                  commentHandler.handleOnPressBlacklistForIOS();
-                  // commentHandler.setIsModalVisible(false);
-                  // setTimeout(() => {
-                  //   commentHandler.setIsBlacklist(true); // 두 번째 모달 열기
-                  // }, 300);
-                  // // commentHandler.setIsBlacklist(true);
-                  // console.log('차단하기');
-                }}
-                color="white"
-                size={4}
-              />
-            </View>
+        <TouchableWithoutFeedback
+          onPress={() => commentHandler.setIsModalVisible(false)}>
+          <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
+            <TouchableWithoutFeedback>
+              {/* View로 감싸서 여러 자식을 포함 */}
+              <View style={tw`bg-black`}>
+                <Text style={tw`text-white font-bold text-xl my-4 px-4`}>
+                  댓글
+                </Text>
+                <View
+                  style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+                  <View style={tw`mb-3`}>
+                    <TextButton
+                      title="신고하기"
+                      onPress={handleOnPressReport}
+                      color="white"
+                      size={4}
+                    />
+                  </View>
+                  <View style={tw`mt-3`}>
+                    <TextButton
+                      title="차단하기"
+                      onPress={() => {
+                        commentHandler.handleOnPressBlacklistForIOS();
+                        // commentHandler.setIsModalVisible(false);
+                        // setTimeout(() => {
+                        //   commentHandler.setIsBlacklist(true); // 두 번째 모달 열기
+                        // }, 300);
+                        // // commentHandler.setIsBlacklist(true);
+                        // console.log('차단하기');
+                      }}
+                      color="white"
+                      size={4}
+                    />
+                  </View>
+                </View>
+                <View style={tw`py-4`}>
+                  <TextButton
+                    title="닫기"
+                    onPress={() => {
+                      commentHandler.setIsKeyboardVisible(true);
+                      commentHandler.setIsModalVisible(false);
+                    }}
+                    color="white"
+                    size={4}
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-          <View style={tw`py-4`}>
-            <TextButton
-              title="닫기"
-              onPress={() => {
-                commentHandler.setIsKeyboardVisible(true);
-                commentHandler.setIsModalVisible(false);
-              }}
-              color="white"
-              size={4}
-            />
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
       <CustomModal
         visible={commentHandler.isBlacklist}

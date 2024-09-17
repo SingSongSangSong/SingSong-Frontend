@@ -1,5 +1,12 @@
 import React from 'react';
-import {Platform, SafeAreaView, Text, View} from 'react-native';
+import {
+  Modal,
+  Platform,
+  SafeAreaView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
@@ -15,7 +22,6 @@ import {
   TextButton,
 } from '../../components';
 import useRecomment from '../../hooks/useRecomment';
-import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type RecommentScreenProps =
@@ -82,6 +88,7 @@ function RecommentScreen(props: RecommentScreenProps) {
           </View>
         )}
       </View>
+
       {recommentHandler.isKeyboardVisible && (
         <View style={tw`w-full justify-end m-0`}>
           <CommentKeyboard
@@ -92,52 +99,66 @@ function RecommentScreen(props: RecommentScreenProps) {
       )}
 
       <Modal
-        isVisible={recommentHandler.isModalVisible}
-        onBackdropPress={() => {
-          recommentHandler.setIsModalVisible(false);
+        animationType="fade"
+        transparent={true}
+        visible={recommentHandler.isModalVisible}
+        onRequestClose={() => {
           recommentHandler.setIsKeyboardVisible(true);
+          recommentHandler.setIsModalVisible(false);
         }}
         style={[
           {justifyContent: 'flex-end', margin: 0},
-          Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+          Platform.OS === 'ios' && {paddingBottom: insets.bottom},
         ]}>
-        <View style={tw`bg-black w-full px-4`}>
-          <Text style={tw`text-white font-bold text-xl my-4`}>답글</Text>
-          <View
-            style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-            <View style={tw`mb-3`}>
-              <TextButton
-                title="신고하기"
-                onPress={handleOnPressReport}
-                color="white"
-                size={4}
-              />
-            </View>
-            <View style={tw`mt-3`}>
-              <TextButton
-                title="차단하기"
-                onPress={() => {
-                  // recommentHandler.setIsBlacklist(true)
-                  recommentHandler.handleOnPressBlacklistForIOS();
-                }}
-                color="white"
-                size={4}
-              />
-            </View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            recommentHandler.setIsModalVisible(false);
+            // recommentHandler.setIsKeyboardVisible(true);
+          }}>
+          <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
+            <TouchableWithoutFeedback>
+              <View style={tw`bg-black`}>
+                <Text style={tw`text-white font-bold text-xl my-4 px-4`}>
+                  답글
+                </Text>
+                <View
+                  style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
+                  <View style={tw`mb-3`}>
+                    <TextButton
+                      title="신고하기"
+                      onPress={handleOnPressReport}
+                      color="white"
+                      size={4}
+                    />
+                  </View>
+                  <View style={tw`mt-3`}>
+                    <TextButton
+                      title="차단하기"
+                      onPress={() => {
+                        recommentHandler.handleOnPressBlacklistForIOS();
+                      }}
+                      color="white"
+                      size={4}
+                    />
+                  </View>
+                </View>
+                <View style={tw`py-4`}>
+                  <TextButton
+                    title="닫기"
+                    onPress={() => {
+                      recommentHandler.setIsKeyboardVisible(true);
+                      recommentHandler.setIsModalVisible(false);
+                    }}
+                    color="white"
+                    size={4}
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-          <View style={tw`py-4`}>
-            <TextButton
-              title="닫기"
-              onPress={() => {
-                recommentHandler.setIsModalVisible(false);
-                recommentHandler.setIsKeyboardVisible(true);
-              }}
-              color="white"
-              size={4}
-            />
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
+
       <CustomModal
         visible={recommentHandler.isBlacklist}
         onClose={() => recommentHandler.setIsBlacklist(false)}

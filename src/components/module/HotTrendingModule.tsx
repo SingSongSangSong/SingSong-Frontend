@@ -155,7 +155,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
             {showGender(selectedGender)}
           </Text>
           <View style={tw`ml-2`}>
-            <ArrowBottomIcon width={16} height={16} />
+            <ArrowBottomIcon width={12} height={12} />
           </View>
         </TouchableOpacity>
         {/* <View style={tw`flex-row items-center`}>
