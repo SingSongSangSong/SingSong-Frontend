@@ -208,12 +208,14 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                     {genders.map(gender => (
                       <View
                         key={gender}
-                        style={tw`flex-row justify-between mt-2 mx-2`}>
+                        // style={tw`flex-row justify-between mt-2 mx-2`}
+                      >
                         <TouchableOpacity
                           onPress={() => {
                             handleOnPressChangeGender(gender);
                           }}
-                          style={tw`p-2`}>
+                          style={tw`flex-row justify-between mt-2 mx-2 p-2`}
+                          activeOpacity={0.8}>
                           <Text
                             style={[
                               tw`text-sm`,
@@ -223,14 +225,13 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                             ]}>
                             {showGender(gender)}
                           </Text>
+                          {gender === selectedGender ? (
+                            <CheckFilled2Icon width={16} height={16} />
+                          ) : (
+                            // <CheckIcon width={16} height={16} />
+                            <></>
+                          )}
                         </TouchableOpacity>
-
-                        {gender === selectedGender ? (
-                          <CheckFilled2Icon width={16} height={16} />
-                        ) : (
-                          // <CheckIcon width={16} height={16} />
-                          <></>
-                        )}
                       </View>
                     ))}
                   </View>
