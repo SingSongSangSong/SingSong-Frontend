@@ -42,6 +42,7 @@ const designatedColor = {
   HOT_TRENDING_COLOR: '#373A40',
   INDI_PINK: '#E3A5C7',
   PINK0: '#D63484',
+  RED2: '#B8001F',
 } as const;
 
 export {randomColor, designatedColor};

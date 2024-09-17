@@ -182,6 +182,7 @@ interface HotTrendingV2Props {
     songId: number,
     songName: string,
     singerName: string,
+    album: string,
     isMr: boolean,
   ) => void;
 }
@@ -248,6 +249,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
           <TouchableOpacity
             key={index}
             onPress={() => handleAgeGroupChange(ageGroup)}
+            activeOpacity={0.8}
             style={[
               tw`py-2 justify-center items-center px-4`,
               // {
@@ -300,6 +302,8 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                         artistName={item.artistName}
                         isMr={item.isMr}
                         isNew={item.isNew}
+                        isLive={item.isLive}
+                        album={item.album}
                         ranking={item.ranking}
                         rankingChange={item.rankingChange}
                         songName={item.songName}
@@ -310,6 +314,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                             item.songId,
                             item.songName,
                             item.artistName,
+                            item.album,
                             item.isMr,
                           );
                         }}
@@ -324,7 +329,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
               ) : (
                 <View
                   style={[
-                    tw`justify-center items-center h-[89]`,
+                    tw`justify-center items-center h-[91]`,
                     {width: itemWidth},
                   ]}>
                   <ErrorIcon width={36} height={36} />
@@ -338,7 +343,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
         ) : (
           <View
             style={[
-              tw`justify-center items-center h-[89] `,
+              tw`justify-center items-center h-[91] `,
               {width: itemWidth},
             ]}>
             <ErrorIcon width={36} height={36} />

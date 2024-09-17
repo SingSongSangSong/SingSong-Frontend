@@ -26,7 +26,7 @@ interface HotTrendingModuleProps {
     songId: number,
     songName: string,
     singerName: string,
-    // album?: string,
+    album: string,
     isMr: boolean,
   ) => void;
 }

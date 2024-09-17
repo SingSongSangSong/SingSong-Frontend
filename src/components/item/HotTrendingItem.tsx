@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MediumIcon from '../../assets/svg/medium.svg';
@@ -15,6 +15,8 @@ type HotTrendingItemProps = {
   rankingChange: number;
   songName: string;
   songNumber: number;
+  isLive: boolean;
+  album: string;
   onPress?: () => void;
 };
 
@@ -26,6 +28,8 @@ const HotTrendingItem = ({
   rankingChange,
   songName,
   songNumber,
+  isLive,
+  album,
   onPress,
 }: HotTrendingItemProps) => {
   // console.log(isMr);
@@ -52,40 +56,59 @@ const HotTrendingItem = ({
         </>
       )}
       <View style={tw`flex-1 mx-4`}>
-        <View style={tw`flex-row mb-1 items-center`}>
-          {isNew && (
-            <View
-              style={tw`border border-[${designatedColor.ORANGE}] rounded-sm py-0.4 px-1 mr-2`}>
-              <Text style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
-                NEW
-              </Text>
-            </View>
-          )}
-          {isMr && (
-            <View
-              style={tw`border border-[${designatedColor.PURPLE}] rounded-sm py-0.4 px-1 mr-2`}>
-              <Text style={tw`text-[${designatedColor.PURPLE}] text-xs`}>
-                MR
-              </Text>
-            </View>
-          )}
-          <Text
-            style={tw`text-white flex-1`}
-            numberOfLines={1}
-            ellipsizeMode="tail">
-            {songName}
-          </Text>
-        </View>
         <View style={tw`flex-row items-center`}>
-          <Text style={tw`text-[${designatedColor.PINK}] mr-2`}>
-            {songNumber}
-          </Text>
-          <Text
-            style={tw`text-[${designatedColor.GRAY3}] flex-1`} // flex-1을 추가하여 가로 확장을 제한
-            numberOfLines={1}
-            ellipsizeMode="tail">
-            {artistName}
-          </Text>
+          <View style={tw`rounded-lg justify-center items-center`}>
+            <Image
+              source={{uri: album}}
+              style={tw`w-12 h-12 rounded-md`}
+              resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
+            />
+          </View>
+          <View style={tw`ml-3 flex-1`}>
+            <View style={tw`flex-row mb-1 items-center`}>
+              {isNew && (
+                <View
+                  style={tw`border border-[${designatedColor.ORANGE}] rounded-sm py-0.4 px-1 mr-2`}>
+                  <Text style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
+                    NEW
+                  </Text>
+                </View>
+              )}
+              {isMr && (
+                <View
+                  style={tw`border border-[${designatedColor.PURPLE}] rounded-sm py-0.4 px-1 mr-2`}>
+                  <Text style={tw`text-[${designatedColor.PURPLE}] text-xs`}>
+                    MR
+                  </Text>
+                </View>
+              )}
+              {isLive && (
+                <View
+                  style={tw`border border-[${designatedColor.RED2}] rounded-sm py-0.4 px-1 mr-2`}>
+                  <Text style={tw`text-[${designatedColor.RED2}] text-xs`}>
+                    LIVE
+                  </Text>
+                </View>
+              )}
+              <Text
+                style={tw`text-white flex-1`}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {songName}
+              </Text>
+            </View>
+            <View style={tw`flex-row items-center`}>
+              <Text style={tw`text-[${designatedColor.PINK}] mr-2 text-[3]`}>
+                {songNumber}
+              </Text>
+              <Text
+                style={tw`text-[${designatedColor.GRAY3}] flex-1 text-[3]`} // flex-1을 추가하여 가로 확장을 제한
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {artistName}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
