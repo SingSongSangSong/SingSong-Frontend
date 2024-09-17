@@ -174,6 +174,7 @@ import {HotTrendingItem} from '../item/HotTrendingItem';
 import {designatedColor} from '../../constants';
 import useChartV2Store from '../../store/useChartV2Store';
 import {logSwipe} from '../../utils';
+import ErrorIcon from '../../assets/svg/error.svg';
 
 interface HotTrendingV2Props {
   onPressSongButton: (
@@ -207,6 +208,23 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
     setCurrentPage(0);
   }, [selectedCharts]);
 
+  const showAgeGroup = (ageGroup: string) => {
+    switch (ageGroup) {
+      case 'ALL':
+        return '전체';
+      case '10':
+        return '10대';
+      case '20':
+        return '20대';
+      case '30':
+        return '30대';
+      case '40+':
+        return '40대 이상';
+      default:
+        return ageGroup; // 다른 값은 그대로 반환
+    }
+  };
+
   // 연령대 버튼 클릭 시 연령대 데이터 로드
   const handleAgeGroupChange = (ageGroup: string) => {
     const index = ageGroups.indexOf(ageGroup);
@@ -225,24 +243,32 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
     <View>
       {/* 연령대 인디케이터 */}
       <View
-        style={tw`flex-row justify-between px-4 py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        style={tw`flex-row justify-between py-2 px-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         {ageGroups.map((ageGroup, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => handleAgeGroupChange(ageGroup)}>
+            onPress={() => handleAgeGroupChange(ageGroup)}
+            style={[
+              tw`py-2 justify-center items-center px-4`,
+              // {
+              //   width: screenWidth * 0.17,
+              // },
+              {
+                borderBottomWidth: currentAgeGroup === ageGroup ? 2 : 0,
+                borderBottomColor: designatedColor.PINK,
+              },
+            ]}>
             <Text
               style={[
-                tw`text-lg font-bold`,
+                tw`text-sm font-bold`,
                 {
                   color:
                     currentAgeGroup === ageGroup
                       ? designatedColor.PINK
                       : designatedColor.GRAY4,
-                  borderBottomWidth: currentAgeGroup === ageGroup ? 2 : 0,
-                  borderBottomColor: designatedColor.PINK,
                 },
               ]}>
-              {ageGroup}
+              {showAgeGroup(ageGroup)}
             </Text>
           </TouchableOpacity>
         ))}
@@ -290,7 +316,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                       />
                     ) : (
                       <View
-                        style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}] h-16`}
+                        style={tw`flex-row items-center p-2 mx-2 my-1 rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}] h-16`}
                       />
                     )}
                   </View>
@@ -298,10 +324,13 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
               ) : (
                 <View
                   style={[
-                    tw`flex-row justify-center items-center`,
-                    {width: itemWidth, height: 200},
+                    tw`justify-center items-center h-[89]`,
+                    {width: itemWidth},
                   ]}>
-                  <Text style={tw`text-white`}>아직 데이터가 없어요</Text>
+                  <ErrorIcon width={36} height={36} />
+                  <Text style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
+                    곧 업데이트 예정이에요
+                  </Text>
                 </View>
               )}
             </View>
@@ -309,10 +338,13 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
         ) : (
           <View
             style={[
-              tw`flex-row justify-center items-center`,
-              {width: itemWidth, height: 200},
+              tw`justify-center items-center h-[89] `,
+              {width: itemWidth},
             ]}>
-            <Text style={tw`text-white`}>아직 데이터가 없어요</Text>
+            <ErrorIcon width={36} height={36} />
+            <Text style={tw`text-[${designatedColor.GRAY3}] mt-2`}>
+              곧 업데이트 예정이에요
+            </Text>
           </View>
         )}
       </ScrollView>

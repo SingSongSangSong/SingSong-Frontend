@@ -44,7 +44,7 @@ const HotTrendingItem = ({
         <MediumIcon width={14} height={14} />
       ) : (
         <>
-          {rankingChange > 0 ? (
+          {rankingChange < 0 ? (
             <DownIcon width={14} height={14} />
           ) : (
             <UpIcon width={14} height={14} />
@@ -53,7 +53,7 @@ const HotTrendingItem = ({
       )}
       <View style={tw`flex-1 mx-4`}>
         <View style={tw`flex-row mb-1 items-center`}>
-          {isNew == 'new' && (
+          {isNew && (
             <View
               style={tw`border border-[${designatedColor.ORANGE}] rounded-sm py-0.4 px-1 mr-2`}>
               <Text style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
@@ -61,7 +61,7 @@ const HotTrendingItem = ({
               </Text>
             </View>
           )}
-          {isMr == 1 && (
+          {isMr && (
             <View
               style={tw`border border-[${designatedColor.PURPLE}] rounded-sm py-0.4 px-1 mr-2`}>
               <Text style={tw`text-[${designatedColor.PURPLE}] text-xs`}>

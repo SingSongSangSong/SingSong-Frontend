@@ -40,7 +40,6 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   // const setUserGender = useChartStore(state => state.setUserGender);
   const selectedGender = useChartV2Store(state => state.selectedGender);
   const setSelectedGender = useChartV2Store(state => state.setSelectedGender);
-  const selectedAgeGroup = useChartV2Store(state => state.selectedAgeGroup);
   const setSelectedAgeGroup = useChartV2Store(
     state => state.setSelectedAgeGroup,
   );
@@ -111,6 +110,18 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   //   changeGender();
   // };
 
+  const showGender = (gender: string) => {
+    switch (gender) {
+      case 'MIXED':
+        return '전체';
+      case 'FEMALE':
+        return '여자';
+      case 'MALE':
+        return '남자';
+      default:
+        return gender; // 다른 값은 그대로 반환
+    }
+  };
   const handleOnPressGender = () => {
     console.log('성별 변경');
     setIsModalVisible(true);
@@ -140,8 +151,8 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
           style={tw`flex-row items-center rounded-lg bg-[${designatedColor.GRAY5}] px-2`}
           activeOpacity={0.8}
           onPress={handleOnPressGender}>
-          <Text style={tw`text-[${designatedColor.PINK2}] text-[10px]`}>
-            {selectedGender}
+          <Text style={tw`text-white text-[10px]`}>
+            {showGender(selectedGender)}
           </Text>
           <View style={tw`ml-2`}>
             <ArrowBottomIcon width={16} height={16} />
@@ -210,7 +221,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                                 ? tw`text-[${designatedColor.PINK}] font-bold` // userGender가 'FEMALE'이면 핑크색과 굵은 폰트
                                 : tw`text-white`, // 그 외에는 기본 흰색
                             ]}>
-                            {gender}
+                            {showGender(gender)}
                           </Text>
                         </TouchableOpacity>
 
