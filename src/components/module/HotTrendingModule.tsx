@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, Modal, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import tw from 'twrnc';
 import useChartStore from '../../store/useChartStore';
 import {formatDateString, logToggleClick} from '../../utils';
@@ -11,7 +17,9 @@ import {useQuery} from '@tanstack/react-query';
 // import getChart from '../../api/songs/getChart';
 import getV2Chart from '../../api/songs/getV2Chart';
 import useChartV2Store from '../../store/useChartV2Store';
-
+import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
+import CheckIcon from '../../assets/svg/check.svg';
+import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
 interface HotTrendingModuleProps {
   onPressSongButton: (
     songNumber: number,
@@ -32,6 +40,10 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   // const setUserGender = useChartStore(state => state.setUserGender);
   const selectedGender = useChartV2Store(state => state.selectedGender);
   const setSelectedGender = useChartV2Store(state => state.setSelectedGender);
+  const selectedAgeGroup = useChartV2Store(state => state.selectedAgeGroup);
+  const setSelectedAgeGroup = useChartV2Store(
+    state => state.setSelectedAgeGroup,
+  );
   const time = useChartV2Store(state => state.time);
   const setCharts = useChartV2Store(state => state.setCharts);
   const setTime = useChartV2Store(state => state.setTime);
@@ -39,6 +51,9 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   const setUserAgeGroup = useChartV2Store(state => state.setUserAgeGroup);
   const setInitCharts = useChartV2Store(state => state.setInitChart);
   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
+  const genders = useChartV2Store(state => state.genders);
+  const ageGroups = useChartV2Store(state => state.ageGroups);
+  // const userGender = useChartV2Store(state => state.userGender);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // const {
@@ -96,6 +111,17 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   //   changeGender();
   // };
 
+  const handleOnPressGender = () => {
+    console.log('성별 변경');
+    setIsModalVisible(true);
+  };
+
+  const handleOnPressChangeGender = (gender: string) => {
+    //성별 변경을 했을 시
+    setSelectedGender(gender);
+    setSelectedAgeGroup('ALL');
+  };
+
   return (
     <View style={tw`flex-1`}>
       {/* Header Section */}
@@ -110,6 +136,17 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
             </Text>
           )}
         </View>
+        <TouchableOpacity
+          style={tw`flex-row items-center rounded-lg bg-[${designatedColor.GRAY5}] px-2`}
+          activeOpacity={0.8}
+          onPress={handleOnPressGender}>
+          <Text style={tw`text-[${designatedColor.PINK2}] text-[10px]`}>
+            {selectedGender}
+          </Text>
+          <View style={tw`ml-2`}>
+            <ArrowBottomIcon width={16} height={16} />
+          </View>
+        </TouchableOpacity>
         {/* <View style={tw`flex-row items-center`}>
           <Text style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
             {selectedGender === 'FEMALE' ? '여자' : '남자'}
@@ -132,22 +169,73 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
           <EmptyHotTrending />
         )}
       </View>
-      {/* <Modal
-        animationType={'slide'}
+      <Modal
+        animationType="fade" // 애니메이션 없이 즉시 사라지도록 설정
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={() => {
-          setIsModalVisible(!isModalVisible);
-          console.log('modal appearance');
-        }}>
-        <Text>Modal is appearance!</Text>
-        <TouchableOpacit
-          onPress={() => {
-            console.log('모달이 나타남');
-          }}>
-          <Text>View Alert!</Text>
-        </TouchableOpacity>
-      </Modal> */}
+        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
+        {/* 모달 바깥을 클릭하면 닫히도록 설정 */}
+        <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
+          <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
+            {/* 모달 안쪽 영역만 따로 터치 가능하도록 분리 */}
+            <TouchableWithoutFeedback>
+              <View style={tw`bg-black p-6 rounded-t-xl`}>
+                {/* 상단 헤더 */}
+                <View style={tw`flex-row justify-between items-center`}>
+                  <Text style={tw`text-white text-lg font-bold`}>
+                    성별 변경
+                  </Text>
+                  {/* <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                    <Text style={tw`text-white text-lg`}>✕</Text>
+                  </TouchableOpacity> */}
+                </View>
+
+                {/* 정보 */}
+                <View style={tw`mt-4`}>
+                  {/* <Text style={tw`text-[pink] text-sm`}>11112 김민석</Text> */}
+                  <View style={tw`mt-4`}>
+                    {genders.map(gender => (
+                      <View
+                        key={gender}
+                        style={tw`flex-row justify-between mt-2 mx-2`}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            handleOnPressChangeGender(gender);
+                          }}
+                          style={tw`p-2`}>
+                          <Text
+                            style={[
+                              tw`text-sm`,
+                              gender === selectedGender
+                                ? tw`text-[${designatedColor.PINK}] font-bold` // userGender가 'FEMALE'이면 핑크색과 굵은 폰트
+                                : tw`text-white`, // 그 외에는 기본 흰색
+                            ]}>
+                            {gender}
+                          </Text>
+                        </TouchableOpacity>
+
+                        {gender === selectedGender ? (
+                          <CheckFilled2Icon width={16} height={16} />
+                        ) : (
+                          // <CheckIcon width={16} height={16} />
+                          <></>
+                        )}
+                      </View>
+                    ))}
+                  </View>
+                </View>
+
+                {/* 닫기 버튼 */}
+                <TouchableOpacity
+                  onPress={() => setIsModalVisible(false)}
+                  style={tw`mt-4 py-2 border-t border-gray-600`}>
+                  <Text style={tw`text-center text-white`}>닫기</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };

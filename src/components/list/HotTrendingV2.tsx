@@ -189,7 +189,9 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
   const itemsPerPage = 5; // 페이지 당 항목 수
   const selectedCharts = useChartV2Store(state => state.selectedCharts);
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentAgeGroup, setCurrentAgeGroup] = useState('ALL'); // 연령대
+  const userAgeGroup = useChartV2Store(state => state.userAgeGroup);
+  const selectedAgeGroup = useChartV2Store(state => state.selectedAgeGroup);
+  const [currentAgeGroup, setCurrentAgeGroup] = useState(selectedAgeGroup); // 연령대
   const userGender = useChartV2Store(state => state.userGender);
   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
 
@@ -201,6 +203,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
 
   // 페이지 변경 시 currentPage를 0으로 초기화
   useEffect(() => {
+    // setCurrentAgeGroup('ALL');
     setCurrentPage(0);
   }, [selectedCharts]);
 

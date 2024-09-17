@@ -10,6 +10,9 @@ interface ChartV2State {
     itemsPerPage: number,
   ) => void;
 
+  genders: string[];
+  ageGroups: string[];
+
   selectedCharts: ChartSong[];
   setSelectedCharts: (gender: string, ageGroup: string) => void;
 
@@ -41,6 +44,8 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
   selectedGender: '',
   selectedAgeGroup: '',
   time: '',
+  genders: [],
+  ageGroups: [],
 
   setCharts: (
     gender: string,
@@ -120,6 +125,14 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
             [ageGroup]: filledCharts,
           },
         },
+        genders: state.genders.includes(gender)
+          ? state.genders
+          : [...state.genders, gender],
+
+        // 중복 없이 ageGroups에 추가
+        ageGroups: state.ageGroups.includes(ageGroup)
+          ? state.ageGroups
+          : [...state.ageGroups, ageGroup],
       }));
     });
   },
