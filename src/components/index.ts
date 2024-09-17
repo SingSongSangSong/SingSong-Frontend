@@ -71,3 +71,4 @@ export * from './item/LeftActionItem';
 export * from './item/SearchSongItem';
 export * from './list/SearchSongsList';
 export * from './list/KeepSongsList';
+export * from './list/HotTrendingV2';

@@ -7,7 +7,7 @@ const getBlacklist = async () => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetBlacklistResponse>(
-      '/blacklist',
+      'v1/blacklist',
       {
         headers: {
           Authorization: `Bearer ${token}`,

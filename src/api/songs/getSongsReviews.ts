@@ -7,7 +7,7 @@ const getSongsReviews = async (songNumber: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<SongInfoReviewResponse>(
-      `/songs/${songNumber}/reviews`,
+      `v1/songs/${songNumber}/reviews`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

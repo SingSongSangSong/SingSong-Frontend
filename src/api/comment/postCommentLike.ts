@@ -7,7 +7,7 @@ const postCommentLike = async (commentId: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.post<PostCommentLikeResponse>(
-      `/comment/${commentId}/like`,
+      `v1/comment/${commentId}/like`,
       {},
       {
         headers: {

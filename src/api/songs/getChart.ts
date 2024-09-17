@@ -6,7 +6,7 @@ const getChart = async () => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.get<ChartResponse>('/chart', {
+    const response = await axiosInstance.get<ChartResponse>('v1/chart', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

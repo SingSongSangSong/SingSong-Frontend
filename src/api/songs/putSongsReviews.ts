@@ -11,7 +11,7 @@ const putSongReviews = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.put(
-      `/songs/${songNumber}/reviews`,
+      `v1/songs/${songNumber}/reviews`,
       {songReviewOptionId: songReviewOptionId},
       {
         headers: {

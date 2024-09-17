@@ -6,7 +6,7 @@ const deleteKeep = async (songNumbers: number[]) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.delete<KeepResponse>('/keep', {
+    const response = await axiosInstance.delete<KeepResponse>('v1/keep', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

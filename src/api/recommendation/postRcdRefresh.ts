@@ -9,7 +9,7 @@ const postRcdRefresh = async (tag: string) => {
     // console.log(token);
     // console.log(tag);
     const response = await axiosInstance.post<RcdRefreshResponse>(
-      '/recommend/refresh',
+      'v1/recommend/refresh',
       {tag: tag},
       {
         headers: {

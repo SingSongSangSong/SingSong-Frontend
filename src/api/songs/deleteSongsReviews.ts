@@ -6,7 +6,7 @@ const deleteSongsReviews = async (songNumber: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.delete(
-      `/songs/${songNumber}/reviews`,
+      `v1/songs/${songNumber}/reviews`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

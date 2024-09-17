@@ -1,0 +1,320 @@
+// import React, {useEffect, useState} from 'react';
+// import {
+//   View,
+//   ScrollView,
+//   Dimensions,
+//   Text,
+//   TouchableOpacity,
+// } from 'react-native';
+// import tw from 'twrnc';
+// import {HotTrendingItem} from '../item/HotTrendingItem';
+// import {designatedColor} from '../../constants';
+// import useChartV2Store from '../../store/useChartV2Store';
+// import {logSwipe} from '../../utils';
+
+// interface HotTrendingV2Props {
+//   onPressSongButton: (
+//     songNumber: number,
+//     songId: number,
+//     songName: string,
+//     singerName: string,
+//     isMr: boolean,
+//   ) => void;
+// }
+
+// const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
+//   const itemsPerPage = 5;
+//   const selectedCharts = useChartV2Store(state => state.selectedCharts);
+//   const [currentPage, setCurrentPage] = useState(0);
+//   const [currentAgeGroup, setCurrentAgeGroup] = useState('ALL');
+//   const userGender = useChartV2Store(state => state.userGender);
+//   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
+
+//   const screenWidth = Dimensions.get('window').width;
+
+//   const ageGroups = ['ALL', '10대', '20대', '30대', '40대 이상'];
+
+//   useEffect(() => {
+//     // 성별 변경 시 currentPage를 0으로 초기화
+//     setCurrentPage(0);
+//   }, [selectedCharts]);
+
+//   // 연령대 변경
+//   const handleScroll = event => {
+//     const contentOffsetX = event.nativeEvent.contentOffset.x;
+//     const index = Math.round(contentOffsetX / screenWidth);
+
+//     if (index !== currentPage) {
+//       setCurrentPage(index);
+
+//       // 연령대 변경
+//       const newAgeGroup = ageGroups[index] || 'ALL';
+//       setCurrentAgeGroup(newAgeGroup);
+//       setSelectedCharts(userGender, newAgeGroup);
+//       logSwipe('hot_trending', index);
+//     }
+//   };
+
+//   // 연령대 버튼을 클릭할 때 해당 연령대의 데이터를 보여줌
+//   const handleAgeGroupChange = (ageGroup: string) => {
+//     const index = ageGroups.indexOf(ageGroup);
+//     setCurrentPage(index);
+//     setCurrentAgeGroup(ageGroup);
+//     setSelectedCharts(userGender, ageGroup);
+//   };
+
+//   // 연령대 별 데이터를 5개씩 끊어서 보여줌
+//   const groupedCharts = [];
+//   for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
+//     groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
+//   }
+
+//   return (
+//     <View>
+//       {/* 연령대 인디케이터 */}
+//       <View
+//         style={tw`flex-row justify-between px-4 py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+//         {ageGroups.map((ageGroup, index) => (
+//           <TouchableOpacity
+//             key={index}
+//             onPress={() => handleAgeGroupChange(ageGroup)}>
+//             <Text
+//               style={[
+//                 tw`text-lg font-bold`,
+//                 {
+//                   color:
+//                     currentAgeGroup === ageGroup
+//                       ? designatedColor.PINK
+//                       : designatedColor.GRAY4,
+//                   borderBottomWidth: currentAgeGroup === ageGroup ? 2 : 0,
+//                   borderBottomColor: designatedColor.PINK,
+//                 },
+//               ]}>
+//               {ageGroup}
+//             </Text>
+//           </TouchableOpacity>
+//         ))}
+//       </View>
+
+//       <ScrollView
+//         horizontal
+//         pagingEnabled
+//         showsHorizontalScrollIndicator={false}
+//         style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
+//         onScroll={handleScroll}
+//         scrollEventThrottle={16}>
+//         {groupedCharts.map((group, index) => (
+//           <View
+//             key={`group-${index}`}
+//             style={[tw`w-full`, {width: screenWidth}]}>
+//             {group.map((item, idx) => (
+//               <View key={idx}>
+//                 {item.songId !== 0 ? (
+//                   <HotTrendingItem
+//                     artistName={item.artistName}
+//                     isMr={item.isMr}
+//                     isNew={item.isNew}
+//                     ranking={item.ranking}
+//                     rankingChange={item.rankingChange}
+//                     songName={item.songName}
+//                     songNumber={item.songNumber}
+//                     onPress={() => {
+//                       onPressSongButton(
+//                         item.songNumber,
+//                         item.songId,
+//                         item.songName,
+//                         item.artistName,
+//                         item.isMr,
+//                       );
+//                     }}
+//                   />
+//                 ) : (
+//                   <View
+//                     style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}] h-16`}
+//                   />
+//                 )}
+//               </View>
+//             ))}
+//           </View>
+//         ))}
+//       </ScrollView>
+
+//       {/* 페이지 인디케이터 */}
+//       {/* <View style={tw`flex-row justify-center my-4`}>
+//         {groupedCharts.map((_, index) => (
+//           <View
+//             key={index}
+//             style={[
+//               tw`h-2 w-2 mx-1 rounded-full`,
+//               {
+//                 backgroundColor:
+//                   index === currentPage
+//                     ? designatedColor.PINK
+//                     : designatedColor.GRAY4,
+//               },
+//             ]}
+//           />
+//         ))}
+//       </View> */}
+//     </View>
+//   );
+// };
+
+// export {HotTrendingV2};
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import tw from 'twrnc';
+import {HotTrendingItem} from '../item/HotTrendingItem';
+import {designatedColor} from '../../constants';
+import useChartV2Store from '../../store/useChartV2Store';
+import {logSwipe} from '../../utils';
+
+interface HotTrendingV2Props {
+  onPressSongButton: (
+    songNumber: number,
+    songId: number,
+    songName: string,
+    singerName: string,
+    isMr: boolean,
+  ) => void;
+}
+
+const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
+  const itemsPerPage = 5; // 페이지 당 항목 수
+  const selectedCharts = useChartV2Store(state => state.selectedCharts);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentAgeGroup, setCurrentAgeGroup] = useState('ALL'); // 연령대
+  const userGender = useChartV2Store(state => state.userGender);
+  const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
+
+  const screenWidth = Dimensions.get('window').width;
+  const itemWidth = screenWidth * 0.9; // 각 항목이 화면의 90% 차지
+  const itemSpacing = screenWidth * 0.05; // 좌우 여백
+
+  const ageGroups = ['ALL', '10', '20', '30', '40+'];
+
+  // 페이지 변경 시 currentPage를 0으로 초기화
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [selectedCharts]);
+
+  // 연령대 버튼 클릭 시 연령대 데이터 로드
+  const handleAgeGroupChange = (ageGroup: string) => {
+    const index = ageGroups.indexOf(ageGroup);
+    setCurrentPage(index);
+    setCurrentAgeGroup(ageGroup);
+    setSelectedCharts(userGender, ageGroup);
+  };
+
+  // 연령대 별 데이터를 5개씩 끊어서 보여줌
+  const groupedCharts = [];
+  for (let i = 0; i < selectedCharts.length; i += itemsPerPage) {
+    groupedCharts.push(selectedCharts.slice(i, i + itemsPerPage));
+  }
+
+  return (
+    <View>
+      {/* 연령대 인디케이터 */}
+      <View
+        style={tw`flex-row justify-between px-4 py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        {ageGroups.map((ageGroup, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleAgeGroupChange(ageGroup)}>
+            <Text
+              style={[
+                tw`text-lg font-bold`,
+                {
+                  color:
+                    currentAgeGroup === ageGroup
+                      ? designatedColor.PINK
+                      : designatedColor.GRAY4,
+                  borderBottomWidth: currentAgeGroup === ageGroup ? 2 : 0,
+                  borderBottomColor: designatedColor.PINK,
+                },
+              ]}>
+              {ageGroup}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
+        snapToAlignment="start"
+        contentContainerStyle={{
+          paddingRight: itemSpacing, // 오른쪽에만 여백을 추가
+        }}
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        {groupedCharts.length > 0 ? (
+          groupedCharts.map((group, index) => (
+            <View
+              key={`group-${index}`}
+              style={[
+                tw`mr-[${itemSpacing / 2}px]`, // 오른쪽 여백만 설정
+                {width: itemWidth}, // 항목 너비를 화면보다 조금 작게 설정
+              ]}>
+              {group.length > 0 ? (
+                group.map((item, idx) => (
+                  <View key={idx}>
+                    {item.songId !== 0 ? (
+                      <HotTrendingItem
+                        artistName={item.artistName}
+                        isMr={item.isMr}
+                        isNew={item.isNew}
+                        ranking={item.ranking}
+                        rankingChange={item.rankingChange}
+                        songName={item.songName}
+                        songNumber={item.songNumber}
+                        onPress={() => {
+                          onPressSongButton(
+                            item.songNumber,
+                            item.songId,
+                            item.songName,
+                            item.artistName,
+                            item.isMr,
+                          );
+                        }}
+                      />
+                    ) : (
+                      <View
+                        style={tw`flex-row items-center p-2 mx-2 my-1 border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}] h-16`}
+                      />
+                    )}
+                  </View>
+                ))
+              ) : (
+                <View
+                  style={[
+                    tw`flex-row justify-center items-center`,
+                    {width: itemWidth, height: 200},
+                  ]}>
+                  <Text style={tw`text-white`}>아직 데이터가 없어요</Text>
+                </View>
+              )}
+            </View>
+          ))
+        ) : (
+          <View
+            style={[
+              tw`flex-row justify-center items-center`,
+              {width: itemWidth, height: 200},
+            ]}>
+            <Text style={tw`text-white`}>아직 데이터가 없어요</Text>
+          </View>
+        )}
+      </ScrollView>
+    </View>
+  );
+};
+
+export {HotTrendingV2};

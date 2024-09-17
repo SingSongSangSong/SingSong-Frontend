@@ -13,7 +13,7 @@ const postMemberLogout = async () => {
     removeSecureValue(REFRESH_TOKEN);
 
     const response = await axiosInstance.post<DefaultResponse>(
-      '/member/logout',
+      'v1/member/logout',
       {
         refreshToken: refreshToken,
       },

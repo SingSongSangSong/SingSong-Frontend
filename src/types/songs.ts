@@ -178,6 +178,47 @@ interface ChartResponse {
   data: {gender: string; female: Chart[]; male: Chart[]; time: string};
 }
 
+interface ChartSong {
+  album: string;
+  artistName: string;
+  isLive: boolean;
+  isMr: boolean;
+  isNew: boolean;
+  ranking: number;
+  rankingChange: number;
+  songId: number;
+  songName: string;
+  songNumber: number;
+  totalScore: number;
+}
+
+// interface ChartV2 {
+//   ageGroup: string;
+//   charts: {
+//     chartKey: string;
+//     songs: ChartSong[];
+//   }[];
+//   gender: string;
+//   time: string;
+//   userKey: string;
+// }
+
+interface ChartV2 {
+  chartKey: string;
+  songs: ChartSong[];
+}
+
+interface ChartV2Response {
+  data: {
+    time: string;
+    gender: string;
+    ageGroup: string;
+    userKey: string;
+    charts: ChartV2[];
+  };
+  message: string;
+}
+
 interface SongParams {
   songId: number;
   songNumber: number;
@@ -228,4 +269,7 @@ export type {
   GetDetailSearchSongResponse,
   DetailSearchSong,
   GetRcdRecommendationResponse,
+  ChartV2,
+  ChartV2Response,
+  ChartSong,
 };

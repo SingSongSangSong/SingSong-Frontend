@@ -7,7 +7,7 @@ const getSearch = async (searchKeyword: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetSearchSongResponse>(
-      `/search/${searchKeyword}`,
+      `v1/search/${searchKeyword}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

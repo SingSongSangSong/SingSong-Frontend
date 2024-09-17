@@ -7,7 +7,7 @@ const getComment = async (songId: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetCommentResponse>(
-      `/comment/${songId}`,
+      `v1/comment/${songId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

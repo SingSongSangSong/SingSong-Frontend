@@ -7,7 +7,7 @@ const postMemberReissue = async (accessToken: string, refreshToken: string) => {
     // console.log('refreshToken:', refreshToken);
 
     const response = await axiosInstance.post<LoginResponse>(
-      '/member/reissue',
+      'v1/member/reissue',
       {
         accessToken: accessToken,
         refreshToken: refreshToken,

@@ -16,7 +16,7 @@ const postMemberWithdraw = async () => {
     deletePermissionValue();
 
     const response = await axiosInstance.post<DefaultResponse>(
-      '/member/withdraw',
+      'v1/member/withdraw',
       {
         refreshToken: refreshToken,
       },

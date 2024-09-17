@@ -12,12 +12,15 @@ const postMemberLogin = async (
     console.log('gender', gender);
     console.log('idToken:', idToken);
     console.log('provider:', provider);
-    const response = await axiosInstance.post<LoginResponse>('/member/login', {
-      birthYear: birthYear,
-      gender: gender,
-      idToken: idToken,
-      provider: provider,
-    });
+    const response = await axiosInstance.post<LoginResponse>(
+      'v1/member/login',
+      {
+        birthYear: birthYear,
+        gender: gender,
+        idToken: idToken,
+        provider: provider,
+      },
+    );
     // console.log('postLogin:', response.data);
     return response.data;
   } catch (error) {

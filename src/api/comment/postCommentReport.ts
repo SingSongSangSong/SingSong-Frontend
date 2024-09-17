@@ -11,7 +11,7 @@ const postCommentReport = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.post<PostCommentReportResponse>(
-      '/comment/report',
+      'v1/comment/report',
       {
         commentId: commentId,
         reason: reason,

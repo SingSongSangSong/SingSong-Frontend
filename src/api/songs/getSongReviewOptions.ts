@@ -3,7 +3,7 @@ import axiosInstance from '../axiosIns';
 
 const getSongReviewOptions = async () => {
   const response = await axiosInstance.get<GetSongReviewOptionsResponse>(
-    '/song-review-options',
+    'v1/song-review-options',
   );
   // console.log('data for tag response', response.data);
   return response.data;

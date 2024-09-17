@@ -4,7 +4,7 @@ import axiosInstance from '../axiosIns';
 const postRcdSongs = async (songs: number[]) => {
   try {
     const response = await axiosInstance.post<RcdSongResponse>(
-      '/recommend/songs',
+      'v1/recommend/songs',
       {
         songs: songs,
       },

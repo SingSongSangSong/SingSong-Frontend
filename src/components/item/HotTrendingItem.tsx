@@ -9,8 +9,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type HotTrendingItemProps = {
   artistName: string;
-  isMr: number;
-  isNew: string;
+  isMr: boolean;
+  isNew: boolean;
   ranking: number;
   rankingChange: number;
   songName: string;

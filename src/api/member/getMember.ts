@@ -6,7 +6,7 @@ const getMember = async () => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.get<MemberInfoResponse>('/member', {
+    const response = await axiosInstance.get<MemberInfoResponse>('v1/member', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

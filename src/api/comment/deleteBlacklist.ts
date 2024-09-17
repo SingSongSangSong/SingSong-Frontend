@@ -5,7 +5,7 @@ const deleteBlacklist = async (memberIds: number[]) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.delete('/blacklist', {
+    const response = await axiosInstance.delete('v1/blacklist', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const getSongsRelated = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<SongInfoRelatedResponse>(
-      `/songs/${songNumber}/related`,
+      `v1/songs/${songNumber}/related`,
       {
         params: {page: page, size: size},
         headers: {

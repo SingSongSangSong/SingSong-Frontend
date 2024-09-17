@@ -7,7 +7,7 @@ const postBlacklist = async (memberId: number) => {
     const token = await getAccessToken();
 
     const response = await axiosInstance.post(
-      '/blacklist',
+      'v1/blacklist',
       {
         memberId: memberId,
       },

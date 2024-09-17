@@ -1,23 +1,23 @@
 import TokenStore from '../../store/TokenStore';
-import {KeepResponse} from '../../types';
+import {ChartV2Response} from '../../types';
 import axiosInstance from '../axiosIns';
 
-const getKeep = async () => {
+const getV2Chart = async () => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    const response = await axiosInstance.get<KeepResponse>('v1/keep', {
+    const response = await axiosInstance.get<ChartV2Response>('v2/chart', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
-    // console.log('data for getKeep response', response.data);
+    console.log('data for getChart response', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching getKeep:', error);
+    console.error('Error fetching getChart:', error);
     throw error;
   }
 };
 
-export default getKeep;
+export default getV2Chart;

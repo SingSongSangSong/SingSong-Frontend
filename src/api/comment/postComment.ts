@@ -13,7 +13,7 @@ const postComment = async (
     const token = await getAccessToken();
     // console.log(content, isRecomment, parentCommentId, songId);
     const response = await axiosInstance.post<PostCommentResponse>(
-      '/comment',
+      'v1/comment',
       {
         content: content,
         isRecomment: isRecomment,
