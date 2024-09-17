@@ -161,7 +161,7 @@
 // };
 
 // export {HotTrendingV2};
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   ScrollView,
@@ -173,7 +173,7 @@ import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
 import {designatedColor} from '../../constants';
 import useChartV2Store from '../../store/useChartV2Store';
-import {logSwipe} from '../../utils';
+// import {logSwipe} from '../../utils';
 import ErrorIcon from '../../assets/svg/error.svg';
 
 interface HotTrendingV2Props {
@@ -190,8 +190,8 @@ interface HotTrendingV2Props {
 const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
   const itemsPerPage = 5; // 페이지 당 항목 수
   const selectedCharts = useChartV2Store(state => state.selectedCharts);
-  const [currentPage, setCurrentPage] = useState(0);
-  const userAgeGroup = useChartV2Store(state => state.userAgeGroup);
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const userAgeGroup = useChartV2Store(state => state.userAgeGroup);
   const selectedAgeGroup = useChartV2Store(state => state.selectedAgeGroup);
   const [currentAgeGroup, setCurrentAgeGroup] = useState(selectedAgeGroup); // 연령대
   const userGender = useChartV2Store(state => state.userGender);
@@ -204,10 +204,11 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
   const ageGroups = ['ALL', '10', '20', '30', '40+'];
 
   // 페이지 변경 시 currentPage를 0으로 초기화
-  useEffect(() => {
-    // setCurrentAgeGroup('ALL');
-    setCurrentPage(0);
-  }, [selectedCharts]);
+  // useEffect(() => {
+  //   // setCurrentAgeGroup('ALL');
+  //   setCurrentPage(0);
+  //   console.log('change!!');
+  // }, [currentAgeGroup]);
 
   const showAgeGroup = (ageGroup: string) => {
     switch (ageGroup) {
@@ -228,8 +229,8 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
 
   // 연령대 버튼 클릭 시 연령대 데이터 로드
   const handleAgeGroupChange = (ageGroup: string) => {
-    const index = ageGroups.indexOf(ageGroup);
-    setCurrentPage(index);
+    // const index = ageGroups.indexOf(ageGroup);
+    // setCurrentPage(index);
     setCurrentAgeGroup(ageGroup);
     setSelectedCharts(userGender, ageGroup);
   };
@@ -285,6 +286,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
         contentContainerStyle={{
           paddingRight: itemSpacing, // 오른쪽에만 여백을 추가
         }}
+        key={currentAgeGroup}
         style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         {groupedCharts.length > 0 ? (
           groupedCharts.map((group, index) => (
