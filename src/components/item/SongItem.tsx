@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import tw from 'twrnc';
 import {useSharedValue} from 'react-native-reanimated';
@@ -12,6 +12,7 @@ import CommentIcon from '../../assets/svg/commentGray.svg';
 import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TextButton} from '..';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface SongItemProps {
   songId: number;
@@ -54,6 +55,11 @@ SongItemProps) => {
   const [keepCounts, setKeepCounts] = useState<number>(keepCount);
 
   const dragX = useSharedValue(0);
+  useFocusEffect(
+    useCallback(() => {
+      setIsPressed(false);
+    }, []),
+  );
 
   const handleOnKeepPress = () => {
     if (isKeepPressed) {
