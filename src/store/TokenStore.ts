@@ -132,8 +132,23 @@ const TokenStore = () => {
     AsyncStorage.removeItem(key);
   }
 
+  // const isExpiredToken = (token: string) => {
+  //   try {
+  //     const decoded = jwtDecode<{exp: number}>(token);
+  //     const currentTime = Date.now() / 1000;
+  //     return decoded.exp < currentTime;
+  //   } catch (error) {
+  //     console.error('Invalid token:', error);
+  //     return true;
+  //   }
+  // };
   const isExpiredToken = (token: string) => {
     try {
+      // console.log('Token received for decoding:', token); // 토큰이 올바른지 출력
+      // if (token.split('.').length !== 3) {
+      //   throw new Error('Invalid token format');
+      // }
+
       const decoded = jwtDecode<{exp: number}>(token);
       const currentTime = Date.now() / 1000;
       return decoded.exp < currentTime;

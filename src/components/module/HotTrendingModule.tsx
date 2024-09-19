@@ -92,9 +92,17 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
     if (tempCharts) {
       setInitCharts(tempCharts.charts, 5);
       setUserAgeGroup(tempCharts.ageGroup);
+      console.log('ageGroup:', tempCharts.ageGroup);
       setTime(tempCharts.time);
-      setUserGender(tempCharts.gender);
-      setSelectedCharts(tempCharts.gender, tempCharts.ageGroup);
+      if (tempCharts.gender === 'Unknown') {
+        setSelectedGender('MIXED');
+        setUserGender('MIXED');
+        setSelectedCharts('MIXED', tempCharts.ageGroup);
+      } else {
+        setSelectedGender(tempCharts.gender);
+        setUserGender(tempCharts.gender);
+        setSelectedCharts(tempCharts.gender, tempCharts.ageGroup);
+      }
     }
   }, [tempCharts]);
 

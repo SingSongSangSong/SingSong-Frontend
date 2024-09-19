@@ -15,13 +15,20 @@ import React from 'react';
 import {LargeButton} from '../../components';
 import KaKaoIcon from '../../assets/svg/kakao.svg';
 import tw from 'twrnc';
-import {appStackNavigations, designatedColor} from '../../constants';
+import {
+  ACCESS_TOKEN,
+  appStackNavigations,
+  designatedColor,
+  REFRESH_TOKEN,
+} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
 import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
-import GuestStore from '../../store/GuestStore';
+// import GuestStore from '../../store/GuestStore';
 import CustomText from '../../components/text/CustomText';
+import postMemberLogin from '../../api/member/postMemberLogin';
+import TokenStore from '../../store/TokenStore';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 type LoginScreenProps = StackScreenProps<
@@ -32,7 +39,8 @@ type LoginScreenProps = StackScreenProps<
 function LoginScreen({navigation}: LoginScreenProps) {
   const loginHandler = useLogin();
   // console.log('prvalue', loginHandler.prValue);
-  const setIsGuest = GuestStore(state => state.setIsGuest);
+  // const setIsGuest = GuestStore(state => state.setIsGuest);
+  const {setSecureValue} = TokenStore();
 
   const handleKakaoButton = async () => {
     try {
@@ -76,8 +84,12 @@ function LoginScreen({navigation}: LoginScreenProps) {
     }
   };
 
-  const handleGuestButton = () => {
-    setIsGuest(true);
+  const handleGuestButton = async () => {
+    // setIsGuest(true);
+    // navigation.replace(appStackNavigations.MAIN);
+    const data = await postMemberLogin('', 'Anonymous');
+    setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+    setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
     navigation.replace(appStackNavigations.MAIN);
   };
 
@@ -124,16 +136,16 @@ function LoginScreen({navigation}: LoginScreenProps) {
           />
         </View>
 
-        {/* <LargeButton
-          title="Guest"
+        <LargeButton
+          title="GUEST"
           onPress={handleGuestButton}
-          color="#C9CCD5"
-        /> */}
+          color="#D2E0FB"
+        />
       </View>
       {loginHandler.isLoggedProcess && (
         <View
           style={tw`absolute top-0 left-0 right-0 bottom-0 justify-center items-center`}>
-          <ActivityIndicator size="large" color="#FFFFFF" />
+          <ActivityIndicator size="large" color="#D2E0FB" />
         </View>
       )}
 

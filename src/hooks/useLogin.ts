@@ -168,6 +168,10 @@ const useLogin = () => {
     }
   };
 
+  // const handleGuestLogin = async () => {
+  //   const data = await postMemberLogin();
+  // }
+
   //모달에서 완료 버튼 클릭
   const _handleLogin = async () => {
     if (idToken && birthYear != '' && gender != '' && birthYear.length == 4) {

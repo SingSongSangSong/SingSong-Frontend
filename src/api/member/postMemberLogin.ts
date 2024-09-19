@@ -21,7 +21,7 @@ const postMemberLogin = async (
         provider: provider,
       },
     );
-    // console.log('postLogin:', response.data);
+    console.log('postLogin:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postLogin:', error);
