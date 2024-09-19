@@ -25,7 +25,7 @@ import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
 import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
-// import GuestStore from '../../store/GuestStore';
+import GuestStore from '../../store/GuestStore';
 import CustomText from '../../components/text/CustomText';
 import postMemberLogin from '../../api/member/postMemberLogin';
 import TokenStore from '../../store/TokenStore';
@@ -40,6 +40,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const loginHandler = useLogin();
   // console.log('prvalue', loginHandler.prValue);
   // const setIsGuest = GuestStore(state => state.setIsGuest);
+  const {setGuestState} = GuestStore();
   const {setSecureValue} = TokenStore();
 
   const handleKakaoButton = async () => {
@@ -85,7 +86,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
   };
 
   const handleGuestButton = async () => {
-    // setIsGuest(true);
+    setGuestState(true);
     // navigation.replace(appStackNavigations.MAIN);
     loginHandler.setIsLoggedProcess(true);
     const data = await postMemberLogin('', 'Anonymous');

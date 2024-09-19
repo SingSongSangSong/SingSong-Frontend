@@ -75,6 +75,8 @@ const useSetting = () => {
     provider,
     handleKakaoLogout,
     handleWithdraw,
+    clearMemberInfo,
+    clearProvider,
   };
 };
 

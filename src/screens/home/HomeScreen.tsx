@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   ActivityIndicator,
@@ -38,6 +38,7 @@ import {CommonActions} from '@react-navigation/native';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
 import TokenStore from '../../store/TokenStore';
+import useMemberStore from '../../store/useMemberStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -47,9 +48,23 @@ type HomeScreenProps = StackScreenProps<
 const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
-  const isGuest = GuestStore(state => state.isGuest);
+  // const isGuest = GuestStore(state => state.isGuest);
+  const {setGuestState, getGuestState} = GuestStore();
+  // const isGuest = getGuestState();
   const screen = Dimensions.get('window');
   const {removeSecureValue} = TokenStore();
+  const [isGuest, setIsGuest] = useState();
+  const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
+  const clearProvider = useMemberStore(state => state.clearProvider);
+
+  useEffect(() => {
+    initIsGuest();
+  });
+
+  const initIsGuest = async () => {
+    const tempIsGuest = await getGuestState();
+    setIsGuest(tempIsGuest);
+  };
 
   const handleOnLayout = (event: LayoutChangeEvent) => {
     const {height} = event.nativeEvent.layout;
@@ -100,9 +115,12 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     console.log('AI 추천 전체보기 버튼 클릭');
   };
 
-  const handleOnPressLoginButton = () => {
+  const handleOnPressLoginButton = async () => {
     removeSecureValue(ACCESS_TOKEN);
     removeSecureValue(REFRESH_TOKEN);
+    await setGuestState(false);
+    clearMemberInfo();
+    clearProvider();
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -168,43 +186,40 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
         <View style={tw`justify-between flex-row p-3 items-center`}>
           <LogoIcon />
           <View style={tw`flex-row`}>
-            {isGuest ? (
-              <View style={tw`py-6`} />
-            ) : (
-              <>
-                <View style={tw`mr-2`}>
-                  <IconButton
-                    Icon={SearchIcon}
-                    onPress={handleOnPressSearch}
-                    size={28}
-                  />
-                </View>
+            <View style={tw`mr-2`}>
+              <IconButton
+                Icon={SearchIcon}
+                onPress={handleOnPressSearch}
+                size={28}
+              />
+            </View>
 
-                <IconButton
-                  Icon={SettingsIcon}
-                  onPress={handleOnPressSetting}
-                  size={28}
-                />
-              </>
-            )}
+            <IconButton
+              Icon={SettingsIcon}
+              onPress={handleOnPressSetting}
+              size={28}
+            />
           </View>
         </View>
-        <View style={tw`bg-[${designatedColor.GRAY5}] p-2 items-center py-4`}>
-          <Text style={tw`text-white`}>
-            로그인 후 사용하시면 더욱 멋진 경험을 할 수 있습니다
-          </Text>
-          <TouchableOpacity
-            onPress={handleOnPressLoginButton}
-            style={tw`mt-2 p-2 border-[1px] border-[${designatedColor.WHITE}] rounded-full px-6`}
-            activeOpacity={0.8}>
-            <View style={tw`flex-row items-center`}>
-              <CustomText style={tw`text-[${designatedColor.WHITE}] font-bold`}>
-                로그인하러 가기
-              </CustomText>
-              <ArrowRightIcon width={16} height={16} />
-            </View>
-          </TouchableOpacity>
-        </View>
+        {isGuest && (
+          <View style={tw`bg-[${designatedColor.GRAY5}] p-2 items-center py-4`}>
+            <Text style={tw`text-white`}>
+              로그인 후 사용하시면 더욱 멋진 경험을 할 수 있습니다
+            </Text>
+            <TouchableOpacity
+              onPress={handleOnPressLoginButton}
+              style={tw`mt-2 p-2 border-[1px] border-[${designatedColor.WHITE}] rounded-full px-6`}
+              activeOpacity={0.8}>
+              <View style={tw`flex-row items-center`}>
+                <CustomText
+                  style={tw`text-[${designatedColor.WHITE}] font-bold`}>
+                  로그인하러 가기
+                </CustomText>
+                <ArrowRightIcon width={16} height={16} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>

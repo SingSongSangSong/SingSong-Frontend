@@ -1,24 +1,32 @@
-import {create} from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface GuestState {
-  isGuest: boolean;
-  setIsGuest: (isGuest: boolean) => void;
-}
+const GuestStore = () => {
+  const setGuestState = async (isGuest: boolean) => {
+    try {
+      await AsyncStorage.setItem('isGuest', JSON.stringify(isGuest));
+    } catch (error) {
+      console.error('Error saving guest state:', error);
+    }
+  };
 
-const GuestStore = create<GuestState>(set => {
-  const initState = {
-    isGuest: false,
+  // Function to get guest state
+  const getGuestState = async () => {
+    try {
+      const value = await AsyncStorage.getItem('isGuest');
+      if (value !== null) {
+        return JSON.parse(value);
+      }
+      return false; // Default value if not set
+    } catch (error) {
+      console.error('Error retrieving guest state:', error);
+      return false; // Default value on error
+    }
   };
 
   return {
-    ...initState,
-
-    setIsGuest: (isGuest: boolean) => {
-      set(() => ({
-        isGuest: isGuest,
-      }));
-    },
+    setGuestState,
+    getGuestState,
   };
-});
+};
 
 export default GuestStore;

@@ -12,7 +12,7 @@ const getMember = async () => {
         'Content-Type': 'application/json',
       },
     });
-    // console.log('data for recommend member info response', response.data);
+    // console.log('data for get member info response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching member info:', error);

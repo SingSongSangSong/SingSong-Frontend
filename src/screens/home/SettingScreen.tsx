@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import {
+  ACCESS_TOKEN,
   appStackNavigations,
   designatedColor,
   homeStackNavigations,
+  REFRESH_TOKEN,
 } from '../../constants';
 import {
   Image,
@@ -22,6 +24,8 @@ import useSetting from '../../hooks/useSetting';
 import AppleIcon from '../../assets/svg/appleWhiteLogo.svg';
 import CustomText from '../../components/text/CustomText';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import GuestStore from '../../store/GuestStore';
+import TokenStore from '../../store/TokenStore';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -32,6 +36,20 @@ function SettingScreen({navigation}: SettingScreenProps) {
   const settingHandler = useSetting();
   const [isWithdraw, setIsWithdraw] = useState(false);
   const currentVersion = VersionStore(state => state.currentVersion);
+  // const isGuest = GuestStore(state => state.isGuest);
+  const {setGuestState, getGuestState} = GuestStore();
+  // const isGuest = getGuestState();
+  const {removeSecureValue} = TokenStore();
+  const [isGuest, setIsGuest] = useState();
+
+  useEffect(() => {
+    initIsGuest();
+  }, []);
+
+  const initIsGuest = async () => {
+    const tempIsGuest = await getGuestState();
+    setIsGuest(tempIsGuest);
+  };
 
   const handleLogoutButton = async () => {
     await settingHandler.handleKakaoLogout();
@@ -63,6 +81,20 @@ function SettingScreen({navigation}: SettingScreenProps) {
     });
   };
 
+  const handleOnPressLoginButton = async () => {
+    removeSecureValue(ACCESS_TOKEN);
+    removeSecureValue(REFRESH_TOKEN);
+    settingHandler.clearMemberInfo();
+    settingHandler.clearProvider();
+    await setGuestState(false);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: appStackNavigations.LOGIN}],
+      }),
+    );
+  };
+
   return (
     <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-1`}>
@@ -70,33 +102,48 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <CustomText style={tw`text-[${designatedColor.DARK_GRAY}]`}>
             내 계정
           </CustomText>
-          <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
-            <View style={tw`flex-row items-center`}>
-              {settingHandler.provider == 'KAKAO_KEY' ? (
-                <Image
-                  source={require('../../assets/png/kakaotalk.png')}
-                  style={tw`w-4 h-4`}
-                />
-              ) : (
-                // <Icon name="apple" size={30} color="#000" />
-                <AppleIcon width={32} height={32} />
-              )}
-
-              <CustomText style={tw`text-white ml-2`}>
-                {settingHandler.provider == 'KAKAO_KEY'
-                  ? settingHandler.memberInfo?.email
-                  : 'Apple'}
-              </CustomText>
-            </View>
+          {isGuest ? (
             <TouchableOpacity
-              onPress={handleLogoutButton}
-              style={tw`py-2 px-3 border rounded-full border-[${designatedColor.GRAY3}]`}
-              activeOpacity={0.8}>
-              <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
-                로그아웃
-              </CustomText>
+              onPress={handleOnPressLoginButton}
+              style={tw`flex-row justify-between items-center mt-4 p-2`}>
+              <CustomText style={tw`text-white`}>Guest</CustomText>
+              <View style={tw`flex-row items-center`}>
+                <CustomText style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
+                  로그인
+                </CustomText>
+                <ArrowRightIcon width={20} height={20} />
+              </View>
             </TouchableOpacity>
-          </View>
+          ) : (
+            <View style={tw`flex-row justify-between items-center mt-4 ml-2`}>
+              <View style={tw`flex-row items-center`}>
+                {settingHandler.provider == 'KAKAO_KEY' ? (
+                  <Image
+                    source={require('../../assets/png/kakaotalk.png')}
+                    style={tw`w-4 h-4`}
+                  />
+                ) : (
+                  // <Icon name="apple" size={30} color="#000" />
+                  <AppleIcon width={32} height={32} />
+                )}
+
+                <CustomText style={tw`text-white ml-2`}>
+                  {settingHandler.provider == 'KAKAO_KEY'
+                    ? settingHandler.memberInfo?.email
+                    : 'Apple'}
+                </CustomText>
+              </View>
+              <TouchableOpacity
+                onPress={handleLogoutButton}
+                style={tw`py-2 px-3 border rounded-full border-[${designatedColor.GRAY3}]`}
+                activeOpacity={0.8}>
+                <CustomText
+                  style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
+                  로그아웃
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+          )}
           <TouchableOpacity
             style={tw`p-2 mt-3`}
             activeOpacity={0.8}
@@ -105,8 +152,10 @@ function SettingScreen({navigation}: SettingScreenProps) {
               <CustomText style={tw`text-white`}>닉네임</CustomText>
               <View style={tw`flex-row items-center`}>
                 <CustomText style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
-                  {settingHandler.memberInfo?.nickname ||
-                    '닉네임을 설정해주세요'}
+                  {settingHandler.memberInfo?.nickname &&
+                  settingHandler.memberInfo?.nickname !== 'Anonymous'
+                    ? settingHandler.memberInfo.nickname
+                    : '닉네임을 설정해주세요'}
                 </CustomText>
                 <ArrowRightIcon width={20} height={20} />
               </View>
