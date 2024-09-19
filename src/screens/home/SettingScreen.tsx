@@ -21,6 +21,7 @@ import VersionStore from '../../store/VersionStore';
 import useSetting from '../../hooks/useSetting';
 import AppleIcon from '../../assets/svg/appleWhiteLogo.svg';
 import CustomText from '../../components/text/CustomText';
+import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -54,6 +55,12 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const handleOnBlacklistButton = () => {
     navigation.push(homeStackNavigations.BLACKLIST);
+  };
+
+  const handleOnPressNicknameChange = () => {
+    navigation.push(homeStackNavigations.NICKNAME_CHANGE, {
+      nickname: settingHandler.memberInfo?.nickname || '',
+    });
   };
 
   return (
@@ -90,6 +97,21 @@ function SettingScreen({navigation}: SettingScreenProps) {
               </CustomText>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={tw`p-2 mt-3`}
+            activeOpacity={0.8}
+            onPress={handleOnPressNicknameChange}>
+            <View style={tw`w-full justify-between flex-row items-center`}>
+              <CustomText style={tw`text-white`}>닉네임</CustomText>
+              <View style={tw`flex-row items-center`}>
+                <CustomText style={tw`text-[${designatedColor.GRAY3}] mr-2`}>
+                  {settingHandler.memberInfo?.nickname ||
+                    '닉네임을 설정해주세요'}
+                </CustomText>
+                <ArrowRightIcon width={20} height={20} />
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={tw`m-4`}>
           <CustomText style={tw`text-[${designatedColor.DARK_GRAY}]`}>
@@ -98,16 +120,22 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
               <TouchableOpacity
-                style={tw`p-2`}
+                style={tw`p-2 mb-2`}
                 activeOpacity={0.8}
                 onPress={handleOnBlacklistButton}>
-                <CustomText style={tw`text-white`}>댓글 차단 관리</CustomText>
+                <View style={tw`w-full justify-between flex-row`}>
+                  <CustomText style={tw`text-white`}>댓글 차단 관리</CustomText>
+                  <ArrowRightIcon width={20} height={20} />
+                </View>
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`p-2`}
                 activeOpacity={0.8}
                 onPress={() => setIsWithdraw(true)}>
-                <CustomText style={tw`text-white`}>회원 탈퇴</CustomText>
+                <View style={tw`w-full justify-between flex-row`}>
+                  <CustomText style={tw`text-white`}>회원 탈퇴</CustomText>
+                  <ArrowRightIcon width={20} height={20} />
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -119,7 +147,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
               <View
-                style={tw`w-full flex-row justify-between items-center p-2`}>
+                style={tw`w-full flex-row justify-between items-center p-2 mb-2`}>
                 <CustomText style={tw`text-white`}>앱 버전 정보</CustomText>
                 <CustomText style={tw`text-[${designatedColor.GRAY3}]`}>
                   {currentVersion}
@@ -133,7 +161,10 @@ function SettingScreen({navigation}: SettingScreenProps) {
                     'https://piquant-leek-b2c.notion.site/3d562645e4e74abdbd8fd470541bf0a9?pvs=4',
                   );
                 }}>
-                <CustomText style={tw`text-white`}>서비스 정책</CustomText>
+                <View style={tw`w-full justify-between flex-row`}>
+                  <CustomText style={tw`text-white`}>서비스 정책</CustomText>
+                  <ArrowRightIcon width={20} height={20} />
+                </View>
               </TouchableOpacity>
             </View>
           </View>

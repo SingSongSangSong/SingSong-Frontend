@@ -46,6 +46,7 @@ type HomeStackParamList = {
   [homeStackNavigations.BLACKLIST]: undefined;
   [homeStackNavigations.SEARCH]: undefined;
   [homeStackNavigations.AI_RECOMMENDATION]: undefined;
+  [homeStackNavigations.NICKNAME_CHANGE]: {nickname: string};
 };
 
 type KeepStackParamList = {

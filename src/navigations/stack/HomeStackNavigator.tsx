@@ -22,6 +22,7 @@ import SearchScreen from '../../screens/search/SearchScreen';
 import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import {Platform} from 'react-native';
 import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendationScreen';
+import NicknameChangeScreen from '../../screens/home/NicknameChangeScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -205,6 +206,24 @@ function HomeStackNavigator() {
           animationEnabled: false,
           headerShown: true,
           headerTitle: '댓글 차단 관리',
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.NICKNAME_CHANGE}
+        component={NicknameChangeScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerShown: true,
+          headerTitle: '닉네임 변경',
           headerLeft: () => (
             <IconButton
               onPress={() => {

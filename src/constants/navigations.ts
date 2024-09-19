@@ -32,6 +32,7 @@ const homeStackNavigations = {
   BLACKLIST: '_Blacklist',
   SEARCH: '_Search',
   AI_RECOMMENDATION: '_AiRecommendation',
+  NICKNAME_CHANGE: '_NicknameChange',
 } as const;
 
 const keepStackNavigations = {
