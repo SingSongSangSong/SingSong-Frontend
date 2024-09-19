@@ -18,6 +18,7 @@ type HotTrendingItemProps = {
   songNumber: number;
   isLive: boolean;
   album: string;
+  disabled?: boolean;
   onPress?: () => void;
 };
 
@@ -31,13 +32,15 @@ const HotTrendingItem = ({
   songNumber,
   isLive,
   album,
+  disabled = true,
   onPress,
 }: HotTrendingItemProps) => {
   // console.log(isMr);
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.9}
+      activeOpacity={1.0}
+      disabled={disabled}
       // border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}]
       //
       style={tw`flex-row items-center p-2 mx-2 my-1 border-b-[0.5px] border-[${designatedColor.GRAY5}] rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}]`}>

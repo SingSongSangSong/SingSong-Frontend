@@ -197,6 +197,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
   const [currentAgeGroup, setCurrentAgeGroup] = useState(selectedAgeGroup); // 연령대
   const userGender = useChartV2Store(state => state.userGender);
   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
+  const [isScrolling, setIsScrolling] = useState(false); // 스크롤 여부를 저장하는 상태
 
   const screenWidth = Dimensions.get('window').width;
   const itemWidth = screenWidth * 0.9; // 각 항목이 화면의 90% 차지
@@ -287,6 +288,8 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
         contentContainerStyle={{
           paddingRight: itemSpacing, // 오른쪽에만 여백을 추가
         }}
+        onScrollBeginDrag={() => setIsScrolling(true)} // 스크롤 시작 시 스크롤 상태 활성화
+        onScrollEndDrag={() => setIsScrolling(false)} // 스크롤 종료 시 스크롤 상태 비활성화
         key={currentAgeGroup}
         style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         {groupedCharts.length > 0 ? (
@@ -311,6 +314,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                         rankingChange={item.rankingChange}
                         songName={item.songName}
                         songNumber={item.songNumber}
+                        disabled={isScrolling}
                         onPress={() => {
                           onPressSongButton(
                             item.songNumber,
