@@ -44,22 +44,7 @@ const HotTrendingItem = ({
       // border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}]
       //
       style={tw`flex-row items-center p-2 mx-2 my-1 border-b-[0.5px] border-[${designatedColor.GRAY5}] rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}]`}>
-      <CustomText
-        style={tw`text-[${designatedColor.PINK}] text-lg font-bold w-10 text-center`}>
-        {ranking}
-      </CustomText>
-      {rankingChange == 0 ? (
-        <MediumIcon width={14} height={14} />
-      ) : (
-        <>
-          {rankingChange < 0 ? (
-            <DownIcon width={14} height={14} />
-          ) : (
-            <UpIcon width={14} height={14} />
-          )}
-        </>
-      )}
-      <View style={tw`flex-1 mx-4`}>
+      <View style={tw`flex-1 mx-2`}>
         <View style={tw`flex-row items-center`}>
           <View style={tw`rounded-lg justify-center items-center`}>
             <Image
@@ -68,7 +53,24 @@ const HotTrendingItem = ({
               resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
             />
           </View>
-          <View style={tw`ml-3 flex-1`}>
+          <View style={tw`items-center mx-1`}>
+            <CustomText
+              style={tw`text-[${designatedColor.PINK}] text-lg font-bold w-10 text-center`}>
+              {ranking}
+            </CustomText>
+            {rankingChange == 0 ? (
+              <MediumIcon width={14} height={14} />
+            ) : (
+              <>
+                {rankingChange < 0 ? (
+                  <DownIcon width={14} height={14} />
+                ) : (
+                  <UpIcon width={14} height={14} />
+                )}
+              </>
+            )}
+          </View>
+          <View style={tw`flex-1`}>
             <View style={tw`flex-row mb-1 items-center`}>
               {isNew && (
                 <View

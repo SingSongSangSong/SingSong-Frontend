@@ -243,7 +243,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
                 {/* 닫기 버튼 */}
                 <TouchableOpacity
                   onPress={() => setIsModalVisible(false)}
-                  style={tw`mt-4 py-2 border-t border-gray-600`}>
+                  style={tw`py-4 mt-2 border-t-[0.4px] border-[${designatedColor.GRAY5}]`}>
                   <CustomText style={tw`text-center text-white`}>
                     닫기
                   </CustomText>
