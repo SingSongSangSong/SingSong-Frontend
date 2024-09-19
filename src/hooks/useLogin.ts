@@ -212,6 +212,7 @@ const useLogin = () => {
     handleKakaoLogin2,
     handleAppleLogin,
     handleAppleLogin2,
+    setIsLoggedProcess,
   };
 };
 

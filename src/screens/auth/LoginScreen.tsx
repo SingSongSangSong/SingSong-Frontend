@@ -87,9 +87,11 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const handleGuestButton = async () => {
     // setIsGuest(true);
     // navigation.replace(appStackNavigations.MAIN);
+    loginHandler.setIsLoggedProcess(true);
     const data = await postMemberLogin('', 'Anonymous');
     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
+    loginHandler.setIsLoggedProcess(false);
     navigation.replace(appStackNavigations.MAIN);
   };
 

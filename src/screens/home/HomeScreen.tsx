@@ -9,6 +9,7 @@ import {
   LayoutChangeEvent,
   Platform,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -19,7 +20,11 @@ import {
   TaglistModule,
 } from '../../components';
 import {HomeStackParamList} from '../../types';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {
+  appStackNavigations,
+  designatedColor,
+  homeStackNavigations,
+} from '../../constants';
 import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import SearchIcon from '../../assets/svg/search.svg';
@@ -29,6 +34,10 @@ import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import GuestStore from '../../store/GuestStore';
 import CustomText from '../../components/text/CustomText';
+import {CommonActions} from '@react-navigation/native';
+import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
+import TokenStore from '../../store/TokenStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -40,6 +49,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const loadingVisible = useSongStore(state => state.loadingVisible);
   const isGuest = GuestStore(state => state.isGuest);
   const screen = Dimensions.get('window');
+  const {removeSecureValue} = TokenStore();
 
   const handleOnLayout = (event: LayoutChangeEvent) => {
     const {height} = event.nativeEvent.layout;
@@ -88,6 +98,17 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const handleOnPressAiTotalButton = () => {
     navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
     console.log('AI 추천 전체보기 버튼 클릭');
+  };
+
+  const handleOnPressLoginButton = () => {
+    removeSecureValue(ACCESS_TOKEN);
+    removeSecureValue(REFRESH_TOKEN);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: appStackNavigations.LOGIN}],
+      }),
+    );
   };
 
   const handleOnHotTrendingSongPress = (
@@ -168,22 +189,22 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             )}
           </View>
         </View>
-        {/* <View style={tw`bg-[${designatedColor.PINK}] p-2 items-center py-3`}>
-          <Text style={tw`text-black font-bold`}>
+        <View style={tw`bg-[${designatedColor.GRAY5}] p-2 items-center py-4`}>
+          <Text style={tw`text-white`}>
             로그인 후 사용하시면 더욱 멋진 경험을 할 수 있습니다
           </Text>
           <TouchableOpacity
-            onPress={() =>
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [{name: appStackNavigations.LOGIN}],
-                }),
-              )
-            }>
-            <Text>로그인하러 가기</Text>
+            onPress={handleOnPressLoginButton}
+            style={tw`mt-2 p-2 border-[1px] border-[${designatedColor.WHITE}] rounded-full px-6`}
+            activeOpacity={0.8}>
+            <View style={tw`flex-row items-center`}>
+              <CustomText style={tw`text-[${designatedColor.WHITE}] font-bold`}>
+                로그인하러 가기
+              </CustomText>
+              <ArrowRightIcon width={16} height={16} />
+            </View>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
