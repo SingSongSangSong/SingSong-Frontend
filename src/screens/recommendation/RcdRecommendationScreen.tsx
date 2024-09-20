@@ -1,28 +1,27 @@
 import {SafeAreaView, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useAiSong from '../../hooks/useAiSong';
+import {StackScreenProps} from '@react-navigation/stack';
 
-type RcdRecommendationScreenProps = {
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.AI_RECOMMENDATION
-  >;
-};
+type RcdRecommendationScreenProps = StackScreenProps<
+  HomeStackParamList,
+  typeof homeStackNavigations.AI_RECOMMENDATION
+>;
 
-function RcdRecommendationScreen({navigation}: RcdRecommendationScreenProps) {
-  const songHandler = useAiSong({navigation});
+function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
+  const songHandler = useAiSong();
 
   useEffect(() => {
     if (!songHandler.songLst) {
       songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
+    logPageView(props.route.name);
   }, []);
 
   const _onSongPress = (
@@ -35,7 +34,7 @@ function RcdRecommendationScreen({navigation}: RcdRecommendationScreenProps) {
   ) => {
     logButtonClick('ai_recommendation_song_button_click');
     amplitude.track('ai_recommendation_song_button_click');
-    navigation.push(homeStackNavigations.SONG_DETAIL, {
+    props.navigation.push(homeStackNavigations.SONG_DETAIL, {
       songId,
       songNumber,
       songName,

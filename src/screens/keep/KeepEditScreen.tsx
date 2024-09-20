@@ -1,5 +1,5 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {View} from 'react-native';
 import tw from 'twrnc';
 import useKeep from '../../hooks/useKeep';
 import {
@@ -8,13 +8,25 @@ import {
   RemoveButton,
   SonglistEdit,
 } from '../../components';
-import {designatedColor} from '../../constants';
+import {designatedColor, keepStackNavigations} from '../../constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
+import {KeepStackParamList} from '../../types';
+import {StackScreenProps} from '@react-navigation/stack';
+import {logPageView} from '../../utils';
 
-function KeepEditScreen() {
+type KeepEditScreenProps = StackScreenProps<
+  KeepStackParamList,
+  typeof keepStackNavigations.KEEP_EDIT
+>;
+
+function KeepEditScreen(props: KeepEditScreenProps) {
   const keepHandler = useKeep();
   const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
   return (
     <View
       style={[

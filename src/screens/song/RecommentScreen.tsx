@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Modal,
   Platform,
   SafeAreaView,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -24,6 +23,7 @@ import {
 import useRecomment from '../../hooks/useRecomment';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
+import {logPageView} from '../../utils';
 
 type RecommentScreenProps =
   | StackScreenProps<
@@ -35,6 +35,10 @@ type RecommentScreenProps =
 function RecommentScreen(props: RecommentScreenProps) {
   const commentId = props.route?.params?.comment.commentId; // 초기 카테고리
   const recommentHandler = useRecomment(commentId);
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const handleOnPressReport = () => {
     recommentHandler.setIsModalVisible(false);

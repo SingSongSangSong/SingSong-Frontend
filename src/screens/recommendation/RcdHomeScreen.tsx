@@ -7,7 +7,7 @@ import useSong from '../../hooks/useSong';
 import {RouteProp} from '@react-navigation/native';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type RcdHomeScreenProps = {
@@ -26,6 +26,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     if (!songHandler.songLst) {
       songHandler.setInitSongs(); //처음에 불러온 노래 세팅
     }
+    logPageView(route.name);
   }, []);
 
   const _onSongPress = (

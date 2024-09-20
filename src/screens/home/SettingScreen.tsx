@@ -13,7 +13,6 @@ import {
   Image,
   Linking,
   SafeAreaView,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,13 +25,14 @@ import CustomText from '../../components/text/CustomText';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import GuestStore from '../../store/GuestStore';
 import TokenStore from '../../store/TokenStore';
+import {logPageView} from '../../utils';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
   typeof homeStackNavigations.SETTING
 >;
 
-function SettingScreen({navigation}: SettingScreenProps) {
+function SettingScreen(props: SettingScreenProps) {
   const settingHandler = useSetting();
   const [isWithdraw, setIsWithdraw] = useState(false);
   const currentVersion = VersionStore(state => state.currentVersion);
@@ -44,6 +44,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   useEffect(() => {
     initIsGuest();
+    logPageView(props.route.name);
   }, []);
 
   const initIsGuest = async () => {
@@ -53,7 +54,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const handleLogoutButton = async () => {
     await settingHandler.handleKakaoLogout();
-    navigation.dispatch(
+    props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [{name: appStackNavigations.LOGIN}],
@@ -63,7 +64,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
 
   const handleWithdrawButton = async () => {
     await settingHandler.handleWithdraw();
-    navigation.dispatch(
+    props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [{name: appStackNavigations.LOGIN}],
@@ -72,11 +73,11 @@ function SettingScreen({navigation}: SettingScreenProps) {
   };
 
   const handleOnBlacklistButton = () => {
-    navigation.push(homeStackNavigations.BLACKLIST);
+    props.navigation.push(homeStackNavigations.BLACKLIST);
   };
 
   const handleOnPressNicknameChange = () => {
-    navigation.push(homeStackNavigations.NICKNAME_CHANGE, {
+    props.navigation.push(homeStackNavigations.NICKNAME_CHANGE, {
       nickname: settingHandler.memberInfo?.nickname || '',
     });
   };
@@ -87,7 +88,7 @@ function SettingScreen({navigation}: SettingScreenProps) {
     settingHandler.clearMemberInfo();
     settingHandler.clearProvider();
     await setGuestState(false);
-    navigation.dispatch(
+    props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [{name: appStackNavigations.LOGIN}],

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {HomeStackParamList} from '../../types';
 import {designatedColor, homeStackNavigations} from '../../constants';
@@ -15,6 +15,7 @@ import CustomText from '../../components/text/CustomText';
 import patchMemberNickname from '../../api/member/patchMemberNickname';
 import useMemberStore from '../../store/useMemberStore';
 import Toast from 'react-native-toast-message';
+import {logPageView} from '../../utils';
 
 type NicknameChangeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -28,6 +29,10 @@ function NicknameChangeScreen(props: NicknameChangeScreenProps) {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const isButtonDisabled =
     newNickname.trim().length <= 1 || newNickname.trim().length > 10;
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const handleNicknameChange = async () => {
     // 닉네임 변경 완료 로직

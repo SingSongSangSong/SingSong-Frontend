@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -28,6 +28,7 @@ import {
 import ErrorIcon from '../../assets/svg/error.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
+import {logPageView} from '../../utils';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -41,6 +42,10 @@ function CommentScreen(props: CommentScreenProps) {
   const songId = props.route?.params?.songId;
 
   const commentHandler = useComment(songNumber, songId);
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const handleOnPressRecomment = (comment: Comment) => {
     if ('navigate' in props.navigation) {

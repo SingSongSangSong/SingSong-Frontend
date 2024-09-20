@@ -28,7 +28,7 @@ import {
 import SettingsIcon from '../../assets/svg/settings.svg';
 import LogoIcon from '../../assets/svg/logo.svg';
 import SearchIcon from '../../assets/svg/search.svg';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -45,7 +45,7 @@ type HomeScreenProps = StackScreenProps<
   typeof homeStackNavigations.RCD_HOME
 >;
 
-const HomeScreen = ({navigation}: HomeScreenProps) => {
+const HomeScreen = (props: HomeScreenProps) => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
   // const isGuest = GuestStore(state => state.isGuest);
@@ -59,7 +59,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   useEffect(() => {
     initIsGuest();
-  });
+    logPageView(props.route.name);
+  }, []);
 
   const initIsGuest = async () => {
     const tempIsGuest = await getGuestState();
@@ -75,15 +76,15 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     (tag: string) => {
       amplitude.track('tag_button_click');
       logButtonClick('tag_button_click');
-      navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+      props.navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
     },
-    [navigation],
+    [props.navigation],
   );
 
   const handleOnPreviewTagPress = (tag: string) => {
     amplitude.track('preview_tag_button_click');
     logButtonClick('preview_tag_button_click');
-    navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+    props.navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
   };
 
   const handleOnSongPress = (
@@ -96,7 +97,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   ) => {
     amplitude.track('preview_song_button_click');
     logButtonClick('preview_song_button_click');
-    navigation.navigate({
+    props.navigation.navigate({
       key: 'MyUniqueKeyForSongDetail',
       name: homeStackNavigations.SONG_DETAIL,
       params: {
@@ -111,7 +112,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressAiTotalButton = () => {
-    navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
+    props.navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
     // console.log('AI 추천 전체보기 버튼 클릭');
   };
 
@@ -121,7 +122,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
     await setGuestState(false);
     clearMemberInfo();
     clearProvider();
-    navigation.dispatch(
+    props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [{name: appStackNavigations.LOGIN}],
@@ -139,7 +140,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   ) => {
     amplitude.track('hot_trending_song_button_click');
     logButtonClick('hot_trending_song_button_click');
-    navigation.navigate({
+    props.navigation.navigate({
       key: 'MyUniqueKeyForSongDetail',
       name: homeStackNavigations.SONG_DETAIL,
       params: {
@@ -154,11 +155,11 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleOnPressSetting = () => {
-    navigation.navigate(homeStackNavigations.SETTING);
+    props.navigation.navigate(homeStackNavigations.SETTING);
   };
 
   const handleOnPressSearch = () => {
-    navigation.navigate(homeStackNavigations.SEARCH);
+    props.navigation.navigate(homeStackNavigations.SEARCH);
   };
 
   // const handleOnPressTotalButton = useCallback(() => {
@@ -248,8 +249,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             <View
               style={[
                 tw`absolute bg-black inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
-                // {top: headerHeight}
-                ,
+                {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>
                 <ActivityIndicator size="small" color={designatedColor.PINK2} />

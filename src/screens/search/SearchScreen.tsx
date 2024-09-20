@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {GetSearchSong, HomeStackParamList} from '../../types';
@@ -14,7 +14,7 @@ import {
 import {SearchInput, SearchRecent, SearchResult} from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 
 type SearchScreenProps = StackScreenProps<
@@ -22,18 +22,22 @@ type SearchScreenProps = StackScreenProps<
   typeof homeStackNavigations.SEARCH
 >;
 
-function SearchScreen({navigation}: SearchScreenProps) {
+function SearchScreen(props: SearchScreenProps) {
   const [inputText, setInputText] = useState<string>('');
   const [searchData, setSearchData] = useState<GetSearchSong>();
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true); // 상태 추가
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const addSearchRecent = useSearchRecentStore(state => state.addSearchRecent);
 
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
+
   const inputRef = useRef<TextInput>(null);
 
   const handleOnGoBack = () => {
     Keyboard.dismiss();
-    navigation.goBack();
+    props.navigation.goBack();
   };
 
   const handleOnPressRecent = (searchText: string) => {
@@ -109,7 +113,7 @@ function SearchScreen({navigation}: SearchScreenProps) {
           <SearchResult
             inputText={inputText}
             searchData={searchData}
-            navigation={navigation}
+            navigation={props.navigation}
           />
         ))}
     </SafeAreaView>

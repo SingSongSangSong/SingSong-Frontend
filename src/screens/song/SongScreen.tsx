@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, FlatList} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
@@ -15,7 +15,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -32,6 +32,10 @@ type SongScreenProps =
 function SongScreen(props: SongScreenProps) {
   const {songNumber, songId, songName, singerName, album, isMr} =
     props.route?.params || {};
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const _onPressComment = (songNumber: number, songId: number) => {
     if ('navigate' in props.navigation) {

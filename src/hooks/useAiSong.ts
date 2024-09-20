@@ -10,14 +10,14 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import useKeepListStore from '../store/useKeepStore';
 import getRcdRecommendation from '../api/recommendation/getRcdRecommendation';
 
-type UseAiSongProps = {
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.AI_RECOMMENDATION
-  >;
-};
-
-const useAiSong = ({navigation}: UseAiSongProps) => {
+// type UseAiSongProps = {
+//   navigation: StackNavigationProp<
+//     HomeStackParamList,
+//     typeof homeStackNavigations.AI_RECOMMENDATION
+//   >;
+// };
+// {navigation}: UseAiSongProps
+const useAiSong = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);

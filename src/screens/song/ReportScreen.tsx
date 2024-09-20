@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, Text, TextInput, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, TextInput, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {HomeStackParamList, KeepStackParamList} from '../../types';
@@ -11,6 +11,7 @@ import {
 import {OutlineButton, RadioButton} from '../../components';
 import useReport from '../../hooks/useReport';
 import CustomText from '../../components/text/CustomText';
+import {logPageView} from '../../utils';
 
 type ReportScreenProps =
   | StackScreenProps<
@@ -23,6 +24,10 @@ function ReportScreen(props: ReportScreenProps) {
   const commentId = props.route?.params?.reportCommentId; // 초기 카테고리
   const subjectMemberId = props.route?.params?.reportSubjectMemberId;
   const reportHandler = useReport(commentId, subjectMemberId);
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black px-4`}>

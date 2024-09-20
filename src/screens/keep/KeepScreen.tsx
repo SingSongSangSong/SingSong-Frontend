@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {ActivityIndicator, Text, View, Platform} from 'react-native';
-import {KeepSongsList, SongsList} from '../../components';
+import {ActivityIndicator, View, Platform} from 'react-native';
+import {KeepSongsList} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
-import {logButtonClick} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
@@ -16,8 +16,12 @@ type KeepScreenProps = StackScreenProps<
   typeof keepStackNavigations.KEEP
 >;
 
-function KeepScreen({navigation}: KeepScreenProps) {
+function KeepScreen(props: KeepScreenProps) {
   const keepHandler = useKeep();
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const _onSongPress = (
     songId: number,
@@ -29,7 +33,7 @@ function KeepScreen({navigation}: KeepScreenProps) {
   ) => {
     logButtonClick('keep_song_button_click');
     amplitude.track('keep_song_button_click');
-    navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
+    props.navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,
       songNumber,
       songName,
