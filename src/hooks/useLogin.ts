@@ -69,12 +69,12 @@ const useLogin = () => {
     try {
       setIsLoggedProcess(true); //true
       // console.log('isLoggedProcess', isLoggedProcess);
-      console.log('before login');
+      // console.log('before login');
       const result = await login();
-      console.log('after login', result);
+      // console.log('after login', result);
       if (result.idToken) {
         const data = await postMemberLogin(result.idToken, 'KAKAO_KEY'); //accessToken 받기, 설정해야됨
-        console.log('data', data.data);
+        // console.log('data', data.data);
         setSecureValue(ACCESS_TOKEN, data.data.accessToken);
         setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
         setIsLoggedProcess(!isLoggedProcess); //false
@@ -115,7 +115,7 @@ const useLogin = () => {
 
       // 애플 로그인 성공 시 필요한 처리
       const {identityToken} = appleAuthRequestResponse;
-      console.log('idToken', identityToken);
+      // console.log('idToken', identityToken);
       setIdToken(identityToken!);
       setIsModalVisible(true);
     } catch (err) {
@@ -146,11 +146,11 @@ const useLogin = () => {
 
       // 애플 로그인 성공 시 필요한 처리
       const {identityToken} = appleAuthRequestResponse;
-      console.log('idToken', identityToken);
+      // console.log('idToken', identityToken);
       setIdToken(identityToken!);
 
       const data = await postMemberLogin(identityToken!, 'APPLE_KEY'); //accessToken 받기, 설정해야됨
-      console.log('data', data.data);
+      // console.log('data', data.data);
       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(!isLoggedProcess); //false

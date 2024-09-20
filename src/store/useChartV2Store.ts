@@ -90,7 +90,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
     // charts 배열을 순회하며 각 차트를 처리
     charts.forEach(chartV2 => {
       const {chartKey, songs} = chartV2;
-      console.log('songs', songs);
+      // console.log('songs', songs);
 
       // chartKey에서 성별(gender)와 연령대(ageGroup)를 추출
       const [gender, ageGroup] = chartKey.split('_');

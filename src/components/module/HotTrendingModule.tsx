@@ -132,7 +132,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
     }
   };
   const handleOnPressGender = () => {
-    console.log('성별 변경');
+    // console.log('성별 변경');
     setIsModalVisible(true);
   };
 

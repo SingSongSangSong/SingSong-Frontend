@@ -36,7 +36,7 @@ function NicknameChangeScreen(props: NicknameChangeScreenProps) {
       return;
     }
 
-    console.log('새 닉네임:', newNickname);
+    // console.log('새 닉네임:', newNickname);ㄴ
     const tempData = await patchMemberNickname(newNickname);
     setMemberInfo(tempData.data);
     Toast.show({

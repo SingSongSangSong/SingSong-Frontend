@@ -20,7 +20,7 @@ const getSearchArtistName = async (
         },
       },
     );
-    console.log('search artist name response:', response.data);
+    // console.log('search artist name response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getSearch:', error);

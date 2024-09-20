@@ -112,7 +112,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
 
   const handleOnPressAiTotalButton = () => {
     navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
-    console.log('AI 추천 전체보기 버튼 클릭');
+    // console.log('AI 추천 전체보기 버튼 클릭');
   };
 
   const handleOnPressLoginButton = async () => {

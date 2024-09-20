@@ -8,10 +8,10 @@ const postMemberLogin = async (
   gender?: string,
 ) => {
   try {
-    console.log('birthYear:', birthYear);
-    console.log('gender', gender);
-    console.log('idToken:', idToken);
-    console.log('provider:', provider);
+    // console.log('birthYear:', birthYear);
+    // console.log('gender', gender);
+    // console.log('idToken:', idToken);
+    // console.log('provider:', provider);
     const response = await axiosInstance.post<LoginResponse>(
       'v1/member/login',
       {

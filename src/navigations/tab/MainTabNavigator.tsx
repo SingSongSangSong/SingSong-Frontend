@@ -121,12 +121,12 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
       />
-      {Platform.OS != 'ios' && (
+      {/* {Platform.OS != 'ios' && (
         <Tab.Screen
           name={mainTabNavigations.PLAYGROUND}
           component={PlaygroundScreen}
         />
-      )}
+      )} */}
     </Tab.Navigator>
   );
 };

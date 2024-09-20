@@ -67,7 +67,7 @@ const useAiSong = ({navigation}: UseAiSongProps) => {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('ai_recommendation_down_songs');
-        console.log('pageId:', pageId);
+        // console.log('pageId:', pageId);
         getRcdRecommendation(pageId)
           .then(response => {
             const songData = response.data.songs;

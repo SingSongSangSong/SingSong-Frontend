@@ -20,7 +20,7 @@ const getSearchSongName = async (
         },
       },
     );
-    console.log('search song name response:', response.data);
+    // console.log('search song name response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getSearch:', error);
