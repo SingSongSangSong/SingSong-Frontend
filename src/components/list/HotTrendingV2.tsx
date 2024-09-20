@@ -194,8 +194,9 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
   // const [currentPage, setCurrentPage] = useState(0);
   // const userAgeGroup = useChartV2Store(state => state.userAgeGroup);
   const selectedAgeGroup = useChartV2Store(state => state.selectedAgeGroup);
+  const selectedGender = useChartV2Store(state => state.selectedGender);
   const [currentAgeGroup, setCurrentAgeGroup] = useState(selectedAgeGroup); // 연령대
-  const userGender = useChartV2Store(state => state.userGender);
+  // const userGender = useChartV2Store(state => state.userGender);
   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
   const [isScrolling, setIsScrolling] = useState(false); // 스크롤 여부를 저장하는 상태
 
@@ -234,7 +235,9 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
     // const index = ageGroups.indexOf(ageGroup);
     // setCurrentPage(index);
     setCurrentAgeGroup(ageGroup);
-    setSelectedCharts(userGender, ageGroup);
+    console.log('ageGroup:', ageGroup);
+    setSelectedCharts(selectedGender, ageGroup);
+    console.log('selectedChart: ', selectedGender, ageGroup);
   };
 
   // 연령대 별 데이터를 5개씩 끊어서 보여줌
