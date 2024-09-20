@@ -30,6 +30,7 @@ import CustomText from '../../components/text/CustomText';
 import postMemberLogin from '../../api/member/postMemberLogin';
 import TokenStore from '../../store/TokenStore';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
+import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -139,11 +140,20 @@ function LoginScreen({navigation}: LoginScreenProps) {
           />
         </View>
 
-        <LargeButton
+        {/* <LargeButton
           title="GUEST"
           onPress={handleGuestButton}
           color="#D2E0FB"
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={handleGuestButton}
+          activeOpacity={0.8}
+          style={tw`items-center justify-center`}>
+          <View style={tw`flex-row items-center mt-2`}>
+            <CustomText style={tw`text-white text-lg mr-2`}>Guest</CustomText>
+            <ArrowRightIcon width={20} height={20} />
+          </View>
+        </TouchableOpacity>
       </View>
       {loginHandler.isLoggedProcess && (
         <View

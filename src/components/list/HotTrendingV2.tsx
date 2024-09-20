@@ -278,8 +278,21 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
           </TouchableOpacity>
         ))}
       </View>
-
-      <ScrollView
+      <ScrollView //ios 버전
+        horizontal
+        pagingEnabled={false} // pagingEnabled를 false로 설정합니다.
+        showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
+        snapToInterval={screenWidth * 0.94} // 화면 크기만큼 스와이프되도록 설정
+        snapToAlignment="center" // 페이지를 중앙에 맞추도록 설정
+        contentContainerStyle={{
+          paddingRight: 0, // padding이나 margin을 조정하여 다음 컴포넌트가 보이지 않도록 합니다.
+        }}
+        onScrollBeginDrag={() => setIsScrolling(true)} // 스크롤 시작 시 스크롤 상태 활성화
+        onScrollEndDrag={() => setIsScrolling(false)} // 스크롤 종료 시 스크롤 상태 비활성화
+        key={currentAgeGroup}
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        {/* <ScrollView //android 버전
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -291,7 +304,8 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
         onScrollBeginDrag={() => setIsScrolling(true)} // 스크롤 시작 시 스크롤 상태 활성화
         onScrollEndDrag={() => setIsScrolling(false)} // 스크롤 종료 시 스크롤 상태 비활성화
         key={currentAgeGroup}
-        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}> */}
+
         {groupedCharts.length > 0 ? (
           groupedCharts.map((group, index) => (
             <View

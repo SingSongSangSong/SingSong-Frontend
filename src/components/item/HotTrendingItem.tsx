@@ -7,6 +7,7 @@ import UpIcon from '../../assets/svg/up.svg';
 import DownIcon from '../../assets/svg/down.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import CustomText from '../text/CustomText';
+import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 type HotTrendingItemProps = {
   artistName: string;
@@ -47,11 +48,18 @@ const HotTrendingItem = ({
       <View style={tw`flex-1 mx-2`}>
         <View style={tw`flex-row items-center`}>
           <View style={tw`rounded-lg justify-center items-center`}>
-            <Image
-              source={{uri: album}}
-              style={tw`w-12 h-12 rounded-md`}
-              resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
-            />
+            {!album || album == '' ? (
+              <View
+                style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View>
+            ) : (
+              <Image
+                source={{uri: album}}
+                style={tw`w-12 h-12 rounded-md`}
+                resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
+              />
+            )}
           </View>
           <View style={tw`items-center mx-1`}>
             <CustomText

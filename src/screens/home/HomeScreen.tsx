@@ -248,7 +248,8 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             <View
               style={[
                 tw`absolute bg-black inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
-                {top: headerHeight},
+                // {top: headerHeight}
+                ,
               ]}>
               <View style={tw`flex-row`}>
                 <ActivityIndicator size="small" color={designatedColor.PINK2} />

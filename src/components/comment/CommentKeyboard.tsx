@@ -30,12 +30,12 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
   // const {width} = useWindowDimensions();
 
   return (
-    // <InputAccessoryView style={[tw`bg-black w-full`]}>
-    <View style={[tw`bg-black w-full`]}>
+    <InputAccessoryView style={[tw`bg-black w-full`]}>
+      {/* <View style={[tw`bg-black w-full`]}> */}
       <View style={tw`flex-row items-center py-4 bg-black`}>
         <TextInput
           style={[
-            tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mr-2`,
+            tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mx-2`,
             {height: Math.min(Math.max(40, inputHeight), 60)}, // 최소 1줄, 최대 2줄 높이로 설정
           ]}
           value={comment}
@@ -52,7 +52,7 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
           <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
         </View>
       </View>
-      {/* </InputAccessoryView> */}
-    </View>
+    </InputAccessoryView>
+    // </View>
   );
 };
