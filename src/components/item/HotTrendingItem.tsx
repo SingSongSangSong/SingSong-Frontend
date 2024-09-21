@@ -62,7 +62,7 @@ const HotTrendingItem = ({
                 }
               }}
               style={tw`rounded-lg justify-center items-center`}
-              activeOpacity={0.8}>
+              activeOpacity={1.0}>
               {!album || album == '' ? (
                 <View
                   style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
@@ -152,7 +152,7 @@ const HotTrendingItem = ({
           onClose={() => {
             setIsModalVisible(false);
           }}
-          message="외부 링크로 이동하게 됩니다. 이동하시겠습니까?"
+          message="해당 노래에 대한 가사를 볼 수 있는 외부 링크로 이동하게 됩니다. 이동하시겠습니까?"
           onConfirm={() => {
             Linking.openURL(melonLink);
           }}

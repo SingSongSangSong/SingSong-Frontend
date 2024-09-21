@@ -69,6 +69,7 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
                 )
               }
               album={song.album}
+              melonLink={song.melonLink}
               isMr={song.isMr}
             />
           ))}

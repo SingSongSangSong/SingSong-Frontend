@@ -13,7 +13,7 @@ interface RcdHomeSong {
   songNumber: number;
   tags: string[];
   isMr: boolean;
-  melongLink?: string;
+  melonLink?: string;
 }
 
 interface Song {

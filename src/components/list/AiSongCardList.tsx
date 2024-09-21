@@ -81,6 +81,7 @@ const AiSongCardList = ({
                 )
               }
               album={song.album}
+              melonLink={song.melonLink}
               isMr={song.isMr}
             />
           ))}
