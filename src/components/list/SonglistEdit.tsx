@@ -27,6 +27,7 @@ const SonglistEdit = ({
         songName={item.songName}
         singerName={item.singerName}
         album={item.album}
+        melonLink={item.melonLink}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         isAllSelected={isAllSelected}

@@ -33,6 +33,7 @@ const KeepSongsList = ({
         songName={item.songName}
         singerName={item.singerName}
         album={item.album}
+        melonLink={item.melonLink}
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
         isMr={item.isMr}
