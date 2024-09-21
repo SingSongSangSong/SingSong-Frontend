@@ -1,5 +1,12 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Linking,
+} from 'react-native';
 import tw from 'twrnc';
 import {useSharedValue} from 'react-native-reanimated';
 import {designatedColor} from '../../constants';
@@ -11,7 +18,7 @@ import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import CommentIcon from '../../assets/svg/commentGray.svg';
 import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TextButton} from '..';
+import {CustomModal, TextButton} from '..';
 import {useFocusEffect} from '@react-navigation/native';
 import CustomText from '../text/CustomText';
 
@@ -31,6 +38,7 @@ interface SongItemProps {
   onSongPress: () => void;
   onKeepAddPress?: () => void | undefined;
   onKeepRemovePress?: () => void | undefined;
+  melonLink?: string;
 }
 
 const SongItem = ({
@@ -48,11 +56,13 @@ const SongItem = ({
   onSongPress,
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
+  melonLink,
 }: // setIsModalVisible,
 SongItemProps) => {
   const [isKeepPressed, setIsKeepPressed] = useState(isKeep);
   const [isPressed, setIsPressed] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isLinkModalVisible, setIsLinkModalVisible] = useState<boolean>(false);
   const [keepCounts, setKeepCounts] = useState<number>(keepCount);
 
   const dragX = useSharedValue(0);
@@ -103,10 +113,17 @@ SongItemProps) => {
                   <MusicIcon width={16} height={16} />
                 </View>
               ) : (
-                <Image
-                  source={{uri: album}}
-                  style={tw`w-full h-full rounded-sm`}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsLinkModalVisible(true);
+                  }}
+                  activeOpacity={1.0}
+                  style={tw`w-[16] h-[16]`}>
+                  <Image
+                    source={{uri: album}}
+                    style={tw`w-full h-full rounded-sm`}
+                  />
+                </TouchableOpacity>
               )}
             </View>
 
@@ -200,6 +217,23 @@ SongItemProps) => {
           </View>
         </View>
       </TouchableOpacity>
+      {album && album != '' && melonLink && (
+        <CustomModal
+          visible={isLinkModalVisible}
+          onClose={() => {
+            setIsLinkModalVisible(false);
+          }}
+          message="해당 노래에 대한 가사를 볼 수 있는 외부 링크로 이동하게 됩니다. 이동하시겠습니까?"
+          onConfirm={() => {
+            Linking.openURL(melonLink);
+          }}
+          onCancel={() => {
+            setIsLinkModalVisible(false);
+          }}
+          confirmText="확인"
+          cancelText="취소"
+        />
+      )}
       {/* <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => {
