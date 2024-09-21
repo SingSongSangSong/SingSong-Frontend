@@ -13,6 +13,7 @@ interface RcdHomeSong {
   songNumber: number;
   tags: string[];
   isMr: boolean;
+  melongLink?: string;
 }
 
 interface Song {
@@ -26,6 +27,7 @@ interface Song {
   isMr: boolean;
   keepCount?: number;
   commentCount?: number;
+  melonLink?: string;
 }
 
 interface GetSearchSong {
@@ -134,6 +136,7 @@ interface SongInfo {
   tags: string[];
   keepCount: number;
   commentCount: number;
+  melonLink?: string;
 }
 
 interface SongInfoResponse {
@@ -190,6 +193,7 @@ interface ChartSong {
   songName: string;
   songNumber: number;
   totalScore: number;
+  melonLink: string;
 }
 
 // interface ChartV2 {

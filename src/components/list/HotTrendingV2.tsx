@@ -326,6 +326,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                         isNew={item.isNew}
                         isLive={item.isLive}
                         album={item.album}
+                        melonLink={item.melonLink}
                         ranking={item.ranking}
                         rankingChange={item.rankingChange}
                         songName={item.songName}
