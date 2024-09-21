@@ -184,6 +184,7 @@ interface HotTrendingV2Props {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
 }
@@ -340,6 +341,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                             item.songName,
                             item.artistName,
                             item.album,
+                            item.melonLink,
                             item.isMr,
                           );
                         }}

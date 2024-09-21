@@ -22,6 +22,7 @@ type AiSongCardListProps = {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
 };
@@ -77,6 +78,7 @@ const AiSongCardList = ({
                   song.songName,
                   song.singerName,
                   song.album,
+                  song.melonLink || '',
                   song.isMr,
                 )
               }

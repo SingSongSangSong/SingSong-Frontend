@@ -30,7 +30,7 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  const {songNumber, songId, songName, singerName, album, isMr} =
+  const {songNumber, songId, songName, singerName, album, melonLink, isMr} =
     props.route?.params || {};
 
   useEffect(() => {
@@ -57,6 +57,7 @@ function SongScreen(props: SongScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     console.log('related_song_button_click');
@@ -72,6 +73,7 @@ function SongScreen(props: SongScreenProps) {
           songName,
           singerName,
           album,
+          melonLink,
           isMr,
         });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
@@ -83,6 +85,7 @@ function SongScreen(props: SongScreenProps) {
           songName,
           singerName,
           album,
+          melonLink,
           isMr,
         });
       }
@@ -96,6 +99,7 @@ function SongScreen(props: SongScreenProps) {
         songName={songName}
         singerName={singerName}
         album={album}
+        melonLink={melonLink}
         isMr={isMr}
       />
       <SongAdditionInfo

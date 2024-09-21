@@ -93,6 +93,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     amplitude.track('preview_song_button_click');
@@ -106,6 +107,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         songName,
         singerName,
         album: album || '',
+        melonLink,
         isMr,
       },
     });
@@ -136,6 +138,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     amplitude.track('hot_trending_song_button_click');
@@ -149,6 +152,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         songName,
         singerName,
         album,
+        melonLink,
         isMr,
       },
     });

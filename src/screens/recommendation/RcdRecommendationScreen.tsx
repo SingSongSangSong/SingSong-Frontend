@@ -30,6 +30,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     logButtonClick('ai_recommendation_song_button_click');
@@ -40,6 +41,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
       songName,
       singerName,
       album,
+      melonLink,
       isMr,
     });
   };

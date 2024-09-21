@@ -23,6 +23,7 @@ interface RefreshSongsListProps {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
   onKeepAddPress: (songId: number) => void;
@@ -64,6 +65,7 @@ const RenderItem = memo(
           item.songName,
           item.singerName,
           item.album,
+          item.melonLink,
           item.isMr,
         );
       }}

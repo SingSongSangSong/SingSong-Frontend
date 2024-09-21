@@ -12,6 +12,7 @@ interface KeepSongsListProps {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
   onKeepAddPress?: (songId: number) => void;
@@ -44,6 +45,7 @@ const KeepSongsList = ({
             item.songName,
             item.singerName,
             item.album,
+            item.melonLink || '',
             item.isMr,
           )
         }

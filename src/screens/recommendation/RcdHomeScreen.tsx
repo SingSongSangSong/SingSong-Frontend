@@ -35,6 +35,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     logButtonClick('recommendation_song_button_click');
@@ -45,6 +46,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
       songName,
       singerName,
       album,
+      melonLink,
       isMr,
     });
   };

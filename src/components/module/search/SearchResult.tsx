@@ -48,6 +48,7 @@ const SearchResult = ({
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     logButtonClick('search_result_song_button_click');
@@ -58,6 +59,7 @@ const SearchResult = ({
       songName,
       singerName,
       album,
+      melonLink,
       isMr,
     });
   };

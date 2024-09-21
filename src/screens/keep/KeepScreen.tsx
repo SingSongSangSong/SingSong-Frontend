@@ -29,6 +29,7 @@ function KeepScreen(props: KeepScreenProps) {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => {
     logButtonClick('keep_song_button_click');
@@ -39,6 +40,7 @@ function KeepScreen(props: KeepScreenProps) {
       songName,
       singerName,
       album,
+      melonLink,
       isMr,
     });
   };

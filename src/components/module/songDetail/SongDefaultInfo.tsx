@@ -1,16 +1,18 @@
-import React from 'react';
-import {Image, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, Linking, Text, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import MusicIcon from '../../../assets/svg/music.svg';
 import {CommonTag} from '../../tag/CommonTag';
 import CustomText from '../../text/CustomText';
+import {CustomModal} from '../..';
 
 type SongDefaultInfoProps = {
   songNumber: number;
   songName: string;
   singerName: string;
   album: string;
+  melonLink: string;
   isMr: boolean;
 };
 const SongDefaultInfo = ({
@@ -18,9 +20,11 @@ const SongDefaultInfo = ({
   songName,
   singerName,
   album,
+  melonLink,
   isMr,
 }: SongDefaultInfoProps) => {
   // console.log('songDefaultInfo');
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   return (
     <View>
       <View style={tw`justify-center items-center overflow-hidden`}>
@@ -35,14 +39,18 @@ const SongDefaultInfo = ({
             <MusicIcon width={64} height={64} />
           </View>
         ) : (
-          <View
-            style={tw`absolute w-50 h-50 rounded-lg justify-center items-center`}>
+          <TouchableOpacity
+            onPress={() => {
+              setIsModalVisible(true);
+            }}
+            style={tw`absolute w-50 h-50 rounded-lg justify-center items-center`}
+            activeOpacity={1.0}>
             <Image
               source={{uri: album}}
               style={tw`w-50 h-50 rounded-md`}
               resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
             />
-          </View>
+          </TouchableOpacity>
         )}
       </View>
       <View style={tw`px-3 `}>
@@ -73,6 +81,23 @@ const SongDefaultInfo = ({
           </CustomText>
         </View>
       </View>
+      {album && album != '' && melonLink && (
+        <CustomModal
+          visible={isModalVisible}
+          onClose={() => {
+            setIsModalVisible(false);
+          }}
+          message="해당 노래에 대한 가사를 볼 수 있는 외부 링크로 이동하게 됩니다. 이동하시겠습니까?"
+          onConfirm={() => {
+            Linking.openURL(melonLink);
+          }}
+          onCancel={() => {
+            setIsModalVisible(false);
+          }}
+          confirmText="확인"
+          cancelText="취소"
+        />
+      )}
     </View>
   );
 };

@@ -21,6 +21,7 @@ type SongRelatedProps = {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
 };

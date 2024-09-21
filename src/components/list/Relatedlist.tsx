@@ -15,6 +15,7 @@ interface RelatedlistProps {
     songName: string,
     singerName: string,
     album: string,
+    melonLink: string,
     isMr: boolean,
   ) => void;
   handleRefreshRelatedSongs: () => void;
@@ -40,6 +41,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
         songName={item.songName}
         singerName={item.singerName}
         album={item.album}
+        melonLink={item.melonLink}
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
         isMr={item.isMr}
@@ -51,6 +53,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
             item.songName,
             item.singerName,
             item.album,
+            item.melonLink || '',
             item.isMr,
           )
         }
