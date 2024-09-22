@@ -21,7 +21,7 @@ const TagDetailListItem = ({tag, Icon, onPress}: TagDetailListItemProps) => {
   );
 
   const handlePress = () => {
-    console.log(isPressed);
+    // console.log(isPressed);
     if (!isPressed) {
       setIsPressed(true);
       onPress();

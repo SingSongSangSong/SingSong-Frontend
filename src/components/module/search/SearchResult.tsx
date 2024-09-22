@@ -109,7 +109,7 @@ const SearchResult = ({
     if (value != 'all') {
       setCategory(value);
       setIsLoading(true);
-      console.log('value', value);
+      // console.log('value', value);
       const tempData = await functions[value](inputText, 1, 20); //누르면 그냥 1로 페이지 초기화
       setSelectedDetailData(tempData.data.songs);
       setPage(tempData.data.nextPage);

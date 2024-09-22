@@ -93,7 +93,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
     if (tempCharts) {
       setInitCharts(tempCharts.charts, 5);
       setUserAgeGroup(tempCharts.ageGroup);
-      console.log('ageGroup:', tempCharts.ageGroup);
+      // console.log('ageGroup:', tempCharts.ageGroup);
       setTime(tempCharts.time);
       if (tempCharts.gender === 'Unknown') {
         setSelectedGender('MIXED');

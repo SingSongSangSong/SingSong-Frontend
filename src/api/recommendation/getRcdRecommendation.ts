@@ -15,7 +15,7 @@ const getRcdRecommendation = async (pageId: number) => {
         },
       },
     );
-    console.log('data for rcd recommendation song response', response.data);
+    // console.log('data for rcd recommendation song response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching rcd recommendation song:', error);
