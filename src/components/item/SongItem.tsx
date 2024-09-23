@@ -21,6 +21,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {CustomModal, TextButton} from '..';
 import {useFocusEffect} from '@react-navigation/native';
 import CustomText from '../text/CustomText';
+import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 interface SongItemProps {
   songId: number;
@@ -100,7 +101,19 @@ SongItemProps) => {
           style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <View style={tw`flex-row items-center`}>
             <View style={tw`items-center justify-center w-[16] h-[16]`}>
-              {album === '' ? (
+              <View
+                style={[
+                  {
+                    backgroundColor: 'rgba(0, 0, 0, 1)',
+                    width: 54,
+                    height: 54,
+                  },
+                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
+                ]}>
+                {/* <MusicIcon width={16} height={16} /> */}
+                <WhiteLogoIcon width={54} height={38} />
+              </View>
+              {/* {album === '' ? (
                 <View
                   style={[
                     {
@@ -124,7 +137,7 @@ SongItemProps) => {
                     style={tw`w-full h-full rounded-sm`}
                   />
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
 
             <View style={tw`flex-1 h-full ml-4 mr-2`}>

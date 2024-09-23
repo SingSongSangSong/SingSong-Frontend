@@ -63,7 +63,11 @@ const HotTrendingItem = ({
               }}
               style={tw`rounded-lg justify-center items-center`}
               activeOpacity={1.0}>
-              {!album || album == '' ? (
+              <View
+                style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View>
+              {/* {!album || album == '' ? (
                 <View
                   style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
                   <WhiteLogoIcon width={54} height={38} />
@@ -74,7 +78,7 @@ const HotTrendingItem = ({
                   style={tw`w-12 h-12 rounded-md`}
                   resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
                 />
-              )}
+              )} */}
             </TouchableOpacity>
             {/* </View> */}
             <View style={tw`items-center mx-1`}>

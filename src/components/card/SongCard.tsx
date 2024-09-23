@@ -13,6 +13,7 @@ import MusicIcon from '../../assets/svg/music.svg';
 import {CommonTag, CustomModal} from '..';
 import CustomText from '../text/CustomText';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 type SongCardProps = {
   songName: string;
@@ -44,7 +45,7 @@ const SongCard = ({
         style={tw`mx-1`}
         onPress={onSongPress}
         activeOpacity={1}>
-        {album != '' ? (
+        {/* {album != '' ? (
           // <View
           //   style={[
           //     {
@@ -89,7 +90,19 @@ const SongCard = ({
             ]}>
             <MusicIcon width={40} height={40} />
           </View>
-        )}
+        )} */}
+        <View
+          style={[
+            {
+              backgroundColor: 'rgba(0, 0, 0, 1)',
+              width: cardWidth,
+              height: cardWidth,
+            },
+            tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
+          ]}>
+          {/* <MusicIcon width={40} height={40} /> */}
+          <WhiteLogoIcon width={108} height={76} />
+        </View>
         <View style={tw`flex-row m-1`}>
           <View
             style={tw`px-3 py-0.5 border border-[${designatedColor.PINK2}] rounded-full`}>

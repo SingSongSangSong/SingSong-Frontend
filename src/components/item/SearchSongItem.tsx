@@ -9,6 +9,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {CommonTag} from '../tag/CommonTag';
 import CustomText from '../text/CustomText';
 import {CustomModal} from '../message/CustomModal';
+import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 interface SearchSongItemProps {
   songId: number;
@@ -74,7 +75,19 @@ const SearchSongItem = ({
           style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 mx-2`}>
           <View style={tw`flex-row flex-1`}>
             <View style={tw`items-center justify-center w-[12] h-[12]`}>
-              {album == '' ? (
+              <View
+                style={[
+                  {
+                    backgroundColor: 'rgba(0, 0, 0, 1)',
+                    width: 54,
+                    height: 54,
+                  },
+                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
+                ]}>
+                <WhiteLogoIcon width={54} height={38} />
+                {/* <MusicIcon width={16} height={16} /> */}
+              </View>
+              {/* {album == '' ? (
                 <View
                   style={[
                     {
@@ -98,7 +111,7 @@ const SearchSongItem = ({
                     style={tw`w-full h-full rounded-sm`}
                   />
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
 
             <View style={tw`flex-1 h-full ml-4 mr-2`}>
