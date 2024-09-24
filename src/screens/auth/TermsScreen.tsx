@@ -6,6 +6,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   useWindowDimensions,
+  Linking,
+  ActivityIndicator,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -30,13 +32,14 @@ function TermsScreen(props: TermsScreenProps) {
     navigation: props.navigation,
   });
 
-  const {width} = useWindowDimensions(); // 화면의 너비와 높이를 가져옴
+  const {width, height} = useWindowDimensions(); // 화면의 너비와 높이를 가져옴
+  const isLandscape = width > height;
 
   return (
-    <View style={tw`flex-1 justify-center items-center bg-white p-6`}>
+    <View style={tw`flex-1 items-center bg-white p-6`}>
       {!termsHandler.isNextStep ? (
-        <>
-          <View style={tw`flex-row items-center`}>
+        <View style={[tw`flex-1 pt-20`, isLandscape && tw`pt-2`]}>
+          <View style={tw`flex-row items-center `}>
             <LogoBlackIcon width={59.04} height={30.96} />
             <CustomText style={tw`text-black text-xl font-bold ml-2`}>
               고객님 환영합니다!
@@ -81,7 +84,11 @@ function TermsScreen(props: TermsScreenProps) {
                     {item.label}
                   </CustomText>
                 </View>
-                <TouchableOpacity style={tw`p-1`}>
+                <TouchableOpacity
+                  style={tw`p-1`}
+                  onPress={() => {
+                    Linking.openURL(item.url);
+                  }}>
                   <ArrowRightIcon />
                 </TouchableOpacity>
               </View>
@@ -112,10 +119,14 @@ function TermsScreen(props: TermsScreenProps) {
             }}>
             <CustomText style={tw`text-white text-sm`}>다음</CustomText>
           </TouchableOpacity>
-        </>
+        </View>
       ) : (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={tw`flex-1 w-full`}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
+          accessible={false}>
+          <View style={[tw`flex-1 w-full pt-20`, isLandscape && tw`pt-2`]}>
             <View>
               <CustomText style={tw`text-black text-lg font-bold my-4 ml-2`}>
                 출생연도와 성별을 입력해주세요
@@ -178,6 +189,12 @@ function TermsScreen(props: TermsScreenProps) {
             </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
+      )}
+      {termsHandler.isLoggedProcess && (
+        <View
+          style={tw`absolute top-0 left-0 right-0 bottom-0 justify-center items-center`}>
+          <ActivityIndicator size="large" color="#D2E0FB" />
+        </View>
       )}
     </View>
   );

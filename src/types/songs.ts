@@ -7,6 +7,7 @@ interface KeepSong {
 interface TermItem {
   label: string;
   value: string;
+  url: string;
 }
 
 interface RcdHomeSong {
