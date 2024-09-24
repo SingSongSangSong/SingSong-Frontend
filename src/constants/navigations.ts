@@ -18,6 +18,7 @@ const appStackNavigations = {
   MAIN: 'Main',
   SPLASH: 'Splash',
   LOGIN: 'Login',
+  TERMS: 'Terms',
 } as const;
 
 const homeStackNavigations = {

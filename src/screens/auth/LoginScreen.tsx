@@ -133,7 +133,13 @@ function LoginScreen({navigation}: LoginScreenProps) {
               Platform.OS == 'ios' ? 'Sign in with Kakao' : '카카오로 로그인'
             }
             onPress={
-              loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
+              // loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
+              () => {
+                navigation.replace(appStackNavigations.TERMS, {
+                  provider: 'KAKAO_KEY',
+                  idToken: 'temp',
+                });
+              }
             }
             color={designatedColor.KAKAO_YELLOW}
             Icon={KaKaoIcon}
