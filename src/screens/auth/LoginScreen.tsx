@@ -2,12 +2,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
-  Keyboard,
-  Modal,
-  Text,
-  TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
   Platform,
 } from 'react-native';
@@ -15,20 +10,12 @@ import React from 'react';
 import {LargeButton} from '../../components';
 import KaKaoIcon from '../../assets/svg/kakao.svg';
 import tw from 'twrnc';
-import {
-  ACCESS_TOKEN,
-  appStackNavigations,
-  designatedColor,
-  REFRESH_TOKEN,
-} from '../../constants';
+import {appStackNavigations, designatedColor} from '../../constants';
 import {AppStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useLogin from '../../hooks/useLogin';
 import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
-import GuestStore from '../../store/GuestStore';
 import CustomText from '../../components/text/CustomText';
-import postMemberLogin from '../../api/member/postMemberLogin';
-import TokenStore from '../../store/TokenStore';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 
@@ -38,64 +25,7 @@ type LoginScreenProps = StackScreenProps<
 >;
 
 function LoginScreen({navigation}: LoginScreenProps) {
-  const loginHandler = useLogin();
-  // console.log('prvalue', loginHandler.prValue);
-  // const setIsGuest = GuestStore(state => state.setIsGuest);
-  const {setGuestState} = GuestStore();
-  const {setSecureValue} = TokenStore();
-
-  const handleKakaoButton = async () => {
-    try {
-      await loginHandler.handleKakaoLogin();
-    } catch (err) {
-      console.error('Login Failed', err);
-    }
-  };
-
-  const handleKakaoButton2 = async () => {
-    try {
-      await loginHandler.handleKakaoLogin2();
-      navigation.replace(appStackNavigations.MAIN);
-    } catch (err) {
-      console.error('Login Failed', err);
-    }
-  };
-
-  const handleAppleButton = async () => {
-    try {
-      await loginHandler.handleAppleLogin();
-    } catch (err) {
-      console.error('Login Failed', err);
-    }
-  };
-
-  const handleAppleButton2 = async () => {
-    try {
-      await loginHandler.handleAppleLogin2();
-      navigation.replace(appStackNavigations.MAIN);
-    } catch (err) {
-      console.error('Login Failed', err);
-    }
-  };
-
-  const handleOnModalCloseButton = async () => {
-    const value = await loginHandler._handleLogin();
-    if (value) {
-      loginHandler.setPermissionValue('true');
-      navigation.replace(appStackNavigations.MAIN); //메인으로 이동
-    }
-  };
-
-  const handleGuestButton = async () => {
-    setGuestState(true);
-    // navigation.replace(appStackNavigations.MAIN);
-    loginHandler.setIsLoggedProcess(true);
-    const data = await postMemberLogin('', 'Anonymous');
-    setSecureValue(ACCESS_TOKEN, data.data.accessToken);
-    setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
-    loginHandler.setIsLoggedProcess(false);
-    navigation.replace(appStackNavigations.MAIN);
-  };
+  const loginHandler = useLogin({navigation});
 
   const deviceHeight = Dimensions.get('window').height;
 
@@ -120,7 +50,9 @@ function LoginScreen({navigation}: LoginScreenProps) {
             <LargeButton
               title="Sign in with Apple"
               onPress={
-                loginHandler.prValue ? handleAppleButton2 : handleAppleButton
+                loginHandler.prValue
+                  ? loginHandler.handleAppleLogin2
+                  : loginHandler.handleAppleLogin
               }
               color={designatedColor.WHITE}
               Icon={AppleBlackIcon}
@@ -133,26 +65,17 @@ function LoginScreen({navigation}: LoginScreenProps) {
               Platform.OS == 'ios' ? 'Sign in with Kakao' : '카카오로 로그인'
             }
             onPress={
-              // loginHandler.prValue ? handleKakaoButton2 : handleKakaoButton
-              () => {
-                navigation.replace(appStackNavigations.TERMS, {
-                  provider: 'KAKAO_KEY',
-                  idToken: 'temp',
-                });
-              }
+              loginHandler.prValue
+                ? loginHandler.handleKakaoLogin2
+                : loginHandler.handleKakaoLogin
             }
             color={designatedColor.KAKAO_YELLOW}
             Icon={KaKaoIcon}
           />
         </View>
 
-        {/* <LargeButton
-          title="GUEST"
-          onPress={handleGuestButton}
-          color="#D2E0FB"
-        /> */}
         <TouchableOpacity
-          onPress={handleGuestButton}
+          onPress={loginHandler.handleGuestLogin}
           activeOpacity={0.8}
           style={tw`items-center justify-center`}>
           <View style={tw`flex-row items-center mt-2`}>
@@ -168,7 +91,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
         </View>
       )}
 
-      <Modal
+      {/* <Modal
         transparent={true}
         visible={loginHandler.isModalVisible}
         animationType="fade">
@@ -236,7 +159,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
                         출생연도와 성별을 입력해주세요
                       </CustomText>
                       <View style={tw`mx-3`}>
-                        {/* 출생연도 입력 */}
+
                         <View style={tw`flex-row items-center`}>
                           <View
                             style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
@@ -309,7 +232,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
+      </Modal> */}
     </View>
   );
 }

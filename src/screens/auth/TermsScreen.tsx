@@ -1,5 +1,12 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, TextInput, Keyboard} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+  useWindowDimensions,
+} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {StackScreenProps} from '@react-navigation/stack';
 import {AppStackParamList} from '../../types';
@@ -9,6 +16,7 @@ import LogoBlackIcon from '../../assets/svg/logoBlack.svg';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import useTerms from '../../hooks/useTerms';
 import CustomText from '../../components/text/CustomText';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 type TermsScreenProps = StackScreenProps<
   AppStackParamList,
@@ -19,23 +27,28 @@ function TermsScreen(props: TermsScreenProps) {
   const termsHandler = useTerms({
     provider: props.route.params.provider,
     idToken: props.route.params.idToken,
+    navigation: props.navigation,
   });
 
+  const {width} = useWindowDimensions(); // 화면의 너비와 높이를 가져옴
+
   return (
-    <View style={tw`flex-1 bg-white p-6`}>
+    <View style={tw`flex-1 justify-center items-center bg-white p-6`}>
       {!termsHandler.isNextStep ? (
         <>
-          <View style={tw`ml-4 mt-25`}>
-            <View style={tw`flex-row items-center`}>
-              <LogoBlackIcon width={59.04} height={30.96} />
-              <CustomText style={tw`text-black text-xl font-bold ml-2`}>
-                고객님 환영합니다!
-              </CustomText>
-            </View>
+          <View style={tw`flex-row items-center`}>
+            <LogoBlackIcon width={59.04} height={30.96} />
+            <CustomText style={tw`text-black text-xl font-bold ml-2`}>
+              고객님 환영합니다!
+            </CustomText>
           </View>
-          <View style={tw`mt-10 ml-4`}>
+          <View style={tw`mt-10`}>
+            {/* 조건에 따라 가로 크기를 동적으로 조절 */}
             <View
-              style={tw`flex-row items-center justify-between pb-3 mb-3 border-b-[0.5px] border-[${designatedColor.GRAY3}]`}>
+              style={[
+                tw`flex-row items-center justify-between pb-3 mb-3 border-b-[0.5px]`,
+                {borderColor: designatedColor.GRAY3, width: width * 0.9}, // 화면 너비의 90%를 사용
+              ]}>
               <View style={tw`flex-row items-center`}>
                 <CheckBox
                   value={termsHandler.isAllChecked}
@@ -48,104 +61,52 @@ function TermsScreen(props: TermsScreenProps) {
               </View>
             </View>
 
-            <View style={tw`flex-row justify-between items-center my-3`}>
-              <View style={tw`flex-row items-center`}>
-                <CheckBox
-                  value={termsHandler.terms.termsOfService}
-                  onValueChange={newValue =>
-                    termsHandler.handleCheck('termsOfService', newValue)
-                  }
-                  tintColors={{true: 'black'}}
-                />
-                <CustomText style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
-                  [필수] 이용약관 동의
-                </CustomText>
+            {termsHandler.termsList.map((item, index) => (
+              <View
+                key={index}
+                style={[
+                  tw`flex-row justify-between items-center my-3`,
+                  {width: width * 0.9}, // 화면 너비의 90%를 사용
+                ]}>
+                <View style={tw`flex-row items-center`}>
+                  <CheckBox
+                    value={termsHandler.terms[item.value]}
+                    onValueChange={newValue =>
+                      termsHandler.handleCheck(item.value, newValue)
+                    }
+                    tintColors={{true: 'black'}}
+                  />
+                  <CustomText
+                    style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
+                    {item.label}
+                  </CustomText>
+                </View>
+                <TouchableOpacity style={tw`p-1`}>
+                  <ArrowRightIcon />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={tw`p-1`}>
-                <ArrowRightIcon />
-              </TouchableOpacity>
-            </View>
-
-            <View style={tw`flex-row items-center justify-between my-3`}>
-              <View style={tw`flex-row items-center`}>
-                <CheckBox
-                  value={termsHandler.terms.personalInfo}
-                  onValueChange={newValue =>
-                    termsHandler.handleCheck('personalInfo', newValue)
-                  }
-                  tintColors={{true: 'black'}}
-                />
-                <CustomText style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
-                  [필수] 개인정보 수집 및 이용 동의
-                </CustomText>
-              </View>
-              <TouchableOpacity style={tw`p-1`}>
-                <ArrowRightIcon />
-              </TouchableOpacity>
-            </View>
-
-            <View style={tw`flex-row items-center justify-between my-3`}>
-              <View style={tw`flex-row items-center`}>
-                <CheckBox
-                  value={termsHandler.terms.thirdPartyInfo}
-                  onValueChange={newValue =>
-                    termsHandler.handleCheck('thirdPartyInfo', newValue)
-                  }
-                  tintColors={{true: 'black'}}
-                />
-                <CustomText style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
-                  [선택] 제 3자 정보 제공 동의
-                </CustomText>
-              </View>
-              <TouchableOpacity style={tw`p-1`}>
-                <ArrowRightIcon />
-              </TouchableOpacity>
-            </View>
-
-            <View style={tw`flex-row items-center justify-between my-3`}>
-              <View style={tw`flex-row items-center`}>
-                <CheckBox
-                  value={termsHandler.terms.marketingInfo}
-                  onValueChange={newValue =>
-                    termsHandler.handleCheck('marketingInfo', newValue)
-                  }
-                  tintColors={{true: 'black'}}
-                />
-                <Text style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
-                  [선택] 마케팅 정보 수신 동의
-                </Text>
-              </View>
-              <TouchableOpacity style={tw`p-1`}>
-                <ArrowRightIcon />
-              </TouchableOpacity>
-            </View>
-
-            <View style={tw`flex-row items-center justify-between my-3`}>
-              <View style={tw`flex-row items-center`}>
-                <CheckBox
-                  value={termsHandler.terms.locationInfo}
-                  onValueChange={newValue =>
-                    termsHandler.handleCheck('locationInfo', newValue)
-                  }
-                  tintColors={{true: 'black'}}
-                />
-                <CustomText style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
-                  [선택] 광고성 정보 수신 동의
-                </CustomText>
-              </View>
-              <TouchableOpacity style={tw`p-1`}>
-                <ArrowRightIcon />
-              </TouchableOpacity>
-            </View>
+            ))}
           </View>
+
           <TouchableOpacity
             style={[
-              tw`mt-6 bg-[${designatedColor.GRAY2}] py-3 mx-10 rounded-full items-center`,
-              {position: 'absolute', bottom: 40, left: 0, right: 0},
+              tw`mt-6 bg-[${designatedColor.GRAY2}] py-3 rounded-full items-center`,
+              {
+                position: 'absolute',
+                bottom: 40,
+                left: width * 0.05,
+                right: width * 0.05,
+              }, // 좌우 여백을 화면의 5%로 조정
               termsHandler.terms.termsOfService &&
                 termsHandler.terms.personalInfo &&
                 tw`bg-[${designatedColor.BLACK}]`,
             ]}
+            disabled={
+              !(
+                termsHandler.terms.termsOfService &&
+                termsHandler.terms.personalInfo
+              )
+            }
             onPress={() => {
               termsHandler.setIsNextStep(true);
             }}>
@@ -153,90 +114,70 @@ function TermsScreen(props: TermsScreenProps) {
           </TouchableOpacity>
         </>
       ) : (
-        <>
-          <View style={tw`ml-4 mt-25`}>
-            <CustomText style={tw`text-black text-lg font-bold my-4`}>
-              출생연도와 성별을 입력해주세요
-            </CustomText>
-            <View style={tw`mx-3`}>
-              {/* 출생연도 입력 */}
-              <View style={tw`flex-row items-center`}>
-                <View style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                  <CustomText style={tw`text-black`}>출생연도</CustomText>
-                </View>
-                <TextInput
-                  style={tw`border border-gray-400 rounded p-2 w-40`}
-                  placeholder="ex) 1990"
-                  keyboardType="numeric"
-                  value={termsHandler.birthYear}
-                  onChangeText={termsHandler.setBirthYear}
-                  maxLength={4}
-                  autoFocus={true}
-                />
-              </View>
-              <View style={tw`flex-row items-center`}>
-                <View style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                  <CustomText style={tw`text-black`}>성별</CustomText>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={tw`flex-1 w-full`}>
+            <View>
+              <CustomText style={tw`text-black text-lg font-bold my-4 ml-2`}>
+                출생연도와 성별을 입력해주세요
+              </CustomText>
+
+              <View style={tw`mx-3 mt-4`}>
+                {/* 출생연도 입력 */}
+                <View style={tw`flex-row items-center`}>
+                  <View
+                    style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
+                    <CustomText style={tw`text-black`}>출생연도</CustomText>
+                  </View>
+
+                  <TextInput
+                    style={tw`flex-1 border border-gray-400 rounded p-2`}
+                    placeholder="ex) 1990"
+                    keyboardType="numeric"
+                    value={termsHandler.birthYear}
+                    onChangeText={termsHandler.setBirthYear}
+                    maxLength={4}
+                    autoFocus={true}
+                  />
                 </View>
 
-                <View style={tw`flex-row justify-around px-2 w-40`}>
-                  <TouchableOpacity
-                    style={[
-                      tw`px-4 py-2 rounded mr-4`,
-                      termsHandler.gender === 'MALE'
-                        ? tw`bg-black`
-                        : tw`bg-gray-300`,
-                    ]}
-                    onPress={() => {
-                      Keyboard.dismiss();
-                      //   termsHandler.handleGenderToggle('MALE');
-                    }}>
-                    <CustomText style={tw`text-white text-center`}>
-                      남성
-                    </CustomText>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[
-                      tw`px-4 py-2 rounded`,
-                      termsHandler.gender === 'FEMALE'
-                        ? tw`bg-black`
-                        : tw`bg-gray-300`,
-                    ]}
-                    onPress={() => {
-                      Keyboard.dismiss();
-                      //   termsHandler.handleGenderToggle('FEMALE');
-                    }}>
-                    <CustomText style={tw`text-white text-center`}>
-                      여성
-                    </CustomText>
-                  </TouchableOpacity>
+                <View style={tw`flex-row items-center mt-2`}>
+                  <View
+                    style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
+                    <CustomText style={tw`text-black`}>성별</CustomText>
+                  </View>
+
+                  {/* 성별 선택 Radio 버튼 */}
+                  <View style={tw`flex-row justify-around px-2 w-40`}>
+                    <RadioGroup
+                      radioButtons={termsHandler.radioButtons}
+                      onPress={termsHandler.handleOnPressRadioButton}
+                      selectedId={termsHandler.selectedId}
+                      layout="row"
+                    />
+                  </View>
                 </View>
               </View>
             </View>
+
+            {/* 완료 버튼 */}
+            <TouchableOpacity
+              style={[
+                tw`mt-6 bg-[${designatedColor.GRAY2}] py-3 rounded-full items-center`,
+                {
+                  position: 'absolute',
+                  bottom: 40,
+                  left: width * 0.05,
+                  right: width * 0.05,
+                }, // 좌우 여백을 화면의 5%로 조정
+                termsHandler.gender &&
+                  termsHandler.birthYear &&
+                  tw`bg-[${designatedColor.BLACK}]`,
+              ]}
+              onPress={termsHandler.handleOnPressSubmission}>
+              <CustomText style={tw`text-white text-sm`}>완료</CustomText>
+            </TouchableOpacity>
           </View>
-          {/* <TouchableOpacity
-            style={tw`my-6 mx-8 bg-black p-2 rounded`}
-            activeOpacity={0.8}
-            // onPress={handleOnModalCloseButton}
-          >
-            <CustomText style={tw`text-white font-bold text-center`}>
-              완료
-            </CustomText>
-          </TouchableOpacity> */}
-          <TouchableOpacity
-            style={[
-              tw`mt-6 bg-[${designatedColor.GRAY2}] py-3 mx-10 rounded-full items-center`,
-              {position: 'absolute', bottom: 40, left: 0, right: 0},
-              termsHandler.terms.termsOfService &&
-                termsHandler.terms.personalInfo &&
-                tw`bg-[${designatedColor.BLACK}]`,
-            ]}
-            onPress={() => {
-              termsHandler.setIsNextStep(true);
-            }}>
-            <CustomText style={tw`text-white text-sm`}>완료</CustomText>
-          </TouchableOpacity>
-        </>
+        </TouchableWithoutFeedback>
       )}
     </View>
   );

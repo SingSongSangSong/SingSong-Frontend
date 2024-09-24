@@ -4,6 +4,10 @@ interface KeepSong {
   songName: string;
   songNumber: number;
 }
+interface TermItem {
+  label: string;
+  value: string;
+}
 
 interface RcdHomeSong {
   album: string;
@@ -276,4 +280,5 @@ export type {
   ChartV2,
   ChartV2Response,
   ChartSong,
+  TermItem,
 };
