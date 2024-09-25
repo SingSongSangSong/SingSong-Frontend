@@ -73,3 +73,5 @@ export * from './list/SearchSongsList';
 export * from './list/KeepSongsList';
 export * from './list/HotTrendingV2';
 export * from './text/CustomText';
+export * from './module/LlmModule';
+export * from './module/SearchKeyboard';

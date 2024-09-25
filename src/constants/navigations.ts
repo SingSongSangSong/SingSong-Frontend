@@ -34,6 +34,8 @@ const homeStackNavigations = {
   SEARCH: '_Search',
   AI_RECOMMENDATION: '_AiRecommendation',
   NICKNAME_CHANGE: '_NicknameChange',
+  AI_LLM: '_AiLlm',
+  AI_LLM_RESULT: '_AiLlmResult',
 } as const;
 
 const keepStackNavigations = {

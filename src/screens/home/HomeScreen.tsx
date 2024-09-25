@@ -16,6 +16,7 @@ import {
   AiSongCardModule,
   HotTrendingModule,
   IconButton,
+  LlmModule,
   SongCardModule,
   TaglistModule,
 } from '../../components';
@@ -166,6 +167,10 @@ const HomeScreen = (props: HomeScreenProps) => {
     props.navigation.navigate(homeStackNavigations.SEARCH);
   };
 
+  const handleOnPressLlm = () => {
+    props.navigation.navigate(homeStackNavigations.AI_LLM);
+  };
+
   // const handleOnPressTotalButton = useCallback(() => {
   //   navigation.navigate(homeStackNavigations.TAG_DETAIL);
   // }, [navigation]);
@@ -229,17 +234,17 @@ const HomeScreen = (props: HomeScreenProps) => {
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
           {/* {!isGuest && ( */}
-          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
-          {/* )} */}
-
-          <TaglistModule
-            onPressTagButton={handleOnTagPress}
-            // onPressTotalButton={handleOnPressTotalButton}
-          />
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
           />
+          <LlmModule onPressSearch={handleOnPressLlm} />
+          {/* )} */}
+          <TaglistModule
+            onPressTagButton={handleOnTagPress}
+            // onPressTotalButton={handleOnPressTotalButton}
+          />
+          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
           <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnPreviewTagPress}

@@ -6,6 +6,7 @@ import {
   mainTabNavigations,
 } from '../constants';
 import {Comment} from './comment';
+import {Song} from './songs';
 
 type AuthStackParamList = {
   [authNavigations.AUTH_HOME]: undefined;
@@ -49,6 +50,8 @@ type HomeStackParamList = {
   [homeStackNavigations.SEARCH]: undefined;
   [homeStackNavigations.AI_RECOMMENDATION]: undefined;
   [homeStackNavigations.NICKNAME_CHANGE]: {nickname: string};
+  [homeStackNavigations.AI_LLM]: undefined;
+  [homeStackNavigations.AI_LLM_RESULT]: {resultSong: Song[]};
 };
 
 type KeepStackParamList = {

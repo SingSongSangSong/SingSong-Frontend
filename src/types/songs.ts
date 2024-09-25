@@ -35,6 +35,11 @@ interface Song {
   melonLink?: string;
 }
 
+interface LlmSongResponse {
+  data: {songs: Song[]};
+  message: string;
+}
+
 interface GetSearchSong {
   artistName: Song[];
   songName: Song[];
@@ -282,4 +287,5 @@ export type {
   ChartV2Response,
   ChartSong,
   TermItem,
+  LlmSongResponse,
 };

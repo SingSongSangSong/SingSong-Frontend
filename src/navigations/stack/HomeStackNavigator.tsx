@@ -23,6 +23,8 @@ import ArrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import {Platform} from 'react-native';
 import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendationScreen';
 import NicknameChangeScreen from '../../screens/home/NicknameChangeScreen';
+import AiLlmScreen from '../../screens/llm/AiLlmScreen';
+import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -240,6 +242,41 @@ function HomeStackNavigator() {
         component={SearchScreen}
         options={({navigation}) => ({
           headerShown: false,
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={homeStackNavigations.AI_LLM}
+        component={AiLlmScreen}
+        options={({navigation}) => ({
+          // headerShown: false,
+          headerTitle: 'AI 검색',
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name={homeStackNavigations.AI_LLM_RESULT}
+        component={AiLlmResultScreen}
+        options={({navigation}) => ({
+          // headerShown: false,
+          headerTitle: '',
           headerLeft: () => (
             <IconButton
               onPress={() => {

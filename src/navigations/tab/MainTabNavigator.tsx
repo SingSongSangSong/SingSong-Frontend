@@ -67,7 +67,9 @@ const MainTabNavigator = () => {
             routeName === keepStackNavigations.KEEP_SONG_DETAIL ||
             routeName === homeStackNavigations.TAG_DETAIL ||
             routeName === homeStackNavigations.AI_RECOMMENDATION ||
-            routeName === homeStackNavigations.NICKNAME_CHANGE
+            routeName === homeStackNavigations.NICKNAME_CHANGE ||
+            routeName === homeStackNavigations.AI_LLM ||
+            routeName === homeStackNavigations.AI_LLM_RESULT
           ) {
             return true;
           }
