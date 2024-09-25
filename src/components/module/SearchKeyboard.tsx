@@ -6,12 +6,14 @@ import {
   InputAccessoryView,
   useWindowDimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import tw from 'twrnc';
 // import SendIcon from '../../assets/svg/send.svg';
 // import {IconButton} from '../button/IconButton';
 import SearchIcon from '../../assets/svg/search.svg';
 import {designatedColor} from '../../constants';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface SearchKeyboardProps {
   onSearchPress: (content: string) => void;
@@ -40,7 +42,8 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
   };
 
   return (
-    // <InputAccessoryView style={[tw`bg-black w-full`]}>
+    // <InputAccessoryView
+    //   style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full py-3`]}>
     <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full py-3`]}>
       <View
         style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 mx-2 border-[0.5px] border-[${designatedColor.PINK2}]`}>
@@ -69,7 +72,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
         </TouchableOpacity>
       </View>
     </View>
-    // </View>
+    // </InputAccessoryView>
   );
 };
 
