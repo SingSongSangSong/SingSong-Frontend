@@ -17,6 +17,8 @@ interface SongsListProps {
   ) => void;
   onKeepAddPress?: (songId: number) => void;
   onKeepRemovePress?: (songId: number) => void;
+  listHeader?: () => React.ReactNode;
+  listFooter?: () => React.ReactNode;
 }
 
 const SongsList = ({
@@ -25,6 +27,8 @@ const SongsList = ({
   onSongPress,
   onKeepAddPress,
   onKeepRemovePress,
+  listHeader,
+  listFooter,
 }: SongsListProps) => {
   const renderItem = ({item}: {item: Song}) => (
     <View>
@@ -60,7 +64,14 @@ const SongsList = ({
     </View>
   );
 
-  return <FlatList data={songlistData} renderItem={renderItem} />;
+  return (
+    <FlatList
+      data={songlistData}
+      renderItem={renderItem}
+      ListHeaderComponent={listHeader}
+      ListFooterComponent={listFooter}
+    />
+  );
 };
 
 export {SongsList};

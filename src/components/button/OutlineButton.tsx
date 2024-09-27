@@ -16,7 +16,7 @@ const OutlineButton: React.FC<OutlineButtonProps> = ({
 }) => {
   return (
     <View
-      style={tw`flex-row justify-center rounded-full border border-[${color}] `}>
+      style={tw`flex-row justify-center rounded-full border border-[${color}] mx-1`}>
       <TouchableOpacity
         style={tw`flex-row justify-center items-center px-4 py-2`}
         onPress={onPress}
