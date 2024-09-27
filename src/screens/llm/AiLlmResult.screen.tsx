@@ -36,10 +36,10 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
       </View> */}
       <SongsList
         songlistData={aiLlmResultHandler.searchResult || []}
-        isShowKeepIcon={false}
+        isShowKeepIcon={true}
         onSongPress={aiLlmResultHandler.handleOnSongPress}
-        // onKeepAddPress={}
-        // onKeepRemovePress={}
+        onKeepAddPress={aiLlmResultHandler.handleOnKeepAddPress}
+        onKeepRemovePress={aiLlmResultHandler.handleOnKeepRemovePress}
       />
     </View>
   );
