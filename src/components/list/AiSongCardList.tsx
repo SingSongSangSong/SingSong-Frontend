@@ -36,7 +36,7 @@ const AiSongCardList = ({
   const deviceWidth = Dimensions.get('window').width;
 
   return (
-    <View style={tw`w-full mx-2 mt-2 my-2`}>
+    <View style={tw`w-full mx-2 mb-2`}>
       <View style={tw`px-2 px-8 mt-2 mb-6 my-4 py-4`}>
         <View style={tw`flex-row justify-between items-center`}>
           <CustomText style={tw`text-[${designatedColor.PINK}] text-lg`}>

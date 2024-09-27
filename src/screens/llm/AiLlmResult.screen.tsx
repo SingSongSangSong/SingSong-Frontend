@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {Animated, Easing, View} from 'react-native';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import tw from 'twrnc';
@@ -44,15 +44,19 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
     return () => floatingAnimation.stop(); // 컴포넌트 언마운트 시 애니메이션 정지
   }, [translateY]);
 
-  const renderHeader = () => (
-    <View style={tw`justify-center items-center py-12`}>
-      <CustomText style={tw`text-lg text-white font-bold`}>
-        싱송이와 생송이가 추천하는 노래에요
-      </CustomText>
-      <Animated.View style={[{transform: [{translateY}]}, tw`pt-8`]}>
-        <ArrowBottomIcon />
-      </Animated.View>
-    </View>
+  // ListHeaderComponent를 useMemo로 캐싱
+  const renderHeader = useMemo(
+    () => (
+      <View style={tw`justify-center items-center py-12`}>
+        <CustomText style={tw`text-lg text-white font-bold`}>
+          싱송이와 생송이가 추천하는 노래에요
+        </CustomText>
+        <Animated.View style={[{transform: [{translateY}]}, tw`pt-8`]}>
+          <ArrowBottomIcon />
+        </Animated.View>
+      </View>
+    ),
+    [translateY],
   );
 
   // FlatList의 FooterComponent

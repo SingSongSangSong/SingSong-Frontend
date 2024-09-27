@@ -82,11 +82,11 @@ const HomeScreen = (props: HomeScreenProps) => {
     [props.navigation],
   );
 
-  const handleOnPreviewTagPress = (tag: string) => {
-    amplitude.track('preview_tag_button_click');
-    logButtonClick('preview_tag_button_click');
-    props.navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
-  };
+  // const handleOnPreviewTagPress = (tag: string) => {
+  //   amplitude.track('preview_tag_button_click');
+  //   logButtonClick('preview_tag_button_click');
+  //   props.navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
+  // };
 
   const handleOnSongPress = (
     songNumber: number,
@@ -234,21 +234,21 @@ const HomeScreen = (props: HomeScreenProps) => {
       <View style={tw`flex-1`}>
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
           {/* {!isGuest && ( */}
+          <LlmModule onPressSearch={handleOnPressLlm} />
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
           />
-          <LlmModule onPressSearch={handleOnPressLlm} />
           {/* )} */}
           <TaglistModule
             onPressTagButton={handleOnTagPress}
             // onPressTotalButton={handleOnPressTotalButton}
           />
           <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
-          <SongCardModule
+          {/* <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnPreviewTagPress}
-          />
+          /> */}
         </ScrollView>
         {loadingVisible && (
           <Modal
@@ -256,8 +256,9 @@ const HomeScreen = (props: HomeScreenProps) => {
             visible={loadingVisible}
             animationType="fade">
             <View
+              // bg-opacity-20
               style={[
-                tw`absolute bg-black inset-x-0 bottom-0 justify-center items-center bg-opacity-50`,
+                tw`absolute bg-[${designatedColor.BACKGROUND_BLACK}] inset-x-0 bottom-0 justify-center items-center `,
                 {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>

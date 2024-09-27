@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
 import {useQuery} from '@tanstack/react-query';
 import getRcdRecommendation from '../../api/recommendation/getRcdRecommendation';
 import {AiSongCardList} from '..';
+import useSongStore from '../../store/useSongStore';
+import {designatedColor} from '../../constants';
 
 interface AiSongCardModuleProps {
   onPressTotalButton: () => void;
@@ -22,6 +24,7 @@ const AiSongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
 }: AiSongCardModuleProps) => {
+  const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
   const {
     data: tempRcdRecommendationSongs,
     error: rcdRecommendationError,
@@ -33,10 +36,22 @@ const AiSongCardModule = ({
     select: data => data.data.songs,
   });
 
+  useEffect(() => {
+    if (tempRcdRecommendationSongs || rcdRecommendationError) {
+      // console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
+      // tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
+      //   setPreviewSongs(songWithTags.tag, songWithTags.songs);
+      // });
+      // console.log('setPreview Song completed!!!!!!!!!!!');
+      setLoadingVisible(false);
+    }
+  }, [tempRcdRecommendationSongs, rcdRecommendationError]);
+
   return (
     <View>
       {tempRcdRecommendationSongs ? (
-        <View style={tw`w-full flex-wrap flex-row justify-center items-center`}>
+        <View
+          style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
           <View key="aiSong">
             <AiSongCardList
               tag="AI's PICK"

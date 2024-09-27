@@ -1,10 +1,10 @@
 import {create} from 'zustand';
-import {RcdExploreSong, RcdHomeSong, Song} from '../types';
+import {RcdExploreSong, Song} from '../types';
 
 interface SongState {
   selectedTag: string;
   tags: string[];
-  previewSongs: {[tag: string]: RcdHomeSong[]};
+  // previewSongs: {[tag: string]: RcdHomeSong[]};
   refreshSongs: {[tag: string]: Song[]};
   exploreSongs: RcdExploreSong[];
   time: string;
@@ -13,19 +13,20 @@ interface SongState {
   setGender: (gender: string) => void;
   setSelectedTag: (tag: string) => void;
   setTags: (tags: string[]) => void;
-  setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
+  // setPreviewSongs: (tag: string, songs: RcdHomeSong[]) => void;
   setRefreshSongs: (tag: string, songs: Song[]) => void;
   setExploreSongs: (songs: RcdExploreSong[]) => void;
 
   updateRefreshSongs: (tag: string, songs: Song[]) => Song[];
   loadingVisible: boolean;
+  setLoadingVisible: (loadingVisible: boolean) => void;
 }
 
 const useSongStore = create<SongState>((set, get) => {
   const initState = {
     selectedTag: '',
     tags: [],
-    previewSongs: {},
+    // previewSongs: {},
     refreshSongs: {},
     exploreSongs: [],
     charts: {},
@@ -58,18 +59,18 @@ const useSongStore = create<SongState>((set, get) => {
         };
       }),
 
-    setPreviewSongs: (tag: string, songs: RcdHomeSong[]) =>
-      set(state => {
-        const existingSongs = state.previewSongs[tag] || [];
-        const updatedSongs = [...existingSongs, ...songs];
-        return {
-          loadingVisible: false,
-          previewSongs: {
-            ...state.previewSongs,
-            [tag]: updatedSongs,
-          },
-        };
-      }),
+    // setPreviewSongs: (tag: string, songs: RcdHomeSong[]) =>
+    //   set(state => {
+    //     const existingSongs = state.previewSongs[tag] || [];
+    //     const updatedSongs = [...existingSongs, ...songs];
+    //     return {
+    //       loadingVisible: false,
+    //       previewSongs: {
+    //         ...state.previewSongs,
+    //         [tag]: updatedSongs,
+    //       },
+    //     };
+    //   }),
 
     setRefreshSongs: (tag: string, songs: Song[]) => {
       set(state => ({
@@ -114,6 +115,12 @@ const useSongStore = create<SongState>((set, get) => {
         gender: gender,
       }));
       // console.log('gender in song store', gender);
+    },
+
+    setLoadingVisible: (loadingVisible: boolean) => {
+      set(() => ({
+        loadingVisible: loadingVisible,
+      }));
     },
   };
 });

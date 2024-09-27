@@ -144,7 +144,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   };
 
   return (
-    <View style={tw`flex-1`}>
+    <View style={tw`flex-1 py-15`}>
       {/* Header Section */}
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
