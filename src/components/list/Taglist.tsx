@@ -43,7 +43,7 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
         onPress={rotateArrow}
         activeOpacity={0.8}
         style={tw`flex-row justify-between px-4 items-center mb-2`}>
-        <CustomText style={tw`text-white text-sm my-2`}>
+        <CustomText style={tw`text-white text-base my-2`}>
           어떤 노래를 찾으시나요?
         </CustomText>
         <View style={tw`items-center my-2`}>

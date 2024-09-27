@@ -40,6 +40,7 @@ import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
 import TokenStore from '../../store/TokenStore';
 import useMemberStore from '../../store/useMemberStore';
+import {KeywordModule} from '../../components/module/KeywordModule';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -235,6 +236,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
           {/* {!isGuest && ( */}
           <LlmModule onPressSearch={handleOnPressLlm} />
+          <KeywordModule />
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
@@ -258,7 +260,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             <View
               // bg-opacity-20
               style={[
-                tw`absolute bg-[${designatedColor.BACKGROUND_BLACK}] inset-x-0 bottom-0 justify-center items-center `,
+                tw`absolute bg-[${designatedColor.BACKGROUND_BLACK}] inset-x-0 bottom-0 justify-center items-center bg-opacity-80`,
                 {top: headerHeight},
               ]}>
               <View style={tw`flex-row`}>

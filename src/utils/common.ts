@@ -10,4 +10,9 @@ const getCurrentVersion = async () => {
   return version;
 };
 
-export {isEmptyObject, getCurrentVersion};
+const getRandomKeywords = (list: string[], count: number) => {
+  const shuffled = [...list].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
+
+export {isEmptyObject, getCurrentVersion, getRandomKeywords};

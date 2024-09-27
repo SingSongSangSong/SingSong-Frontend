@@ -43,10 +43,6 @@ const LlmModule = ({onPressSearch}: LlmModuleProps) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View>
-        <CustomText>다른 사용자들이 검색한 키워드</CustomText>
-        {/* 잠시만 기다려주세요 배경 다 검정색으로 */}
-      </View>
     </>
   );
 };
