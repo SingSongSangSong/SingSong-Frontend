@@ -13,7 +13,7 @@ const KeywordModule = () => {
   //   const [visible, setVisible] = useState(false);
   return (
     <View
-      style={tw`flex-1 py-4 mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+      style={tw`flex-1 pb-4 mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-row items-center mx-4`}>
         <CustomText style={tw`text-base text-white py-2`}>
           다른 사용자들이 검색한 키워드

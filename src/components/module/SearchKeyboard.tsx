@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -18,11 +18,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 interface SearchKeyboardProps {
   onSearchPress: (content: string) => void;
   text: string;
+  sampleText?: string;
 }
 
 const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
   onSearchPress,
   text,
+  sampleText,
 }) => {
   const [sentence, setSentence] = useState<string>('');
   const [inputHeight, setInputHeight] = useState(0);
@@ -41,10 +43,17 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (sampleText && sampleText != '') {
+      setSentence(sampleText);
+      console.log('sampleText:', sampleText);
+    }
+  }, [sampleText]);
+
   return (
     // <InputAccessoryView
     //   style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full py-3`]}>
-    <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full py-3`]}>
+    <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}>
       <View
         style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 mx-2 border-[0.5px] border-[${designatedColor.PINK2}]`}>
         <TextInput
