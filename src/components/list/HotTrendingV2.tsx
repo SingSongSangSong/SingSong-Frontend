@@ -161,14 +161,8 @@
 // };
 
 // export {HotTrendingV2};
-import React, {useState} from 'react';
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import React, {RefObject, useState} from 'react';
+import {View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {HotTrendingItem} from '../item/HotTrendingItem';
 import {designatedColor} from '../../constants';
@@ -187,9 +181,13 @@ interface HotTrendingV2Props {
     melonLink: string,
     isMr: boolean,
   ) => void;
+  isScrollingHome: RefObject<View>;
 }
 
-const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
+const HotTrendingV2 = ({
+  onPressSongButton,
+  isScrollingHome,
+}: HotTrendingV2Props) => {
   const itemsPerPage = 5; // 페이지 당 항목 수
   const selectedCharts = useChartV2Store(state => state.selectedCharts);
   // const [currentPage, setCurrentPage] = useState(0);
@@ -334,7 +332,6 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                         songNumber={item.songNumber}
                         disabled={isScrolling}
                         onPress={() => {
-                          // console.log('onPress!!');
                           onPressSongButton(
                             item.songNumber,
                             item.songId,
@@ -345,6 +342,7 @@ const HotTrendingV2 = ({onPressSongButton}: HotTrendingV2Props) => {
                             item.isMr,
                           );
                         }}
+                        isScrollingHome={isScrollingHome}
                       />
                     ) : (
                       <View

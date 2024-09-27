@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {
   ActivityIndicator,
@@ -17,7 +17,6 @@ import {
   HotTrendingModule,
   IconButton,
   LlmModule,
-  SongCardModule,
   TaglistModule,
 } from '../../components';
 import {HomeStackParamList} from '../../types';
@@ -82,6 +81,26 @@ const HomeScreen = (props: HomeScreenProps) => {
     },
     [props.navigation],
   );
+
+  // const touchableRef = useRef(null);
+  const touchableRef = useRef<View>(null);
+
+  const disableButton = () => {
+    if (touchableRef.current) {
+      // console.log('disableButton');
+      touchableRef.current.setNativeProps({
+        pointerEvents: 'none',
+        opacity: 0.5,
+      });
+    }
+  };
+
+  const enableButton = () => {
+    if (touchableRef.current) {
+      // console.log('enableButton');
+      touchableRef.current.setNativeProps({pointerEvents: 'auto', opacity: 1});
+    }
+  };
 
   // const handleOnPreviewTagPress = (tag: string) => {
   //   amplitude.track('preview_tag_button_click');
@@ -233,7 +252,13 @@ const HomeScreen = (props: HomeScreenProps) => {
         )}
       </View>
       <View style={tw`flex-1`}>
-        <ScrollView contentContainerStyle={tw`w-full flex-grow`}>
+        <ScrollView
+          contentContainerStyle={tw`w-full flex-grow`}
+          // onScrollBeginDrag={() => setIsScrollingHome(true)} // 스크롤이 시작될 때
+          // onScrollEndDrag={() => setIsScrollingHome(false)} // 스크롤이 멈출 때
+          onScrollBeginDrag={disableButton} // 스크롤 시작 시 버튼 비활성화
+          onScrollEndDrag={enableButton}
+          scrollEventThrottle={16}>
           {/* {!isGuest && ( */}
           <LlmModule onPressSearch={handleOnPressLlm} />
           <KeywordModule />
@@ -246,7 +271,11 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressTagButton={handleOnTagPress}
             // onPressTotalButton={handleOnPressTotalButton}
           />
-          <HotTrendingModule onPressSongButton={handleOnHotTrendingSongPress} />
+          <HotTrendingModule
+            onPressSongButton={handleOnHotTrendingSongPress}
+            // isScrollingHome={isScrollingHome}
+            isScrollingHome={touchableRef}
+          />
           {/* <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnPreviewTagPress}

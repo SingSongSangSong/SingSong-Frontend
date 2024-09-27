@@ -1,24 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {RefObject, useEffect, useState} from 'react';
 import {
-  Text,
   View,
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import tw from 'twrnc';
-import useChartStore from '../../store/useChartStore';
-import {formatDateString, logToggleClick} from '../../utils';
+// import useChartStore from '../../store/useChartStore';
+import {formatDateString} from '../../utils';
 import {designatedColor} from '../../constants';
-import {ToggleButton} from '../button/ToggleButton';
-import {HotTrending, HotTrendingV2} from '..';
+// import {ToggleButton} from '../button/ToggleButton';
+import {HotTrendingV2} from '..';
 import {EmptyHotTrending} from '..';
 import {useQuery} from '@tanstack/react-query';
 // import getChart from '../../api/songs/getChart';
 import getV2Chart from '../../api/songs/getV2Chart';
 import useChartV2Store from '../../store/useChartV2Store';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
-import CheckIcon from '../../assets/svg/check.svg';
+// import CheckIcon from '../../assets/svg/check.svg';
 import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
 import CustomText from '../text/CustomText';
 interface HotTrendingModuleProps {
@@ -31,9 +30,13 @@ interface HotTrendingModuleProps {
     melonLink: string,
     isMr: boolean,
   ) => void;
+  isScrollingHome: RefObject<View>;
 }
 
-const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
+const HotTrendingModule = ({
+  onPressSongButton,
+  isScrollingHome,
+}: HotTrendingModuleProps) => {
   // const selectedGender = useChartStore(state => state.selectedGender);
   // const setSelectedGender = useChartStore(state => state.setSelectedGender);
   // const time = useChartStore(state => state.time);
@@ -46,14 +49,14 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
     state => state.setSelectedAgeGroup,
   );
   const time = useChartV2Store(state => state.time);
-  const setCharts = useChartV2Store(state => state.setCharts);
+  // const setCharts = useChartV2Store(state => state.setCharts);
   const setTime = useChartV2Store(state => state.setTime);
   const setUserGender = useChartV2Store(state => state.setUserGender);
   const setUserAgeGroup = useChartV2Store(state => state.setUserAgeGroup);
   const setInitCharts = useChartV2Store(state => state.setInitChart);
   const setSelectedCharts = useChartV2Store(state => state.setSelectedCharts);
   const genders = useChartV2Store(state => state.genders);
-  const ageGroups = useChartV2Store(state => state.ageGroups);
+  // const ageGroups = useChartV2Store(state => state.ageGroups);
   // const userGender = useChartV2Store(state => state.userGender);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -144,7 +147,8 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
   };
 
   return (
-    <View style={tw`flex-1 py-15`}>
+    <View
+      style={tw`flex-1 pb-15 pt-5 mt-5 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {/* Header Section */}
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
@@ -187,6 +191,7 @@ const HotTrendingModule = ({onPressSongButton}: HotTrendingModuleProps) => {
           <HotTrendingV2
             key={selectedGender} // 성별이 바뀔 때마다 컴포넌트 재마운트
             onPressSongButton={onPressSongButton}
+            isScrollingHome={isScrollingHome}
           />
         ) : (
           <EmptyHotTrending />

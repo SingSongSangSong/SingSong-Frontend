@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Image, Linking, Text, View} from 'react-native';
+import React, {RefObject, useState} from 'react';
+import {Image, Linking, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import MediumIcon from '../../assets/svg/medium.svg';
 import UpIcon from '../../assets/svg/up.svg';
 import DownIcon from '../../assets/svg/down.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import CustomText from '../text/CustomText';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 import {CustomModal} from '..';
@@ -23,6 +23,7 @@ type HotTrendingItemProps = {
   melonLink: string;
   disabled?: boolean;
   onPress?: () => void;
+  isScrollingHome: RefObject<View>;
 };
 
 const HotTrendingItem = ({
@@ -38,23 +39,20 @@ const HotTrendingItem = ({
   melonLink,
   disabled = true,
   onPress,
+  isScrollingHome,
 }: HotTrendingItemProps) => {
-  // console.log(isMr);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
-    <>
+    <View>
       <TouchableOpacity
         onPress={onPress}
         activeOpacity={1.0}
+        ref={isScrollingHome}
         disabled={disabled}
-        // border border-[${designatedColor.GRAY4}] rounded-lg bg-[${designatedColor.GRAY5}]
-        //
         style={tw`flex-row items-center p-2 mx-2 my-1 border-b-[0.5px] border-[${designatedColor.GRAY5}] rounded-lg bg-[${designatedColor.HOT_TRENDING_COLOR}]`}>
         <View style={tw`flex-1 mx-2`}>
           <View style={tw`flex-row items-center`}>
-            {/* <View style={tw`rounded-lg justify-center items-center`}> */}
-            {/* Linking.openURL(updateUrl); */}
             <TouchableOpacity
               onPress={() => {
                 if (album && album != '') {
@@ -163,7 +161,7 @@ const HotTrendingItem = ({
           cancelText="취소"
         />
       )}
-    </>
+    </View>
   );
 };
 

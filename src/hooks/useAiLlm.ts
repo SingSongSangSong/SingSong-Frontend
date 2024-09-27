@@ -15,11 +15,9 @@ const useAiLlm = ({navigation}: UseAiLlmProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const [searchResult, setSearchResult] = useState<Song[]>();
   const handleOnPressSearch = async (sentence: string) => {
-    console.log('hi!!');
     setIsLoading(true);
     const tempData = await postRcdRecommendationLlm(sentence);
     // setSearchResult(tempData.data.songs);
-    console.log('complete!!');
     setIsLoading(false);
     navigation.navigate(homeStackNavigations.AI_LLM_RESULT, {
       resultSong: tempData.data.songs || [],
