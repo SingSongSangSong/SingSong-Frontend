@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Text, LayoutChangeEvent} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  LayoutChangeEvent,
+  useWindowDimensions,
+} from 'react-native';
 import InfoIcon from '../../assets/svg/Info.svg'; // 실제로 사용하고 있는 SVG 컴포넌트 경로를 수정
 import CustomText from '../text/CustomText';
 import tw from 'twrnc';
@@ -10,6 +16,7 @@ type CustomTooltipProps = {
   onClose: () => void;
   content: string;
   position: {x: number; y: number};
+  maxWidth: number; // 디바이스 너비를 전달받음
 };
 
 const CustomTooltip = ({
@@ -17,12 +24,14 @@ const CustomTooltip = ({
   onClose,
   content,
   position,
+  maxWidth, // 전달받은 디바이스 너비 사용
 }: CustomTooltipProps) => {
   if (!visible) {
     return null;
   }
 
   return (
+    // width 크기를 device width 크기를 고려해서 수정
     <View
       style={[
         {
@@ -33,13 +42,16 @@ const CustomTooltip = ({
           borderRadius: 5,
           elevation: 5,
           zIndex: 9999,
-          minWidth: 170,
+          minWidth: 150,
+          maxWidth: maxWidth - 40, // 디바이스 너비에서 40px의 여유 공간을 둠
         },
         tw`pb-2 px-1`,
       ]}>
       <View style={tw`flex-row justify-between`}>
-        <TouchableOpacity onPress={onClose} style={tw`ml-auto px-1 pr-2`}>
-          <Text style={tw`text-[${designatedColor.GRAY3}] text-[11px]`}>x</Text>
+        <TouchableOpacity onPress={onClose} style={tw`ml-auto px-1 my-1`}>
+          <Text style={tw`text-[${designatedColor.GRAY4}] text-[6px]`}>
+            닫기
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -56,6 +68,8 @@ const CustomTooltipInfo = ({text}: {text: string}) => {
   const [tooltipPosition, setTooltipPosition] = useState({x: 0, y: 0});
   const [iconPosition, setIconPosition] = useState({x: 0, y: 0, height: 0});
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
+
+  const {width: screenWidth} = useWindowDimensions(); // 디바이스 너비 가져오기
 
   // InfoIcon의 위치와 높이를 최초 렌더링 때 한 번만 저장합니다.
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -76,6 +90,7 @@ const CustomTooltipInfo = ({text}: {text: string}) => {
           content={text}
           onClose={() => setTooltipVisible(false)}
           position={tooltipPosition}
+          maxWidth={screenWidth} // 디바이스 너비 전달
         />
       )}
       <View onLayout={handleLayout}>

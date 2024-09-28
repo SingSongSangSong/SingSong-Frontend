@@ -145,7 +145,8 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               source={require('../../assets/gif/animation.gif')}
               style={{width: 134, height: 148}}
             />
-            <CustomText style={tw`text-white text-lg mt-4 pb-10`}>
+            <CustomText
+              style={tw`text-[${designatedColor.PINK2}] text-lg mt-4 pb-10`}>
               검색 중입니다...
             </CustomText>
           </View>
