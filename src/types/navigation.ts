@@ -51,7 +51,7 @@ type HomeStackParamList = {
   [homeStackNavigations.AI_RECOMMENDATION]: undefined;
   [homeStackNavigations.NICKNAME_CHANGE]: {nickname: string};
   [homeStackNavigations.AI_LLM]: undefined;
-  [homeStackNavigations.AI_LLM_RESULT]: {resultSong: Song[]};
+  [homeStackNavigations.AI_LLM_RESULT]: {resultSong: Song[]; character: string};
 };
 
 type KeepStackParamList = {

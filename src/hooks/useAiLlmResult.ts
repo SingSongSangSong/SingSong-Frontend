@@ -15,14 +15,22 @@ type UseAiLlmResultProps = {
     typeof homeStackNavigations.AI_LLM_RESULT
   >;
   resultSong: Song[];
+  character: string;
 };
 
-const useAiLlmResult = ({navigation, resultSong}: UseAiLlmResultProps) => {
+const useAiLlmResult = ({
+  navigation,
+  resultSong,
+  character,
+}: UseAiLlmResultProps) => {
   const [searchResult, setSearchResult] = useState<Song[]>();
   const setKeepList = useKeepListStore(state => state.setKeepList);
+  const [characterIcon, setCharacterIcon] = useState<string>();
 
   useEffect(() => {
     setSearchResult(resultSong);
+    setCharacterIcon(character);
+    console.log('character:', character);
   }, []);
 
   const handleOnSongPress = (
@@ -77,6 +85,7 @@ const useAiLlmResult = ({navigation, resultSong}: UseAiLlmResultProps) => {
   };
 
   return {
+    characterIcon,
     searchResult,
     handleOnSongPress,
     handleOnKeepAddPress,

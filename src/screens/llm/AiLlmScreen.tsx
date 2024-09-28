@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   Keyboard,
@@ -33,12 +33,13 @@ type AiLlmScreenProps = StackScreenProps<
 function AiLlmScreen(props: AiLlmScreenProps) {
   const aiLlmHandler = useAiLlm({navigation: props.navigation});
   const insets = useSafeAreaInsets();
-  const [randomKeywords, setRandomKeywords] = useState<string[]>([]);
-  const [sampleText, setSampleText] = useState<string>('');
 
   // 처음 한 번만 랜덤 키워드를 생성
   useEffect(() => {
-    setRandomKeywords(getRandomKeywords(keywordList, 5));
+    aiLlmHandler.setRandomKeywords(getRandomKeywords(keywordList, 5));
+    const randomIndex = Math.floor(Math.random() * 2); // 0 또는 1
+    console.log('randomIndex:', randomIndex);
+    aiLlmHandler.setSelectedGif(randomIndex);
   }, []);
 
   // 여기는 키보드를 dismiss할 수 있는 특정 영역 (상단 배경)
@@ -110,7 +111,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
           contentContainerStyle={tw`flex-row px-4 pt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}
           keyboardShouldPersistTaps="always" // ScrollView 터치 시 키보드를 유지
         >
-          {randomKeywords.map((keyword, index) => (
+          {aiLlmHandler.randomKeywords.map((keyword, index) => (
             <TouchableOpacity
               key={index}
               style={[
@@ -119,7 +120,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                   width: width * 0.4,
                 },
               ]}
-              onPress={() => setSampleText(keyword)}
+              onPress={() => aiLlmHandler.setSampleText(keyword)}
               activeOpacity={0.8}>
               <CustomText style={tw`text-[${designatedColor.GRAY_E5}] text-xs`}>
                 {keyword}
@@ -132,7 +133,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         <SearchKeyboard
           text="문장으로 검색하고, 맞춤 노래를 추천 받으세요."
           onSearchPress={aiLlmHandler.handleOnPressSearch}
-          sampleText={sampleText} // 선택한 텍스트 전달
+          sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
         />
       </View>
 
@@ -141,10 +142,18 @@ function AiLlmScreen(props: AiLlmScreenProps) {
           // bg-opacity-50
           style={tw`bg-[${designatedColor.BLACK}] w-full h-full justify-center items-center`}>
           <View style={tw`flex-1 justify-center items-center`}>
-            <Image
-              source={require('../../assets/gif/animation.gif')}
-              style={{width: 134, height: 148}}
-            />
+            {aiLlmHandler.selectedGif === 0 ? ( //싱송
+              <Image
+                source={require('../../assets/gif/animation1.gif')}
+                style={{width: 134, height: 148}}
+              />
+            ) : (
+              //생송
+              <Image
+                source={require('../../assets/gif/animation2.gif')}
+                style={{width: 100, height: 148}}
+              />
+            )}
             <CustomText
               style={tw`text-[${designatedColor.PINK2}] text-lg mt-4 pb-10`}>
               검색 중입니다...

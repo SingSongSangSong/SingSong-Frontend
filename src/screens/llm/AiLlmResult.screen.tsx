@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {Animated, Easing, View} from 'react-native';
+import {Animated, Easing, useWindowDimensions, View} from 'react-native';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -8,6 +8,8 @@ import useAiLlmResult from '../../hooks/useAiLlmResult';
 import {OutlineButton, SongsList} from '../../components';
 import CustomText from '../../components/text/CustomText';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
+import SingsongIcon from '../../assets/svg/singsong.svg';
+import SangsongIcon from '../../assets/svg/sangsong.svg';
 
 type AiLlmResultScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -18,7 +20,9 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
   const aiLlmResultHandler = useAiLlmResult({
     navigation: props.navigation,
     resultSong: props.route.params.resultSong,
+    character: props.route.params.character,
   });
+  const {width} = useWindowDimensions();
   const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -47,16 +51,30 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
   // ListHeaderComponent를 useMemo로 캐싱
   const renderHeader = useMemo(
     () => (
-      <View style={tw`justify-center items-center py-12`}>
-        <CustomText style={tw`text-lg text-white font-bold`}>
-          싱송이와 생송이가 추천하는 노래에요
-        </CustomText>
-        <Animated.View style={[{transform: [{translateY}]}, tw`pt-8`]}>
+      <View style={tw`justify-center items-center py-6`}>
+        {aiLlmResultHandler.characterIcon === 'singsong' ? (
+          <View style={tw`flex-row items-center`}>
+            <SingsongIcon width={width * 0.2} height={186} />
+            <CustomText
+              style={tw`text-[${designatedColor.WHITE}] text-lg font-bold ml-4`}>
+              싱송's PICK은?
+            </CustomText>
+          </View>
+        ) : (
+          <View style={tw`flex-row items-center`}>
+            <CustomText
+              style={tw`text-[${designatedColor.WHITE}] text-lg font-bold mr-4`}>
+              생송's PICK은?
+            </CustomText>
+            <SangsongIcon width={width * 0.2} height={186} />
+          </View>
+        )}
+        <Animated.View style={[{transform: [{translateY}]}]}>
           <ArrowBottomIcon />
         </Animated.View>
       </View>
     ),
-    [translateY],
+    [translateY, aiLlmResultHandler.characterIcon],
   );
 
   // FlatList의 FooterComponent
