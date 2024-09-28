@@ -12,7 +12,7 @@ const getChart = async () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('data for getChart response', response.data);
+    // console.log('data for getChart response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getChart:', error);

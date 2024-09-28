@@ -38,7 +38,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
   useEffect(() => {
     aiLlmHandler.setRandomKeywords(getRandomKeywords(keywordList, 5));
     const randomIndex = Math.floor(Math.random() * 2); // 0 또는 1
-    console.log('randomIndex:', randomIndex);
+    // console.log('randomIndex:', randomIndex);
     aiLlmHandler.setSelectedGif(randomIndex);
   }, []);
 

@@ -30,7 +30,7 @@ const useAiLlmResult = ({
   useEffect(() => {
     setSearchResult(resultSong);
     setCharacterIcon(character);
-    console.log('character:', character);
+    // console.log('character:', character);
   }, []);
 
   const handleOnSongPress = (

@@ -46,7 +46,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
   useEffect(() => {
     if (sampleText && sampleText != '') {
       setSentence(sampleText);
-      console.log('sampleText:', sampleText);
+      // console.log('sampleText:', sampleText);
     }
   }, [sampleText]);
 
