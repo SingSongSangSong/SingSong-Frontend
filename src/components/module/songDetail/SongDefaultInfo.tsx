@@ -6,6 +6,7 @@ import MusicIcon from '../../../assets/svg/music.svg';
 import {CommonTag} from '../../tag/CommonTag';
 import CustomText from '../../text/CustomText';
 import {CustomModal} from '../..';
+import WhiteLogoIcon from '../../../assets/svg/whiteLogo.svg';
 
 type SongDefaultInfoProps = {
   songNumber: number;
@@ -52,6 +53,10 @@ const SongDefaultInfo = ({
             />
           </TouchableOpacity>
         )}
+        {/* <View
+          style={tw`absolute w-50 h-50 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`}>
+          <WhiteLogoIcon width={108} height={76} />
+        </View> */}
       </View>
       <View style={tw`px-3 `}>
         <View style={tw`flex-row items-center`}>

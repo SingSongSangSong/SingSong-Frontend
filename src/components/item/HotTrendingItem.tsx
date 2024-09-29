@@ -73,6 +73,10 @@ const HotTrendingItem = ({
                   resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
                 />
               )}
+              {/* <View
+                style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View> */}
             </TouchableOpacity>
             {/* </View> */}
             <View style={tw`items-center mx-1`}>
