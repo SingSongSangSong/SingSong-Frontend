@@ -48,6 +48,7 @@ type HomeScreenProps = StackScreenProps<
 
 const HomeScreen = (props: HomeScreenProps) => {
   const [headerHeight, setHeaderHeight] = useState(0);
+  // const [guestHeight, setGuestHeight] = useState(0);
   const loadingVisible = useSongStore(state => state.loadingVisible);
   // const isGuest = GuestStore(state => state.isGuest);
   const {setGuestState, getGuestState} = GuestStore();
@@ -72,6 +73,11 @@ const HomeScreen = (props: HomeScreenProps) => {
     const {height} = event.nativeEvent.layout;
     setHeaderHeight(height);
   };
+
+  // const handleOnGuestLayout = (event: LayoutChangeEvent) => {
+  //   const {height} = event.nativeEvent.layout;
+  //   setGuestHeight(height);
+  // };
 
   const handleOnTagPress = useCallback(
     (tag: string) => {
@@ -211,7 +217,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         },
       ]}>
       <View
-        style={tw`border-[${designatedColor.BACKGROUND}] border-b  `}
+        style={tw`border-[${designatedColor.BACKGROUND}] border-b`}
         onLayout={handleOnLayout}>
         <View style={tw`justify-between flex-row p-3 items-center`}>
           <LogoIcon />
@@ -232,7 +238,10 @@ const HomeScreen = (props: HomeScreenProps) => {
           </View>
         </View>
         {isGuest && (
-          <View style={tw`bg-[${designatedColor.GRAY5}] p-2 items-center py-4`}>
+          <View
+            style={tw`bg-[${designatedColor.GRAY5}] p-2 items-center py-4`}
+            // onLayout={handleOnGuestLayout}
+          >
             <Text style={tw`text-white`}>
               로그인 후 사용하시면 더욱 멋진 경험을 할 수 있습니다
             </Text>
@@ -257,6 +266,9 @@ const HomeScreen = (props: HomeScreenProps) => {
           // onScrollBeginDrag={() => setIsScrollingHome(true)} // 스크롤이 시작될 때
           // onScrollEndDrag={() => setIsScrollingHome(false)} // 스크롤이 멈출 때
           onScrollBeginDrag={disableButton} // 스크롤 시작 시 버튼 비활성화
+          // style={{
+          //   paddingTop: guestHeight,
+          // }}
           onScrollEndDrag={enableButton}
           scrollEventThrottle={16}>
           {/* {!isGuest && ( */}
@@ -289,8 +301,8 @@ const HomeScreen = (props: HomeScreenProps) => {
             <View
               // bg-opacity-20
               style={[
-                tw`absolute bg-[${designatedColor.BACKGROUND_BLACK}] inset-x-0 bottom-0 justify-center items-center bg-opacity-80`,
-                {top: headerHeight},
+                tw`absolute top-0 left-0 w-full h-full bg-[${designatedColor.BACKGROUND_BLACK}] inset-x-0 bottom-0 justify-center items-center bg-opacity-70`,
+                // {marginTop: headerHeight},
               ]}>
               <View style={tw`flex-row`}>
                 <ActivityIndicator size="small" color={designatedColor.PINK2} />

@@ -27,6 +27,7 @@ const LargeButton: React.FC<LargeButtonProps> = ({
             tw`text-[16px] text-black`,
             title == 'Sign in with Kakao' && tw`ml-4`,
             title == '카카오로 로그인' && tw`ml-4`,
+            title == 'Sign in with Apple' && tw`pr-4`,
           ]}>
           {title}
         </CustomText>

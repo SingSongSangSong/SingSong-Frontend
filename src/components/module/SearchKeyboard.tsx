@@ -58,7 +58,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
         style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 mx-2 border-[0.5px] border-[${designatedColor.PINK2}]`}>
         <TextInput
           style={[
-            tw`flex-1 text-white py-1 mx-2`,
+            tw`flex-1 text-white py-2 mx-2`,
             // {height: Math.min(Math.max(40, inputHeight), 60)},
           ]}
           value={sentence}

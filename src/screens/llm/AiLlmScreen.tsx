@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Keyboard,
+  LayoutChangeEvent,
   Platform,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -48,6 +49,13 @@ function AiLlmScreen(props: AiLlmScreenProps) {
   };
 
   const {width} = useWindowDimensions();
+  const [bottomHeight, setBottomHeight] = useState<number>(0); // 하단 컴포넌트 높이 상태 저장
+
+  // 하단 영역의 높이를 계산하여 상태에 저장
+  const handleLayoutBottom = (event: LayoutChangeEvent) => {
+    const {height} = event.nativeEvent.layout;
+    setBottomHeight(height); // 동적으로 계산한 높이 저장
+  };
 
   return (
     <View
@@ -56,55 +64,70 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         Platform.OS === 'ios' && {paddingBottom: insets.bottom},
       ]}>
       {/* 터치 시 키보드가 닫히는 상단 영역 */}
-      <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
-        <View style={tw`flex-1 w-full justify-start items-center`}>
-          <View style={tw`mt-[30%] items-center`}>
-            <CustomText style={tw`text-white text-lg font-bold`}>
-              싱송이와 생송이에게
-            </CustomText>
-            <CustomText style={tw`text-white text-lg font-bold`}>
-              부르고 싶은 노래를 물어보세요
-            </CustomText>
-            <View style={tw`items-center my-4`}>
-              <SingsongsangsongIcon />
+      <View
+        style={[
+          tw`flex-1 justify-center items-center`,
+          {
+            paddingBottom: bottomHeight,
+          },
+        ]}>
+        <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
+          {/* <View style={tw`justify-center items-center bg-pink-200`}> */}
+          <View style={tw`justify-center items-center`}>
+            <View style={tw`items-center`}>
+              <CustomText style={tw`text-white text-lg font-bold`}>
+                싱송이와 생송이에게
+              </CustomText>
+              <CustomText style={tw`text-white text-lg font-bold`}>
+                부르고 싶은 노래를 물어보세요
+              </CustomText>
+              <View style={tw`items-center my-4`}>
+                <SingsongsangsongIcon />
+              </View>
             </View>
-          </View>
-          <View
-            style={tw`bg-[${designatedColor.HOT_TRENDING_COLOR}] mx-4 p-4 rounded-lg mt-2`}>
-            <View style={tw`flex-row items-center mb-2`}>
-              <InfoIcon />
-              <CustomText style={tw`text-white text-[14px] font-bold ml-1`}>
-                더 정확한 추천을 받으려면 아래 키워드를 사용해보세요
+            <View
+              style={tw`bg-[${designatedColor.HOT_TRENDING_COLOR}] mx-4 p-4 rounded-lg mt-2`}>
+              <View style={tw`flex-row items-center mb-2`}>
+                <InfoIcon />
+                <CustomText style={tw`text-white text-[12px] font-bold ml-1`}>
+                  더 정확한 추천을 받으려면 아래 키워드를 사용해보세요
+                </CustomText>
+              </View>
+              <CustomText
+                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px] mb-1`}>
+                1. 부르고 싶은 노래와 비슷한 노래의 가수와 노래 제목을
+                언급해보세요.
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                예시) "빅뱅의 '뱅뱅뱅' 같은 노래 추천해줘"
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px] mb-1`}>
+                2. 분위기나 상황을 묘사해보세요. 이를 통해 맞춤형 추천을 받을 수
+                있어요.
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                예시) "편안한 느낌의 노래 추천해줘"
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px]`}>
+                3. 특별히 부르고 싶은 특정 연도가 있다면, 그 연도를
+                언급해보세요.
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                예시) "2010년대 초반의 노래 추천해줘"
               </CustomText>
             </View>
-            <CustomText
-              style={tw`text-[${designatedColor.GRAY_E5}] text-sm mb-1`}>
-              1. 부르고 싶은 노래와 비슷한 노래의 가수와 노래 제목을
-              언급해보세요.
-            </CustomText>
-            <CustomText style={tw`text-[${designatedColor.PINK}] text-sm mb-1`}>
-              예시) "빅뱅의 '뱅뱅뱅' 같은 노래 추천해줘"
-            </CustomText>
-            <CustomText
-              style={tw`text-[${designatedColor.GRAY_E5}] text-sm mb-1`}>
-              2. 분위기나 상황을 묘사해보세요. 이를 통해 맞춤형 추천을 받을 수
-              있어요.
-            </CustomText>
-            <CustomText style={tw`text-[${designatedColor.PINK}] text-sm mb-1`}>
-              예시) "편안한 느낌의 노래 추천해줘"
-            </CustomText>
-            <CustomText style={tw`text-[${designatedColor.GRAY_E5}] text-sm`}>
-              3. 특별히 부르고 싶은 특정 연도가 있다면, 그 연도를 언급해보세요.
-            </CustomText>
-            <CustomText style={tw`text-[${designatedColor.PINK}] text-sm mb-1`}>
-              예시) "2010년대 초반의 노래 추천해줘"
-            </CustomText>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+          {/* </View> */}
+        </TouchableWithoutFeedback>
+      </View>
 
       {/* 이 아래는 키보드를 dismiss하지 않음 */}
-      <View style={tw`w-full absolute bottom-0`}>
+      <View style={tw`w-full absolute bottom-0`} onLayout={handleLayoutBottom}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -122,7 +145,8 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               ]}
               onPress={() => aiLlmHandler.setSampleText(keyword)}
               activeOpacity={0.8}>
-              <CustomText style={tw`text-[${designatedColor.GRAY_E5}] text-xs`}>
+              <CustomText
+                style={tw`text-[${designatedColor.GRAY_E5}] text-[10px]`}>
                 {keyword}
               </CustomText>
             </TouchableOpacity>
@@ -139,8 +163,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
 
       {aiLlmHandler.isLoading && (
         <View
-          // bg-opacity-50
-          style={tw`bg-[${designatedColor.BLACK}] w-full h-full justify-center items-center`}>
+          style={tw`absolute top-0 left-0 w-full h-full bg-[${designatedColor.BLACK}] justify-center items-center bg-opacity-70`}>
           <View style={tw`flex-1 justify-center items-center`}>
             {aiLlmHandler.selectedGif === 0 ? ( //싱송
               <Image
