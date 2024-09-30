@@ -30,6 +30,7 @@ const SongsList = ({
   listHeader,
   listFooter,
 }: SongsListProps) => {
+  console.log('SongsList:', songlistData);
   const renderItem = ({item}: {item: Song}) => (
     <View>
       <SongItem

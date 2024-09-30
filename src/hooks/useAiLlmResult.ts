@@ -34,8 +34,8 @@ const useAiLlmResult = ({
   }, []);
 
   const handleOnSongPress = (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,

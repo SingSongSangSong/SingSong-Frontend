@@ -115,8 +115,8 @@ const HomeScreen = (props: HomeScreenProps) => {
   // };
 
   const handleOnSongPress = (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,
@@ -160,8 +160,8 @@ const HomeScreen = (props: HomeScreenProps) => {
   };
 
   const handleOnHotTrendingSongPress = (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,

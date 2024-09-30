@@ -17,8 +17,8 @@ type SongCardListProps = {
   onPress: (tag: string) => void;
   data: RcdHomeSong[];
   onSongPress: (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,
@@ -61,8 +61,8 @@ const SongCardList = ({tag, onPress, data, onSongPress}: SongCardListProps) => {
               singerName={song.singerName}
               onSongPress={() =>
                 onSongPress(
-                  song.songNumber,
                   song.songId,
+                  song.songNumber,
                   song.songName,
                   song.singerName,
                   song.album,

@@ -16,7 +16,7 @@ const postRcdRecommendationLlm = async (userInput: string) => {
         },
       },
     );
-    // console.log('data for recommend song llm response', response.data);
+    console.log('data for recommend song llm response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching llm:', error);

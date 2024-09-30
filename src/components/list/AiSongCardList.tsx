@@ -17,8 +17,8 @@ type AiSongCardListProps = {
   onPress: () => void;
   data: Song[];
   onSongPress: (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,
@@ -72,8 +72,8 @@ const AiSongCardList = ({
               singerName={song.singerName}
               onSongPress={() =>
                 onSongPress(
-                  song.songNumber,
                   song.songId,
+                  song.songNumber,
                   song.songName,
                   song.singerName,
                   song.album,
