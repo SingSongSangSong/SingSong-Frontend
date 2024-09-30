@@ -23,6 +23,7 @@ target 'singsongsangsong_frontend' do
   $RNFirebaseAnalyticsEnableAdSupport = true
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  # pod 'FBSDKCoreKit', '~> 17.1.0'
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
@@ -42,5 +43,12 @@ target 'singsongsangsong_frontend' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+  
+    # # Swift 라이브러리 경로 설정 추가
+    # installer.aggregate_targets.first.user_project.native_targets.each do |target|
+    #   target.build_configurations.each do |config|
+    #     config.build_settings['LIBRARY_SEARCH_PATHS'] = ['$(inherited)', '$(SDKROOT)/usr/lib/swift']
+    #   end
+    # end
   end
 end

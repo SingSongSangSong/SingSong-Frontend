@@ -16,6 +16,8 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>이 앱은 맞춤형 광고를 제공하기 위해 사용자 활동을 추적할 수 있습니다.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
@@ -28,9 +30,17 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao2de29a7b3583418860f9e5705cca20cf</string>
+				<string>fb8358574374255875</string> <!-- Facebook 앱 ID를 대체 -->
 			</array>
 		</dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>8358574374255875</string> <!-- Facebook 앱 ID -->
+	<key>FacebookClientToken</key>
+	<string>e5b2e87f5e450783b5a9e5e43c574c6a</string>
+	<key>FacebookDisplayName</key>
+	<string>singsongsangsong</string> <!-- Facebook 앱 이름 -->
+
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>KAKAO_APP_KEY</key>

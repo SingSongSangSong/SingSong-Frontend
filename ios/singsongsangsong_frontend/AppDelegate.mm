@@ -3,6 +3,12 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 #import <RNCKakaoUser/RNCKakaoUserUtil.h>
+// #import <FBSDKCoreKit/FBSDKCoreKit.h>
+// #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
+// #import <AppTrackingTransparency/AppTrackingTransparency.h>
+// #import <FBAEMKit/FBAEMKit-Swift.h>
+// #import <AuthenticationServices/AuthenticationServices.h>
+// #import <SafariServices/SafariServices.h>
 
 @implementation AppDelegate
 
@@ -13,6 +19,24 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
   [FIRApp configure];
+  // [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    //  [[FBSDKApplicationDelegate sharedInstance] application:application
+    //                    didFinishLaunchingWithOptions:launchOptions];
+
+  // [FBSDKSettings setAdvertiserTrackingEnabled:YES];
+  // 광고 추적 권한 요청
+  // if (@available(iOS 14, *)) {
+  //   [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+  //     // 광고 추적 동의 상태에 따라 설정
+  //     if (status == ATTrackingManagerAuthorizationStatusAuthorized) {
+  //       [FBSDKSettings setAdvertiserTrackingEnabled:YES];
+  //     } else {
+  //       [FBSDKSettings setAdvertiserTrackingEnabled:NO];
+  //     }
+  //   }];
+  // } else {
+  //   [FBSDKSettings setAdvertiserTrackingEnabled:YES];
+  // } 
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -23,6 +47,14 @@
   if([RNCKakaoUserUtil isKakaoTalkLoginUrl:url]) {
     return [RNCKakaoUserUtil handleOpenUrl:url];
   }
+
+  // if ([[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]) {
+  //   return YES;
+  // }
+
+  // if ([RCTLinkingManager application:application openURL:url options:options]) {
+  //   return YES;
+  // }
 
   return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
 }
@@ -40,5 +72,4 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
-
 @end

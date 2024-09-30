@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">싱송생송</string>
+    <string name="facebook_app_id">8358574374255875</string>
+<string name="facebook_client_token">e5b2e87f5e450783b5a9e5e43c574c6a</string>
 </resources>

@@ -40,6 +40,7 @@ import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
 import TokenStore from '../../store/TokenStore';
 import useMemberStore from '../../store/useMemberStore';
 import {KeywordModule} from '../../components/module/KeywordModule';
+import {AppEventsLogger} from 'react-native-fbsdk-next';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -62,6 +63,9 @@ const HomeScreen = (props: HomeScreenProps) => {
   useEffect(() => {
     initIsGuest();
     logPageView(props.route.name);
+    AppEventsLogger.logEvent('page_view', {
+      screen: 'Home',
+    });
   }, []);
 
   const initIsGuest = async () => {
