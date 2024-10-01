@@ -30,7 +30,7 @@ type SongScreenProps =
     >;
 
 function SongScreen(props: SongScreenProps) {
-  const {songNumber, songId, songName, singerName, album, melonLink, isMr} =
+  const {songId, songNumber, songName, singerName, album, melonLink, isMr} =
     props.route?.params || {};
 
   useEffect(() => {

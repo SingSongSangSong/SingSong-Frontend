@@ -10,8 +10,8 @@ import {designatedColor} from '../../constants';
 interface AiSongCardModuleProps {
   onPressTotalButton: () => void;
   onPressSongButton: (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,
