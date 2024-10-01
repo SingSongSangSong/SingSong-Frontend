@@ -51,9 +51,9 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
   }, [sampleText]);
 
   return (
-    <InputAccessoryView
-      style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}>
-      {/* <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}> */}
+    // <InputAccessoryView
+    //   style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}>
+    <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}>
       <View
         style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 mx-2 border-[0.5px] border-[${designatedColor.PINK2}]`}>
         <TextInput
@@ -80,8 +80,8 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
           <SearchIcon />
         </TouchableOpacity>
       </View>
-      {/* </View> */}
-    </InputAccessoryView>
+    </View>
+    // </InputAccessoryView>
   );
 };
 

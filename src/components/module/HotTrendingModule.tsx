@@ -22,8 +22,8 @@ import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
 import CustomText from '../text/CustomText';
 interface HotTrendingModuleProps {
   onPressSongButton: (
-    songNumber: number,
     songId: number,
+    songNumber: number,
     songName: string,
     singerName: string,
     album: string,
