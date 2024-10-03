@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
 import {useQuery} from '@tanstack/react-query';
@@ -24,11 +24,12 @@ const AiSongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
 }: AiSongCardModuleProps) => {
+  const [isTimeoutReached, setIsTimeoutReached] = useState<boolean>(false);
   const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
   const {
     data: tempRcdRecommendationSongs,
     error: rcdRecommendationError,
-    isFetching: isFetchingRcdRecommentdationSongs,
+    isFetching: isFetchingRcdRecommendationSongs,
   } = useQuery({
     queryKey: ['rcdRecommendationSongs'],
     queryFn: () => getRcdRecommendation(1),
@@ -37,15 +38,34 @@ const AiSongCardModule = ({
   });
 
   useEffect(() => {
+    // 5초 타이머 설정
+    const timer = setTimeout(() => {
+      setIsTimeoutReached(true); // 5초 후 타임아웃 도달을 표시
+      setLoadingVisible(false); // 로딩 false로 변경
+    }, 5000);
+
     if (tempRcdRecommendationSongs || rcdRecommendationError) {
-      // console.log('tempRcdHomeSongs:', tempRcdHomeSongs);
-      // tempRcdHomeSongs.forEach((songWithTags: RcdHomeSongWithTags) => {
-      //   setPreviewSongs(songWithTags.tag, songWithTags.songs);
-      // });
-      // console.log('setPreview Song completed!!!!!!!!!!!');
+      clearTimeout(timer); // 타이머가 실행되기 전에 응답이 도착하면 타이머 정리
+      setLoadingVisible(false); // 데이터가 오면 로딩 false로 변경
+    }
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+  }, [
+    tempRcdRecommendationSongs,
+    rcdRecommendationError,
+    isFetchingRcdRecommendationSongs,
+  ]);
+
+  // 5초 후에도 데이터가 없고 에러가 없다면 로딩을 false로 설정
+  useEffect(() => {
+    if (
+      isTimeoutReached &&
+      !tempRcdRecommendationSongs &&
+      !rcdRecommendationError
+    ) {
       setLoadingVisible(false);
     }
-  }, [tempRcdRecommendationSongs, rcdRecommendationError]);
+  }, [isTimeoutReached, tempRcdRecommendationSongs, rcdRecommendationError]);
 
   return (
     <View>

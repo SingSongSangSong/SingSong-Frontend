@@ -58,7 +58,8 @@ function TermsScreen(props: TermsScreenProps) {
                   onValueChange={termsHandler.handleAllChecked}
                   tintColors={{true: 'black'}}
                 />
-                <CustomText style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
+                <CustomText
+                  style={tw`text-sm text-[${designatedColor.GRAY4}] ml-2`}>
                   약관 전체 동의
                 </CustomText>
               </View>
@@ -80,7 +81,7 @@ function TermsScreen(props: TermsScreenProps) {
                     tintColors={{true: 'black'}}
                   />
                   <CustomText
-                    style={tw`text-sm text-[${designatedColor.GRAY4}]`}>
+                    style={tw`text-sm text-[${designatedColor.GRAY4}] ml-2`}>
                     {item.label}
                   </CustomText>
                 </View>

@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
+  InputAccessoryView,
   Keyboard,
   LayoutChangeEvent,
   Platform,
@@ -25,6 +26,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {getRandomKeywords} from '../../utils';
 import {ScrollView} from 'react-native-gesture-handler';
 import InfoIcon from '../../assets/svg/Info.svg';
+import {useFocusEffect} from '@react-navigation/native';
 
 type AiLlmScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -56,6 +58,16 @@ function AiLlmScreen(props: AiLlmScreenProps) {
     const {height} = event.nativeEvent.layout;
     setBottomHeight(height); // 동적으로 계산한 높이 저장
   };
+
+  const [key, setKey] = useState(0); // 컴포넌트를 리렌더링하기 위한 key
+
+  useFocusEffect(
+    useCallback(() => {
+      // 화면이 포커스될 때마다 key 값을 증가시켜 컴포넌트 리렌더링 유도
+      setKey(prevKey => prevKey + 1);
+      aiLlmHandler.setSampleText(''); // 샘플 텍스트 초기화
+    }, []),
+  );
 
   return (
     <View
@@ -127,43 +139,55 @@ function AiLlmScreen(props: AiLlmScreenProps) {
       </View>
 
       {/* 이 아래는 키보드를 dismiss하지 않음 */}
-      <View style={tw`w-full absolute bottom-0`} onLayout={handleLayoutBottom}>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={tw`flex-row px-4 pt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}
-          keyboardShouldPersistTaps="always" // ScrollView 터치 시 키보드를 유지
-        >
-          {aiLlmHandler.randomKeywords.map((keyword, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                tw`bg-[${designatedColor.GRAY5}] rounded-lg px-4 py-3 mr-3 items-center justify-center`,
-                {
-                  width: width * 0.4,
-                },
-              ]}
-              onPress={() => aiLlmHandler.setSampleText(keyword)}
-              activeOpacity={0.8}>
-              <CustomText
-                style={tw`text-[${designatedColor.GRAY_E5}] text-[10px]`}>
-                {keyword}
-              </CustomText>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+      <View
+        key={key}
+        style={tw`w-full absolute bottom-0 bg-[${designatedColor.BACKGROUND_BLACK}]`}
+        onLayout={handleLayoutBottom}>
+        {!aiLlmHandler.isLoading && (
+          <InputAccessoryView
+            // nativeID="uniqueInputAccessoryViewID"
+            backgroundColor={designatedColor.BACKGROUND_BLACK}
+            style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={tw`flex-row px-4 pt-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}
+              keyboardShouldPersistTaps="always" // ScrollView 터치 시 키보드를 유지
+            >
+              {aiLlmHandler.randomKeywords.map((keyword, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    tw`bg-[${designatedColor.GRAY5}] rounded-lg px-4 py-3 mr-3 items-center justify-center`,
+                    {
+                      width: width * 0.4,
+                    },
+                  ]}
+                  onPress={() => aiLlmHandler.setSampleText(keyword)}
+                  activeOpacity={0.8}>
+                  <CustomText
+                    style={tw`text-[${designatedColor.GRAY_E5}] text-[10px]`}>
+                    {keyword}
+                  </CustomText>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
 
-        {/* SearchKeyboard 컴포넌트 */}
-        <SearchKeyboard
-          text="문장으로 검색하고, 맞춤 노래를 추천 받으세요."
-          onSearchPress={aiLlmHandler.handleOnPressSearch}
-          sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
-        />
+            <SearchKeyboard
+              text="문장으로 검색하고, 맞춤 노래를 추천 받으세요."
+              onSearchPress={aiLlmHandler.handleOnPressSearch}
+              sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
+            />
+          </InputAccessoryView>
+        )}
       </View>
 
       {aiLlmHandler.isLoading && (
         <View
-          style={tw`absolute top-0 left-0 w-full h-full bg-[${designatedColor.BLACK}] justify-center items-center bg-opacity-70`}>
+          style={[
+            tw`absolute top-0 left-0 w-full h-full bg-[${designatedColor.BLACK}] justify-center items-center bg-opacity-70`,
+            // {zIndex: 9999},
+          ]}>
           <View style={tw`flex-1 justify-center items-center`}>
             {aiLlmHandler.selectedGif === 0 ? ( //싱송
               <Image
