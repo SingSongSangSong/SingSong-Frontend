@@ -36,8 +36,8 @@
 	</array>
 	<key>FacebookAppID</key>
 	<string>8358574374255875</string> <!-- Facebook 앱 ID -->
-	<key>FacebookClientToken</key>
-	<string>e5b2e87f5e450783b5a9e5e43c574c6a</string>
+	<!-- <key>FacebookClientToken</key>
+	<string>e5b2e87f5e450783b5a9e5e43c574c6a</string> -->
 	<key>FacebookDisplayName</key>
 	<string>singsongsangsong</string> <!-- Facebook 앱 이름 -->
 
@@ -51,6 +51,10 @@
 		<string>kakaolink</string>
 		<string>storykompassauth</string>
 		<string>kakaokompassauth</string>
+		<string>fbapi</string>
+    	<string>fb-messenger-api</string>
+    	<string>fbauth2</string>
+    	<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

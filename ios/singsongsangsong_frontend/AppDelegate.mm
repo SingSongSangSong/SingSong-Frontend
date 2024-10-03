@@ -3,12 +3,13 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 #import <RNCKakaoUser/RNCKakaoUserUtil.h>
-// #import <FBSDKCoreKit/FBSDKCoreKit.h>
 // #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
+// #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 // #import <AppTrackingTransparency/AppTrackingTransparency.h>
 // #import <FBAEMKit/FBAEMKit-Swift.h>
-// #import <AuthenticationServices/AuthenticationServices.h>
-// #import <SafariServices/SafariServices.h>
 
 @implementation AppDelegate
 
@@ -19,6 +20,8 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
   [FIRApp configure];
+  [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+  // return YES;
   // [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     //  [[FBSDKApplicationDelegate sharedInstance] application:application
     //                    didFinishLaunchingWithOptions:launchOptions];
