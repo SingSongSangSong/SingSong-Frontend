@@ -9,11 +9,15 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {request, PERMISSIONS} from 'react-native-permissions';
+import {AppState, Platform} from 'react-native';
+import TrackingStore from './src/store/TrackingStore';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
   //   navigation.navigate(playlistNavigations.PLAYLIST);
   // };
+  const setTrackingStatus = TrackingStore().setTrackingStatus;
 
   useEffect(() => {
     // In-App Messaging 활성화
@@ -21,6 +25,50 @@ function App(): React.JSX.Element {
     // messaging().setMessagesDisplaySuppressed(false);
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
+
+  // useEffect(() => {
+  //   const tempStatus = setInitTracking();
+  //   console.log('tempStatus:', tempStatus);
+  //   const listener = AppState.addEventListener('change', status => {
+  //     if (!tempStatus && Platform.OS === 'ios' && status === 'active') {
+  //       request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+  //         .then(result => setTrackingStatus(result))
+  //         .catch(error => console.warn(error));
+  //     }
+  //   });
+
+  //   return () => {
+  //     listener.remove();
+  //   };
+  // }, []);
+  // const setInitTracking = async () => {
+  //   const trackingStatus = await TrackingStore().getTrackingStatus();
+  //   return trackingStatus;
+  // };
+
+  useEffect(() => {
+    // AppState 이벤트 리스너 추가
+    const listener = AppState.addEventListener('change', status => {
+      if (Platform.OS === 'ios' && status === 'active') {
+        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+          .then(result => {
+            setTrackingStatus(result); // 추적 상태 업데이트 (TrackingStore로 저장)
+            // TrackingStore().setTrackingStatus(result); // 추적 상태 저장
+          })
+          .catch(error => console.warn(error));
+      }
+    });
+
+    // 리스너는 컴포넌트 언마운트 시 제거
+    return () => {
+      listener.remove(); // 리스너 제거
+    };
+  }, []);
+
+  // const setInitTracking = async () => {
+  //   const trackingStatus = await TrackingStore().getTrackingStatus();
+  //   return trackingStatus;
+  // };
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
