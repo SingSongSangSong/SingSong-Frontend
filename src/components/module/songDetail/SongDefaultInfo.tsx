@@ -35,9 +35,13 @@ const SongDefaultInfo = ({
         />
 
         {!album || album == '' ? (
+          // <View
+          //   style={tw`absolute w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
+          //   <MusicIcon width={64} height={64} />
+          // </View>
           <View
-            style={tw`absolute w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
-            <MusicIcon width={64} height={64} />
+            style={tw`absolute w-50 h-50 bg-[${designatedColor.BLACK}] rounded-lg justify-center items-center`}>
+            <WhiteLogoIcon width={108} height={76} />
           </View>
         ) : (
           <TouchableOpacity

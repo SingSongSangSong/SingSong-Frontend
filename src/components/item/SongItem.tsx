@@ -103,15 +103,8 @@ SongItemProps) => {
             <View style={tw`items-center justify-center w-[16] h-[16]`}>
               {album === '' ? (
                 <View
-                  style={[
-                    {
-                      backgroundColor: 'rgba(0, 0, 0, 1)',
-                      width: 54,
-                      height: 54,
-                    },
-                    tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
-                  ]}>
-                  <MusicIcon width={16} height={16} />
+                  style={tw`flex-1 w-full bg-[${designatedColor.BLACK}] rounded-sm justify-center items-center`}>
+                  <WhiteLogoIcon width={54} height={38} />
                 </View>
               ) : (
                 <TouchableOpacity
