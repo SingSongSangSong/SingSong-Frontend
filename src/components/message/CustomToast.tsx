@@ -9,8 +9,8 @@ const CustomToast = () => {
   const toastConfig: ToastConfig = {
     selectedToast: ({text1}) => (
       <View
-        style={tw`justify-center items-center bg-[#373A40] mx-4 px-8 py-3 rounded-full`}>
-        <CustomText style={tw`text-[${designatedColor.PINK2}]`}>
+        style={tw`justify-center items-center bg-[${designatedColor.GRAY5}] mx-4 px-8 py-3 rounded-full`}>
+        <CustomText style={tw`text-[${designatedColor.VIOLET}]`}>
           {text1}
         </CustomText>
       </View>

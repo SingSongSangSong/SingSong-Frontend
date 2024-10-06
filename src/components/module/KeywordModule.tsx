@@ -28,7 +28,7 @@ const KeywordModule = () => {
       {sampleKeywords.map((keyword, index) => (
         <View key={index} style={tw`flex-row items-center mx-4 py-1`}>
           <CustomText
-            style={[tw`text-base mr-2`, {color: designatedColor.PINK2}]}>
+            style={[tw`text-base mr-2`, {color: designatedColor.VIOLET}]}>
             #
           </CustomText>
           <CustomText style={[tw`text-sm`, {color: designatedColor.GRAY1}]}>

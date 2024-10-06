@@ -112,7 +112,7 @@ const RefreshSongsList = ({
         ListFooterComponent={() =>
           isLoading ? (
             <View style={tw`py-10`}>
-              <ActivityIndicator size="large" color={designatedColor.PINK2} />
+              <ActivityIndicator size="large" color={designatedColor.VIOLET} />
             </View>
           ) : null
         }

@@ -74,7 +74,7 @@ const SearchResult = ({
               .length > 0, // 해당 카테고리에 데이터가 있을 때만 표시
         )
         .map(categoryItem => (
-          <View key={categoryItem.value} style={tw`mx-1`}>
+          <View key={categoryItem.value} style={tw`mx-[0.5px]`}>
             <OutlineButton
               title={categoryItem.title}
               onPress={() => {
@@ -83,7 +83,7 @@ const SearchResult = ({
               }}
               color={
                 category === categoryItem.value
-                  ? designatedColor.PINK
+                  ? designatedColor.VIOLET
                   : designatedColor.GRAY3
               }
             />
@@ -134,7 +134,7 @@ const SearchResult = ({
       <View key={key} style={tw`my-4`}>
         {category === 'all' && (
           <View style={tw`flex-row justify-between items-center my-2 px-2`}>
-            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
+            <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
               {title}
             </CustomText>
             <TouchableOpacity
@@ -204,7 +204,7 @@ const SearchResult = ({
         />
       ) : isLoading ? (
         <View style={tw`flex-1 justify-center items-center`}>
-          <ActivityIndicator size="large" color={designatedColor.PINK2} />
+          <ActivityIndicator size="large" color={designatedColor.VIOLET} />
         </View>
       ) : (
         <FlatList
@@ -217,7 +217,10 @@ const SearchResult = ({
           ListFooterComponent={() =>
             isMoreLoading ? (
               <View style={tw`py-10`}>
-                <ActivityIndicator size="large" color={designatedColor.PINK2} />
+                <ActivityIndicator
+                  size="large"
+                  color={designatedColor.VIOLET}
+                />
               </View>
             ) : null
           }

@@ -60,7 +60,7 @@ function KeepScreen(props: KeepScreenProps) {
       <View style={tw`w-full h-full pt-6`}>
         {keepHandler.isKeepLoading ? (
           <View style={tw`flex-1 justify-center items-center`}>
-            <ActivityIndicator size="small" color={designatedColor.PINK2} />
+            <ActivityIndicator size="small" color={designatedColor.VIOLET} />
           </View>
         ) : (
           <View>

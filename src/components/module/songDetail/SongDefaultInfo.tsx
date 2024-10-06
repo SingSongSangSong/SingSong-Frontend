@@ -74,7 +74,7 @@ const SongDefaultInfo = ({
 
         <View style={tw`flex-row items-center mt-2`}>
           <View style={tw`items-center justify-center`}>
-            <CustomText style={tw`text-white text-[${designatedColor.PINK2}]`}>
+            <CustomText style={tw`text-white text-[${designatedColor.VIOLET}]`}>
               {songNumber}
             </CustomText>
           </View>

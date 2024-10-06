@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circlePressed: {
-    backgroundColor: designatedColor.PINK2,
+    backgroundColor: designatedColor.VIOLET,
   },
 });
 

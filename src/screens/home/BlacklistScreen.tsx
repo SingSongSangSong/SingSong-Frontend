@@ -41,7 +41,7 @@ function BlacklistScreen(props: BlacklistScreenProps) {
               <View style={tw`flex-1 items-center justify-center`}>
                 <ErrorIcon width={50} height={50} />
                 <CustomText
-                  style={tw`text-[${designatedColor.PINK2}] font-bold mt-4`}>
+                  style={tw`text-[${designatedColor.VIOLET}] font-bold mt-4`}>
                   차단한 유저가 없어요
                 </CustomText>
               </View>

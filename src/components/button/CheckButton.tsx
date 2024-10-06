@@ -57,7 +57,7 @@ const CheckButton = ({
         <CustomText
           style={[
             tw`text-[${designatedColor.TEXT_WHITE}] ml-2`,
-            isPressed && tw`text-[${designatedColor.PINK2}]`,
+            isPressed && tw`text-[${designatedColor.VIOLET}]`,
           ]}>
           {isPressed ? '선택 해제' : '전체 선택'}
         </CustomText>

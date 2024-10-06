@@ -199,7 +199,7 @@ SongItemProps) => {
                           <View style={tw`flex-row items-center`}>
                             <KeepFilledIcon width={12} height={12} />
                             <CustomText
-                              style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
+                              style={tw`text-white text-[3] text-[${designatedColor.VIOLET2}] ml-1`}>
                               {keepCounts}
                             </CustomText>
                           </View>

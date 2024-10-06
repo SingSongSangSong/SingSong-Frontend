@@ -138,7 +138,7 @@ const SongReview = ({songId}: SongReviewProps) => {
     <View>
       <View style={tw`mt-4 px-2 py-1 flex-row items-center`}>
         <View
-          style={tw`rounded-full px-2 py-1 bg-[${designatedColor.INDI_PINK}]`}>
+          style={tw`rounded-full px-2 py-1 bg-[${designatedColor.VIOLET2}]`}>
           {easyCount > hardCount ? (
             // <View style={tw`flex-row items-center`}>
             //   <Text style={tw`text-[${designatedColor.PINK2}]`}>
@@ -157,7 +157,7 @@ const SongReview = ({songId}: SongReviewProps) => {
                 부르기 쉬워요
               </CustomText>
               <CustomText
-                style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
+                style={tw`text-[${designatedColor.VIOLET}] font-bold text-[3] ml-1`}>
                 {easyPercentage}%
               </CustomText>
             </View>
@@ -168,7 +168,7 @@ const SongReview = ({songId}: SongReviewProps) => {
                 부르기 어려워요
               </CustomText>
               <CustomText
-                style={tw`text-[${designatedColor.PINK0}] font-bold text-[3] ml-1`}>
+                style={tw`text-[${designatedColor.VIOLET}] font-bold text-[3] ml-1`}>
                 {hardPercentage}%
               </CustomText>
             </View>
@@ -188,7 +188,7 @@ const SongReview = ({songId}: SongReviewProps) => {
         <View style={tw`flex-row`}>
           <LikeButton
             title="쉬워요"
-            color={designatedColor.PINK}
+            color={designatedColor.VIOLET2}
             onPress={() => {
               handleOnPressReview(1);
             }}
@@ -198,7 +198,7 @@ const SongReview = ({songId}: SongReviewProps) => {
           />
           <LikeButton
             title="어려워요"
-            color={designatedColor.PINK}
+            color={designatedColor.VIOLET2}
             onPress={() => {
               handleOnPressReview(2);
             }}

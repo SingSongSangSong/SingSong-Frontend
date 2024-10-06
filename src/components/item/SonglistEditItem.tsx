@@ -108,7 +108,7 @@ const SonglistEditItem = ({
           <View style={tw`flex-1 h-full ml-4 mr-2`}>
             <View style={tw`flex-row items-center`}>
               <CustomText
-                style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
+                style={tw`text-white text-sm text-[${designatedColor.VIOLET}]`}>
                 {songNumber}
               </CustomText>
               <CustomText

@@ -128,7 +128,7 @@ function CommentScreen(props: CommentScreenProps) {
               <View style={tw`w-full h-full justify-center items-center`}>
                 <View style={tw`flex-1 justify-center items-center`}>
                   <ErrorIcon width={50} height={50} />
-                  <CustomText style={tw`text-[${designatedColor.PINK2}] mt-4`}>
+                  <CustomText style={tw`text-[${designatedColor.VIOLET}] mt-4`}>
                     댓글이 없어요
                   </CustomText>
                 </View>
@@ -138,7 +138,7 @@ function CommentScreen(props: CommentScreenProps) {
           />
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
-            <ActivityIndicator size="small" color={designatedColor.PINK2} />
+            <ActivityIndicator size="small" color={designatedColor.VIOLET} />
           </View>
         )}
       </View>

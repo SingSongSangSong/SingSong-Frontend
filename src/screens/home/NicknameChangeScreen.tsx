@@ -96,7 +96,7 @@ function NicknameChangeScreen(props: NicknameChangeScreenProps) {
               tw`mt-6 py-4 rounded-lg`,
               isButtonDisabled
                 ? tw`bg-[${designatedColor.GRAY3}]`
-                : tw`bg-[${designatedColor.PINK2}]`,
+                : tw`bg-[${designatedColor.VIOLET}]`,
             ]}
             disabled={isButtonDisabled}
             onPress={handleNicknameChange}>

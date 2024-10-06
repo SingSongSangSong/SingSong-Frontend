@@ -94,9 +94,10 @@ const CommentItem = ({
           )}
 
           <CustomText
-            style={
-              isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`
-            }>
+            style={[
+              isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`,
+              tw`text-[11px]`,
+            ]}>
             {likes}
           </CustomText>
         </TouchableOpacity>
@@ -112,11 +113,11 @@ const CommentItem = ({
             onPress={onPressRecomment}
           /> */}
           {recommentCount > 0 ? (
-            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
+            <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
               답글 {recommentCount}개 모두 보기
             </CustomText>
           ) : (
-            <CustomText style={tw`text-[${designatedColor.PINK}]`}>
+            <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
               답글
             </CustomText>
           )}

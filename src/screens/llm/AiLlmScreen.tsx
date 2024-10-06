@@ -111,7 +111,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                 언급해보세요.
               </CustomText>
               <CustomText
-                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
                 예시) "빅뱅의 '뱅뱅뱅' 같은 노래 추천해줘"
               </CustomText>
               <CustomText
@@ -120,7 +120,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                 있어요.
               </CustomText>
               <CustomText
-                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
                 예시) "편안한 느낌의 노래 추천해줘"
               </CustomText>
               <CustomText
@@ -129,7 +129,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                 언급해보세요.
               </CustomText>
               <CustomText
-                style={tw`text-[${designatedColor.PINK}] text-[11px] mb-1`}>
+                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
                 예시) "2010년대 초반의 노래 추천해줘"
               </CustomText>
             </View>
@@ -144,10 +144,11 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         style={tw`w-full absolute bottom-0 bg-[${designatedColor.BACKGROUND_BLACK}]`}
         onLayout={handleLayoutBottom}>
         {!aiLlmHandler.isLoading && (
-          <InputAccessoryView
-            // nativeID="uniqueInputAccessoryViewID"
-            backgroundColor={designatedColor.BACKGROUND_BLACK}
-            style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+          // <InputAccessoryView
+          //   // nativeID="uniqueInputAccessoryViewID"
+          //   backgroundColor={designatedColor.BACKGROUND_BLACK}
+          //   style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+          <>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -178,7 +179,8 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               onSearchPress={aiLlmHandler.handleOnPressSearch}
               sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
             />
-          </InputAccessoryView>
+          </>
+          // </InputAccessoryView>
         )}
       </View>
 
@@ -202,7 +204,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               />
             )}
             <CustomText
-              style={tw`text-[${designatedColor.PINK2}] text-lg mt-4 pb-10`}>
+              style={tw`text-[${designatedColor.VIOLET}] text-lg mt-4 pb-10`}>
               검색 중입니다...
             </CustomText>
           </View>
