@@ -101,6 +101,17 @@ SongItemProps) => {
           style={tw`flex-row items-center justify-between border-b-[0.5px] border-[${designatedColor.GRAY5}] py-4 px-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <View style={tw`flex-row items-center`}>
             <View style={tw`items-center justify-center w-[16] h-[16]`}>
+              {/* <View
+                style={[
+                  {
+                    backgroundColor: 'rgba(0, 0, 0, 1)',
+                    width: 54,
+                    height: 54,
+                  },
+                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
+                ]}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View> */}
               {album === '' ? (
                 <View
                   style={tw`flex-1 w-full bg-[${designatedColor.BLACK}] rounded-sm justify-center items-center`}>
@@ -192,7 +203,7 @@ SongItemProps) => {
                           <View style={tw`flex-row items-center`}>
                             <KeepFilledIcon width={12} height={12} />
                             <CustomText
-                              style={tw`text-white text-[3] text-[${designatedColor.PINK}] ml-1`}>
+                              style={tw`text-white text-[3] text-[${designatedColor.VIOLET2}] ml-1`}>
                               {keepCounts}
                             </CustomText>
                           </View>

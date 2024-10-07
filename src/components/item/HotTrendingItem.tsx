@@ -77,11 +77,15 @@ const HotTrendingItem = ({
                 style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
                 <WhiteLogoIcon width={54} height={38} />
               </View> */}
+              {/* <View
+                style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View> */}
             </TouchableOpacity>
             {/* </View> */}
             <View style={tw`items-center mx-1`}>
               <CustomText
-                style={tw`text-[${designatedColor.PINK}] text-lg font-bold w-10 text-center`}>
+                style={tw`text-[${designatedColor.VIOLET}] text-lg font-bold w-10 text-center`}>
                 {ranking}
               </CustomText>
               {rankingChange == 0 ? (
@@ -134,7 +138,7 @@ const HotTrendingItem = ({
               </View>
               <View style={tw`flex-row items-center`}>
                 <CustomText
-                  style={tw`text-[${designatedColor.PINK}] mr-2 text-[3]`}>
+                  style={tw`text-[${designatedColor.VIOLET2}] mr-2 text-[3]`}>
                   {songNumber}
                 </CustomText>
                 <CustomText

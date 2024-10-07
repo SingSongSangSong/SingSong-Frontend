@@ -40,6 +40,7 @@ const useAiSong = () => {
         // console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         // const songData = await postRcdRefresh(initTag);
         const songData = await getRcdRecommendation(pageId);
+        console.log('songData:', songData.data.songs);
         setSongLst(songData.data.songs);
         setPageId(pageId + 1);
         // setRefreshSongs(initTag, songData.data);
@@ -71,6 +72,7 @@ const useAiSong = () => {
         getRcdRecommendation(pageId)
           .then(response => {
             const songData = response.data.songs;
+            console.log('songData:', response.data.songs);
             // const newSongLst = updateRefreshSongs(initTag, songData);
             setSongLst(prev => [...(prev || []), ...songData]);
             setPageId(pageId + 1);

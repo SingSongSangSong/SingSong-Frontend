@@ -115,12 +115,23 @@ const SearchSongItem = ({
                 ]}>
                 <WhiteLogoIcon width={54} height={38} />
               </View> */}
+              {/* <View
+                style={[
+                  {
+                    backgroundColor: 'rgba(0, 0, 0, 1)',
+                    width: 54,
+                    height: 54,
+                  },
+                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
+                ]}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View> */}
             </View>
 
             <View style={tw`flex-1 h-full ml-4 mr-2`}>
               <View style={tw`flex-row items-center`}>
                 <CustomText
-                  style={tw`text-white text-sm text-[${designatedColor.PINK2}]`}>
+                  style={tw`text-white text-sm text-[${designatedColor.VIOLET}]`}>
                   {songNumber}
                 </CustomText>
                 {isMr ? (

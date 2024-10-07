@@ -199,7 +199,7 @@ function SettingScreen(props: SettingScreenProps) {
               <View
                 style={tw`w-full flex-row justify-between items-center p-2 mb-2`}>
                 <CustomText style={tw`text-white`}>앱 버전 정보</CustomText>
-                <CustomText style={tw`text-[${designatedColor.PINK2}]`}>
+                <CustomText style={tw`text-[${designatedColor.VIOLET}]`}>
                   {currentVersion}
                 </CustomText>
               </View>

@@ -153,12 +153,12 @@ const HotTrendingModule = ({
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
           <CustomText
-            style={tw`text-[${designatedColor.PINK}] font-bold text-xl`}>
+            style={tw`text-[${designatedColor.VIOLET2}] font-bold text-xl`}>
             HOT TRENDING
           </CustomText>
           {time && (
             <CustomText
-              style={tw`text-[${designatedColor.PINK2}] text-[10px] mx-3`}>
+              style={tw`text-[${designatedColor.VIOLET}] text-[10px] mx-3`}>
               {formatDateString(time)}
             </CustomText>
           )}
@@ -237,7 +237,7 @@ const HotTrendingModule = ({
                             style={[
                               tw`text-sm`,
                               gender === selectedGender
-                                ? tw`text-[${designatedColor.PINK}] font-bold` // userGender가 'FEMALE'이면 핑크색과 굵은 폰트
+                                ? tw`text-[${designatedColor.VIOLET2}] font-bold` // userGender가 'FEMALE'이면 핑크색과 굵은 폰트
                                 : tw`text-white`, // 그 외에는 기본 흰색
                             ]}>
                             {showGender(gender)}

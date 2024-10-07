@@ -33,6 +33,11 @@ const SongDefaultInfo = ({
         <View
           style={tw`w-full h-30 bg-[${designatedColor.BACKGROUND_BLACK}]`}
         />
+        {/*
+        <View
+          style={tw`absolute w-50 h-50 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`}>
+          <WhiteLogoIcon width={108} height={76} />
+        </View> */}
 
         {!album || album == '' ? (
           // <View
@@ -78,7 +83,7 @@ const SongDefaultInfo = ({
 
         <View style={tw`flex-row items-center mt-2`}>
           <View style={tw`items-center justify-center`}>
-            <CustomText style={tw`text-white text-[${designatedColor.PINK2}]`}>
+            <CustomText style={tw`text-white text-[${designatedColor.VIOLET}]`}>
               {songNumber}
             </CustomText>
           </View>

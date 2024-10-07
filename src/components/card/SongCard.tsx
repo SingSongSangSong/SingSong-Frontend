@@ -104,9 +104,9 @@ const SongCard = ({
         </View> */}
         <View style={tw`flex-row m-1`}>
           <View
-            style={tw`px-3 py-0.5 border border-[${designatedColor.PINK2}] rounded-full`}>
+            style={tw`px-3 py-0.5 border border-[${designatedColor.VIOLET}] rounded-full`}>
             <CustomText
-              style={tw`text-[${designatedColor.PINK2}] text-center text-3`}>
+              style={tw`text-[${designatedColor.VIOLET}] text-center text-3`}>
               {songNumber}
             </CustomText>
           </View>

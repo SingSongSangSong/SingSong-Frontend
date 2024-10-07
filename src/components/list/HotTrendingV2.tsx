@@ -262,7 +262,7 @@ const HotTrendingV2 = ({
               // },
               {
                 borderBottomWidth: currentAgeGroup === ageGroup ? 2 : 0,
-                borderBottomColor: designatedColor.PINK,
+                borderBottomColor: designatedColor.VIOLET2,
               },
             ]}>
             <CustomText
@@ -271,7 +271,7 @@ const HotTrendingV2 = ({
                 {
                   color:
                     currentAgeGroup === ageGroup
-                      ? designatedColor.PINK
+                      ? designatedColor.VIOLET2
                       : designatedColor.GRAY4,
                 },
               ]}>

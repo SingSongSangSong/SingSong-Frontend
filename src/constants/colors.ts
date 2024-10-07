@@ -43,6 +43,8 @@ const designatedColor = {
   INDI_PINK: '#E3A5C7',
   PINK0: '#D63484',
   RED2: '#B8001F',
+  VIOLET: '#5867FE',
+  VIOLET2: '#8792FF',
 } as const;
 
 export {randomColor, designatedColor};

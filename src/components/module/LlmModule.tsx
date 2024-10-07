@@ -34,7 +34,7 @@ const LlmModule = ({onPressSearch}: LlmModuleProps) => {
           style={tw`flex-1 mt-4`}
           activeOpacity={0.9}>
           <View
-            style={tw`flex-row justify-between items-center bg-[${designatedColor.GRAY5}] py-1 rounded-full border-[0.5px] border-[${designatedColor.PINK2}] my-4 w-[90%] px-3`}>
+            style={tw`flex-row justify-between items-center bg-[${designatedColor.GRAY5}] py-1 rounded-full border-[0.5px] border-[${designatedColor.VIOLET}] my-4 w-[90%] px-3`}>
             {/* 여기서 w-full로 전체 너비를 설정하고, mx로 수평 마진을 추가 */}
             <CustomText style={tw`text-[${designatedColor.GRAY3}]`}>
               문장으로 검색하고, 맞춤 노래를 추천 받으세요.

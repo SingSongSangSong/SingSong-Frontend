@@ -89,7 +89,7 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
       <View style={tw`flex-row justify-center items-center py-4`}>
         <OutlineButton
           title="네, 다시 추천 받을래요"
-          color={designatedColor.PINK}
+          color={designatedColor.VIOLET2}
           onPress={() => {
             props.navigation.navigate(homeStackNavigations.AI_LLM);
           }}

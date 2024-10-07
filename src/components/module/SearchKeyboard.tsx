@@ -57,7 +57,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
     // <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full pb-3`]}>
     <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View
-        style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 px-2 border-[0.5px] border-[${designatedColor.PINK2}]`}>
+        style={tw`flex-row items-center my-4 bg-[${designatedColor.GRAY5}] rounded-full px-4 px-2 border-[0.5px] border-[${designatedColor.VIOLET}]`}>
         <TextInput
           style={[
             tw`flex-1 text-white py-2 mx-2`,
@@ -83,7 +83,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
         </TouchableOpacity>
       </View>
     </View>
-    //</InputAccessoryView>
+    // </InputAccessoryView>
   );
 };
 

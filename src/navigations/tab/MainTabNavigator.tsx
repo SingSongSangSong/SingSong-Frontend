@@ -111,7 +111,7 @@ const MainTabNavigator = () => {
           //   shouldHideTabBar() && isIOS ? null : ( // iOS일 때 숨길 때 버튼을 null로 처리
           //     <TouchableOpacity {...props} />
           //   ), // 버튼을 기본 Touchable로 사용
-          tabBarActiveTintColor: designatedColor.PINK,
+          tabBarActiveTintColor: designatedColor.VIOLET2,
           tabBarInactiveTintColor: 'gray',
         };
       }}>

@@ -26,7 +26,8 @@ import {
   homeStackNavigations,
 } from '../../constants';
 import SettingsIcon from '../../assets/svg/settings.svg';
-import LogoIcon from '../../assets/svg/logo.svg';
+// import LogoIcon from '../../assets/svg/logo.svg';
+import LogoIcon from '../../assets/svg/whiteLogo.svg';
 import SearchIcon from '../../assets/svg/search.svg';
 import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
@@ -250,8 +251,8 @@ const HomeScreen = (props: HomeScreenProps) => {
       <View
         style={tw`border-[${designatedColor.BACKGROUND}] border-b`}
         onLayout={handleOnLayout}>
-        <View style={tw`justify-between flex-row p-3 items-center`}>
-          <LogoIcon />
+        <View style={tw`justify-between flex-row p-3 pl-0 items-center`}>
+          <LogoIcon width={90} height={48} />
           <View style={tw`flex-row`}>
             <View style={tw`mr-2`}>
               <IconButton
@@ -336,7 +337,10 @@ const HomeScreen = (props: HomeScreenProps) => {
                 // {marginTop: headerHeight},
               ]}>
               <View style={tw`flex-row`}>
-                <ActivityIndicator size="small" color={designatedColor.PINK2} />
+                <ActivityIndicator
+                  size="small"
+                  color={designatedColor.VIOLET}
+                />
                 <CustomText style={tw`text-white font-bold ml-2`}>
                   잠시만 기다려주세요
                 </CustomText>
