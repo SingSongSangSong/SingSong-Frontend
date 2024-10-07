@@ -41,6 +41,9 @@ import TokenStore from '../../store/TokenStore';
 import useMemberStore from '../../store/useMemberStore';
 import {KeywordModule} from '../../components/module/KeywordModule';
 import {AppEventsLogger} from 'react-native-fbsdk-next';
+// import {getTrackingStatus} from 'react-native-tracking-transparency';
+import {RESULTS} from 'react-native-permissions';
+import TrackingStore from '../../store/TrackingStore';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -63,14 +66,38 @@ const HomeScreen = (props: HomeScreenProps) => {
   useEffect(() => {
     initIsGuest();
     logPageView(props.route.name);
-    AppEventsLogger.logEvent('page_view', {
-      screen: 'Home',
-    });
+    setFbLogEvent();
   }, []);
 
   const initIsGuest = async () => {
     const tempIsGuest = await getGuestState();
     setIsGuest(tempIsGuest);
+  };
+
+  const setFbLogEvent = async () => {
+    // const trackingStatus = await getTrackingStatus();
+    // const trackingStatus = await request(
+    //   PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
+    // );
+    // if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+    //   AppEventsLogger.logEvent('page_view', {
+    //     screen: 'Home',
+    //   });
+    // }
+    // 'RESULTS' 상수를 사용하여 비교
+    const trackingStatus = await TrackingStore().getTrackingStatus();
+    if (
+      trackingStatus &&
+      (trackingStatus === RESULTS.GRANTED ||
+        trackingStatus === RESULTS.UNAVAILABLE)
+    ) {
+      AppEventsLogger.logEvent('page_view', {
+        screen: 'Home',
+      });
+    }
+    // else {
+    //   console.warn('Tracking not authorized or unavailable');
+    // }
   };
 
   const handleOnLayout = (event: LayoutChangeEvent) => {

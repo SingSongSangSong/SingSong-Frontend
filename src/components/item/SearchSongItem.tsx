@@ -76,16 +76,20 @@ const SearchSongItem = ({
           <View style={tw`flex-row flex-1`}>
             <View style={tw`items-center justify-center w-[12] h-[12]`}>
               {album == '' ? (
+                // <View
+                //   style={[
+                //     {
+                //       backgroundColor: 'rgba(0, 0, 0, 1)',
+                //       width: 54,
+                //       height: 54,
+                //     },
+                //     tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
+                //   ]}>
+                //   <MusicIcon width={16} height={16} />
+                // </View>
                 <View
-                  style={[
-                    {
-                      backgroundColor: 'rgba(0, 0, 0, 1)',
-                      width: 54,
-                      height: 54,
-                    },
-                    tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
-                  ]}>
-                  <MusicIcon width={16} height={16} />
+                  style={tw`flex-1 w-full h-full bg-[${designatedColor.BLACK}] rounded-sm justify-center items-center`}>
+                  <WhiteLogoIcon width={43.2} height={30.4} />
                 </View>
               ) : (
                 <TouchableOpacity
