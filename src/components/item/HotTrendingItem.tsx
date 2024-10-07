@@ -77,6 +77,10 @@ const HotTrendingItem = ({
                 style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
                 <WhiteLogoIcon width={54} height={38} />
               </View> */}
+              {/* <View
+                style={tw`w-12 h-12 bg-[${designatedColor.BACKGROUND_BLACK}] rounded-lg justify-center items-center`}>
+                <WhiteLogoIcon width={54} height={38} />
+              </View> */}
             </TouchableOpacity>
             {/* </View> */}
             <View style={tw`items-center mx-1`}>

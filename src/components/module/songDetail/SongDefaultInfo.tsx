@@ -33,6 +33,11 @@ const SongDefaultInfo = ({
         <View
           style={tw`w-full h-30 bg-[${designatedColor.BACKGROUND_BLACK}]`}
         />
+        {/*
+        <View
+          style={tw`absolute w-50 h-50 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`}>
+          <WhiteLogoIcon width={108} height={76} />
+        </View> */}
 
         {!album || album == '' ? (
           <View

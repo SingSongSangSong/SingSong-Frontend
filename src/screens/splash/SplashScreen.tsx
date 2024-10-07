@@ -145,7 +145,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           }}>
           <Animated.Text
             style={[
-              tw`text-[${designatedColor.PINK}] font-bold text-3xl`,
+              tw`text-[${designatedColor.VIOLET}] font-bold text-3xl`,
               {opacity: textFadeOutOpacity},
             ]}>
             싱송생송하게
