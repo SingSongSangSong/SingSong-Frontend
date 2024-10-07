@@ -39,7 +39,7 @@ function LoginScreen({navigation}: LoginScreenProps) {
         <View style={{position: 'absolute'}}>
           <Image
             source={require('../../assets/png/shinedLogo.png')}
-            style={{width: 246, height: 129}}
+            style={{width: 196.8, height: 103.2}}
           />
         </View>
       </View>

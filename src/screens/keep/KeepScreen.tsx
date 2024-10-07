@@ -73,7 +73,7 @@ function KeepScreen(props: KeepScreenProps) {
             ) : (
               <View style={tw`h-full w-full justify-center items-center`}>
                 <CustomText
-                  style={tw`text-[${designatedColor.PINK2}] font-bold`}>
+                  style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
                   KEEP이 비어있어요
                 </CustomText>
               </View>

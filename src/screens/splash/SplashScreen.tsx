@@ -18,6 +18,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   const firstTextOpacity = useRef(new Animated.Value(0)).current;
   const secondTextOpacity = useRef(new Animated.Value(0)).current;
   const textFadeOutOpacity = useRef(new Animated.Value(1)).current;
+  const effectOpacity = useRef(new Animated.Value(1)).current;
   const [isValidToken, setIsValidToken] = useState(false);
 
   useEffect(() => {
@@ -61,6 +62,11 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
                   duration: 500,
                   useNativeDriver: true,
                 }).start(() => {
+                  Animated.timing(effectOpacity, {
+                    toValue: 0, // 이미지 투명하게
+                    duration: 500,
+                    useNativeDriver: true,
+                  }).start();
                   // setShowLogo(true);
                   Animated.timing(logoOpacity, {
                     toValue: 1,
@@ -88,6 +94,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   }, []);
 
   const deviceHeight = Dimensions.get('window').height;
+  console.log('deviceHeight', deviceHeight);
 
   return (
     <View
@@ -95,7 +102,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         tw`w-full h-full bg-black items-center justify-start`,
         {paddingTop: deviceHeight * 0.25},
       ]}>
-      <View style={tw`items-center`}>
+      <View style={tw`flex-1 items-center`}>
         <CustomModal
           visible={initHandler.isModalVisible}
           onClose={() => {}}
@@ -127,29 +134,45 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           }
         />
         <Animated.View
-          style={{
-            opacity: firstTextOpacity,
-          }}>
-          <Animated.Text
-            style={[
-              tw`text-white font-bold text-3xl`,
-              {opacity: textFadeOutOpacity},
-            ]}>
-            싱숭생숭한 기분을
-          </Animated.Text>
-        </Animated.View>
-        <Animated.View
-          style={{
-            opacity: secondTextOpacity,
-            marginTop: 8,
-          }}>
-          <Animated.Text
-            style={[
-              tw`text-[${designatedColor.VIOLET}] font-bold text-3xl`,
-              {opacity: textFadeOutOpacity},
-            ]}>
-            싱송생송하게
-          </Animated.Text>
+          style={{flex: 1, position: 'relative', alignItems: 'center'}}>
+          <Animated.View
+            style={{
+              position: 'absolute',
+              flex: 1,
+              justifyContent: 'flex-start',
+              top: -deviceHeight * 0.1,
+              opacity: effectOpacity,
+            }}>
+            <Image
+              source={require('../../assets/png/effect.png')}
+              style={{
+                width: 492,
+                height: 246,
+              }}
+            />
+          </Animated.View>
+
+          {/* 싱숭생숭한 기분을 텍스트 */}
+          <Animated.View style={{opacity: firstTextOpacity}}>
+            <Animated.Text
+              style={[
+                tw`text-white font-bold text-3xl`,
+                {opacity: textFadeOutOpacity},
+              ]}>
+              싱숭생숭한 기분을
+            </Animated.Text>
+          </Animated.View>
+
+          {/* 싱송생송하게 텍스트 */}
+          <Animated.View style={{opacity: secondTextOpacity, marginTop: 8}}>
+            <Animated.Text
+              style={[
+                tw`text-[${designatedColor.VIOLET}] font-bold text-3xl`,
+                {opacity: textFadeOutOpacity},
+              ]}>
+              싱송생송하게
+            </Animated.Text>
+          </Animated.View>
         </Animated.View>
         <Animated.View
           style={{
@@ -158,7 +181,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
           }}>
           <Image
             source={require('../../assets/png/shinedLogo.png')}
-            style={{width: 246, height: 129}}
+            style={{width: 196.8, height: 103.2}}
           />
         </Animated.View>
       </View>
