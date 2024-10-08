@@ -71,12 +71,14 @@ const useTerms = ({provider, idToken, navigation}: UseTermsProps) => {
     {
       label: '[필수] 이용약관 동의',
       value: 'termsOfService',
-      url: 'https://piquant-leek-b2c.notion.site/ac414a53adc349868bb7c3584d1bb8b9',
+      // url: 'https://piquant-leek-b2c.notion.site/ac414a53adc349868bb7c3584d1bb8b9',
+      url: 'https://piquant-leek-b2c.notion.site/ac414a53adc349868bb7c3584d1bb8b9?pvs=4',
     },
     {
       label: '[필수] 개인정보 수집 및 이용 동의',
       value: 'personalInfo',
-      url: 'https://piquant-leek-b2c.notion.site/01eeabc64725442fac5c2ad91c6ab4',
+      // url: 'https://piquant-leek-b2c.notion.site/01eeabc64725442fac5c2ad91c6ab4',
+      url: 'https://piquant-leek-b2c.notion.site/01eeabc64725442fac5c2ad91c6ab4a9?pvs=4',
     },
     // {label: '[선택] 제 3자 정보 제공 동의', value: 'thirdPartyInfo'},
     // {label: '[선택] 마케팅 정보 수신 동의', value: 'marketingInfo'},
