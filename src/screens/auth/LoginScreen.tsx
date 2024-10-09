@@ -6,7 +6,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LargeButton} from '../../components';
 import KaKaoIcon from '../../assets/svg/kakao.svg';
 import tw from 'twrnc';
@@ -18,6 +18,7 @@ import AppleBlackIcon from '../../assets/svg/appleLogo.svg';
 import CustomText from '../../components/text/CustomText';
 // import {AppleButton} from '@invertase/react-native-apple-authentication';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+import {logPageView} from '../../utils';
 
 type LoginScreenProps = StackScreenProps<
   AppStackParamList,
@@ -28,6 +29,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const loginHandler = useLogin({navigation});
 
   const deviceHeight = Dimensions.get('window').height;
+
+  useEffect(() => {
+    logPageView('login');
+  }, []);
 
   return (
     <View
