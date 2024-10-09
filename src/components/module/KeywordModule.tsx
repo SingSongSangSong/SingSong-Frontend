@@ -5,7 +5,9 @@ import {designatedColor, keywordList} from '../../constants';
 import CustomText from '../text/CustomText';
 import tw from 'twrnc';
 // import InfoIcon from '../../assets/svg/Info.svg';
-import {CustomTooltipInfo} from '../info/CustomTooltipInfo';
+// import {CustomTooltipInfo} from '../info/CustomTooltipInfo';
+import {Tooltip} from 'react-native-elements';
+import InfoIcon from '../../assets/svg/Info.svg';
 // import {useState} from 'react';
 
 const KeywordModule = () => {
@@ -20,10 +22,33 @@ const KeywordModule = () => {
     <View
       style={tw`flex-1 pb-4 mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`flex-row items-center mx-4`}>
-        <CustomText style={tw`text-base text-white py-2`}>
+        <CustomText style={tw`text-base text-white py-2 mr-1`}>
           다른 사용자들이 검색한 키워드
         </CustomText>
-        <CustomTooltipInfo text=" 다른 사용자들이 검색한 키워드 중 가장 인기 있는 검색어가 노출됩니다." />
+        <Tooltip
+          popover={
+            <CustomText
+              style={[
+                tw`text-[10px] text-[${designatedColor.WHITE}]`,
+                {lineHeight: 18},
+              ]}>
+              다른 사용자들이 검색한 키워드 중 가장 인기 있는 검색어가
+              노출됩니다.
+            </CustomText>
+          } // 툴팁에 표시할 내용
+          backgroundColor={designatedColor.GRAY5} // 툴팁 배경 색상
+          height={60} // 툴팁 높이
+          width={200} // 툴팁 너비
+          containerStyle={{borderRadius: 10}} // 툴팁 컨테이너 스타일
+          withOverlay={false} // 배경이 흐려지는 효과를 없앰
+          placement="top"
+          skipAndroidStatusBar // 안드로이드 상태 표시줄을 피해서 위치가 밀리는 현상을 줄임
+        >
+          {/* <Icon name="info" type="material" color="purple" size={24} /> */}
+          <InfoIcon width={16} height={16} />
+        </Tooltip>
+
+        {/* <CustomTooltipInfo text=" 다른 사용자들이 검색한 키워드 중 가장 인기 있는 검색어가 노출됩니다." /> */}
       </View>
       {sampleKeywords.map((keyword, index) => (
         <View key={index} style={tw`flex-row items-center mx-4 py-1`}>

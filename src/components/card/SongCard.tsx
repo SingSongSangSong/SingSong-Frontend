@@ -56,7 +56,8 @@ const SongCard = ({
           //     },
           //     tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
           //   ]}>
-          <TouchableOpacity
+          <View
+            // <TouchableOpacity
             style={[
               {
                 width: cardWidth,
@@ -64,10 +65,11 @@ const SongCard = ({
               },
               tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
             ]}
-            onPress={() => {
-              setIsModalVisible(true);
-            }}
-            activeOpacity={1.0}>
+            // onPress={() => {
+            //   setIsModalVisible(true);
+            // }}
+            // activeOpacity={1.0}
+          >
             <Image
               source={{uri: album}}
               style={[
@@ -78,7 +80,8 @@ const SongCard = ({
                 },
               ]}
             />
-          </TouchableOpacity>
+            {/* </TouchableOpacity> */}
+          </View>
         ) : (
           // </View>
           <View
@@ -148,7 +151,7 @@ const SongCard = ({
         </View>
       </TouchableOpacity>
 
-      {album && album != '' && melonLink && (
+      {/* {album && album != '' && melonLink && (
         <CustomModal
           visible={isModalVisible}
           onClose={() => {
@@ -164,7 +167,7 @@ const SongCard = ({
           confirmText="확인"
           cancelText="취소"
         />
-      )}
+      )} */}
     </>
   );
 };
