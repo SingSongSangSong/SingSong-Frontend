@@ -41,6 +41,7 @@ const useAiLlmResult = ({
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => {
     amplitude.track('llm_song_button_click');
     logButtonClick('llm_song_button_click');
@@ -55,6 +56,7 @@ const useAiLlmResult = ({
         album: album || '',
         melonLink,
         isMr,
+        isLive,
       },
     });
   };

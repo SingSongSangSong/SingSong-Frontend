@@ -17,6 +17,7 @@ interface AiSongCardModuleProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
 }
 

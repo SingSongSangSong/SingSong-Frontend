@@ -30,6 +30,7 @@ interface Song {
   songNumber: number;
   tags?: string[];
   isMr: boolean;
+  isLive?: boolean;
   keepCount?: number;
   commentCount?: number;
   melonLink?: string;

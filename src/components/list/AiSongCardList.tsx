@@ -1,11 +1,5 @@
 import React, {memo} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {SongCard} from '..';
 import {designatedColor} from '../../constants';
@@ -24,6 +18,7 @@ type AiSongCardListProps = {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
 };
 
@@ -79,11 +74,13 @@ const AiSongCardList = ({
                   song.album,
                   song.melonLink || '',
                   song.isMr,
+                  song.isLive || false,
                 )
               }
               album={song.album}
               melonLink={song.melonLink}
               isMr={song.isMr}
+              isLive={song.isLive || false}
             />
           ))}
       </ScrollView>

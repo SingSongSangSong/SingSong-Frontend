@@ -15,6 +15,7 @@ type SongDefaultInfoProps = {
   album: string;
   melonLink: string;
   isMr: boolean;
+  isLive?: boolean;
 };
 const SongDefaultInfo = ({
   songNumber,
@@ -23,6 +24,7 @@ const SongDefaultInfo = ({
   album,
   melonLink,
   isMr,
+  isLive = false,
 }: SongDefaultInfoProps) => {
   // console.log('songDefaultInfo');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -68,9 +70,12 @@ const SongDefaultInfo = ({
         </View> */}
       </View>
       <View style={tw`px-3 `}>
-        <View style={tw`flex-row items-center`}>
+        <View style={tw`flex-row items-center mx-1`}>
           <View style={tw`items-center`}>
             {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+          </View>
+          <View style={tw`items-center`}>
+            {isLive && <CommonTag name="LIVE" color={designatedColor.ORANGE} />}
           </View>
 
           <CustomText

@@ -19,6 +19,7 @@ interface SearchSongItemProps {
   album: string | undefined;
   isKeep: boolean | undefined;
   isMr?: boolean;
+  isLive?: boolean;
   isShowKeepIcon: boolean;
   melonLink?: string;
   onSongPress: () => void;
@@ -36,6 +37,7 @@ const SearchSongItem = ({
   isKeep = true,
   isShowKeepIcon,
   isMr = false,
+  isLive = false,
   onSongPress,
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
@@ -131,13 +133,12 @@ const SearchSongItem = ({
             <View style={tw`flex-1 h-full ml-4 mr-2`}>
               <View style={tw`flex-row items-center`}>
                 <CustomText
-                  style={tw`text-white text-sm text-[${designatedColor.VIOLET}]`}>
+                  style={tw`text-white text-sm text-[${designatedColor.VIOLET}] mr-1`}>
                   {songNumber}
                 </CustomText>
-                {isMr ? (
-                  <CommonTag name="MR" color={designatedColor.PURPLE} />
-                ) : (
-                  <View style={tw`mx-1`} />
+                {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+                {isLive && (
+                  <CommonTag name="LIVE" color={designatedColor.ORANGE} />
                 )}
                 <CustomText
                   style={tw`text-white text-sm flex-1`}

@@ -37,6 +37,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => {
     logButtonClick('recommendation_song_button_click');
     amplitude.track('recommendation_song_button_click');
@@ -48,6 +49,7 @@ function RcdHomeScreen({route, navigation}: RcdHomeScreenProps) {
       album,
       melonLink,
       isMr,
+      isLive,
     });
   };
 

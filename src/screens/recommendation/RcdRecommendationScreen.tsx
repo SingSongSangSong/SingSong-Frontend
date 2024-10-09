@@ -32,6 +32,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => {
     logButtonClick('ai_recommendation_song_button_click');
     amplitude.track('ai_recommendation_song_button_click');
@@ -43,6 +44,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
       album,
       melonLink,
       isMr,
+      isLive,
     });
   };
 

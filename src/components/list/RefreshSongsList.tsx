@@ -1,10 +1,9 @@
-import React, {memo, useState} from 'react';
+import React, {memo} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Platform,
   RefreshControl,
-  Text,
   View,
 } from 'react-native';
 import tw from 'twrnc';
@@ -12,7 +11,7 @@ import {SongItem, TextButton} from '..';
 import {Song} from '../../types';
 import {designatedColor} from '../../constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Modal from 'react-native-modal';
+// import Modal from 'react-native-modal';
 
 interface RefreshSongsListProps {
   songlistData: Song[];
@@ -25,6 +24,7 @@ interface RefreshSongsListProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
   onKeepAddPress: (songId: number) => void;
   onKeepRemovePress: (songId: number) => void;
@@ -55,6 +55,7 @@ const RenderItem = memo(
       isKeep={item.isKeep}
       isShowKeepIcon={isShowKeepIcon}
       isMr={item.isMr}
+      isLive={item.isLive}
       keepCount={item.keepCount}
       commentCount={item.commentCount}
       // setIsModalVisible={setIsModalVisible}
@@ -67,6 +68,7 @@ const RenderItem = memo(
           item.album,
           item.melonLink,
           item.isMr,
+          item.isLive,
         );
       }}
       onKeepAddPress={() => onKeepAddPress(item.songId)}

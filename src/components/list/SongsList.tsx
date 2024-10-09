@@ -14,11 +14,13 @@ interface SongsListProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
   onKeepAddPress?: (songId: number) => void;
   onKeepRemovePress?: (songId: number) => void;
   listHeader?: () => React.ReactNode;
   listFooter?: () => React.ReactNode;
+  isShowInfo?: boolean;
 }
 
 const SongsList = ({
@@ -29,6 +31,7 @@ const SongsList = ({
   onKeepRemovePress,
   listHeader,
   listFooter,
+  isShowInfo = true,
 }: SongsListProps) => {
   console.log('SongsList:', songlistData);
   const renderItem = ({item}: {item: Song}) => (
@@ -42,6 +45,7 @@ const SongsList = ({
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
         isMr={item.isMr}
+        isLive={item.isLive}
         keepCount={item.keepCount}
         commentCount={item.commentCount}
         onSongPress={() =>
@@ -53,6 +57,7 @@ const SongsList = ({
             item.album,
             item.melonLink || '',
             item.isMr,
+            item.isLive || false,
           )
         }
         onKeepAddPress={
@@ -61,6 +66,7 @@ const SongsList = ({
         onKeepRemovePress={
           onKeepRemovePress ? () => onKeepRemovePress(item.songId) : () => {}
         }
+        isShowInfo={isShowInfo}
       />
     </View>
   );

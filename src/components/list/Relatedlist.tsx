@@ -17,6 +17,7 @@ interface RelatedlistProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
   handleRefreshRelatedSongs: () => void;
   onKeepAddPress: (songId: number) => void;
@@ -55,6 +56,7 @@ const Relatedlist: React.FC<RelatedlistProps> = ({
             item.album,
             item.melonLink || '',
             item.isMr,
+            item.isLive || false,
           )
         }
         onKeepAddPress={() => onKeepAddPress(item.songId)}

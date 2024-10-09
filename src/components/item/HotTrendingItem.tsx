@@ -8,7 +8,7 @@ import DownIcon from '../../assets/svg/down.svg';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import CustomText from '../text/CustomText';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
-import {CustomModal} from '..';
+import {CommonTag, CustomModal} from '..';
 
 type HotTrendingItemProps = {
   artistName: string;
@@ -102,32 +102,10 @@ const HotTrendingItem = ({
             </View>
             <View style={tw`flex-1`}>
               <View style={tw`flex-row mb-1 items-center`}>
-                {isNew && (
-                  <View
-                    style={tw`border border-[${designatedColor.ORANGE}] rounded-sm py-0.4 px-1 mr-2`}>
-                    <CustomText
-                      style={tw`text-[${designatedColor.ORANGE}] text-xs`}>
-                      NEW
-                    </CustomText>
-                  </View>
-                )}
-                {isMr && (
-                  <View
-                    style={tw`border border-[${designatedColor.PURPLE}] rounded-sm py-0.4 px-1 mr-2`}>
-                    <CustomText
-                      style={tw`text-[${designatedColor.PURPLE}] text-xs`}>
-                      MR
-                    </CustomText>
-                  </View>
-                )}
+                {isNew && <CommonTag name="NEW" color={designatedColor.MINT} />}
+                {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
                 {isLive && (
-                  <View
-                    style={tw`border border-[${designatedColor.RED2}] rounded-sm py-0.4 px-1 mr-2`}>
-                    <CustomText
-                      style={tw`text-[${designatedColor.RED2}] text-xs`}>
-                      LIVE
-                    </CustomText>
-                  </View>
+                  <CommonTag name="LIVE" color={designatedColor.ORANGE} />
                 )}
                 <CustomText
                   style={tw`text-white flex-1`}

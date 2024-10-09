@@ -7,7 +7,7 @@ const postRcdRecommendationLlm = async (userInput: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.post<LlmSongResponse>(
-      'v1/recommend/recommendation/llm',
+      'v1/recommend/recommendation/functionCalling',
       {userInput: userInput},
       {
         headers: {

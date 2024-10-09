@@ -14,6 +14,7 @@ interface KeepSongsListProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
   onKeepAddPress?: (songId: number) => void;
   onKeepRemovePress?: (songId: number) => void;
@@ -38,6 +39,7 @@ const KeepSongsList = ({
         isKeep={item.isKeep}
         isShowKeepIcon={isShowKeepIcon}
         isMr={item.isMr}
+        isLive={item.isLive}
         onSongPress={() =>
           onSongPress(
             item.songId,
@@ -47,6 +49,7 @@ const KeepSongsList = ({
             item.album,
             item.melonLink || '',
             item.isMr,
+            item.isLive || false,
           )
         }
         onKeepAddPress={

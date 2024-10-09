@@ -31,6 +31,7 @@ function KeepScreen(props: KeepScreenProps) {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => {
     logButtonClick('keep_song_button_click');
     amplitude.track('keep_song_button_click');
@@ -42,6 +43,7 @@ function KeepScreen(props: KeepScreenProps) {
       album,
       melonLink,
       isMr,
+      isLive,
     });
   };
 

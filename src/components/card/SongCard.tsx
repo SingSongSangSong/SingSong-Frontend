@@ -23,6 +23,7 @@ type SongCardProps = {
   album: string;
   melonLink?: string;
   isMr: boolean;
+  isLive: boolean;
 };
 
 const SongCard = ({
@@ -33,6 +34,7 @@ const SongCard = ({
   album,
   melonLink,
   isMr,
+  isLive,
 }: SongCardProps) => {
   const deviceWidth = Dimensions.get('window').width;
   const cardWidth = deviceWidth * 0.4;
@@ -116,6 +118,9 @@ const SongCard = ({
             <View
               style={[tw`flex-row items-center my-0.5`, {width: cardWidth}]}>
               {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+              {isLive && (
+                <CommonTag name="LIVE" color={designatedColor.ORANGE} />
+              )}
               <CustomText
                 style={[
                   tw`text-white text-3 mr-1`, // 카드의 너비에 맞추어 텍스트 너비 설정

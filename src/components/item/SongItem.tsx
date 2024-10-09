@@ -32,6 +32,7 @@ interface SongItemProps {
   isKeep: boolean | undefined;
   isShowKeepIcon: boolean;
   isMr?: boolean;
+  isLive?: boolean;
   keepCount?: number;
   commentCount?: number;
   isShowInfo?: boolean;
@@ -51,6 +52,7 @@ const SongItem = ({
   isKeep = true,
   isShowKeepIcon,
   isMr = false,
+  isLive = false,
   keepCount = 0,
   commentCount = 0,
   isShowInfo = true,
@@ -147,7 +149,7 @@ SongItemProps) => {
               <View style={tw`flex-row items-center mt-2 justify-between`}>
                 <View style={tw`flex-row items-center flex-1`}>
                   <View
-                    style={tw`px-2 py-0.3 rounded-full items-center justify-center bg-[${designatedColor.GRAY5}]`}>
+                    style={tw`px-2 py-0.3 rounded-full items-center justify-center bg-[${designatedColor.GRAY5}] mr-1`}>
                     <CustomText style={tw`text-white text-[3] text-white`}>
                       {songNumber}
                     </CustomText>
@@ -156,7 +158,7 @@ SongItemProps) => {
                     <TouchableOpacity
                       onPress={handleOnKeepPress}
                       activeOpacity={0.8}
-                      style={tw`px-2`}>
+                      style={tw`pl-1 pr-2`}>
                       {isKeepPressed ? (
                         <KeepFilledIcon width={14} height={14} />
                       ) : (
@@ -166,6 +168,11 @@ SongItemProps) => {
                   )}
                   {isMr ? (
                     <CommonTag name="MR" color={designatedColor.PURPLE} />
+                  ) : (
+                    <View />
+                  )}
+                  {isLive ? (
+                    <CommonTag name="LIVE" color={designatedColor.ORANGE} />
                   ) : (
                     <View />
                   )}

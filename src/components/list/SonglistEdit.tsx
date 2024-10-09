@@ -32,6 +32,8 @@ const SonglistEdit = ({
         onPressOut={onPressOut}
         isAllSelected={isAllSelected}
         isAllDeleted={isAllDeleted}
+        isMr={item.isMr}
+        isLive={item.isLive}
       />
     </View>
   );

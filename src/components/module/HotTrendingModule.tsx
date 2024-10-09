@@ -29,6 +29,7 @@ interface HotTrendingModuleProps {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
   isScrollingHome: RefObject<View>;
 }

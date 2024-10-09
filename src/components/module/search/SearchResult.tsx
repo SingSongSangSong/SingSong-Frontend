@@ -50,6 +50,7 @@ const SearchResult = ({
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => {
     logButtonClick('search_result_song_button_click');
     amplitude.track('search_result_song_button_click');
@@ -61,6 +62,7 @@ const SearchResult = ({
       album,
       melonLink,
       isMr,
+      isLive,
     });
   };
 

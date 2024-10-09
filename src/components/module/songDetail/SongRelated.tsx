@@ -23,6 +23,7 @@ type SongRelatedProps = {
     album: string,
     melonLink: string,
     isMr: boolean,
+    isLive: boolean,
   ) => void;
 };
 const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {

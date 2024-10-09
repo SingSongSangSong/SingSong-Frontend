@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, TouchableOpacity, Linking} from 'react-native';
+import {View, Image, TouchableOpacity, Linking} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
-import {CircleButton, CustomModal} from '..';
-import MusicIcon from '../../assets/svg/music.svg';
+import {CircleButton, CommonTag, CustomModal} from '..';
+// import MusicIcon from '../../assets/svg/music.svg';
 import CustomText from '../text/CustomText';
+import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 interface SonglistEditItemProps {
   songId: number;
@@ -17,6 +18,8 @@ interface SonglistEditItemProps {
   onPressOut: (songNumber: number) => void;
   isAllSelected: boolean;
   isAllDeleted: boolean;
+  isMr?: boolean;
+  isLive?: boolean;
 }
 
 const SonglistEditItem = ({
@@ -30,6 +33,8 @@ const SonglistEditItem = ({
   isAllSelected,
   isAllDeleted,
   melonLink,
+  isMr = false,
+  isLive = false,
 }: SonglistEditItemProps) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -79,16 +84,20 @@ const SonglistEditItem = ({
 
           <View style={tw`items-center justify-center w-[12] h-[12]`}>
             {album == '' ? (
+              // <View
+              //   style={[
+              //     {
+              //       backgroundColor: 'rgba(0, 0, 0, 1)',
+              //       width: 54,
+              //       height: 54,
+              //     },
+              //     tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
+              //   ]}>
+              //   <MusicIcon width={16} height={16} />
+              // </View>
               <View
-                style={[
-                  {
-                    backgroundColor: 'rgba(0, 0, 0, 1)',
-                    width: 54,
-                    height: 54,
-                  },
-                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
-                ]}>
-                <MusicIcon width={16} height={16} />
+                style={tw`flex-1 w-full h-full bg-[${designatedColor.BLACK}] rounded-sm justify-center items-center`}>
+                <WhiteLogoIcon width={43.2} height={30.4} />
               </View>
             ) : (
               <TouchableOpacity
@@ -108,11 +117,15 @@ const SonglistEditItem = ({
           <View style={tw`flex-1 h-full ml-4 mr-2`}>
             <View style={tw`flex-row items-center`}>
               <CustomText
-                style={tw`text-white text-sm text-[${designatedColor.VIOLET}]`}>
+                style={tw`text-white text-sm text-[${designatedColor.VIOLET}] mr-1`}>
                 {songNumber}
               </CustomText>
+              {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+              {isLive && (
+                <CommonTag name="LIVE" color={designatedColor.ORANGE} />
+              )}
               <CustomText
-                style={tw`text-white text-sm ml-2 flex-1`}
+                style={tw`text-white text-sm flex-1`}
                 numberOfLines={1}
                 ellipsizeMode="tail">
                 {songName}
