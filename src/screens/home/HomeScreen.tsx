@@ -304,12 +304,13 @@ const HomeScreen = (props: HomeScreenProps) => {
           onScrollEndDrag={enableButton}
           scrollEventThrottle={16}>
           {/* {!isGuest && ( */}
-          <LlmModule onPressSearch={handleOnPressLlm} />
-          <KeywordModule />
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
           />
+          <LlmModule onPressSearch={handleOnPressLlm} />
+          <KeywordModule />
+
           {/* )} */}
           <TaglistModule
             onPressTagButton={handleOnTagPress}

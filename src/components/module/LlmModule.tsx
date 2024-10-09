@@ -21,11 +21,11 @@ const LlmModule = ({onPressSearch}: LlmModuleProps) => {
         <CustomText style={tw`text-white text-[4] my-1 font-bold`}>
           노래방에서 부를 노래를 고민하고 있나요?
         </CustomText>
-        <View style={tw`flex-row items-center`}>
+        {/* <View style={tw`flex-row items-center`}>
           <SingsongIcon width={width * 0.2} height={186} />
           <TextIcon width={width * 0.5} height={186} />
           <SangsongIcon width={width * 0.2} height={186} />
-        </View>
+        </View> */}
         {/* <CustomText style={tw`text-white text-[4] my-1`}>
           노래를 찾지 못하셨나요?
         </CustomText> */}
