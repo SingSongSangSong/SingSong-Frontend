@@ -25,6 +25,16 @@ const useSearchRecentStore = create(
       // 새로운 검색 기록을 추가하는 함수
       addSearchRecent: newSearchRecent =>
         set(state => {
+          // 기존 검색 기록에서 중복 여부 확인
+          const isDuplicate = Array.from(state.searchRecent.values()).some(
+            recent => recent.recentText === newSearchRecent.recentText, // 'term'은 검색 기록의 텍스트 또는 키워드를 나타낸다고 가정
+          );
+
+          // 중복이 있다면 추가하지 않음
+          if (isDuplicate) {
+            return state; // 상태를 그대로 반환하여 아무 변화도 없도록 함
+          }
+
           const newId = state.currentId; // 현재 ID를 가져옴
           const updatedMap = new Map(state.searchRecent); // 기존 검색 기록을 복사
           updatedMap.set(newId, {...newSearchRecent, id: newId}); // 새로운 검색 기록을 Map에 추가
