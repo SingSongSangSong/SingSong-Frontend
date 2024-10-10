@@ -7,6 +7,8 @@ import {designatedColor} from '../../constants';
 import getSongsNew from '../../api/newSong/getSongsNew';
 import CustomText from '../text/CustomText';
 import {NewSongCardList} from '..';
+import {Tooltip} from 'react-native-elements';
+import InfoIcon from '../../assets/svg/Info.svg';
 // import {NewSongCardList} from '../list/NewSongCardList';
 
 interface NewSongModuleProps {
@@ -31,8 +33,8 @@ const NewSongModule = ({
   const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
   const {
     data: tempNewSongs,
-    error: rcdRecommendationError,
-    isFetching: isFetchingRcdRecommendationSongs,
+    error: newSongsError,
+    isFetching: isFetchingNewSongs,
   } = useQuery({
     queryKey: ['newSongs'],
     queryFn: () => getSongsNew(-1, 10),
@@ -47,20 +49,20 @@ const NewSongModule = ({
       setLoadingVisible(false); // 로딩 false로 변경
     }, 5000);
 
-    if (tempNewSongs || rcdRecommendationError) {
+    if (tempNewSongs || newSongsError) {
       clearTimeout(timer); // 타이머가 실행되기 전에 응답이 도착하면 타이머 정리
       setLoadingVisible(false); // 데이터가 오면 로딩 false로 변경
     }
 
     return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
-  }, [tempNewSongs, rcdRecommendationError, isFetchingRcdRecommendationSongs]);
+  }, [tempNewSongs, newSongsError, isFetchingNewSongs]);
 
   // 5초 후에도 데이터가 없고 에러가 없다면 로딩을 false로 설정
   useEffect(() => {
-    if (isTimeoutReached && !tempNewSongs && !rcdRecommendationError) {
+    if (isTimeoutReached && !tempNewSongs && !newSongsError) {
       setLoadingVisible(false);
     }
-  }, [isTimeoutReached, tempNewSongs, rcdRecommendationError]);
+  }, [isTimeoutReached, tempNewSongs, newSongsError]);
 
   return (
     <View>
@@ -70,10 +72,34 @@ const NewSongModule = ({
           <View key="newSong">
             <View style={tw`px-2 px-8 mt-2 mb-2 my-4 py-2`}>
               <View style={tw`flex-row justify-between items-center`}>
-                <CustomText
-                  style={tw`text-[${designatedColor.VIOLET3}] text-lg`}>
-                  이달의 노래방 신곡
-                </CustomText>
+                <View style={tw`flex-row items-center`}>
+                  <CustomText
+                    style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2 items-center`}>
+                    이달의 노래방 신곡
+                  </CustomText>
+                  <Tooltip
+                    popover={
+                      <CustomText
+                        style={[
+                          tw`text-[10px] text-[${designatedColor.WHITE}]`,
+                          {lineHeight: 18},
+                        ]}>
+                        노래방에 최신으로 발매된 순으로 확인 가능하며, 일주일
+                        사이 발매된 노래는 NOW로 표시됩니다.
+                      </CustomText>
+                    } // 툴팁에 표시할 내용
+                    backgroundColor={designatedColor.GRAY5} // 툴팁 배경 색상
+                    height={90} // 툴팁 높이
+                    width={200} // 툴팁 너비
+                    containerStyle={{borderRadius: 10}} // 툴팁 컨테이너 스타일
+                    withOverlay={false} // 배경이 흐려지는 효과를 없앰
+                    skipAndroidStatusBar // 안드로이드 상태 표시줄을 피해서 위치가 밀리는 현상을 줄임
+                  >
+                    {/* <Icon name="info" type="material" color="purple" size={24} /> */}
+                    <InfoIcon width={14} height={14} />
+                  </Tooltip>
+                </View>
+
                 <TouchableOpacity
                   onPress={onPressTotalButton}
                   activeOpacity={0.8}
