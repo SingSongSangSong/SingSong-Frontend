@@ -1,15 +1,15 @@
 import React, {memo} from 'react';
 import {View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
-import {SongCard} from '..';
 import {designatedColor} from '../../constants';
-import {Song} from '../../types';
+import {NewSong} from '../../types';
 import CustomText from '../text/CustomText';
+import {NewSongCard} from '..';
 
-type AiSongCardListProps = {
-  tag: string;
-  onPress: () => void;
-  data: Song[];
+type NewSongCardListProps = {
+  //   tag: string;
+  //   onPress: () => void;
+  data: NewSong[];
   onSongPress: (
     songId: number,
     songNumber: number,
@@ -22,35 +22,16 @@ type AiSongCardListProps = {
   ) => void;
 };
 
-const AiSongCardList = ({
-  tag,
-  onPress,
+const NewSongCardList = ({
+  //   tag,
+  //   onPress,
   data,
   onSongPress,
-}: AiSongCardListProps) => {
+}: NewSongCardListProps) => {
   const deviceWidth = Dimensions.get('window').width;
 
   return (
     <View style={tw`w-full mx-2 mb-2`}>
-      <View style={tw`px-2 px-8 mt-2 mb-2 my-4 py-2`}>
-        <View style={tw`flex-row justify-between items-center`}>
-          <CustomText style={tw`text-[${designatedColor.VIOLET3}] text-lg`}>
-            {tag}
-          </CustomText>
-          <TouchableOpacity
-            onPress={() => onPress()}
-            activeOpacity={0.8}
-            style={tw`p-2`}>
-            <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[3]`}>
-              전체보기
-            </CustomText>
-          </TouchableOpacity>
-        </View>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
-          개인 맞춤 노래를 추천 받아보세요
-        </CustomText>
-      </View>
-
       <ScrollView
         horizontal
         pagingEnabled
@@ -60,8 +41,8 @@ const AiSongCardList = ({
         decelerationRate="fast">
         {data &&
           data.slice(0, 10).map((song, index) => (
-            <SongCard
-              key={`${tag}-${index}`} // 고유한 key 생성
+            <NewSongCard
+              key={index} // 고유한 key 생성
               songNumber={song.songNumber}
               songName={song.songName}
               singerName={song.singerName}
@@ -81,6 +62,7 @@ const AiSongCardList = ({
               melonLink={song.melonLink}
               isMr={song.isMr}
               isLive={song.isLive || false}
+              isRecentlyUpdated={song.isRecentlyUpdated}
             />
           ))}
       </ScrollView>
@@ -89,5 +71,5 @@ const AiSongCardList = ({
 };
 
 // React.memo를 사용하여 SongCardList 컴포넌트를 메모이제이션하고 내보내기
-export const MemoizedSongCardList = memo(AiSongCardList);
-export {MemoizedSongCardList as AiSongCardList};
+export const NewMemoizedSongCardList = memo(NewSongCardList);
+export {NewMemoizedSongCardList as NewSongCardList};

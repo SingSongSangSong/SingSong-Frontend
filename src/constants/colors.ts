@@ -45,6 +45,7 @@ const designatedColor = {
   RED2: '#B8001F',
   VIOLET: '#5867FE',
   VIOLET2: '#8792FF',
+  VIOLET3: '#9FA8FF',
   MINT: '#6DFBFB',
 } as const;
 

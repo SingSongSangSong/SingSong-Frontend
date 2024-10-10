@@ -25,6 +25,7 @@ import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendat
 import NicknameChangeScreen from '../../screens/home/NicknameChangeScreen';
 import AiLlmScreen from '../../screens/llm/AiLlmScreen';
 import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
+import NewSongScreen from '../../screens/home/NewSongScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -259,6 +260,24 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           // headerShown: false,
           headerTitle: 'AI 검색',
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name={homeStackNavigations.NEW_SONG}
+        component={NewSongScreen}
+        options={({navigation}) => ({
+          // headerShown: false,
+          headerTitle: '이달의 노래방 신곡',
           headerLeft: () => (
             <IconButton
               onPress={() => {

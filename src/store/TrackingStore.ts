@@ -12,7 +12,7 @@ const TrackingStore = () => {
   const getTrackingStatus = async () => {
     try {
       const trackingStatus = await AsyncStorage.getItem('@tracking_status');
-      console.log('Tracking status:', trackingStatus);
+      // console.log('Tracking status:', trackingStatus);
       return trackingStatus;
     } catch (e) {
       console.error('Failed to fetch tracking status', e);

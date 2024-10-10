@@ -36,6 +36,7 @@ const homeStackNavigations = {
   NICKNAME_CHANGE: '_NicknameChange',
   AI_LLM: '_AiLlm',
   AI_LLM_RESULT: '_AiLlmResult',
+  NEW_SONG: '_NewSong',
 } as const;
 
 const keepStackNavigations = {

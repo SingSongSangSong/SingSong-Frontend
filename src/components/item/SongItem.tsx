@@ -41,6 +41,7 @@ interface SongItemProps {
   onKeepAddPress?: () => void | undefined;
   onKeepRemovePress?: () => void | undefined;
   melonLink?: string;
+  isRecentlyUpdated?: boolean;
 }
 
 const SongItem = ({
@@ -60,6 +61,7 @@ const SongItem = ({
   onKeepAddPress = () => {},
   onKeepRemovePress = () => {},
   melonLink,
+  isRecentlyUpdated = false,
 }: // setIsModalVisible,
 SongItemProps) => {
   const [isKeepPressed, setIsKeepPressed] = useState(isKeep);
@@ -165,6 +167,11 @@ SongItemProps) => {
                         <KeepIcon width={14} height={14} />
                       )}
                     </TouchableOpacity>
+                  )}
+                  {isRecentlyUpdated ? (
+                    <CommonTag name="NOW" color={designatedColor.MINT} />
+                  ) : (
+                    <View />
                   )}
                   {isMr ? (
                     <CommonTag name="MR" color={designatedColor.PURPLE} />

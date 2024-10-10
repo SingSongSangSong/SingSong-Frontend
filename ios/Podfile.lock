@@ -1691,8 +1691,6 @@ PODS:
     - React-logger (= 0.75.2)
     - React-perflogger (= 0.75.2)
     - React-utils (= 0.75.2)
-  - ReactNativeART (1.1.2):
-    - React
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNCAsyncStorage (1.24.0):
@@ -1883,7 +1881,7 @@ PODS:
     - Yoga
   - RNSVG (15.6.0):
     - React-Core
-  - RNVectorIcons (10.1.0):
+  - RNVectorIcons (10.2.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1978,7 +1976,6 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
@@ -2172,8 +2169,6 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  ReactNativeART:
-    :path: "../node_modules/@react-native-community/art"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCAsyncStorage:
@@ -2314,7 +2309,6 @@ SPEC CHECKSUMS:
   React-utils: f908da1113885e2c08b25247e0ea892c68e2eaf6
   ReactCodegen: de94475c4712a61ba0b1e1c25eb54db32f56836d
   ReactCommon: 8da2bad9c1e5901f7b5484e42e59578edeece142
-  ReactNativeART: c580fba2f7d188d8fa4418ce78db8130654ed10f
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCCheckbox: a3ca9978cb0846b981d28da4e9914bd437403d77
@@ -2333,7 +2327,7 @@ SPEC CHECKSUMS:
   RNReanimated: d23c509e05bab52691ce7b81deb9fb9736b4d2d8
   RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
   RNSVG: 5da7a24f31968ec74f0b091e3440080f347e279b
-  RNVectorIcons: 6336d2071d885cc1081de5ab5deeaad4416aac50
+  RNVectorIcons: 7b81882e9c9369031aede0016dee0fe415cf2f43
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: c6584ec444ef4aee46e0575049f90cd2aab1e6ed
 

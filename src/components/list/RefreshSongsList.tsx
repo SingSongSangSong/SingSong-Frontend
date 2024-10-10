@@ -58,6 +58,7 @@ const RenderItem = memo(
       isLive={item.isLive}
       keepCount={item.keepCount}
       commentCount={item.commentCount}
+      isRecentlyUpdated={item.isRecentlyUpdated}
       // setIsModalVisible={setIsModalVisible}
       onSongPress={() => {
         onSongPress(
@@ -122,8 +123,8 @@ const RefreshSongsList = ({
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor={designatedColor.PINK2} // RefreshControl indicator color (iOS)
-            colors={[designatedColor.PINK2]}
+            tintColor={designatedColor.VIOLET2} // RefreshControl indicator color (iOS)
+            colors={[designatedColor.VIOLET2]}
           /> // RefreshControl indicator colors (Android)/>
         }
       />

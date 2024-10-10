@@ -75,3 +75,6 @@ export * from './list/HotTrendingV2';
 export * from './text/CustomText';
 export * from './module/LlmModule';
 export * from './module/SearchKeyboard';
+export * from './module/NewSongModule';
+export * from './list/NewSongCardList';
+export * from './card/NewSongCard';

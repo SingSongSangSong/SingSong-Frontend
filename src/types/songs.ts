@@ -252,6 +252,29 @@ interface GetRcdRecommendationResponse {
   message: string;
 }
 
+interface NewSong {
+  album: string;
+  commentCount: number;
+  isKeep: boolean;
+  isLive: boolean;
+  isMr: boolean;
+  isRecentlyUpdated: boolean;
+  keepCount: number;
+  melonLink: string;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+}
+
+interface GetSongsNewResponse {
+  data: {
+    lastCursor: number;
+    songs: NewSong[];
+  };
+  message: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -289,4 +312,6 @@ export type {
   ChartSong,
   TermItem,
   LlmSongResponse,
+  NewSong,
+  GetSongsNewResponse,
 };

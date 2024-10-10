@@ -17,6 +17,7 @@ import {
   HotTrendingModule,
   IconButton,
   LlmModule,
+  NewSongModule,
   TaglistModule,
 } from '../../components';
 import {HomeStackParamList} from '../../types';
@@ -179,6 +180,10 @@ const HomeScreen = (props: HomeScreenProps) => {
     // console.log('AI 추천 전체보기 버튼 클릭');
   };
 
+  const handleOnPressNewSongTotalButton = () => {
+    props.navigation.navigate(homeStackNavigations.NEW_SONG);
+  };
+
   const handleOnPressLoginButton = async () => {
     removeSecureValue(ACCESS_TOKEN);
     removeSecureValue(REFRESH_TOKEN);
@@ -308,6 +313,10 @@ const HomeScreen = (props: HomeScreenProps) => {
           onScrollEndDrag={enableButton}
           scrollEventThrottle={16}>
           {/* {!isGuest && ( */}
+          <NewSongModule
+            onPressTotalButton={handleOnPressNewSongTotalButton}
+            onPressSongButton={handleOnSongPress}
+          />
           <LlmModule onPressSearch={handleOnPressLlm} />
           <KeywordModule />
           <AiSongCardModule
