@@ -89,7 +89,13 @@ const HotTrendingItem = ({
                 {ranking}
               </CustomText>
               {rankingChange == 0 ? (
-                <MediumIcon width={14} height={14} />
+                <>
+                  {isNew ? (
+                    <UpIcon width={14} height={14} />
+                  ) : (
+                    <MediumIcon width={14} height={14} />
+                  )}
+                </>
               ) : (
                 <>
                   {rankingChange < 0 ? (
