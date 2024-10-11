@@ -52,6 +52,7 @@ const AiSongCardModule = ({
     }, 5000);
 
     if (tempRcdRecommendationSongs || rcdRecommendationError) {
+      setRcdRecommendationSongs(tempRcdRecommendationSongs);
       clearTimeout(timer); // 타이머가 실행되기 전에 응답이 도착하면 타이머 정리
       setLoadingVisible(false); // 데이터가 오면 로딩 false로 변경
     }

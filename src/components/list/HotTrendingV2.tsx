@@ -189,6 +189,7 @@ const HotTrendingV2 = ({
   onPressSongButton,
   isScrollingHome,
 }: HotTrendingV2Props) => {
+  // console.log('hi!!22');
   const itemsPerPage = 5; // 페이지 당 항목 수
   const selectedCharts = useChartV2Store(state => state.selectedCharts);
   // const [currentPage, setCurrentPage] = useState(0);
@@ -281,7 +282,7 @@ const HotTrendingV2 = ({
           </TouchableOpacity>
         ))}
       </View>
-      {/* <ScrollView //ios 버전
+      <ScrollView //ios 버전
         horizontal
         pagingEnabled={false} // pagingEnabled를 false로 설정합니다.
         showsHorizontalScrollIndicator={false}
@@ -294,8 +295,8 @@ const HotTrendingV2 = ({
         onScrollBeginDrag={() => setIsScrolling(true)} // 스크롤 시작 시 스크롤 상태 활성화
         onScrollEndDrag={() => setIsScrolling(false)} // 스크롤 종료 시 스크롤 상태 비활성화
         key={currentAgeGroup}
-        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}> */}
-      <ScrollView //android 버전
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        {/* <ScrollView //android 버전
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -307,7 +308,7 @@ const HotTrendingV2 = ({
         onScrollBeginDrag={() => setIsScrolling(true)} // 스크롤 시작 시 스크롤 상태 활성화
         onScrollEndDrag={() => setIsScrolling(false)} // 스크롤 종료 시 스크롤 상태 비활성화
         key={currentAgeGroup}
-        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+        style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}> */}
         {groupedCharts.length > 0 ? (
           groupedCharts.map((group, index) => (
             <View

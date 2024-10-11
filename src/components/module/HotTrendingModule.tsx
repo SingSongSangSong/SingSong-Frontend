@@ -95,6 +95,7 @@ const HotTrendingModule = ({
   useEffect(() => {
     if (tempCharts) {
       // console.log('tempCharts:', tempCharts);
+      // console.log('tempCharts:', tempCharts);
       setInitCharts(tempCharts.charts, 5);
       setUserAgeGroup(tempCharts.ageGroup);
       // console.log('ageGroup:', tempCharts.ageGroup);
@@ -104,6 +105,7 @@ const HotTrendingModule = ({
         setUserGender('MIXED');
         setSelectedCharts('MIXED', tempCharts.ageGroup);
       } else {
+        // console.log('selectedGender!');
         setSelectedGender(tempCharts.gender);
         setUserGender(tempCharts.gender);
         setSelectedCharts(tempCharts.gender, tempCharts.ageGroup);
@@ -191,6 +193,7 @@ const HotTrendingModule = ({
           // />
           <HotTrendingV2
             key={selectedGender} // 성별이 바뀔 때마다 컴포넌트 재마운트
+            // key={`${tempCharts}-${selectedGender}`} // 성별이 바뀔 때마다 컴포넌트 재마운트
             onPressSongButton={onPressSongButton}
             isScrollingHome={isScrollingHome}
           />

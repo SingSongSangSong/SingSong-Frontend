@@ -12,7 +12,7 @@ import {designatedColor} from '../../constants';
 import MusicIcon from '../../assets/svg/music.svg';
 import {CommonTag, CustomModal} from '..';
 import CustomText from '../text/CustomText';
-import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+// import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 type SongCardProps = {
@@ -144,7 +144,7 @@ const SongCard = ({
               >
                 {songName}
               </CustomText>
-              <ArrowRightIcon width={16} height={16} />
+              {/* <ArrowRightIcon width={16} height={16} /> */}
             </View>
 
             <CustomText

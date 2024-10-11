@@ -4,7 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {CommonTag} from '..';
 import CustomText from '../text/CustomText';
-import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
+// import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 
 type NewSongCardProps = {
@@ -120,12 +120,12 @@ const NewSongCard = ({
               >
                 {songName}
               </CustomText>
-              <ArrowRightIcon width={16} height={16} />
+              {/* <ArrowRightIcon width={16} height={16} /> */}
             </View>
 
             <CustomText
               style={[
-                tw`text-[${designatedColor.GRAY3}] text-[11px]`,
+                tw`text-[${designatedColor.GRAY3}] text-[11px] mt-1`,
                 {width: cardWidth}, // 카드의 너비에 맞추어 텍스트 너비 설정
               ]}
               numberOfLines={1} // 최대 한 줄로 표시되도록 설정

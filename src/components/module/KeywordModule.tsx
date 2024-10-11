@@ -10,8 +10,11 @@ import InfoIcon from '../../assets/svg/Info.svg';
 import {useQuery} from '@tanstack/react-query';
 import getRcdRecommendationSearchLog from '../../api/recommendation/getRcdRecommendationSearchLog';
 // import {useState} from 'react';
+interface KeywordModuleProps {
+  refreshing: boolean;
+}
 
-const KeywordModule = (refreshing: string) => {
+const KeywordModule = ({refreshing}: KeywordModuleProps) => {
   const [sampleKeywords, setSampleKeywords] = useState<string[]>([]);
 
   //   const [visible, setVisible] = useState(false);
