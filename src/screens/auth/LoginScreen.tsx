@@ -55,9 +55,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
             <LargeButton
               title="Sign in with Apple"
               onPress={
-                loginHandler.prValue
-                  ? loginHandler.handleAppleLogin2
-                  : loginHandler.handleAppleLogin
+                loginHandler.handleAppleLogin
+                // loginHandler.prValue
+                //   ? loginHandler.handleAppleLogin2
+                //   : loginHandler.handleAppleLogin
               }
               color={designatedColor.WHITE}
               Icon={AppleBlackIcon}
@@ -70,9 +71,10 @@ function LoginScreen({navigation}: LoginScreenProps) {
               Platform.OS == 'ios' ? 'Sign in with Kakao' : '카카오로 로그인'
             }
             onPress={
-              loginHandler.prValue
-                ? loginHandler.handleKakaoLogin2
-                : loginHandler.handleKakaoLogin
+              loginHandler.handleKakaoLogin
+              // loginHandler.prValue
+              //   ? loginHandler.handleKakaoLogin2
+              //   : loginHandler.handleKakaoLogin
             }
             color={designatedColor.KAKAO_YELLOW}
             Icon={KaKaoIcon}
@@ -95,149 +97,6 @@ function LoginScreen({navigation}: LoginScreenProps) {
           <ActivityIndicator size="large" color="#D2E0FB" />
         </View>
       )}
-
-      {/* <Modal
-        transparent={true}
-        visible={loginHandler.isModalVisible}
-        animationType="fade">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={tw`flex-1 justify-center items-center bg-black bg-opacity-50 px-8`}
-            pointerEvents="box-none">
-            <View style={tw`bg-white p-4 rounded-lg w-full max-w-md`}>
-              <View style={{height: deviceHeight * 0.7}}>
-                {loginHandler.step === 1 ? (
-                  <>
-                    <View style={{flex: 1}}>
-                      <CustomText style={tw`text-black text-lg font-bold my-4`}>
-                        개인정보 처리방침 및 데이터 수집 동의
-                      </CustomText>
-                      <CustomText style={tw`text-black my-2`}>
-                        앱을 사용하기 위해서는 개인정보 처리방침과 데이터 수집
-                        방침에 동의해주셔야 합니다.
-                      </CustomText>
-                      <CustomText
-                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
-                        - 개인정보 수집 및 사용 목적: 본 앱은 회원 가입, 로그인,
-                        서비스 제공, 고객 지원, 마케팅 및 분석 목적으로 최소한의
-                        개인정보를 수집합니다.
-                      </CustomText>
-                      <CustomText
-                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
-                        - 본 단계에서 출생연도와 성별 정보를 수집합니다. 이
-                        정보는 사용자 맞춤형 서비스 제공과 분석 목적으로
-                        사용됩니다.
-                      </CustomText>
-                      <CustomText
-                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
-                        - 데이터 수집 및 사용: 본 앱은 Firebase, Amplitude 등과
-                        같은 분석 도구를 사용하여 사용자의 앱 내 행동 데이터를
-                        수집합니다. 이 데이터는 서비스 개선, 사용자 경험 향상,
-                        개인 맞춤형 콘텐츠 제공을 위해 사용됩니다.
-                      </CustomText>
-                      <CustomText
-                        style={tw`text-[${designatedColor.GRAY1}] mt-2`}>
-                        - 데이터 제3자 제공: 수집된 데이터는 앱 성능 분석 및
-                        마케팅 목적으로 Firebase, Amplitude와 같은 제3자 서비스
-                        제공자에게 공유될 수 있습니다.
-                      </CustomText>
-                      <CustomText style={tw`text-black my-4`}>
-                        위 내용을 확인하였으며, 개인정보 처리방침과 데이터 수집
-                        방침에 동의합니다.
-                      </CustomText>
-                    </View>
-                    <TouchableOpacity
-                      style={tw`my-6 mx-8 bg-black p-2 rounded`}
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        loginHandler.setStep(2);
-                      }}>
-                      <CustomText style={tw`text-white font-bold text-center`}>
-                        동의하고 다음 단계로
-                      </CustomText>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <>
-                    <View style={tw`flex-1 items-center justify-center`}>
-                      <CustomText style={tw`text-black text-lg font-bold my-4`}>
-                        출생연도와 성별을 입력해주세요
-                      </CustomText>
-                      <View style={tw`mx-3`}>
-
-                        <View style={tw`flex-row items-center`}>
-                          <View
-                            style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                            <CustomText style={tw`text-black`}>
-                              출생연도
-                            </CustomText>
-                          </View>
-                          <TextInput
-                            style={tw`border border-gray-400 rounded p-2 w-40`}
-                            placeholder="ex) 1990"
-                            keyboardType="numeric"
-                            value={loginHandler.birthYear}
-                            onChangeText={loginHandler.setBirthYear}
-                            maxLength={4}
-                            autoFocus={true}
-                          />
-                        </View>
-                        <View style={tw`flex-row items-center`}>
-                          <View
-                            style={tw`my-4 mr-4 w-[16] justify-center items-center`}>
-                            <CustomText style={tw`text-black`}>성별</CustomText>
-                          </View>
-
-                          <View style={tw`flex-row justify-around px-2 w-40`}>
-                            <TouchableOpacity
-                              style={[
-                                tw`px-4 py-2 rounded mr-4`,
-                                loginHandler.gender === 'MALE'
-                                  ? tw`bg-black`
-                                  : tw`bg-gray-300`,
-                              ]}
-                              onPress={() => {
-                                Keyboard.dismiss();
-                                loginHandler.handleGenderToggle('MALE');
-                              }}>
-                              <CustomText style={tw`text-white text-center`}>
-                                남성
-                              </CustomText>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              style={[
-                                tw`px-4 py-2 rounded`,
-                                loginHandler.gender === 'FEMALE'
-                                  ? tw`bg-black`
-                                  : tw`bg-gray-300`,
-                              ]}
-                              onPress={() => {
-                                Keyboard.dismiss();
-                                loginHandler.handleGenderToggle('FEMALE');
-                              }}>
-                              <CustomText style={tw`text-white text-center`}>
-                                여성
-                              </CustomText>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                    <TouchableOpacity
-                      style={tw`my-6 mx-8 bg-black p-2 rounded`}
-                      activeOpacity={0.8}
-                      onPress={handleOnModalCloseButton}>
-                      <CustomText style={tw`text-white font-bold text-center`}>
-                        완료
-                      </CustomText>
-                    </TouchableOpacity>
-                  </>
-                )}
-              </View>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal> */}
     </View>
   );
 }

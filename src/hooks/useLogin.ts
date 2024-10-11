@@ -1,15 +1,16 @@
 import {login} from '@react-native-kakao/user';
-import {useEffect, useState} from 'react';
-import postMemberLogin from '../api/member/postMemberLogin';
+import {useState} from 'react';
+// import postMemberLogin from '../api/member/postMemberLogin';
 import TokenStore from '../store/TokenStore';
 import {ACCESS_TOKEN, appStackNavigations, REFRESH_TOKEN} from '../constants';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
-import PermissionStore from '../store/PermissionStore';
+// import PermissionStore from '../store/PermissionStore';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import useMemberStore from '../store/useMemberStore';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList} from '../types';
 import GuestStore from '../store/GuestStore';
+import postMemberLoginV2 from '../api/member/postMemberLoginV2';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<
@@ -26,21 +27,21 @@ const useLogin = ({navigation}: UseLoginProps) => {
   // const [step, setStep] = useState(1); // 현재 단계 (1: 입력, 2: 동의)
   // const [birthYear, setBirthYear] = useState('');
   // const [gender, setGender] = useState('');
-  const {getPermissionValue} = PermissionStore();
-  const [prValue, setPrValue] = useState('');
+  // const {getPermissionValue} = PermissionStore();
+  // const [prValue, setPrValue] = useState('');
   const {setProvider} = useMemberStore();
   const {setSecureValue} = TokenStore();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getPermissionValue();
-      // console.log('data', data);
-      if (data) {
-        setPrValue(data);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getPermissionValue();
+  //     // console.log('data', data);
+  //     if (data) {
+  //       setPrValue(data);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   // const handleGenderToggle = (selectedGender: string) => {
   //   setGender(selectedGender);
@@ -52,45 +53,17 @@ const useLogin = ({navigation}: UseLoginProps) => {
     try {
       setIsLoggedProcess(true); //true
       const result = await login();
+      const tempData = await postMemberLoginV2(
+        result.idToken || '',
+        'KAKAO_KEY',
+      );
+      setSecureValue(ACCESS_TOKEN, tempData.data.accessToken);
+      setSecureValue(REFRESH_TOKEN, tempData.data.refreshToken);
       setIsLoggedProcess(false);
-      navigation.replace(appStackNavigations.TERMS, {
-        provider: 'KAKAO_KEY',
-        idToken: result.idToken || '',
-      });
-    } catch (err) {
-      console.error('Login Failed', err);
-      setIsLoggedProcess(false);
-      Toast.show({
-        type: 'selectedToast',
-        text1:
-          '카카오톡이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
-        position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-        visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-      });
-    }
-  };
-
-  //그냥 로그인인 경우
-  const handleKakaoLogin2 = async () => {
-    setProvider('KAKAO_KEY');
-    try {
-      setIsLoggedProcess(true); //true
-      const result = await login();
-      if (result.idToken) {
-        const data = await postMemberLogin(result.idToken, 'KAKAO_KEY'); //accessToken 받기, 설정해야됨
-        setSecureValue(ACCESS_TOKEN, data.data.accessToken);
-        setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
-        setIsLoggedProcess(!isLoggedProcess); //false
-        navigation.replace(appStackNavigations.MAIN);
+      if (tempData.data.isInfoRequired) {
+        navigation.replace(appStackNavigations.TERMS);
       } else {
-        Toast.show({
-          type: 'selectedToast',
-          text1:
-            '카카오톡이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
-          position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-          visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-        });
-        setIsLoggedProcess(!isLoggedProcess); //false
+        navigation.replace(appStackNavigations.MAIN);
       }
     } catch (err) {
       console.error('Login Failed', err);
@@ -104,6 +77,41 @@ const useLogin = ({navigation}: UseLoginProps) => {
       });
     }
   };
+
+  // //그냥 로그인인 경우
+  // const handleKakaoLogin2 = async () => {
+  //   setProvider('KAKAO_KEY');
+  //   try {
+  //     setIsLoggedProcess(true); //true
+  //     const result = await login();
+  //     if (result.idToken) {
+  //       const data = await postMemberLogin(result.idToken, 'KAKAO_KEY'); //accessToken 받기, 설정해야됨
+  //       setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+  //       setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
+  //       setIsLoggedProcess(!isLoggedProcess); //false
+  //       navigation.replace(appStackNavigations.MAIN);
+  //     } else {
+  //       Toast.show({
+  //         type: 'selectedToast',
+  //         text1:
+  //           '카카오톡이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
+  //         position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //         visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //       });
+  //       setIsLoggedProcess(!isLoggedProcess); //false
+  //     }
+  //   } catch (err) {
+  //     console.error('Login Failed', err);
+  //     setIsLoggedProcess(false);
+  //     Toast.show({
+  //       type: 'selectedToast',
+  //       text1:
+  //         '카카오톡이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
+  //       position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //       visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //     });
+  //   }
+  // };
 
   //회원가입인 경우
   const handleAppleLogin = async () => {
@@ -117,10 +125,24 @@ const useLogin = ({navigation}: UseLoginProps) => {
       });
 
       const {identityToken} = appleAuthRequestResponse;
-      navigation.replace(appStackNavigations.TERMS, {
-        provider: 'APPLE_KEY',
-        idToken: identityToken || '',
-      });
+
+      const tempData = await postMemberLoginV2(
+        identityToken || '',
+        'APPLE_KEY',
+      );
+
+      setSecureValue(ACCESS_TOKEN, tempData.data.accessToken);
+      setSecureValue(REFRESH_TOKEN, tempData.data.refreshToken);
+      setIsLoggedProcess(false);
+      if (tempData.data.isInfoRequired) {
+        navigation.replace(appStackNavigations.TERMS);
+      } else {
+        navigation.replace(appStackNavigations.MAIN);
+      }
+      // navigation.replace(appStackNavigations.TERMS, {
+      //   provider: 'APPLE_KEY',
+      //   idToken: identityToken || '',
+      // });
     } catch (err) {
       console.error('Login Failed', err);
       setIsLoggedProcess(false);
@@ -135,41 +157,41 @@ const useLogin = ({navigation}: UseLoginProps) => {
     }
   };
 
-  //회원가입이 아닌 그냥 로그인인 경우
-  const handleAppleLogin2 = async () => {
-    setProvider('APPLE_KEY');
-    try {
-      setIsLoggedProcess(true); //true
-      const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
+  // //회원가입이 아닌 그냥 로그인인 경우
+  // const handleAppleLogin2 = async () => {
+  //   setProvider('APPLE_KEY');
+  //   try {
+  //     setIsLoggedProcess(true); //true
+  //     const appleAuthRequestResponse = await appleAuth.performRequest({
+  //       requestedOperation: appleAuth.Operation.LOGIN,
+  //       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+  //     });
 
-      const {identityToken} = appleAuthRequestResponse;
+  //     const {identityToken} = appleAuthRequestResponse;
 
-      const data = await postMemberLogin(identityToken!, 'APPLE_KEY'); //accessToken 받기, 설정해야됨
+  //     const data = await postMemberLogin(identityToken!, 'APPLE_KEY'); //accessToken 받기, 설정해야됨
 
-      setSecureValue(ACCESS_TOKEN, data.data.accessToken);
-      setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
-      setIsLoggedProcess(!isLoggedProcess); //false
-      navigation.replace(appStackNavigations.MAIN);
-    } catch (err) {
-      console.error('Login Failed', err);
-      setIsLoggedProcess(false);
-      Toast.show({
-        type: 'selectedToast',
-        text1:
-          'Apple이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
-        position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-        visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-      });
-    }
-  };
+  //     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+  //     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
+  //     setIsLoggedProcess(!isLoggedProcess); //false
+  //     navigation.replace(appStackNavigations.MAIN);
+  //   } catch (err) {
+  //     console.error('Login Failed', err);
+  //     setIsLoggedProcess(false);
+  //     Toast.show({
+  //       type: 'selectedToast',
+  //       text1:
+  //         'Apple이 계정에 연결되어 있지 않습니다. \n연결 후 다시 시도해주세요.',
+  //       position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //       visibilityTime: 10000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //     });
+  //   }
+  // };
 
   const handleGuestLogin = async () => {
     setGuestState(true);
     setIsLoggedProcess(true);
-    const data = await postMemberLogin('', 'Anonymous');
+    const data = await postMemberLoginV2('', 'Anonymous');
     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
     setIsLoggedProcess(false);
@@ -201,11 +223,11 @@ const useLogin = ({navigation}: UseLoginProps) => {
 
   return {
     isLoggedProcess,
-    prValue,
+    // prValue,
     handleKakaoLogin,
-    handleKakaoLogin2,
+    // handleKakaoLogin2,
     handleAppleLogin,
-    handleAppleLogin2,
+    // handleAppleLogin2,
     handleGuestLogin,
   };
 };

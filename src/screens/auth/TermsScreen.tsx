@@ -27,8 +27,8 @@ type TermsScreenProps = StackScreenProps<
 
 function TermsScreen(props: TermsScreenProps) {
   const termsHandler = useTerms({
-    provider: props.route.params.provider,
-    idToken: props.route.params.idToken,
+    // provider: props.route.params.provider,
+    // idToken: props.route.params.idToken,
     navigation: props.navigation,
   });
 

@@ -94,7 +94,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
   }, []);
 
   const deviceHeight = Dimensions.get('window').height;
-  console.log('deviceHeight', deviceHeight);
+  // console.log('deviceHeight', deviceHeight);
 
   return (
     <View

@@ -4,4 +4,11 @@ interface SearchRecentType {
   recentText: string;
 }
 
-export type {SearchRecentType};
+interface SearchLogResponse {
+  data: {
+    searchTexts: string[];
+  };
+  message: string;
+}
+
+export type {SearchRecentType, SearchLogResponse};

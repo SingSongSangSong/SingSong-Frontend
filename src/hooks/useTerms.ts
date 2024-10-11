@@ -1,22 +1,16 @@
 import {useEffect, useState} from 'react';
-import postMemberLogin from '../api/member/postMemberLogin';
-import TokenStore from '../store/TokenStore';
-import {
-  ACCESS_TOKEN,
-  appStackNavigations,
-  designatedColor,
-  REFRESH_TOKEN,
-} from '../constants';
+import {appStackNavigations, designatedColor} from '../constants';
 import Toast from 'react-native-toast-message';
-import PermissionStore from '../store/PermissionStore';
+// import PermissionStore from '../store/PermissionStore';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
 import {Keyboard} from 'react-native';
+import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
 
 type UseTermsProps = {
-  provider: string;
-  idToken: string;
+  // provider: string;
+  // idToken: string;
   navigation: StackNavigationProp<
     AppStackParamList,
     typeof appStackNavigations.TERMS
@@ -32,14 +26,12 @@ type TermsState = {
   locationInfo: boolean;
 };
 
-const useTerms = ({provider, idToken, navigation}: UseTermsProps) => {
+const useTerms = ({navigation}: UseTermsProps) => {
   const [isLoggedProcess, setIsLoggedProcess] = useState<boolean>(false);
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
   const [isNextStep, setIsNextStep] = useState<boolean>(false);
   const [birthYear, setBirthYear] = useState<string>('');
   const [gender, setGender] = useState<string>('');
-  const {setSecureValue} = TokenStore();
-  const {setPermissionValue} = PermissionStore();
   const [terms, setTerms] = useState<TermsState>({
     termsOfService: false,
     personalInfo: false,
@@ -134,13 +126,13 @@ const useTerms = ({provider, idToken, navigation}: UseTermsProps) => {
   };
 
   const handleOnPressSubmission = async () => {
-    if (idToken && birthYear != '' && gender != '' && birthYear.length == 4) {
+    if (birthYear != '' && gender != '' && birthYear.length == 4) {
       setIsLoggedProcess(true);
-      const data = await postMemberLogin(idToken, provider!, birthYear, gender); //accessToken 받기, 설정해야됨
-      setSecureValue(ACCESS_TOKEN, data.data.accessToken);
-      setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
+      const data = await postMemberLoginExtra(birthYear, gender); //accessToken 받기, 설정해야됨
+      // setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+      // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(false); //false
-      setPermissionValue('true');
+      // setPermissionValue('true');
       navigation.replace(appStackNavigations.MAIN);
     } else {
       let message = '모든 정보를 입력해주세요.';

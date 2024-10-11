@@ -1,23 +1,48 @@
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
-import {getRandomKeywords} from '../../utils';
-import {designatedColor, keywordList} from '../../constants';
+import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
 import tw from 'twrnc';
 // import InfoIcon from '../../assets/svg/Info.svg';
 // import {CustomTooltipInfo} from '../info/CustomTooltipInfo';
 import {Tooltip} from 'react-native-elements';
 import InfoIcon from '../../assets/svg/Info.svg';
+import {useQuery} from '@tanstack/react-query';
+import getRcdRecommendationSearchLog from '../../api/recommendation/getRcdRecommendationSearchLog';
 // import {useState} from 'react';
 
-const KeywordModule = () => {
+const KeywordModule = (refreshing: string) => {
   const [sampleKeywords, setSampleKeywords] = useState<string[]>([]);
 
   //   const [visible, setVisible] = useState(false);
+  // useEffect(() => {
+  //   const randomKeywords = getRandomKeywords(keywordList, 3);
+  //   setSampleKeywords(randomKeywords);
+  // }, []);
+  const {
+    data: tempSearchLogs,
+    error: searchLogsError,
+    isFetching: isFetchingSearchLogs,
+    refetch,
+  } = useQuery({
+    queryKey: ['searchLogs'],
+    queryFn: getRcdRecommendationSearchLog,
+    staleTime: 3600000,
+    select: data => data.data.searchTexts,
+  });
+
   useEffect(() => {
-    const randomKeywords = getRandomKeywords(keywordList, 3);
-    setSampleKeywords(randomKeywords);
-  }, []);
+    if (refreshing) {
+      refetch();
+    }
+  }, [refreshing, refetch]);
+
+  useEffect(() => {
+    if (tempSearchLogs) {
+      setSampleKeywords(tempSearchLogs);
+    }
+  }, [tempSearchLogs]);
+
   return (
     <View
       style={tw`flex-1 pb-4 mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
@@ -32,8 +57,7 @@ const KeywordModule = () => {
                 tw`text-[10px] text-[${designatedColor.WHITE}]`,
                 {lineHeight: 18},
               ]}>
-              다른 사용자들이 검색한 키워드 중 가장 인기 있는 검색어가
-              노출됩니다.
+              다른 사용자들이 검색한 키워드 중 가장 최근 검색어가 노출됩니다.
             </CustomText>
           } // 툴팁에 표시할 내용
           backgroundColor={designatedColor.GRAY5} // 툴팁 배경 색상

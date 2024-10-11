@@ -33,7 +33,7 @@ const SongsList = ({
   listFooter,
   isShowInfo = true,
 }: SongsListProps) => {
-  console.log('SongsList:', songlistData);
+  // console.log('SongsList:', songlistData);
   const renderItem = ({item}: {item: Song}) => (
     <View>
       <SongItem

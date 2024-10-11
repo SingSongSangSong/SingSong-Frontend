@@ -23,7 +23,7 @@ type AppStackParamList = {
   [appStackNavigations.SPLASH]: undefined;
   [appStackNavigations.MAIN]: undefined;
   [appStackNavigations.LOGIN]: undefined;
-  [appStackNavigations.TERMS]: {provider: string; idToken: string};
+  [appStackNavigations.TERMS]: undefined;
 };
 
 type HomeStackParamList = {

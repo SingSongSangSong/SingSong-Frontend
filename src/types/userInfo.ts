@@ -49,6 +49,15 @@ type LoginResponse = {
   message: string;
 };
 
+type LoginV2Response = {
+  data: {
+    accessToken: string;
+    isInfoRequired: boolean;
+    refreshToken: string;
+  };
+  message: string;
+};
+
 type MemberInfo = {
   birthYear?: number;
   email?: string;
@@ -79,4 +88,5 @@ export type {
   MemberInfoResponse,
   Tokens,
   DefaultResponse,
+  LoginV2Response,
 };

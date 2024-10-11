@@ -39,7 +39,7 @@ const useNewSong = () => {
         // console.log('on refresh!!!!!!!!!!!!!!!!!!!');
         // const songData = await postRcdRefresh(initTag);
         const songData = await getSongsNew(-1, 20);
-        console.log('newSongData:', songData.data.songs);
+        // console.log('newSongData:', songData.data.songs);
         setNewSongsLst(songData.data.songs);
         setLastCursor(songData.data.lastCursor);
         // setRefreshSongs(initTag, songData.data);

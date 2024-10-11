@@ -94,6 +94,7 @@ const HotTrendingModule = ({
 
   useEffect(() => {
     if (tempCharts) {
+      // console.log('tempCharts:', tempCharts);
       setInitCharts(tempCharts.charts, 5);
       setUserAgeGroup(tempCharts.ageGroup);
       // console.log('ageGroup:', tempCharts.ageGroup);
