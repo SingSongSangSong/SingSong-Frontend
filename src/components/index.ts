@@ -78,3 +78,5 @@ export * from './module/SearchKeyboard';
 export * from './module/NewSongModule';
 export * from './list/NewSongCardList';
 export * from './card/NewSongCard';
+export * from './item/CommentInfoItem';
+export * from './module/LatestCommentModule';

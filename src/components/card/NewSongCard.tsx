@@ -57,7 +57,7 @@ const NewSongCard = ({
                 width: cardWidth,
                 height: cardWidth,
               },
-              tw`m-1 rounded-sm justify-center items-center border border-[${designatedColor.GRAY4}]`,
+              tw`m-1 rounded-sm justify-center items-center`,
             ]}
             // onPress={() => {
             //   setIsModalVisible(true);
@@ -85,7 +85,7 @@ const NewSongCard = ({
                 width: cardWidth,
                 height: cardWidth,
               },
-              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
+              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
             ]}>
             <WhiteLogoIcon width={108} height={76} />
           </View>

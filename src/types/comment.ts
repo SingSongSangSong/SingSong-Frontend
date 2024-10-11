@@ -1,3 +1,5 @@
+import {Song} from '.';
+
 interface Comment {
   commentId: number;
   content: string;
@@ -50,6 +52,24 @@ interface GetBlacklistResponse {
   message: string;
 }
 
+interface CommentLatest {
+  commentId: number;
+  content: string;
+  createdAt: string;
+  isLiked: boolean;
+  isRecomment: boolean;
+  likes: number;
+  memberId: number;
+  nickname: string;
+  parentCommentId: number;
+  song: Song;
+}
+
+interface GetCommentLatestResponse {
+  data: CommentLatest[];
+  message: string;
+}
+
 export type {
   Comment,
   PostCommentResponse,
@@ -59,4 +79,6 @@ export type {
   PostCommentLikeResponse,
   Blacklist,
   GetBlacklistResponse,
+  GetCommentLatestResponse,
+  CommentLatest,
 };

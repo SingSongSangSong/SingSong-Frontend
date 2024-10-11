@@ -16,6 +16,7 @@ import {
   AiSongCardModule,
   HotTrendingModule,
   IconButton,
+  LatestCommentModule,
   LlmModule,
   NewSongModule,
   TaglistModule,
@@ -175,6 +176,34 @@ const HomeScreen = (props: HomeScreenProps) => {
     });
   };
 
+  const handleOnCommentPress = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+    melonLink: string,
+    isMr: boolean,
+    isLive: boolean,
+  ) => {
+    amplitude.track('comment_song_button_click');
+    logButtonClick('comment_song_button_click');
+    props.navigation.navigate({
+      key: 'MyUniqueKeyForSongComment',
+      name: homeStackNavigations.SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album: album || '',
+        melonLink,
+        isMr,
+        isLive,
+      },
+    });
+  };
+
   const handleOnPressAiTotalButton = () => {
     props.navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
     // console.log('AI 추천 전체보기 버튼 클릭');
@@ -313,10 +342,12 @@ const HomeScreen = (props: HomeScreenProps) => {
           onScrollEndDrag={enableButton}
           scrollEventThrottle={16}>
           {/* {!isGuest && ( */}
+          <LatestCommentModule onPressCommentButton={handleOnCommentPress} />
           <NewSongModule
             onPressTotalButton={handleOnPressNewSongTotalButton}
             onPressSongButton={handleOnSongPress}
           />
+
           <LlmModule onPressSearch={handleOnPressLlm} />
           <KeywordModule />
           <AiSongCardModule
