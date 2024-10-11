@@ -10,6 +10,7 @@ import {
   Platform,
   Dimensions,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -65,6 +66,18 @@ const HomeScreen = (props: HomeScreenProps) => {
   const [isGuest, setIsGuest] = useState();
   const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
   const clearProvider = useMemberStore(state => state.clearProvider);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // 새로고침 로직
+    // 예: API 호출, 상태 리셋 등
+    setTimeout(() => {
+      setRefreshing(false);
+      // 홈 컴포넌트 전체 리렌더링을 위한 로직
+      // 필요한 경우 상태 업데이트 등
+    }, 500); // 새로고침 지연 시간
+  }, []);
 
   useEffect(() => {
     initIsGuest();
@@ -340,12 +353,24 @@ const HomeScreen = (props: HomeScreenProps) => {
           //   paddingTop: guestHeight,
           // }}
           onScrollEndDrag={enableButton}
-          scrollEventThrottle={16}>
+          scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={designatedColor.VIOLET} // iOS 로딩 아이콘 색상
+              colors={[designatedColor.VIOLET]} // Android 로딩 아이콘 색상 배열
+            />
+          }>
           {/* {!isGuest && ( */}
-          <LatestCommentModule onPressCommentButton={handleOnCommentPress} />
+          <LatestCommentModule
+            onPressCommentButton={handleOnCommentPress}
+            refreshing={refreshing}
+          />
           <NewSongModule
             onPressTotalButton={handleOnPressNewSongTotalButton}
             onPressSongButton={handleOnSongPress}
+            refreshing={refreshing}
           />
 
           <LlmModule onPressSearch={handleOnPressLlm} />
@@ -353,6 +378,7 @@ const HomeScreen = (props: HomeScreenProps) => {
           <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
+            refreshing={refreshing}
           />
 
           {/* )} */}
@@ -364,6 +390,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressSongButton={handleOnHotTrendingSongPress}
             // isScrollingHome={isScrollingHome}
             isScrollingHome={touchableRef}
+            refreshing={refreshing}
           />
           {/* <SongCardModule
             onPressSongButton={handleOnSongPress}

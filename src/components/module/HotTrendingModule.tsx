@@ -32,11 +32,13 @@ interface HotTrendingModuleProps {
     isLive: boolean,
   ) => void;
   isScrollingHome: RefObject<View>;
+  refreshing: boolean;
 }
 
 const HotTrendingModule = ({
   onPressSongButton,
   isScrollingHome,
+  refreshing,
 }: HotTrendingModuleProps) => {
   // const selectedGender = useChartStore(state => state.selectedGender);
   // const setSelectedGender = useChartStore(state => state.setSelectedGender);
@@ -76,6 +78,7 @@ const HotTrendingModule = ({
     data: tempCharts,
     error: chartsError,
     isFetching: isFetchingCharts,
+    refetch,
   } = useQuery({
     queryKey: ['chartsV2'],
     queryFn: getV2Chart,
@@ -83,15 +86,11 @@ const HotTrendingModule = ({
     select: data => data.data,
   });
 
-  // useEffect(() => {
-  //   if (tempCharts) {
-  //     setCharts('FEMALE', tempCharts.female, 5);
-  //     setCharts('MALE', tempCharts.male, 5);
-  //     setTime(tempCharts.time);
-  //     setUserGender(tempCharts.gender);
-  //     // console.log('userGender', tempCharts.gender);
-  //   }
-  // }, [tempCharts]);
+  useEffect(() => {
+    if (refreshing) {
+      refetch();
+    }
+  }, [refreshing, refetch]);
 
   useEffect(() => {
     if (tempCharts) {

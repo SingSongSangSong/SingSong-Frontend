@@ -9,7 +9,7 @@ import CustomText from '../text/CustomText';
 import {NewSongCardList} from '..';
 import {Tooltip} from 'react-native-elements';
 import InfoIcon from '../../assets/svg/Info.svg';
-// import {NewSongCardList} from '../list/NewSongCardList';
+import {NewSong} from '../../types';
 
 interface NewSongModuleProps {
   onPressTotalButton: () => void;
@@ -23,18 +23,22 @@ interface NewSongModuleProps {
     isMr: boolean,
     isLive: boolean,
   ) => void;
+  refreshing: boolean;
 }
 
 const NewSongModule = ({
   onPressTotalButton,
   onPressSongButton,
+  refreshing,
 }: NewSongModuleProps) => {
   const [isTimeoutReached, setIsTimeoutReached] = useState<boolean>(false);
+  const [newSongsLst, setNewSongsLst] = useState<NewSong[]>();
   const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
   const {
     data: tempNewSongs,
     error: newSongsError,
     isFetching: isFetchingNewSongs,
+    refetch,
   } = useQuery({
     queryKey: ['newSongs'],
     queryFn: () => getSongsNew(-1, 10),
@@ -43,13 +47,25 @@ const NewSongModule = ({
   });
 
   useEffect(() => {
+    if (refreshing) {
+      refetch();
+    }
+  }, [refreshing, refetch]);
+
+  useEffect(() => {
     // 5초 타이머 설정
     const timer = setTimeout(() => {
       setIsTimeoutReached(true); // 5초 후 타임아웃 도달을 표시
       setLoadingVisible(false); // 로딩 false로 변경
     }, 5000);
 
-    if (tempNewSongs || newSongsError) {
+    if (tempNewSongs) {
+      clearTimeout(timer); // 타이머가 실행되기 전에 응답이 도착하면 타이머 정리
+      setLoadingVisible(false); // 데이터가 오면 로딩 false로 변경
+      setNewSongsLst(tempNewSongs);
+    }
+
+    if (newSongsError) {
       clearTimeout(timer); // 타이머가 실행되기 전에 응답이 도착하면 타이머 정리
       setLoadingVisible(false); // 데이터가 오면 로딩 false로 변경
     }
@@ -66,7 +82,7 @@ const NewSongModule = ({
 
   return (
     <View>
-      {tempNewSongs ? (
+      {newSongsLst ? (
         <View
           style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
           <View key="newSong">
@@ -117,7 +133,7 @@ const NewSongModule = ({
             <NewSongCardList
               //   tag="이달의 노래방 신곡"
               //   onPress={onPressTotalButton}
-              data={tempNewSongs}
+              data={newSongsLst}
               onSongPress={onPressSongButton}
             />
           </View>

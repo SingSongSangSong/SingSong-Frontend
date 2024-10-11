@@ -38,7 +38,7 @@ const CommentInfoItem = ({
     <>
       <TouchableOpacity
         style={[
-          tw`mr-6 mt-4 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center px-4 py-4`,
+          tw`mr-2 mt-4 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center px-4 py-4`,
           //   {
           //     width: commentWidth,
           //     // height: commentHeight,

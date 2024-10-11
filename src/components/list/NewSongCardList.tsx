@@ -1,9 +1,7 @@
 import React, {memo} from 'react';
-import {View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
+import {View, ScrollView, Dimensions} from 'react-native';
 import tw from 'twrnc';
-import {designatedColor} from '../../constants';
 import {NewSong} from '../../types';
-import CustomText from '../text/CustomText';
 import {NewSongCard} from '..';
 
 type NewSongCardListProps = {

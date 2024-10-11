@@ -6,6 +6,7 @@ import getRcdRecommendation from '../../api/recommendation/getRcdRecommendation'
 import {AiSongCardList} from '..';
 import useSongStore from '../../store/useSongStore';
 import {designatedColor} from '../../constants';
+import {Song} from '../../types';
 
 interface AiSongCardModuleProps {
   onPressTotalButton: () => void;
@@ -19,18 +20,23 @@ interface AiSongCardModuleProps {
     isMr: boolean,
     isLive: boolean,
   ) => void;
+  refreshing: boolean;
 }
 
 const AiSongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
+  refreshing,
 }: AiSongCardModuleProps) => {
   const [isTimeoutReached, setIsTimeoutReached] = useState<boolean>(false);
   const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
+  const [rcdRecommendationSongs, setRcdRecommendationSongs] =
+    useState<Song[]>();
   const {
     data: tempRcdRecommendationSongs,
     error: rcdRecommendationError,
     isFetching: isFetchingRcdRecommendationSongs,
+    refetch,
   } = useQuery({
     queryKey: ['rcdRecommendationSongs'],
     queryFn: () => getRcdRecommendation(1),
@@ -68,16 +74,22 @@ const AiSongCardModule = ({
     }
   }, [isTimeoutReached, tempRcdRecommendationSongs, rcdRecommendationError]);
 
+  useEffect(() => {
+    if (refreshing) {
+      refetch();
+    }
+  }, [refreshing, refetch]);
+
   return (
     <View>
-      {tempRcdRecommendationSongs ? (
+      {rcdRecommendationSongs ? (
         <View
           style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
           <View key="aiSong">
             <AiSongCardList
               tag="AI's PICK"
               onPress={onPressTotalButton}
-              data={tempRcdRecommendationSongs}
+              data={rcdRecommendationSongs}
               onSongPress={onPressSongButton}
             />
           </View>

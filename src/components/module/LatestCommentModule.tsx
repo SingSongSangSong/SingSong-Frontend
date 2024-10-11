@@ -1,154 +1,10 @@
-// import {useQuery} from '@tanstack/react-query';
-// import React, {useEffect, useRef, useState} from 'react';
-// import {Dimensions, ScrollView, View} from 'react-native';
-// import tw from 'twrnc';
-// import getCommentLatest from '../../api/comment/getCommentLatest';
-// import {CommentLatest} from '../../types';
-// import {CommentInfoItem} from '..';
-
-// interface LatestCommentModuleProps {
-//   onPressCommentButton: (
-//     songId: number,
-//     songNumber: number,
-//     songName: string,
-//     singerName: string,
-//     album: string,
-//     melonLink: string,
-//     isMr: boolean,
-//     isLive: boolean,
-//   ) => void;
-// }
-
-// const LatestCommentModule = ({
-//   onPressCommentButton,
-// }: LatestCommentModuleProps) => {
-//   const [latestComments, setLatestComments] = useState<CommentLatest[]>([]);
-//   const {
-//     data: tempLatestComments,
-//     error: latestCommentsError,
-//     isFetching: isFetchingLatestComments,
-//   } = useQuery({
-//     queryKey: ['comments'],
-//     queryFn: () => getCommentLatest(5),
-//     staleTime: 3600000, // 1시간 동안 캐시 유지
-//     select: data => data.data,
-//   });
-
-//   const deviceWidth = Dimensions.get('window').width;
-//   //   const deviceHeight = Dimensions.get('window').height;
-//   const scrollViewRef = useRef(null);
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       if (scrollViewRef.current) {
-//         setCurrentIndex(prevIndex => {
-//           const nextIndex = (prevIndex + 1) % latestComments.length;
-//           scrollViewRef.current!.scrollTo({
-//             y: deviceHeight * nextIndex,
-//             animated: true,
-//           });
-//           return nextIndex;
-//         });
-//       }
-//     }, 3000); // 3초마다 스크롤
-
-//     return () => clearInterval(interval);
-//   }, [latestComments]);
-
-//   useEffect(() => {
-//     if (tempLatestComments) {
-//       // console.log('tempTags:', tempTags);
-//       setLatestComments(tempLatestComments);
-//     }
-//   }, [tempLatestComments]);
-
-//   return (
-//     <View style={tw`w-full mx-2 mb-2`}>
-//       {/* <ScrollView
-//         // horizontal
-//         pagingEnabled
-//         showsHorizontalScrollIndicator={false}
-//         contentContainerStyle={tw`px-2`}
-//         snapToInterval={deviceWidth * 0.46}
-//         decelerationRate="fast">
-//         {latestComments &&
-//           latestComments.map((comment, index) => (
-//             <CommentInfoItem
-//               songName={comment.song.songName}
-//               singerName={comment.song.singerName}
-//               songNumber={comment.song.songNumber}
-//               onCommentPress={() => {
-//                 onPressCommentButton(
-//                   comment.song.songId,
-//                   comment.song.songNumber,
-//                   comment.song.songName,
-//                   comment.song.singerName,
-//                   comment.song.album,
-//                   comment.song.melonLink || '',
-//                   comment.song.isMr,
-//                   comment.song.isLive || false,
-//                 );
-//               }}
-//               nickname={comment.nickname}
-//               content={comment.content}
-//               createdAt={comment.createdAt}
-//               likes={comment.likes}
-//               isLiked={comment.isLiked}
-//             />
-//           ))}
-//       </ScrollView> */}
-//       <ScrollView
-//         ref={scrollViewRef}
-//         pagingEnabled
-//         showsHorizontalScrollIndicator={false}
-//         showsVerticalScrollIndicator={false}
-//         contentContainerStyle={tw`px-2`}
-//         // snapToInterval={deviceHeight}
-//         decelerationRate="fast">
-//         {latestComments &&
-//           latestComments.map((comment, index) => (
-//             <View key={index}>
-//               <CommentInfoItem
-//                 songName={comment.song.songName}
-//                 singerName={comment.song.singerName}
-//                 songNumber={comment.song.songNumber}
-//                 onCommentPress={() => {
-//                   onPressCommentButton(
-//                     comment.song.songId,
-//                     comment.song.songNumber,
-//                     comment.song.songName,
-//                     comment.song.singerName,
-//                     comment.song.album,
-//                     comment.song.melonLink || '',
-//                     comment.song.isMr,
-//                     comment.song.isLive || false,
-//                   );
-//                 }}
-//                 nickname={comment.nickname}
-//                 content={comment.content}
-//                 createdAt={comment.createdAt}
-//                 likes={comment.likes}
-//                 isLiked={comment.isLiked}
-//               />
-//             </View>
-//           ))}
-//       </ScrollView>
-//     </View>
-//   );
-// };
-
-// export {LatestCommentModule};
-
 import {useQuery} from '@tanstack/react-query';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import tw from 'twrnc';
 import getCommentLatest from '../../api/comment/getCommentLatest';
 import {CommentLatest} from '../../types';
 import {CommentInfoItem} from '..';
-import {designatedColor} from '../../constants';
-import CustomText from '../text/CustomText';
 
 interface LatestCommentModuleProps {
   onPressCommentButton: (
@@ -161,22 +17,48 @@ interface LatestCommentModuleProps {
     isMr: boolean,
     isLive: boolean,
   ) => void;
+  refreshing: boolean;
 }
 
 const LatestCommentModule = ({
   onPressCommentButton,
+  refreshing,
 }: LatestCommentModuleProps) => {
+  // const [latestComments, setLatestComments] = useState<CommentLatest[]>([]);
+  // const {
+  //   data: tempLatestComments,
+  //   error: latestCommentsError,
+  //   isFetching: isFetchingLatestComments,
+  // } = useQuery({
+  //   queryKey: ['comments'],
+  //   queryFn: () => getCommentLatest(5),
+  //   staleTime: 3600000, // 1시간 동안 캐시 유지
+  //   select: data => data.data,
+  // });
   const [latestComments, setLatestComments] = useState<CommentLatest[]>([]);
   const {
     data: tempLatestComments,
     error: latestCommentsError,
     isFetching: isFetchingLatestComments,
+    refetch,
   } = useQuery({
     queryKey: ['comments'],
     queryFn: () => getCommentLatest(5),
     staleTime: 3600000, // 1시간 동안 캐시 유지
     select: data => data.data,
   });
+
+  useEffect(() => {
+    if (refreshing) {
+      refetch();
+    }
+  }, [refreshing, refetch]);
+
+  useEffect(() => {
+    if (tempLatestComments) {
+      setLatestComments(tempLatestComments);
+    }
+  }, [tempLatestComments]);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
