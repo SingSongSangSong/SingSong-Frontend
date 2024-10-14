@@ -54,6 +54,14 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     setRefreshing(false);
   };
 
+  const focusOnRefresh = async () => {
+    if (isFetching) {
+      console.log('refreshing!!!!!');
+      await handleOnRefreshPosts();
+      setIsFetching(false);
+    }
+  };
+
   //위로 당길 시 노래 리스트 새로고침하는 함수
   const handleOnRefreshPosts = async () => {
     try {
@@ -113,6 +121,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   return {
     isLoading,
     isFetching,
+    tempPosts,
     setIsFetching,
     postsError,
     isFetchingPosts,
@@ -122,6 +131,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     posts,
     handleOnPressWritePost,
     handleOnPressPost,
+    focusOnRefresh,
   };
 };
 

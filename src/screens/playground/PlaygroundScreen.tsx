@@ -22,10 +22,7 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
 
   useFocusEffect(
     useCallback(() => {
-      if (playgroundHandler.isFetching) {
-        playgroundHandler.onRefresh();
-        playgroundHandler.setIsFetching(false);
-      }
+      playgroundHandler.focusOnRefresh();
     }, []),
   );
 
@@ -33,79 +30,64 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
     <View
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}] justify-center items-center`,
-        // {
-        //   paddingTop: insets.top,
-        //   paddingBottom: insets.bottom,
-        //   paddingLeft: insets.left,
-        //   paddingRight: insets.right,
-        // },
       ]}>
       {playgroundHandler.isFetchingPosts ? (
         <View>
           <ActivityIndicator size="large" color={designatedColor.VIOLET} />
         </View>
-      ) : (
-        <>
-          {playgroundHandler.posts && playgroundHandler.posts.length > 0 ? (
-            // posts가 있는 경우 렌더링할 컴포넌트 (예시)
-            <>
-              <View style={tw`flex-1 w-full`}>
-                {/* <CustomText>Posts available</CustomText> */}
-                <PostList
-                  posts={playgroundHandler.posts}
-                  handleOnPressPost={playgroundHandler.handleOnPressPost}
-                  handleRefreshPost={playgroundHandler.handleDownRefreshPosts}
-                  onRefresh={playgroundHandler.onRefresh} //당겨서 새로고침
-                  isLoading={playgroundHandler.isLoading}
-                  refreshing={playgroundHandler.refreshing}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={playgroundHandler.handleOnPressWritePost}
-                style={[
-                  tw`bg-[${designatedColor.VIOLET}] pl-4 pr-5 py-2 rounded-full`,
-                  tw`absolute bottom-4`, // 하단과 오른쪽에 고정
-                ]}
-                activeOpacity={0.9}>
-                <View style={tw`flex-row items-center`}>
-                  <PencilIcon width={20} height={20} />
-                  <CustomText style={tw`text-[${designatedColor.WHITE}] ml-1`}>
-                    글쓰기
-                  </CustomText>
-                </View>
-              </TouchableOpacity>
-            </>
-          ) : (
-            // posts가 없을 경우 렌더링할 컴포넌트
-            <View style={tw`items-center mt-4 mb-12`}>
-              <SangSongIcon width={100} height={100} />
-              <CustomText
-                style={tw`text-[${designatedColor.GRAY3}] text-[18px] font-bold mt-2`}>
-                아직 작성된 게시글이 없어요
-              </CustomText>
-              <TouchableOpacity
-                onPress={playgroundHandler.handleOnPressWritePost}
-                style={tw`bg-[${designatedColor.VIOLET}] pl-4 pr-5 py-2 rounded-full mt-5`}
-                activeOpacity={0.9}>
-                <View style={tw`flex-row items-center`}>
-                  <PencilIcon width={20} height={20} />
-                  <CustomText style={tw`text-[${designatedColor.WHITE}] ml-1`}>
-                    글쓰기
-                  </CustomText>
-                </View>
-              </TouchableOpacity>
-            </View>
-          )}
-        </>
-      )}
-
-      {playgroundHandler.postsError && (
+      ) : playgroundHandler.postsError ? (
         <View style={tw`items-center`}>
           <SangSongIcon width={100} height={100} />
           <CustomText
             style={tw`text-[${designatedColor.GRAY3}] text-[18px] mt-4 mb-12 font-bold`}>
             게시글을 불러오는 중 오류가 발생했어요. 다시 시도해주세요
           </CustomText>
+        </View>
+      ) : playgroundHandler.posts && playgroundHandler.posts.length > 0 ? (
+        <>
+          <View style={tw`flex-1 w-full`}>
+            <PostList
+              posts={playgroundHandler.posts}
+              handleOnPressPost={playgroundHandler.handleOnPressPost}
+              handleRefreshPost={playgroundHandler.handleDownRefreshPosts}
+              onRefresh={playgroundHandler.onRefresh}
+              isLoading={playgroundHandler.isLoading}
+              refreshing={playgroundHandler.refreshing}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={playgroundHandler.handleOnPressWritePost}
+            style={[
+              tw`bg-[${designatedColor.VIOLET}] pl-4 pr-5 py-2 rounded-full`,
+              tw`absolute bottom-4`,
+            ]}
+            activeOpacity={0.9}>
+            <View style={tw`flex-row items-center`}>
+              <PencilIcon width={20} height={20} />
+              <CustomText style={tw`text-[${designatedColor.WHITE}] ml-1`}>
+                글쓰기
+              </CustomText>
+            </View>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <View style={tw`items-center mt-4 mb-12`}>
+          <SangSongIcon width={100} height={100} />
+          <CustomText
+            style={tw`text-[${designatedColor.GRAY3}] text-[18px] font-bold mt-2`}>
+            아직 작성된 게시글이 없어요
+          </CustomText>
+          <TouchableOpacity
+            onPress={playgroundHandler.handleOnPressWritePost}
+            style={tw`bg-[${designatedColor.VIOLET}] pl-4 pr-5 py-2 rounded-full mt-5`}
+            activeOpacity={0.9}>
+            <View style={tw`flex-row items-center`}>
+              <PencilIcon width={20} height={20} />
+              <CustomText style={tw`text-[${designatedColor.WHITE}] ml-1`}>
+                글쓰기
+              </CustomText>
+            </View>
+          </TouchableOpacity>
         </View>
       )}
     </View>
