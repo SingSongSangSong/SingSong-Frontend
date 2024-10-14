@@ -21,7 +21,7 @@ const postPosts = async (content: string, songIds: number[], title: string) => {
         },
       },
     );
-    // console.log('data for postPosts response', response.data);
+    console.log('data for postPosts response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postPosts:', error);

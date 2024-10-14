@@ -5,9 +5,9 @@ import {
   homeStackNavigations,
   keepStackNavigations,
   mainTabNavigations,
+  playgroundStackNavigations,
 } from '../../constants';
 import {MainTabParamList} from '../../types';
-import PlaygroundScreen from '../../screens/playground/PlaygroundScreen';
 import HomeStackNavigator from '../stack/HomeStackNavigator';
 import HomeIcon from '../../assets/svg/recommendation.svg';
 import HomeIconActive from '../../assets/svg/selectedHome.svg';
@@ -19,7 +19,8 @@ import {SvgProps} from 'react-native-svg';
 import KeepStackNavigator from '../stack/KeepStackNavigator';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Platform, TouchableOpacity} from 'react-native';
+import {Platform} from 'react-native';
+import PlaygroundStackNavigator from '../stack/PlaygroundStackNavigator';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -69,7 +70,8 @@ const MainTabNavigator = () => {
             routeName === homeStackNavigations.AI_RECOMMENDATION ||
             routeName === homeStackNavigations.NICKNAME_CHANGE ||
             routeName === homeStackNavigations.AI_LLM ||
-            routeName === homeStackNavigations.AI_LLM_RESULT
+            routeName === homeStackNavigations.AI_LLM_RESULT ||
+            routeName === playgroundStackNavigations.PLAYGROUND_POST_WRITE
           ) {
             return true;
           }
@@ -123,12 +125,10 @@ const MainTabNavigator = () => {
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
       />
-      {/* {Platform.OS != 'ios' && (
-        <Tab.Screen
-          name={mainTabNavigations.PLAYGROUND}
-          component={PlaygroundScreen}
-        />
-      )} */}
+      <Tab.Screen
+        name={mainTabNavigations.PLAYGROUND}
+        component={PlaygroundStackNavigator}
+      />
     </Tab.Navigator>
   );
 };

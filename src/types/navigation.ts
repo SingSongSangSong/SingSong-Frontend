@@ -4,6 +4,7 @@ import {
   homeStackNavigations,
   keepStackNavigations,
   mainTabNavigations,
+  playgroundStackNavigations,
 } from '../constants';
 import {Comment} from './comment';
 import {Song} from './songs';
@@ -76,10 +77,18 @@ type KeepStackParamList = {
     reportSubjectMemberId: number;
   };
 };
+
+type PlaygroundStackParamList = {
+  [playgroundStackNavigations.PLAYGROUND]: undefined;
+  [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]: {postId: number};
+  [playgroundStackNavigations.PLAYGROUND_POST_WRITE]: undefined;
+};
+
 export type {
   AuthStackParamList,
   MainTabParamList,
   AppStackParamList,
   HomeStackParamList,
   KeepStackParamList,
+  PlaygroundStackParamList,
 };

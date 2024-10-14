@@ -80,3 +80,5 @@ export * from './list/NewSongCardList';
 export * from './card/NewSongCard';
 export * from './item/CommentInfoItem';
 export * from './module/LatestCommentModule';
+export * from './item/PostItem';
+export * from './list/PostList';

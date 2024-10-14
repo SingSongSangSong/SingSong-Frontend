@@ -1,3 +1,4 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M18 6L6 18M6 6L18 18" stroke="#979797" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line y1="-0.5" x2="19.5848" y2="-0.5" transform="matrix(0.714839 0.699289 -0.649748 0.76015 5 5.30469)" stroke="#FBFBFB"/>
+<line y1="-0.5" x2="19.8543" y2="-0.5" transform="matrix(-0.689496 0.724289 -0.676204 -0.736715 18.6895 4)" stroke="#FBFBFB"/>
 </svg>

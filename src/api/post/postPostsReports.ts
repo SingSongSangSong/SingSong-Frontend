@@ -11,7 +11,7 @@ const postPostsReport = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.post<DefaultResponse>(
-      `v1/posts/${postId}/report`,
+      `v1/posts/${postId}/reports`,
       {
         reason: reason,
         subjectMemberId: subjectMemberId,

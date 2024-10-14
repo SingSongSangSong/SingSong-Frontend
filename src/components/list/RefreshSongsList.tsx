@@ -1,16 +1,10 @@
 import React, {memo} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  RefreshControl,
-  View,
-} from 'react-native';
+import {ActivityIndicator, FlatList, RefreshControl, View} from 'react-native';
 import tw from 'twrnc';
-import {SongItem, TextButton} from '..';
+import {SongItem} from '..';
 import {Song} from '../../types';
 import {designatedColor} from '../../constants';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+// import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import Modal from 'react-native-modal';
 
 interface RefreshSongsListProps {
@@ -91,7 +85,7 @@ const RefreshSongsList = ({
 }: RefreshSongsListProps) => {
   // console.log('RefreshSongsList rendered!');
   // const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const insets = useSafeAreaInsets();
+  // const insets = useSafeAreaInsets();
 
   return (
     <>

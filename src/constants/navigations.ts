@@ -48,6 +48,12 @@ const keepStackNavigations = {
   KEEP_REPORT: '_KeepReport',
 } as const;
 
+const playgroundStackNavigations = {
+  PLAYGROUND: '_Playground',
+  PLAYGROUND_POST_WRITE: '_PlaygroundPostWrite',
+  PLAYGROUND_POST_DETAIL: '_PlaygroundPostDetailed',
+} as const;
+
 export {
   authNavigations,
   playlistNavigations,
@@ -55,4 +61,5 @@ export {
   appStackNavigations,
   homeStackNavigations,
   keepStackNavigations,
+  playgroundStackNavigations,
 };
