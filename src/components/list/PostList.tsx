@@ -7,7 +7,14 @@ import {designatedColor} from '../../constants';
 
 interface PostListProps {
   posts: Post[];
-  handleOnPressPost: (postId: number) => void;
+  handleOnPressPost: (
+    postId: number,
+    title: string,
+    content: string,
+    nickname: string,
+    likes: number,
+    commentCount: number,
+  ) => void;
   handleRefreshPost: () => void;
   onRefresh: () => void;
   isLoading: boolean;
@@ -32,7 +39,14 @@ const PostList = ({
       commentCount={item.commentCount}
       likes={item.likes}
       onPressPost={() => {
-        handleOnPressPost(item.postId);
+        handleOnPressPost(
+          item.postId,
+          item.title,
+          item.content,
+          item.nickname,
+          item.likes,
+          item.commentCount,
+        );
       }}
     />
     // </View>

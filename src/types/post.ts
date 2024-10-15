@@ -89,6 +89,7 @@ interface PostPostsCommentsResponse {
 
 export type {
   Post,
+  PostDetailed,
   GetPostsResponse,
   SongOnPostComment,
   PostComments,

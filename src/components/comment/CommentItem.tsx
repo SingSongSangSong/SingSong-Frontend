@@ -77,7 +77,7 @@ const CommentItem = ({
         <CustomText style={tw`text-white ml-4`}>{content}</CustomText>
       </View>
 
-      <View style={tw`justify-between flex-row my-2 items-center`}>
+      <View style={tw`justify-between flex-row my-2 items-center bg-pink-200`}>
         <TouchableOpacity
           onPress={handleOnPressLikeButton}
           style={tw`flex-row items-center`}

@@ -36,7 +36,7 @@ function PlaygroundStackNavigator({navigation}: PlaygroundStackNavigatorProps) {
         headerLeft: () => (
           <IconButton
             onPress={() => navigation.goBack()}
-            Icon={DeleteIcon}
+            Icon={ArrowLeftIcon}
             size={28}
           />
         ),
@@ -88,6 +88,13 @@ function PlaygroundStackNavigator({navigation}: PlaygroundStackNavigatorProps) {
         component={PostWriteScreen}
         options={({navigation}) => ({
           headerTitle: '글쓰기', // 헤더 제목을 비움
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={28}
+            />
+          ),
           //   headerRight: () => (
           //     <NavButton
           //       onPress={() => handleOnPress(navigation)}

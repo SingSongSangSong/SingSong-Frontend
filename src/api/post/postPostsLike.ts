@@ -8,6 +8,7 @@ const postPostsLike = async (postId: number) => {
     const token = await getAccessToken();
     const response = await axiosInstance.post<DefaultResponse>(
       `v1/posts/${postId}/likes`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,

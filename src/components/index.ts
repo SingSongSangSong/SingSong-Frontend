@@ -82,3 +82,5 @@ export * from './item/CommentInfoItem';
 export * from './module/LatestCommentModule';
 export * from './item/PostItem';
 export * from './list/PostList';
+export * from './item/PostCommentItem';
+export * from './list/PostCommentList';

@@ -37,8 +37,8 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
     onError: (error: Error) => {
       Toast.show({
         type: 'selectedToast',
-        text1: '에러가 발생했습니다.',
-        text2: error.message || '잠시 후 다시 시도해주세요.',
+        // text1: '에러가 발생했습니다.',
+        text1: error.message || '잠시 후 다시 시도해주세요.',
         position: 'bottom',
         visibilityTime: 2000,
       });

@@ -14,16 +14,15 @@ const formatDateComment = (createdAt: string) => {
   const now = new Date();
   const date = new Date(createdAt);
 
-  const diffMs = now - date;
+  const diffMs = now.getTime() - date.getTime();
   const diffMinutes = Math.floor(diffMs / 60000); // 밀리초 -> 분
   const diffHours = Math.floor(diffMs / 3600000); // 밀리초 -> 시간
 
-  const isToday =
-    now.getDate() === date.getDate() &&
-    now.getMonth() === date.getMonth() &&
-    now.getFullYear() === date.getFullYear();
+  if (diffMinutes <= 0) {
+    return '방금';
+  }
 
-  if (isToday) {
+  if (diffHours < 24) {
     if (diffMinutes < 60) {
       return `${diffMinutes}분 전`;
     } else {

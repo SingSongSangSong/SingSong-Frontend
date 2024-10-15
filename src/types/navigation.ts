@@ -80,7 +80,14 @@ type KeepStackParamList = {
 
 type PlaygroundStackParamList = {
   [playgroundStackNavigations.PLAYGROUND]: undefined;
-  [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]: {postId: number};
+  [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]: {
+    postId: number;
+    title: string;
+    content: string;
+    nickname: string;
+    likes: number;
+    commentCount: number;
+  };
   [playgroundStackNavigations.PLAYGROUND_POST_WRITE]: undefined;
 };
 

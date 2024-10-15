@@ -71,7 +71,8 @@ const MainTabNavigator = () => {
             routeName === homeStackNavigations.NICKNAME_CHANGE ||
             routeName === homeStackNavigations.AI_LLM ||
             routeName === homeStackNavigations.AI_LLM_RESULT ||
-            routeName === playgroundStackNavigations.PLAYGROUND_POST_WRITE
+            routeName === playgroundStackNavigations.PLAYGROUND_POST_WRITE ||
+            routeName === playgroundStackNavigations.PLAYGROUND_POST_DETAIL
           ) {
             return true;
           }

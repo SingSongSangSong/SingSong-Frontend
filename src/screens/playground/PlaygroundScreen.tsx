@@ -43,11 +43,12 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
             게시글을 불러오는 중 오류가 발생했어요. 다시 시도해주세요
           </CustomText>
         </View>
-      ) : playgroundHandler.posts && playgroundHandler.posts.length > 0 ? (
+      ) : playgroundHandler.tempPosts?.posts &&
+        playgroundHandler.tempPosts.posts.length > 0 ? (
         <>
           <View style={tw`flex-1 w-full`}>
             <PostList
-              posts={playgroundHandler.posts}
+              posts={playgroundHandler.posts!}
               handleOnPressPost={playgroundHandler.handleOnPressPost}
               handleRefreshPost={playgroundHandler.handleDownRefreshPosts}
               onRefresh={playgroundHandler.onRefresh}

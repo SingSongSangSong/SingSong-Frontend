@@ -9,6 +9,7 @@ import {
 import tw from 'twrnc';
 import SendIcon from '../../assets/svg/send.svg';
 import {IconButton} from '../button/IconButton';
+import {designatedColor} from '../../constants';
 
 interface CommentKeyboardProps {
   onSendPress: (content: string) => void;
@@ -31,8 +32,9 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
 
   return (
     // <InputAccessoryView style={[tw`bg-black w-full`]}>
-    <View style={[tw`bg-black w-full`]}>
-      <View style={tw`flex-row items-center py-4 bg-black`}>
+    <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full`]}>
+      <View
+        style={tw`flex-row items-center py-4 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         <TextInput
           style={[
             tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mx-2`,

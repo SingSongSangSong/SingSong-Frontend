@@ -9,6 +9,7 @@ const postPostsCommentsLike = async (postCommentId: number) => {
     // console.log(content, isRecomment, parentCommentId, songId);
     const response = await axiosInstance.post<DefaultResponse>(
       `v1/posts/comments/${postCommentId}/like`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,

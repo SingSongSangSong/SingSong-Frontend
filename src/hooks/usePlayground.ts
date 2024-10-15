@@ -111,10 +111,22 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_WRITE);
   };
 
-  const handleOnPressPost = (postId: number) => {
+  const handleOnPressPost = (
+    postId: number,
+    title: string,
+    content: string,
+    nickname: string,
+    likes: number,
+    commentCount: number,
+  ) => {
     logButtonClick('post_detail');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_DETAIL, {
       postId,
+      title,
+      content,
+      nickname,
+      likes,
+      commentCount,
     });
   };
 
