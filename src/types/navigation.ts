@@ -84,6 +84,7 @@ type PlaygroundStackParamList = {
     postId: number;
     title: string;
     content: string;
+    createdAt: string;
     nickname: string;
     likes: number;
     commentCount: number;

@@ -11,6 +11,7 @@ import CustomText from '../text/CustomText';
 import getPostsCommentsRecomments from '../../api/post/getPostsCommentsRecomments';
 import Toast from 'react-native-toast-message';
 import {useMutation} from '@tanstack/react-query';
+import CornerDownIcon from '../../assets/svg/cornerDown.svg';
 
 interface PostRecommentItemProps {
   postId: number;
@@ -25,7 +26,7 @@ interface PostRecommentItemProps {
   parentCommentId: number;
   //   postRecommentsCount: number;
   //   songOnPostComment: SongOnPostComment[];
-  //   onPressCommentLike: () => void;
+  onPressCommentLike: () => void;
   //   setIsRecomment: (isRecomment: boolean) => void;
   //   inputRef: React.RefObject<TextInput>;
   // onPressRecomment: () => void;
@@ -42,6 +43,7 @@ const PostRecommentItem = ({
   memberId,
   nickname,
   parentCommentId,
+  onPressCommentLike,
 }: // onPressRecomment,
 PostRecommentItemProps) => {
   // const [isLike, setIsLike] = useState(isLiked);
@@ -60,83 +62,75 @@ PostRecommentItemProps) => {
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
 
-  //   const handleOnPressCommentLike = () => {
-  //     onPressCommentLike();
-  //     if (isLike) {
-  //       setLikeCount(likeCount - 1);
-  //       setIsLike(false);
-  //     } else {
-  //       setLikeCount(likeCount + 1);
-  //       setIsLike(true);
-  //     }
-  //   };
+  const handleOnPressCommentLike = () => {
+    onPressCommentLike();
+    if (isLike) {
+      setLikeCount(likeCount - 1);
+      setIsLike(false);
+    } else {
+      setLikeCount(likeCount + 1);
+      setIsLike(true);
+    }
+  };
 
   return (
-    <View
-      style={[
-        tw`py-2 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
-      ]}>
+    <View style={tw`flex-row items-center px-2`}>
+      <CornerDownIcon width={14} height={14} />
       <View
-        style={tw`flex-row justify-between items-center
+        style={[
+          tw`flex-1 ml-2 px-2 py-2 border-b-[0.5px] border-[${designatedColor.GRAY5}] bg-[${designatedColor.GRAY5}] bg-opacity-50 rounded-lg`,
+        ]}>
+        <View
+          style={tw`flex-row justify-between items-center
         `}>
-        <View style={tw`flex-row items-center mb-1`}>
-          <CustomText style={tw`text-white font-bold text-[14px]`}>
-            {nickname}
-          </CustomText>
-          <CustomText
-            style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
-            {formatDateComment(createdAt)}
-          </CustomText>
-        </View>
-        {/* <IconButton
+          <View style={tw`flex-row items-center mb-1`}>
+            <CustomText style={tw`text-white font-bold text-[14px]`}>
+              {nickname}
+            </CustomText>
+            <CustomText
+              style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
+              {formatDateComment(createdAt)}
+            </CustomText>
+          </View>
+          {/* <IconButton
           Icon={MoreVerticalIcon}
           size={16}
           onPress={onPressMoreInfo}
         /> */}
-      </View>
-      <View>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1`}>
-          {content}
-        </CustomText>
-      </View>
-
-      <View style={tw`justify-between flex-row pt-1 pr-2 items-center`}>
-        <TouchableOpacity
-          style={tw`flex-row items-center`}
-          activeOpacity={0.8}
-          //   onPress={handleOnPressWriteRecomment}
-          //   disabled={isLiked}
-        >
-          <CustomText
-            style={tw`text-[${designatedColor.GRAY1}] text-[12px] pl-1`}>
-            답글 쓰기
+        </View>
+        <View>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1`}>
+            {content}
           </CustomText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          //   onPress={handleOnPressCommentLike}
-          style={tw`flex-row items-center`}
-          activeOpacity={0.8}
-          disabled={isLike}>
-          {!isLike ? (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <LikeIcon width={14} height={14} />
-            </View>
-          ) : (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <FilledLikeIcon width={14} height={14} />
-            </View>
-          )}
+        </View>
 
-          <CustomText
-            style={[
-              isLike
-                ? tw`text-[${designatedColor.PINK}]`
-                : tw`text-[${designatedColor.GRAY1}]`,
-              tw`text-[11px]`,
-            ]}>
-            {likeCount}
-          </CustomText>
-        </TouchableOpacity>
+        <View style={tw`justify-between flex-row pt-1 pr-2 items-center`}>
+          <TouchableOpacity
+            onPress={handleOnPressCommentLike}
+            style={tw`flex-row items-center`}
+            activeOpacity={0.8}
+            disabled={isLike}>
+            {!isLike ? (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <LikeIcon width={14} height={14} />
+              </View>
+            ) : (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <FilledLikeIcon width={14} height={14} />
+              </View>
+            )}
+
+            <CustomText
+              style={[
+                isLike
+                  ? tw`text-[${designatedColor.PINK}]`
+                  : tw`text-[${designatedColor.GRAY1}]`,
+                tw`text-[11px]`,
+              ]}>
+              {likeCount}
+            </CustomText>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

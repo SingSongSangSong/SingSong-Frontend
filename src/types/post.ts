@@ -1,6 +1,7 @@
 interface Post {
   commentCount: number;
   content: string;
+  createdAt: string;
   likes: number;
   nickname: string;
   postId: number;

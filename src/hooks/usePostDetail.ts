@@ -11,6 +11,7 @@ import getPostsComments from '../api/post/getPostsComments';
 import postPostsLike from '../api/post/postPostsLike';
 import postPostsCommentsLike from '../api/post/postPostsCommentsLike';
 import {TextInput} from 'react-native';
+import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -39,6 +40,9 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   const [likes, setLikes] = useState<number>(route.params.likes);
   // const [isRecomment, setIsRecoment] = useState<boolean>(false);
   const inputRef = useRef<TextInput>(null);
+  const [commentRecomments, setCommentRecomments] = useState<{
+    [key: number]: PostComments[];
+  }>({});
 
   const {
     data: tempPostDetailed,
@@ -94,18 +98,26 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       });
     },
     onSuccess: newCommentData => {
+      if (newCommentData) {
+        if (isRecomment) {
+          const postComments = newCommentData.data;
+          setCommentRecomments(prev => ({
+            ...prev,
+            [parentCommentId]: [...(prev[parentCommentId] || []), postComments],
+          }));
+        } else {
+          // 새로운 댓글 데이터를 postComment 상태에 추가
+          setPostComment(prev => [
+            ...(prev || []),
+            newCommentData.data, // newCommentData의 postComments 배열을 업데이트
+          ]);
+        }
+      }
       setContent('');
       setParentCommentId(0);
       setSongIds([]);
       setIsRecomment(false);
       console.log('newCommentData: ', newCommentData);
-      if (newCommentData) {
-        // 새로운 댓글 데이터를 postComment 상태에 추가
-        setPostComment(prev => [
-          ...(prev || []),
-          newCommentData.data, // newCommentData의 postComments 배열을 업데이트
-        ]);
-      }
     },
   });
 
@@ -177,6 +189,41 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
   });
 
+  const {mutateAsync: mutateAsyncCommentRecomment} = useMutation({
+    mutationFn: async ({
+      postCommentId,
+      cursor,
+      size,
+    }: {
+      postCommentId: number;
+      cursor: number;
+      size: number;
+    }) => {
+      console.log('currentpostCommentId: ', postCommentId);
+      return getPostsCommentsRecomments(postCommentId, cursor, size);
+    },
+    onError: (error: Error) => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: error.message || '잠시 후 다시 시도해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: (tempPostCommentRecomment, {postCommentId}) => {
+      const {postReComments} = tempPostCommentRecomment.data;
+      console.log('currentId:', postCommentId);
+      setCommentRecomments(prev => ({
+        ...prev,
+        [postCommentId]: [...postReComments],
+      }));
+      console.log('postReComments: ', postReComments);
+
+      // 마지막 커서 갱신
+      setLastCursor(tempPostCommentRecomment.data.lastCursor);
+    },
+  });
+
   useEffect(() => {
     if (tempPostDetailed) {
       setPostDetailed(tempPostDetailed);
@@ -230,6 +277,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     setIsRecomment,
     inputRef,
     setParentCommentId,
+    mutateAsyncCommentRecomment,
+    commentRecomments,
   };
 };
 

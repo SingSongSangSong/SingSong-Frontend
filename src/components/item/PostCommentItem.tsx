@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, TextInput} from 'react-native';
 import tw from 'twrnc';
 import {PostComments, SongOnPostComment} from '../../types';
@@ -26,13 +26,21 @@ interface PostCommentItemProps {
   parentCommentId: number;
   postRecommentsCount: number;
   songOnPostComment: SongOnPostComment[];
-  onPressCommentLike: () => void;
+  onPressCommentLike: (postCommentId: number) => void;
   setIsRecomment: (isRecomment: boolean) => void;
   inputRef: React.RefObject<TextInput>;
   // onPressRecomment: () => void;
   setParentCommentId: (parentCommentId: number) => void;
   isFocused: boolean; // 포커싱된 상태 전달
   onFocus: () => void;
+  commentRecomments: {
+    [key: number]: PostComments[];
+  };
+  mutateAsyncCommentRecomment: (data: {
+    postCommentId: number;
+    cursor: number;
+    size: number;
+  }) => Promise<any>;
 }
 
 const PostCommentItem = ({
@@ -53,6 +61,8 @@ const PostCommentItem = ({
   setParentCommentId,
   isFocused,
   onFocus,
+  commentRecomments,
+  mutateAsyncCommentRecomment,
 }: // onPressRecomment,
 PostCommentItemProps) => {
   // const [isLike, setIsLike] = useState(isLiked);
@@ -67,12 +77,13 @@ PostCommentItemProps) => {
   const [isLike, setIsLike] = useState<boolean>(isLiked);
   const [recommentCount, setRecommentCount] =
     useState<number>(postRecommentsCount);
-  const [commentRecomments, setCommentRecomments] = useState<PostComments[]>();
+  // const [commentRecomments, setCommentRecomments] = useState<PostComments[]>();
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
+  const [isPressedRecomment, setIsPressedRecomment] = useState<boolean>(false);
 
   const handleOnPressCommentLike = () => {
-    onPressCommentLike();
+    onPressCommentLike(postCommentId);
     if (isLike) {
       setLikeCount(likeCount - 1);
       setIsLike(false);
@@ -82,41 +93,15 @@ PostCommentItemProps) => {
     }
   };
 
-  const {mutateAsync: mutateAsyncCommentRecomment} = useMutation({
-    mutationFn: async ({
-      postCommentId,
-      cursor,
-      size,
-    }: {
-      postCommentId: number;
-      cursor: number;
-      size: number;
-    }) => {
-      return getPostsCommentsRecomments(postCommentId, cursor, size);
-    },
-    onError: (error: Error) => {
-      Toast.show({
-        type: 'selectedToast',
-        text1: error.message || '잠시 후 다시 시도해주세요.',
-        position: 'bottom',
-        visibilityTime: 2000,
-      });
-    },
-    onSuccess: tempPostCommentRecomment => {
-      // Toast.show({
-      //   type: 'selectedToast',
-      //   text1: '답글이 등록되었습니다.',
-      //   position: 'bottom',
-      //   visibilityTime: 2000,
-      // });
-      console.log(
-        'tempPostCommentRecomment',
-        tempPostCommentRecomment.data.postReComments,
-      );
-      setCommentRecomments(tempPostCommentRecomment.data.postReComments);
-      setLastCursor(tempPostCommentRecomment.data.lastCursor);
-    },
-  });
+  const handleOnPressRecomment = () => {
+    if (isPressedRecomment) {
+      // setIsRecomment(false);
+      setIsPressedRecomment(false);
+    } else {
+      onPressRecomment(postCommentId, lastCursor, 20);
+      setIsPressedRecomment(true);
+    }
+  };
 
   const onPressRecomment = async (
     postCommentId: number,
@@ -138,117 +123,97 @@ PostCommentItemProps) => {
   };
 
   return (
-    <View
-      style={[
-        tw`py-2 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
-        isFocused && tw`bg-[${designatedColor.GRAY5}] bg-opacity-70`,
-      ]}>
+    <>
       <View
-        style={tw`flex-row justify-between items-center
+        style={[
+          tw`py-2 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
+          isFocused && tw`bg-[${designatedColor.GRAY5}] bg-opacity-70`,
+        ]}>
+        <View
+          style={tw`flex-row justify-between items-center
         `}>
-        <View style={tw`flex-row items-center mb-1`}>
-          <CustomText style={tw`text-white font-bold text-[14px]`}>
-            {nickname}
-          </CustomText>
-          <CustomText
-            style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
-            {formatDateComment(createdAt)}
-          </CustomText>
-        </View>
-        {/* <IconButton
+          <View style={tw`flex-row items-center mb-1`}>
+            <CustomText style={tw`text-white font-bold text-[14px]`}>
+              {nickname}
+            </CustomText>
+            <CustomText
+              style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
+              {formatDateComment(createdAt)}
+            </CustomText>
+          </View>
+          {/* <IconButton
           Icon={MoreVerticalIcon}
           size={16}
           onPress={onPressMoreInfo}
         /> */}
-      </View>
-      <View>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1`}>
-          {content}
-        </CustomText>
-      </View>
-
-      <View style={tw`justify-between flex-row pt-1 pr-2 items-center`}>
-        <TouchableOpacity
-          style={tw`flex-row items-center`}
-          activeOpacity={0.8}
-          onPress={handleOnPressWriteRecomment}
-          //   disabled={isLiked}
-        >
-          <CustomText
-            style={tw`text-[${designatedColor.GRAY1}] text-[12px] pl-1`}>
-            답글 쓰기
-          </CustomText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleOnPressCommentLike}
-          style={tw`flex-row items-center`}
-          activeOpacity={0.8}
-          disabled={isLike}>
-          {!isLike ? (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <LikeIcon width={14} height={14} />
-            </View>
-          ) : (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <FilledLikeIcon width={14} height={14} />
-            </View>
-          )}
-
-          <CustomText
-            style={[
-              isLike
-                ? tw`text-[${designatedColor.PINK}]`
-                : tw`text-[${designatedColor.GRAY1}]`,
-              tw`text-[11px]`,
-            ]}>
-            {likeCount}
-          </CustomText>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={tw`pt-1 pb-2 px-1 `}
-        onPress={() => {
-          onPressRecomment(postCommentId, lastCursor, 20);
-        }}
-        activeOpacity={0.8}>
-        {recommentCount > 0 && (
-          <CustomText style={tw`text-[${designatedColor.VIOLET3}] text-[14px]`}>
-            답글 {recommentCount}개 모두 보기
-          </CustomText>
-        )}
-      </TouchableOpacity>
-      {commentRecomments && (
-        <View style={tw`pl-4`}>
-          {commentRecomments.map((item, index) => (
-            <View key={index} style={tw`py-2`}>
-              {/* <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
-                {item.content}
-              </CustomText> */}
-              <PostRecommentItem
-                postId={postId}
-                postCommentId={item.postCommentId}
-                content={item.content}
-                createdAt={item.createdAt}
-                likes={item.likes}
-                isLiked={item.isLiked}
-                memberId={item.memberId}
-                nickname={item.nickname}
-                parentCommentId={item.parentPostCommentId}
-                // postRecommentsCount={item.postRecommentsCount}
-                // songOnPostComment={item.songOnPostComment}
-                // onPressCommentLike={handleOnPressCommentLike}
-                // setIsRecomment={setIsRecomment}
-                // inputRef={inputRef}
-                // setParentCommentId={setParentCommentId}
-                // isFocused={isFocusRecomment}
-                // onFocus={() => setIsFocusRecomment(true)}
-              />
-            </View>
-          ))}
         </View>
-      )}
+        <View>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1`}>
+            {content}
+          </CustomText>
+        </View>
 
-      {/* {isVisibleRecomment && (
+        <View style={tw`justify-between flex-row pt-1 pr-2 items-center`}>
+          <View style={tw`flex-row items-center`}>
+            {recommentCount > 0 && (
+              <TouchableOpacity
+                style={tw`pt-1 pb-1 pr-2 `}
+                onPress={handleOnPressRecomment}
+                activeOpacity={0.8}>
+                <>
+                  {isPressedRecomment ? (
+                    <CustomText style={tw`text-[${designatedColor.VIOLET3}]`}>
+                      답글 닫기
+                    </CustomText>
+                  ) : (
+                    <CustomText
+                      style={tw`text-[${designatedColor.VIOLET3}] text-[14px]`}>
+                      답글 {recommentCount}개 모두 보기
+                    </CustomText>
+                  )}
+                </>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={tw`flex-row items-center pr-2 py-1`}
+              activeOpacity={0.8}
+              onPress={handleOnPressWriteRecomment}
+              //   disabled={isLiked}
+            >
+              <CustomText
+                style={tw`text-[${designatedColor.GRAY2}] text-[10px]`}>
+                답글 쓰기
+              </CustomText>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            onPress={handleOnPressCommentLike}
+            style={tw`flex-row items-center`}
+            activeOpacity={0.8}
+            disabled={isLike}>
+            {!isLike ? (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <LikeIcon width={14} height={14} />
+              </View>
+            ) : (
+              <View style={tw`p-2 pr-1 justify-center items-center`}>
+                <FilledLikeIcon width={14} height={14} />
+              </View>
+            )}
+
+            <CustomText
+              style={[
+                isLike
+                  ? tw`text-[${designatedColor.PINK}]`
+                  : tw`text-[${designatedColor.GRAY1}]`,
+                tw`text-[11px]`,
+              ]}>
+              {likeCount}
+            </CustomText>
+          </TouchableOpacity>
+        </View>
+
+        {/* {isVisibleRecomment && (
         <TouchableOpacity
           onPress={onPressRecomment}
           style={tw`flex-row items-center mx-2 py-1 px-2`}
@@ -266,7 +231,43 @@ PostCommentItemProps) => {
           <TouchableOpacity onPress={onPressRecomment} />
         </TouchableOpacity>
       )} */}
-    </View>
+      </View>
+      {isPressedRecomment &&
+        commentRecomments &&
+        commentRecomments[postCommentId] && (
+          <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            {commentRecomments[postCommentId].map((item, index) => (
+              <View key={index} style={tw`py-2`}>
+                {/* <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
+                    {item.content}
+                  </CustomText> */}
+                <PostRecommentItem
+                  postId={postId}
+                  postCommentId={item.postCommentId}
+                  content={item.content}
+                  createdAt={item.createdAt}
+                  likes={item.likes}
+                  isLiked={item.isLiked}
+                  memberId={item.memberId}
+                  nickname={item.nickname}
+                  parentCommentId={item.parentPostCommentId}
+                  onPressCommentLike={() => {
+                    onPressCommentLike(item.postCommentId);
+                  }}
+                  // postRecommentsCount={item.postRecommentsCount}
+                  // songOnPostComment={item.songOnPostComment}
+                  // onPressCommentLike={handleOnPressCommentLike}
+                  // setIsRecomment={setIsRecomment}
+                  // inputRef={inputRef}
+                  // setParentCommentId={setParentCommentId}
+                  // isFocused={isFocusRecomment}
+                  // onFocus={() => setIsFocusRecomment(true)}
+                />
+              </View>
+            ))}
+          </View>
+        )}
+    </>
   );
 };
 

@@ -18,6 +18,7 @@ import LikeGrayIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
 import {CommentKeyboard, PostCommentItem} from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
+import {formatDateComment} from '../../utils';
 
 type PostDetailScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -36,10 +37,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   useEffect(() => {
     // 키보드가 닫힐 때 실행할 추가 로직
     const handleKeyboardHide = () => {
-      console.log('Keyboard dismissed');
-      // 여기에 추가적인 로직을 넣으세요
-      // 예를 들어, 포커스 해제, 상태 초기화 등
       setFocusedCommentId(undefined);
+      postDetailHandler.setIsRecomment(false);
     };
 
     // 키보드가 닫힐 때 감지
@@ -84,6 +83,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   const renderItem = ({item}: {item: PostComments}) => (
     // <View style={tw`w-full px-2 py-2`}>
     <PostCommentItem
+      key={item.postCommentId}
       postId={item.postId}
       postCommentId={item.postCommentId}
       content={item.content}
@@ -96,14 +96,16 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       parentCommentId={item.parentPostCommentId}
       postRecommentsCount={item.postRecommentsCount}
       songOnPostComment={item.songOnPostComment}
-      onPressCommentLike={() =>
-        postDetailHandler.onPressCommentLikeButton(item.postCommentId)
-      }
+      onPressCommentLike={postDetailHandler.onPressCommentLikeButton}
       setIsRecomment={postDetailHandler.setIsRecomment}
       inputRef={postDetailHandler.inputRef}
       setParentCommentId={postDetailHandler.setParentCommentId}
       isFocused={focusedCommentId === item.postCommentId} // 포커싱된 상태 전달
       onFocus={() => handleFocusComment(item.postCommentId)}
+      commentRecomments={postDetailHandler.commentRecomments}
+      mutateAsyncCommentRecomment={
+        postDetailHandler.mutateAsyncCommentRecomment
+      }
     />
     // </View>
   );
@@ -112,9 +114,14 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     return (
       <View
         style={tw`px-4 pt-2 py-5 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
-        <View>
+        <View style={tw`flex-row items-center`}>
           <CustomText style={tw`text-[${designatedColor.VIOLET3}] py-1`}>
             {props.route.params.nickname}
+          </CustomText>
+          <CustomText
+            style={tw`text-[${designatedColor.GRAY1}] py-1 text-[12px]`}>
+            {'  '}
+            {formatDateComment(props.route.params.createdAt)}
           </CustomText>
         </View>
         <View style={tw`py-2`}>

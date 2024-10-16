@@ -11,6 +11,7 @@ interface PostListProps {
     postId: number,
     title: string,
     content: string,
+    createdAt: string,
     nickname: string,
     likes: number,
     commentCount: number,
@@ -35,6 +36,7 @@ const PostList = ({
       postId={item.postId}
       title={item.title}
       content={item.content}
+      createdAt={item.createdAt}
       nickname={item.nickname}
       commentCount={item.commentCount}
       likes={item.likes}
@@ -43,6 +45,7 @@ const PostList = ({
           item.postId,
           item.title,
           item.content,
+          item.createdAt,
           item.nickname,
           item.likes,
           item.commentCount,

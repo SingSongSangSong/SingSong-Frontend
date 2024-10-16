@@ -15,6 +15,7 @@ interface PostItemProps {
   postId: number;
   title: string;
   content: string;
+  createdAt: string;
   nickname: string;
   commentCount: number;
   likes: number;
@@ -25,6 +26,7 @@ const PostItem = ({
   postId,
   title,
   content,
+  createdAt,
   nickname,
   commentCount,
   likes,
@@ -60,7 +62,10 @@ const PostItem = ({
         </CustomText>
       </View>
       <View style={tw`items-center justify-between flex-row mt-3`}>
-        <View style={tw`items-center justify-center`}>
+        <View style={tw`flex-row items-center justify-center`}>
+          <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[12px]`}>
+            {formatDateComment(createdAt)} |{' '}
+          </CustomText>
           <CustomText style={tw`text-[${designatedColor.GRAY3}] text-[12px]`}>
             {nickname}
           </CustomText>
