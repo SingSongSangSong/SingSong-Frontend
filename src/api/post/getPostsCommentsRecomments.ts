@@ -8,20 +8,28 @@ const getPostsCommentsRecomments = async (
   size: number,
 ) => {
   try {
+    console.log('postCommentId for getPostsCommentsRecomments', postCommentId);
+    console.log('cursor for getPostsCommentsRecomments', cursor);
+    console.log('size for getPostsCommentsRecomments', size);
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
+    const params: {cursor?: number; size: number} = {size: size};
+    if (cursor !== -1) {
+      params.cursor = cursor;
+    }
+
     const response =
       await axiosInstance.get<GetPostsCommentsRecommentsResponse>(
         `v1/posts/comments/${postCommentId}/recomments`,
         {
-          params: {cursor: cursor, size: size},
+          params: params,
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         },
       );
-    // console.log('data for getPostsCommentsRecomments response', response.data);
+    console.log('data for getPostsCommentsRecomments response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getPostsCommentsRecomments:', error);

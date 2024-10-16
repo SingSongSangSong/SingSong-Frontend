@@ -84,3 +84,4 @@ export * from './item/PostItem';
 export * from './list/PostList';
 export * from './item/PostCommentItem';
 export * from './list/PostCommentList';
+export * from './item/PostRecommentItem';

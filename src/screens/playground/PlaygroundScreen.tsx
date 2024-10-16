@@ -39,8 +39,12 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
         <View style={tw`items-center`}>
           <SangSongIcon width={100} height={100} />
           <CustomText
-            style={tw`text-[${designatedColor.GRAY3}] text-[18px] mt-4 mb-12 font-bold`}>
-            게시글을 불러오는 중 오류가 발생했어요. 다시 시도해주세요
+            style={tw`text-[${designatedColor.GRAY3}] text-[18px] mt-4 font-bold items-center`}>
+            게시글을 불러오는 중 오류가 발생했어요.
+          </CustomText>
+          <CustomText
+            style={tw`text-[${designatedColor.GRAY3}] text-[18px] mt-4 mb-12 font-bold items-center`}>
+            다시 시도해주세요
           </CustomText>
         </View>
       ) : playgroundHandler.tempPosts?.posts &&

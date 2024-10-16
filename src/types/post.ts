@@ -65,7 +65,7 @@ interface GetPostsCommentsResponse {
 interface GetPostsCommentsRecommentsResponse {
   data: {
     lastCursor: number;
-    postRecomments: PostComments[];
+    postReComments: PostComments[];
   };
   message: string;
 }

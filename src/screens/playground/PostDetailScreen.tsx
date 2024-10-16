@@ -1,5 +1,11 @@
-import React from 'react';
-import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -10,11 +16,7 @@ import usePostDetail from '../../hooks/usePostDetail';
 import LikeIcon from '../../assets/svg/filledLike.svg';
 import LikeGrayIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
-import {
-  CommentKeyboard,
-  PostCommentItem,
-  PostCommentList,
-} from '../../components';
+import {CommentKeyboard, PostCommentItem} from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
 
 type PostDetailScreenProps = StackScreenProps<
@@ -27,6 +29,57 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     route: props.route,
     navigation: props.navigation,
   });
+
+  const flatListRef = useRef<FlatList<PostComments>>(null);
+  const [focusedCommentId, setFocusedCommentId] = useState<number>();
+
+  useEffect(() => {
+    // 키보드가 닫힐 때 실행할 추가 로직
+    const handleKeyboardHide = () => {
+      console.log('Keyboard dismissed');
+      // 여기에 추가적인 로직을 넣으세요
+      // 예를 들어, 포커스 해제, 상태 초기화 등
+      setFocusedCommentId(undefined);
+    };
+
+    // 키보드가 닫힐 때 감지
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      handleKeyboardHide,
+    );
+
+    // 컴포넌트가 언마운트될 때 리스너 정리
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const refocusInput = () => {
+    postDetailHandler.inputRef.current?.blur(); // 먼저 포커스를 잃게 함
+    setTimeout(() => {
+      postDetailHandler.inputRef.current?.focus(); // 잠시 후에 다시 포커스
+    }, 100);
+  };
+
+  const handleFocusComment = (commentId: number) => {
+    setFocusedCommentId(commentId);
+
+    // 포커스를 재설정하는 함수 호출
+    refocusInput();
+
+    // FlatList에서 해당 댓글로 스크롤
+    const index = postDetailHandler.postComment!.findIndex(
+      comment => comment.postCommentId === commentId,
+    );
+
+    if (index !== -1 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({
+        index,
+        animated: true,
+        viewPosition: 0.2, // 스크롤 뷰에서 중간에 위치하게 설정
+      });
+    }
+  };
 
   const renderItem = ({item}: {item: PostComments}) => (
     // <View style={tw`w-full px-2 py-2`}>
@@ -46,15 +99,11 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       onPressCommentLike={() =>
         postDetailHandler.onPressCommentLikeButton(item.postCommentId)
       }
-      // onPressRecomment={() => handleOnPressRecomment(item)}
-      // onPressMoreInfo={() =>
-      //   commentHandler.handleOnPressMoreInfo(item.commentId, item.memberId)
-      // }
-      // onPressLikeButton={() =>
-      //   commentHandler.handleOnPressLikeButton(item.commentId)
-      // }
-      // isVisibleRecomment={true}
-      // recommentCount={commentHandler.getRecommentCount(item.commentId)}
+      setIsRecomment={postDetailHandler.setIsRecomment}
+      inputRef={postDetailHandler.inputRef}
+      setParentCommentId={postDetailHandler.setParentCommentId}
+      isFocused={focusedCommentId === item.postCommentId} // 포커싱된 상태 전달
+      onFocus={() => handleFocusComment(item.postCommentId)}
     />
     // </View>
   );
@@ -120,37 +169,41 @@ function PostDetailScreen(props: PostDetailScreenProps) {
         //   paddingRight: insets.right,
         // },
       ]}>
-      <View style={tw`flex-1 w-full`}>
-        {/* <PostCommentList postComment={postDetailHandler.postComment} /> */}
+      {postDetailHandler.postComment && (
         <View style={tw`flex-1 w-full`}>
-          <FlatList
-            data={postDetailHandler.postComment}
-            renderItem={renderItem}
-            keyExtractor={item => item.postCommentId.toString()}
-            ListHeaderComponent={renderHeader}
-            ListEmptyComponent={
-              <View
-                style={tw`flex-1 w-full h-full justify-center items-center`}>
-                <View style={tw`flex-1 justify-center items-center`}>
-                  <CommentGrayIcon width={50} height={50} />
-                  <CustomText style={tw`text-[${designatedColor.GRAY1}] mt-4`}>
-                    첫 댓글을 작성해주세요
-                  </CustomText>
+          {/* <PostCommentList postComment={postDetailHandler.postComment} /> */}
+          <View style={tw`flex-1 w-full`}>
+            <FlatList
+              data={postDetailHandler.postComment}
+              ref={flatListRef}
+              renderItem={renderItem}
+              keyExtractor={item => item.postCommentId.toString()}
+              ListHeaderComponent={renderHeader}
+              ListEmptyComponent={
+                <View
+                  style={tw`flex-1 w-full h-full justify-center items-center`}>
+                  <View style={tw`flex-1 justify-center items-center`}>
+                    <CommentGrayIcon width={50} height={50} />
+                    <CustomText
+                      style={tw`text-[${designatedColor.GRAY1}] mt-4`}>
+                      첫 댓글을 작성해주세요
+                    </CustomText>
+                  </View>
                 </View>
-              </View>
-            }
-            contentContainerStyle={[tw`flex-grow`, {paddingBottom: 80}]}
-            refreshControl={
-              <RefreshControl
-                refreshing={postDetailHandler.refreshing}
-                onRefresh={postDetailHandler.onRefresh}
-                tintColor={designatedColor.VIOLET2} // RefreshControl indicator color (iOS)
-                colors={[designatedColor.VIOLET2]}
-              /> // RefreshControl indicator colors (Android)/>
-            }
-          />
+              }
+              contentContainerStyle={[tw`flex-grow`, {paddingBottom: 80}]}
+              refreshControl={
+                <RefreshControl
+                  refreshing={postDetailHandler.refreshing}
+                  onRefresh={postDetailHandler.onRefresh}
+                  tintColor={designatedColor.VIOLET2} // RefreshControl indicator color (iOS)
+                  colors={[designatedColor.VIOLET2]}
+                /> // RefreshControl indicator colors (Android)/>
+              }
+            />
+          </View>
         </View>
-      </View>
+      )}
 
       {/* <CommentV2List postComment={postDetailHandler.postComment}  /> */}
 
@@ -158,7 +211,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
         {postDetailHandler.isKeyboardVisible && (
           <CommentKeyboard
             onSendPress={postDetailHandler.handleOnPressSendButton}
-            text="댓글"
+            text={postDetailHandler.isRecomment ? '답글' : '댓글'}
+            inputRef={postDetailHandler.inputRef}
           />
         )}
       </View>

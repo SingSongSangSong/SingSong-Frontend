@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {Comment} from '../../types';
 import {IconButton} from '../button/IconButton';
@@ -77,7 +77,7 @@ const CommentItem = ({
         <CustomText style={tw`text-white ml-4`}>{content}</CustomText>
       </View>
 
-      <View style={tw`justify-between flex-row my-2 items-center bg-pink-200`}>
+      <View style={tw`justify-between flex-row my-2 items-center`}>
         <TouchableOpacity
           onPress={handleOnPressLikeButton}
           style={tw`flex-row items-center`}

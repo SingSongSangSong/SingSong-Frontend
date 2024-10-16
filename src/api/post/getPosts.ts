@@ -13,10 +13,10 @@ const getPosts = async (cursor: number, size: number) => {
 
     const response = await axiosInstance.get<GetPostsResponse>('v1/posts', {
       params,
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      //   'Content-Type': 'application/json',
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
     console.log('data for getPosts response', response.data);
     return response.data;

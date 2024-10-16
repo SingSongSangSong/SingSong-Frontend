@@ -4,12 +4,13 @@ import {playgroundStackNavigations} from '../constants';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import getPostsDetailed from '../api/post/getPostsDetailed';
 import {RouteProp} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import postPostsComments from '../api/post/postPostsComments';
 import Toast from 'react-native-toast-message';
 import getPostsComments from '../api/post/getPostsComments';
 import postPostsLike from '../api/post/postPostsLike';
 import postPostsCommentsLike from '../api/post/postPostsCommentsLike';
+import {TextInput} from 'react-native';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -36,6 +37,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     route.params.commentCount,
   );
   const [likes, setLikes] = useState<number>(route.params.likes);
+  // const [isRecomment, setIsRecoment] = useState<boolean>(false);
+  const inputRef = useRef<TextInput>(null);
 
   const {
     data: tempPostDetailed,
@@ -92,6 +95,9 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
     onSuccess: newCommentData => {
       setContent('');
+      setParentCommentId(0);
+      setSongIds([]);
+      setIsRecomment(false);
       console.log('newCommentData: ', newCommentData);
       if (newCommentData) {
         // 새로운 댓글 데이터를 postComment 상태에 추가
@@ -220,6 +226,10 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     likes,
     onPressPostLikeButton,
     onPressCommentLikeButton,
+    isRecomment,
+    setIsRecomment,
+    inputRef,
+    setParentCommentId,
   };
 };
 

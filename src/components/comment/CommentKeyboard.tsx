@@ -14,11 +14,13 @@ import {designatedColor} from '../../constants';
 interface CommentKeyboardProps {
   onSendPress: (content: string) => void;
   text: string;
+  inputRef?: React.RefObject<TextInput>;
 }
 
 export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
   onSendPress,
   text,
+  inputRef = null,
 }) => {
   const [comment, setComment] = useState('');
   const [inputHeight, setInputHeight] = useState(0);
@@ -40,6 +42,7 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
             tw`flex-1 bg-gray-800 text-white p-3 rounded-xl mx-2`,
             {height: Math.min(Math.max(40, inputHeight), 60)}, // 최소 1줄, 최대 2줄 높이로 설정
           ]}
+          ref={inputRef}
           value={comment}
           onChangeText={setComment}
           placeholder={`${text}을 입력하세요`}
