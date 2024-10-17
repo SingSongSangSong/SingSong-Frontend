@@ -14,6 +14,7 @@ import {Keyboard, TextInput} from 'react-native';
 import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
 import deletePosts from '../api/post/deletePosts';
 import usePostStore from '../store/usePostStore';
+import postBlacklist from '../api/comment/postBlacklist';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -50,6 +51,9 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   const [isShowMoreMenu, setIsShowMoreMenu] = useState<boolean>(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
   const deletePost = usePostStore(state => state.deletePost);
+  const deletePostFromMemberId = usePostStore(
+    state => state.deletePostFromMemberId,
+  );
 
   useEffect(() => {
     const handleKeyboardHide = () => {
@@ -292,6 +296,30 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
   });
 
+  const {mutateAsync: mutateAsyncCommentBlacklist} = useMutation({
+    mutationFn: async (memberId: number) => {
+      return postBlacklist(memberId);
+    },
+    onError: (error: Error) => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: error.message || '잠시 후 다시 시도해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: (data, memberId) => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '차단되었습니다.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      deletePostFromMemberId(memberId); //memberId와 일치하는 게시물 삭제
+      navigation.goBack();
+    },
+  });
+
   useEffect(() => {
     if (tempPostDetailed) {
       setPostDetailed(tempPostDetailed);
@@ -369,6 +397,10 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     });
   };
 
+  const handleOnPressCommentBlacklist = async (memberId: number) => {
+    await mutateAsyncCommentBlacklist(memberId);
+  };
+
   return {
     postDetailed,
     postsError,
@@ -397,6 +429,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     setIsShowDeleteModal,
     handleDeletePost,
     handleOnPressCommentReport,
+    handleOnPressCommentBlacklist,
   };
 };
 

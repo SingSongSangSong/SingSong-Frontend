@@ -5,6 +5,7 @@ interface PostState {
   post: Post[]; //나중에 keep에 저장되어 있는지 true/false로 바꾸기
   setPost: (post: Post[]) => void;
   deletePost: (postId: number) => void;
+  deletePostFromMemberId: (memberId: number) => void;
 }
 
 const usePostStore = create<PostState>((set, get) => {
@@ -23,6 +24,11 @@ const usePostStore = create<PostState>((set, get) => {
 
     deletePost: (postId: number) => {
       const post = get().post.filter(pos => pos.postId !== postId);
+      set({post});
+    },
+
+    deletePostFromMemberId: (memberId: number) => {
+      const post = get().post.filter(pos => pos.memberId !== memberId);
       set({post});
     },
   };

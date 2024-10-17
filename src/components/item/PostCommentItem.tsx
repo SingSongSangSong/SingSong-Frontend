@@ -8,11 +8,9 @@ import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import {formatDateComment} from '../../utils';
 import CustomText from '../text/CustomText';
-import getPostsCommentsRecomments from '../../api/post/getPostsCommentsRecomments';
-import Toast from 'react-native-toast-message';
-import {useMutation} from '@tanstack/react-query';
-import {PostRecommentItem} from '..';
+import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
+// import postBlacklist from '../../api/comment/postBlacklist';
 
 interface PostCommentItemProps {
   postId: number;
@@ -43,6 +41,7 @@ interface PostCommentItemProps {
     size: number;
   }) => Promise<any>;
   onPressCommentReport: (commentId: number, subjectMemberId: number) => void;
+  onPressCommentBlacklist: (memberId: number) => void;
 }
 
 const PostCommentItem = ({
@@ -66,6 +65,7 @@ const PostCommentItem = ({
   commentRecomments,
   mutateAsyncCommentRecomment,
   onPressCommentReport,
+  onPressCommentBlacklist,
 }: // onPressRecomment,
 PostCommentItemProps) => {
   // const [isLike, setIsLike] = useState(isLiked);
@@ -84,6 +84,8 @@ PostCommentItemProps) => {
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
   const [isPressedRecomment, setIsPressedRecomment] = useState<boolean>(false);
+  const [isShowBlacklistModal, setIsShowBlacklistModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (commentRecomments[postCommentId]) {
@@ -125,6 +127,16 @@ PostCommentItemProps) => {
     });
   };
 
+  // const onPressCommentBlacklist = async (memberId: number) => {
+  //   await postBlacklist(memberId);
+  //   Toast.show({
+  //     type: 'selectedToast',
+  //     text1: '차단되었습니다.',
+  //     position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //     visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //   });
+  // };
+
   const handleOnPressWriteRecomment = () => {
     setIsRecomment(true);
     // inputRef.current?.focus(); // 키보드 포커싱
@@ -165,7 +177,9 @@ PostCommentItemProps) => {
               style={tw`p-4`}
               onPress={() => {
                 // postDetailHandler.handleOnPressPostReport();
+                // onPressCommentBlacklist(memberId);
                 setIsVisible(false);
+                setIsShowBlacklistModal(true);
               }}>
               <CustomText style={tw`text-white`}>차단</CustomText>
             </TouchableOpacity>
@@ -316,6 +330,12 @@ PostCommentItemProps) => {
                   onPressCommentLike={() => {
                     onPressCommentLike(item.postCommentId);
                   }}
+                  onPressRecommentReport={() => {
+                    onPressCommentReport(item.postCommentId, item.memberId);
+                  }}
+                  onPressRecommentBlacklist={() => {
+                    onPressCommentBlacklist(item.memberId);
+                  }}
                   // postRecommentsCount={item.postRecommentsCount}
                   // songOnPostComment={item.songOnPostComment}
                   // onPressCommentLike={handleOnPressCommentLike}
@@ -329,6 +349,20 @@ PostCommentItemProps) => {
             ))}
           </View>
         )}
+      <CustomModal
+        visible={isShowBlacklistModal}
+        onClose={() => setIsShowBlacklistModal(false)}
+        message={
+          '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다.\n차단하시겠습니까?'
+        }
+        onConfirm={() => {
+          setIsShowBlacklistModal(false);
+          onPressCommentBlacklist(memberId);
+        }}
+        onCancel={() => setIsShowBlacklistModal(false)}
+        confirmText="차단"
+        cancelText="취소"
+      />
     </>
   );
 };

@@ -24,6 +24,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const post = usePostStore(state => state.post);
+  const [isLengthZero, setIsLengthZero] = useState<boolean>(false);
   const setPost = usePostStore(state => state.setPost);
   const size = 20;
 
@@ -42,6 +43,10 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
 
   useEffect(() => {
     if (tempPosts) {
+      if (tempPosts.posts.length == 0) {
+        console.log('length is zero');
+        setIsLengthZero(true);
+      }
       setPosts(tempPosts.posts);
       setPost(tempPosts.posts);
       if (tempPosts.posts.length != 0) {
@@ -51,7 +56,10 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   }, [tempPosts]);
 
   useEffect(() => {
-    if (post) {
+    if (tempPosts && post) {
+      if (post.length == 0) {
+        setIsLengthZero(true);
+      }
       console.log('post:', post);
       setPosts(post);
     }
@@ -168,6 +176,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     handleOnPressWritePost,
     handleOnPressPost,
     focusOnRefresh,
+    isLengthZero,
   };
 };
 

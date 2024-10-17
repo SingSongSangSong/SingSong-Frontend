@@ -3,6 +3,7 @@ interface Post {
   content: string;
   createdAt: string;
   likes: number;
+  memberId: number;
   nickname: string;
   postId: number;
   title: string;

@@ -5,7 +5,6 @@ import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
 import {PlaygroundStackParamList, PostComments} from '../../types';
 import CustomText from '../../components/text/CustomText';
-// import SearchIcon from '../../assets/svg/search.svg';
 import usePostDetail from '../../hooks/usePostDetail';
 import LikeIcon from '../../assets/svg/filledLike.svg';
 import LikeGrayIcon from '../../assets/svg/like.svg';
@@ -121,6 +120,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
         postDetailHandler.mutateAsyncCommentRecomment
       }
       onPressCommentReport={postDetailHandler.handleOnPressCommentReport}
+      onPressCommentBlacklist={postDetailHandler.handleOnPressCommentBlacklist}
     />
     // </View>
   );

@@ -9,6 +9,7 @@ import CustomText from '../../components/text/CustomText';
 import SangSongIcon from '../../assets/svg/sangsong2.svg';
 // import SearchIcon from '../../assets/svg/search.svg';
 import PencilIcon from '../../assets/svg/pencil.svg';
+import RefreshIcon from '../../assets/svg/refresh.svg';
 import {PostList} from '../../components';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -34,11 +35,11 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}] justify-center items-center`,
       ]}>
+      {/* 로딩 중 */}
       {playgroundHandler.isFetchingPosts ? (
-        <View>
-          <ActivityIndicator size="large" color={designatedColor.VIOLET} />
-        </View>
+        <ActivityIndicator size="large" color={designatedColor.VIOLET} />
       ) : playgroundHandler.postsError ? (
+        // 에러 발생 시
         <View style={tw`items-center`}>
           <SangSongIcon width={100} height={100} />
           <CustomText
@@ -50,8 +51,8 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
             다시 시도해주세요
           </CustomText>
         </View>
-      ) : playgroundHandler.tempPosts?.posts &&
-        playgroundHandler.tempPosts.posts.length > 0 ? (
+      ) : playgroundHandler.posts && playgroundHandler.posts.length > 0 ? (
+        // 게시글이 있는 경우
         <>
           <View style={tw`flex-1 w-full`}>
             <PostList
@@ -78,7 +79,8 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
             </View>
           </TouchableOpacity>
         </>
-      ) : (
+      ) : playgroundHandler.isLengthZero ? (
+        // 게시글이 없는 경우
         <View style={tw`items-center mt-4 mb-12`}>
           <SangSongIcon width={100} height={100} />
           <CustomText
@@ -96,7 +98,21 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
               </CustomText>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={playgroundHandler.focusOnRefresh}
+            style={tw`bg-[${designatedColor.WHITE}] pl-4 pr-5 py-2 rounded-full mt-5`}
+            activeOpacity={0.9}>
+            <View style={tw`flex-row items-center`}>
+              {/* <PencilIcon width={20} height={20} /> */}
+              <RefreshIcon width={12} height={12} />
+              <CustomText style={tw`text-[${designatedColor.VIOLET}] ml-1`}>
+                새로고침
+              </CustomText>
+            </View>
+          </TouchableOpacity>
         </View>
+      ) : (
+        <View />
       )}
     </View>
   );

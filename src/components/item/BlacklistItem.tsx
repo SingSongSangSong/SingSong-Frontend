@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {OutlineButton} from '../button/OutlineButton';
 import CustomText from '../text/CustomText';
+import {formatDateComment} from '../../utils';
 
 interface BlacklistItemProps {
   nickname: string;
@@ -21,7 +22,9 @@ const BlacklistItem = ({
       style={tw`flex-row justify-between p-2 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
       <View>
         <CustomText style={tw`text-white my-2`}>{nickname}</CustomText>
-        <CustomText style={tw`text-white`}>{blockDate}</CustomText>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
+          {formatDateComment(blockDate)}
+        </CustomText>
       </View>
       <View style={tw`my-4`}>
         <OutlineButton
