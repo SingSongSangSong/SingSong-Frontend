@@ -23,8 +23,10 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
   useFocusEffect(
     useCallback(() => {
       console.log('focus');
-      playgroundHandler.focusOnRefresh();
-    }, []),
+      if (playgroundHandler.isFetching) {
+        playgroundHandler.focusOnRefresh();
+      }
+    }, [playgroundHandler.isFetching]),
   );
 
   return (

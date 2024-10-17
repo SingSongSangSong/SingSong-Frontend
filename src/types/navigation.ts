@@ -90,6 +90,10 @@ type PlaygroundStackParamList = {
     commentCount: number;
   };
   [playgroundStackNavigations.PLAYGROUND_POST_WRITE]: undefined;
+  [playgroundStackNavigations.PLAYGROUND_POST_REPORT]: {
+    reportPostId: number;
+    reportSubjectMemberId: number;
+  };
 };
 
 export type {

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Keyboard,
@@ -16,9 +16,11 @@ import usePostDetail from '../../hooks/usePostDetail';
 import LikeIcon from '../../assets/svg/filledLike.svg';
 import LikeGrayIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
-import {CommentKeyboard, PostCommentItem} from '../../components';
+import {CommentKeyboard, CustomModal, PostCommentItem} from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
 import {formatDateComment} from '../../utils';
+import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
+import Popover from 'react-native-popover-view';
 
 type PostDetailScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -51,6 +53,25 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   //     keyboardDidHideListener.remove();
   //   };
   // }, []);
+
+  const [isVisible, setIsVisible] = useState(false);
+  const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
+
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          ref={iconRef}
+          onPress={() => {
+            setIsVisible(true);
+            console.log('more button clicked');
+          }}
+          style={tw`px-4`}>
+          <MoreVerticalIcon width={20} height={20} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [props.navigation]);
 
   const refocusInput = () => {
     postDetailHandler.inputRef.current?.blur(); // 먼저 포커스를 잃게 함
@@ -113,6 +134,45 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     return (
       <View
         style={tw`px-4 pt-2 py-5 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
+        <Popover
+          isVisible={isVisible}
+          onRequestClose={() => setIsVisible(false)}
+          from={iconRef} // Popover를 MoreVerticalIcon에서 시작하도록 설정
+          arrowSize={{width: 0, height: 0}}
+          popoverStyle={{width: 150}}
+          // placement="bottom" // 팝업이 아이콘 아래쪽에 위치
+          // showArrow={false}
+          // arrowStyle={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
+        >
+          <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            <TouchableOpacity
+              style={tw`p-4`}
+              onPress={() => {
+                postDetailHandler.onRefresh();
+                setIsVisible(false);
+              }}>
+              <CustomText style={tw`text-white`}>새로고침</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`p-4`}
+              onPress={() => {
+                postDetailHandler.handleOnPressPostReport();
+                setIsVisible(false);
+              }}>
+              <CustomText style={tw`text-white`}>신고</CustomText>
+            </TouchableOpacity>
+            {postDetailHandler.postDetailed?.isWriter && (
+              <TouchableOpacity
+                style={tw`p-4`}
+                onPress={() => {
+                  postDetailHandler.setIsShowDeleteModal(true); //삭제 모달 표시
+                  setIsVisible(false);
+                }}>
+                <CustomText style={tw`text-white`}>삭제</CustomText>
+              </TouchableOpacity>
+            )}
+          </View>
+        </Popover>
         <View style={tw`flex-row items-center`}>
           <CustomText style={tw`text-[${designatedColor.VIOLET3}] py-1`}>
             {props.route.params.nickname}
@@ -160,6 +220,18 @@ function PostDetailScreen(props: PostDetailScreenProps) {
             </View>
           </View>
         </View>
+        <CustomModal
+          visible={postDetailHandler.isShowDeleteModal}
+          onClose={() => postDetailHandler.setIsShowDeleteModal(false)}
+          message={'게시글을 삭제하시겠습니까?'}
+          onConfirm={() => {
+            postDetailHandler.setIsShowDeleteModal(false);
+            postDetailHandler.handleDeletePost();
+          }}
+          onCancel={() => postDetailHandler.setIsShowDeleteModal(false)}
+          confirmText="삭제"
+          cancelText="취소"
+        />
       </View>
     );
   };

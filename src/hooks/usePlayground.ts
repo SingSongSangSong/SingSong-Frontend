@@ -7,6 +7,7 @@ import {playgroundStackNavigations} from '../constants';
 import {useQuery} from '@tanstack/react-query';
 import getPosts from '../api/post/getPosts';
 import {useFocusEffect} from '@react-navigation/native';
+import usePostStore from '../store/usePostStore';
 
 type UsePlaygroundProps = {
   navigation: StackNavigationProp<
@@ -22,6 +23,8 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   //   const [pageId, setPageId] = useState<number>(1);
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const post = usePostStore(state => state.post);
+  const setPost = usePostStore(state => state.setPost);
   const size = 20;
 
   const {
@@ -33,18 +36,26 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     queryKey: ['posts'],
     queryFn: () => getPosts(lastCursor, size),
 
-    staleTime: 3600000, // 1시간 동안 캐시 유지
+    staleTime: 0, // 1시간 동안 캐시 유지
     select: data => data.data,
   });
 
   useEffect(() => {
     if (tempPosts) {
       setPosts(tempPosts.posts);
+      setPost(tempPosts.posts);
       if (tempPosts.posts.length != 0) {
         setLastCursor(tempPosts.lastCursor);
       }
     }
   }, [tempPosts]);
+
+  useEffect(() => {
+    if (post) {
+      console.log('post:', post);
+      setPosts(post);
+    }
+  }, [post]);
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -64,11 +75,12 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   };
 
   const focusOnRefresh = async () => {
-    if (isFetching) {
-      // console.log('refreshing!!!!!');
-      await handleOnRefreshPosts();
-      setIsFetching(false);
-    }
+    // console.log('isFetching:', isFetching);
+    // if (isFetching) {
+    // console.log('refreshing!!!!!');
+    await handleOnRefreshPosts();
+    setIsFetching(false);
+    // }
   };
 
   //위로 당길 시 노래 리스트 새로고침하는 함수
@@ -117,6 +129,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
 
   const handleOnPressWritePost = () => {
     setIsFetching(true);
+    console.log('write post');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_WRITE);
   };
 

@@ -12,6 +12,8 @@ import postPostsLike from '../api/post/postPostsLike';
 import postPostsCommentsLike from '../api/post/postPostsCommentsLike';
 import {Keyboard, TextInput} from 'react-native';
 import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
+import deletePosts from '../api/post/deletePosts';
+import usePostStore from '../store/usePostStore';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -45,6 +47,9 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   }>({});
   // const [ignoreNextDismiss, setIgnoreNextDismiss] = useState<boolean>(false);
   const [focusedCommentId, setFocusedCommentId] = useState<number>();
+  const [isShowMoreMenu, setIsShowMoreMenu] = useState<boolean>(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
+  const deletePost = usePostStore(state => state.deletePost);
 
   useEffect(() => {
     const handleKeyboardHide = () => {
@@ -226,6 +231,32 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
   });
 
+  const {mutateAsync: mutateAsyncDeletePost} = useMutation({
+    mutationFn: async (postId: number) => {
+      return deletePosts(postId);
+    },
+    onError: (error: Error) => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: error.message || '잠시 후 다시 시도해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: () => {
+      // setContent('');
+      // setLikes(likes + 1);
+      deletePost(route.params.postId);
+      Toast.show({
+        type: 'selectedToast',
+        text1: '게시물이 삭제되었습니다.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      navigation.goBack(); //뒤로가기
+    },
+  });
+
   const {mutateAsync: mutateAsyncCommentRecomment} = useMutation({
     mutationFn: async ({
       postCommentId,
@@ -316,6 +347,18 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     await mutateAsyncCommentLike(postCommentId);
   };
 
+  const handleOnPressPostReport = () => {
+    // console.log('post report button clicked');
+    navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_REPORT, {
+      reportPostId: route.params.postId,
+      reportSubjectMemberId: postDetailed?.memberId || 0,
+    });
+  };
+
+  const handleDeletePost = async () => {
+    await mutateAsyncDeletePost(route.params.postId);
+  };
+
   return {
     postDetailed,
     postsError,
@@ -337,6 +380,12 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     commentRecomments,
     focusedCommentId,
     setFocusedCommentId,
+    isShowMoreMenu,
+    setIsShowMoreMenu,
+    handleOnPressPostReport,
+    isShowDeleteModal,
+    setIsShowDeleteModal,
+    handleDeletePost,
   };
 };
 
