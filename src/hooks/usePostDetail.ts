@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 import getPostsComments from '../api/post/getPostsComments';
 import postPostsLike from '../api/post/postPostsLike';
 import postPostsCommentsLike from '../api/post/postPostsCommentsLike';
-import {TextInput} from 'react-native';
+import {Keyboard, TextInput} from 'react-native';
 import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
 
 type UsePostDetailProps = {
@@ -43,6 +43,28 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   const [commentRecomments, setCommentRecomments] = useState<{
     [key: number]: PostComments[];
   }>({});
+  // const [ignoreNextDismiss, setIgnoreNextDismiss] = useState<boolean>(false);
+  const [focusedCommentId, setFocusedCommentId] = useState<number>();
+
+  useEffect(() => {
+    const handleKeyboardHide = () => {
+      // console.log('ignoreNextDismiss: ', ignoreNextDismiss);
+      // if (!ignoreNextDismiss) {
+      setFocusedCommentId(undefined);
+      setIsRecomment(false); // 보통 dismiss 시 isRecomment를 false로 설정
+      // }
+      // setIgnoreNextDismiss(false); // dismiss 이벤트를 처리 후 reset
+    };
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      handleKeyboardHide,
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const {
     data: tempPostDetailed,
@@ -71,7 +93,6 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   const {mutateAsync, isLoading} = useMutation({
     mutationFn: async (content: string) => {
-      console.log('content22: ', content);
       if (content.trim() === '') {
         Toast.show({
           type: 'selectedToast',
@@ -99,13 +120,15 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
     onSuccess: newCommentData => {
       if (newCommentData) {
-        if (isRecomment) {
+        if (newCommentData.data.isRecomment) {
+          // console.log('is Recomments...');
           const postComments = newCommentData.data;
           setCommentRecomments(prev => ({
             ...prev,
             [parentCommentId]: [...(prev[parentCommentId] || []), postComments],
           }));
         } else {
+          // console.log('is not Recomments...');
           // 새로운 댓글 데이터를 postComment 상태에 추가
           setPostComment(prev => [
             ...(prev || []),
@@ -117,13 +140,14 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       setParentCommentId(0);
       setSongIds([]);
       setIsRecomment(false);
-      console.log('newCommentData: ', newCommentData);
+      setCommentCount(prevCount => prevCount + 1);
+      // console.log('newCommentData: ', newCommentData);
     },
   });
 
   const {mutateAsync: mutateAsyncPostLike} = useMutation({
     mutationFn: async (postId: number) => {
-      console.log('postId: ', postId);
+      // console.log('postId: ', postId);
       // if (content.trim() === '') {
       //   Toast.show({
       //     type: 'selectedToast',
@@ -157,7 +181,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   const {mutateAsync: mutateAsyncCommentLike} = useMutation({
     mutationFn: async (postCommentId: number) => {
-      console.log('postCommentId: ', postCommentId);
+      // console.log('postCommentId: ', postCommentId);
       // if (content.trim() === '') {
       //   Toast.show({
       //     type: 'selectedToast',
@@ -199,7 +223,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       cursor: number;
       size: number;
     }) => {
-      console.log('currentpostCommentId: ', postCommentId);
+      // console.log('currentpostCommentId: ', postCommentId);
       return getPostsCommentsRecomments(postCommentId, cursor, size);
     },
     onError: (error: Error) => {
@@ -212,12 +236,12 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
     onSuccess: (tempPostCommentRecomment, {postCommentId}) => {
       const {postReComments} = tempPostCommentRecomment.data;
-      console.log('currentId:', postCommentId);
+      // console.log('currentId:', postCommentId);
       setCommentRecomments(prev => ({
         ...prev,
         [postCommentId]: [...postReComments],
       }));
-      console.log('postReComments: ', postReComments);
+      // console.log('postReComments: ', postReComments);
 
       // 마지막 커서 갱신
       setLastCursor(tempPostCommentRecomment.data.lastCursor);
@@ -232,17 +256,26 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   useEffect(() => {
     if (tempPostComment) {
-      console.log('refresh!!!');
+      // console.log('refresh!!!');
       setPostComment(tempPostComment.postComments);
       setLastCursor(tempPostComment.lastCursor);
       setCommentCount(tempPostComment.totalPostCommentCount);
     }
   }, [tempPostComment]);
 
+  // const handleOnPressSendButton = async (content: string) => {
+  //   setContent(content);
+  //   console.log('content: ', content);
+  //   await mutateAsync(content);
+  // };
   const handleOnPressSendButton = async (content: string) => {
     setContent(content);
-    console.log('content: ', content);
-    await mutateAsync(content);
+    // console.log('content: ', content);
+
+    // setIgnoreNextDismiss(true); // 보내기 버튼을 눌렀으므로 키보드 dismiss 이벤트 무시
+    await mutateAsync(content); // 여기서 postCommentId를 함께 전달
+    // setIgnoreNextDismiss(false);
+    setIsRecomment(false); // 필요에 따라 isRecomment를 false로 설정
   };
 
   const onRefresh = async () => {
@@ -279,6 +312,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     setParentCommentId,
     mutateAsyncCommentRecomment,
     commentRecomments,
+    focusedCommentId,
+    setFocusedCommentId,
   };
 };
 

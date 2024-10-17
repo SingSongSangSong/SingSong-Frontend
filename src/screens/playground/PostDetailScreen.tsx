@@ -32,26 +32,25 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   });
 
   const flatListRef = useRef<FlatList<PostComments>>(null);
-  const [focusedCommentId, setFocusedCommentId] = useState<number>();
 
-  useEffect(() => {
-    // 키보드가 닫힐 때 실행할 추가 로직
-    const handleKeyboardHide = () => {
-      setFocusedCommentId(undefined);
-      postDetailHandler.setIsRecomment(false);
-    };
+  // useEffect(() => {
+  //   // 키보드가 닫힐 때 실행할 추가 로직
+  //   const handleKeyboardHide = () => {
+  //     setFocusedCommentId(undefined);
+  //     postDetailHandler.setIsRecomment(false);
+  //   };
 
-    // 키보드가 닫힐 때 감지
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      handleKeyboardHide,
-    );
+  //   // 키보드가 닫힐 때 감지
+  //   const keyboardDidHideListener = Keyboard.addListener(
+  //     'keyboardDidHide',
+  //     handleKeyboardHide,
+  //   );
 
-    // 컴포넌트가 언마운트될 때 리스너 정리
-    return () => {
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  //   // 컴포넌트가 언마운트될 때 리스너 정리
+  //   return () => {
+  //     keyboardDidHideListener.remove();
+  //   };
+  // }, []);
 
   const refocusInput = () => {
     postDetailHandler.inputRef.current?.blur(); // 먼저 포커스를 잃게 함
@@ -61,7 +60,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   };
 
   const handleFocusComment = (commentId: number) => {
-    setFocusedCommentId(commentId);
+    postDetailHandler.setFocusedCommentId(commentId);
 
     // 포커스를 재설정하는 함수 호출
     refocusInput();
@@ -100,7 +99,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       setIsRecomment={postDetailHandler.setIsRecomment}
       inputRef={postDetailHandler.inputRef}
       setParentCommentId={postDetailHandler.setParentCommentId}
-      isFocused={focusedCommentId === item.postCommentId} // 포커싱된 상태 전달
+      isFocused={postDetailHandler.focusedCommentId === item.postCommentId} // 포커싱된 상태 전달
       onFocus={() => handleFocusComment(item.postCommentId)}
       commentRecomments={postDetailHandler.commentRecomments}
       mutateAsyncCommentRecomment={

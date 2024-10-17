@@ -104,7 +104,7 @@ PostRecommentItemProps) => {
           </CustomText>
         </View>
 
-        <View style={tw`justify-between flex-row pt-1 pr-2 items-center`}>
+        <View style={tw`justify-end flex-row pt-1 pr-2 items-center`}>
           <TouchableOpacity
             onPress={handleOnPressCommentLike}
             style={tw`flex-row items-center`}

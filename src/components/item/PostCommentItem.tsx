@@ -82,6 +82,13 @@ PostCommentItemProps) => {
   const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
   const [isPressedRecomment, setIsPressedRecomment] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (commentRecomments[postCommentId]) {
+      setRecommentCount(commentRecomments[postCommentId].length);
+      // console.log('commentRecomments: ', commentRecomments);
+    }
+  }, [commentRecomments]);
+
   const handleOnPressCommentLike = () => {
     onPressCommentLike(postCommentId);
     if (isLike) {
