@@ -22,6 +22,7 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
 
   useFocusEffect(
     useCallback(() => {
+      console.log('focus');
       playgroundHandler.focusOnRefresh();
     }, []),
   );

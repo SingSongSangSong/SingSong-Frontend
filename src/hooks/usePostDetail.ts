@@ -79,6 +79,13 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     select: data => data.data,
   });
 
+  useEffect(() => {
+    if (tempPostDetailed) {
+      setPostDetailed(tempPostDetailed);
+      setLikes(tempPostDetailed.likes);
+    }
+  }, [tempPostDetailed]);
+
   const {
     data: tempPostComment,
     error: postsCommentError,
@@ -175,6 +182,12 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
         text1: '좋아요가 등록되었습니다.',
         position: 'bottom',
         visibilityTime: 2000,
+      });
+      setPostDetailed(prev => {
+        if (prev) {
+          return {...prev, isLiked: true};
+        }
+        return prev; // 상태가 없으면 이전 상태를 그대로 반환
       });
     },
   });
@@ -286,6 +299,16 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   };
 
   const onPressPostLikeButton = async () => {
+    console.log('hi!!!');
+    if (postDetailed && postDetailed.isLiked) {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '이미 좋아요를 누르셨습니다.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      return;
+    }
     await mutateAsyncPostLike(route.params.postId);
   };
 

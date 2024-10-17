@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {PlaygroundStackParamList, Post} from '../types';
@@ -6,6 +6,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {playgroundStackNavigations} from '../constants';
 import {useQuery} from '@tanstack/react-query';
 import getPosts from '../api/post/getPosts';
+import {useFocusEffect} from '@react-navigation/native';
 
 type UsePlaygroundProps = {
   navigation: StackNavigationProp<
@@ -45,9 +46,17 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     }
   }, [tempPosts]);
 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (isFetching) {
+  //       focusOnRefresh();
+  //     }
+  //   }, [isFetching]), // isFetching을 의존성 배열에 추가하여 상태 변경을 감지
+  // );
+
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
-    console.log('refreshing!!!!!');
+    // console.log('refreshing!!!!!');
     setRefreshing(true);
     await handleOnRefreshPosts();
     logRefresh('up_posts');
@@ -56,7 +65,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
 
   const focusOnRefresh = async () => {
     if (isFetching) {
-      console.log('refreshing!!!!!');
+      // console.log('refreshing!!!!!');
       await handleOnRefreshPosts();
       setIsFetching(false);
     }
