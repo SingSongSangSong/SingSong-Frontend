@@ -94,6 +94,10 @@ type PlaygroundStackParamList = {
     reportPostId: number;
     reportSubjectMemberId: number;
   };
+  [playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT]: {
+    reportCommentId: number;
+    reportCommentSubjectMemberId: number;
+  };
 };
 
 export type {

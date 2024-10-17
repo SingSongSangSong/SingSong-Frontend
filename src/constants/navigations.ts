@@ -53,6 +53,7 @@ const playgroundStackNavigations = {
   PLAYGROUND_POST_WRITE: '_PlaygroundPostWrite',
   PLAYGROUND_POST_DETAIL: '_PlaygroundPostDetailed',
   PLAYGROUND_POST_REPORT: '_PlaygroundPostReport',
+  PLAYGROUND_COMMENT_REPORT: '_PlaygroundCommentReport',
 } as const;
 
 export {

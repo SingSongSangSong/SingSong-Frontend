@@ -73,7 +73,8 @@ const MainTabNavigator = () => {
             routeName === homeStackNavigations.AI_LLM_RESULT ||
             routeName === playgroundStackNavigations.PLAYGROUND_POST_WRITE ||
             routeName === playgroundStackNavigations.PLAYGROUND_POST_DETAIL ||
-            routeName === playgroundStackNavigations.PLAYGROUND_POST_REPORT
+            routeName === playgroundStackNavigations.PLAYGROUND_POST_REPORT ||
+            routeName === playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT
           ) {
             return true;
           }

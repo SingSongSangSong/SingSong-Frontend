@@ -359,6 +359,16 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     await mutateAsyncDeletePost(route.params.postId);
   };
 
+  const handleOnPressCommentReport = (
+    commentId: number,
+    subjectMemberId: number,
+  ) => {
+    navigation.navigate(playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT, {
+      reportCommentId: commentId,
+      reportCommentSubjectMemberId: subjectMemberId,
+    });
+  };
+
   return {
     postDetailed,
     postsError,
@@ -386,6 +396,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     isShowDeleteModal,
     setIsShowDeleteModal,
     handleDeletePost,
+    handleOnPressCommentReport,
   };
 };
 

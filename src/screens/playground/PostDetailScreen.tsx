@@ -1,11 +1,5 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useLayoutEffect, useRef, useState} from 'react';
+import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -126,6 +120,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       mutateAsyncCommentRecomment={
         postDetailHandler.mutateAsyncCommentRecomment
       }
+      onPressCommentReport={postDetailHandler.handleOnPressCommentReport}
     />
     // </View>
   );

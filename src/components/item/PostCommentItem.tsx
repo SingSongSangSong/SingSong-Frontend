@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity, TextInput} from 'react-native';
 import tw from 'twrnc';
 import {PostComments, SongOnPostComment} from '../../types';
@@ -12,6 +12,7 @@ import getPostsCommentsRecomments from '../../api/post/getPostsCommentsRecomment
 import Toast from 'react-native-toast-message';
 import {useMutation} from '@tanstack/react-query';
 import {PostRecommentItem} from '..';
+import Popover from 'react-native-popover-view';
 
 interface PostCommentItemProps {
   postId: number;
@@ -41,6 +42,7 @@ interface PostCommentItemProps {
     cursor: number;
     size: number;
   }) => Promise<any>;
+  onPressCommentReport: (commentId: number, subjectMemberId: number) => void;
 }
 
 const PostCommentItem = ({
@@ -63,6 +65,7 @@ const PostCommentItem = ({
   onFocus,
   commentRecomments,
   mutateAsyncCommentRecomment,
+  onPressCommentReport,
 }: // onPressRecomment,
 PostCommentItemProps) => {
   // const [isLike, setIsLike] = useState(isLiked);
@@ -128,6 +131,8 @@ PostCommentItemProps) => {
     setParentCommentId(postCommentId);
     onFocus(); // 포커싱 상태 요청
   };
+  const [isVisible, setIsVisible] = useState(false);
+  const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
 
   return (
     <>
@@ -136,6 +141,46 @@ PostCommentItemProps) => {
           tw`py-2 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
           isFocused && tw`bg-[${designatedColor.GRAY5}] bg-opacity-70`,
         ]}>
+        <Popover
+          isVisible={isVisible}
+          onRequestClose={() => setIsVisible(false)}
+          from={iconRef} // Popover를 MoreVerticalIcon에서 시작하도록 설정
+          arrowSize={{width: 0, height: 0}}
+          popoverStyle={{width: 150}}
+          // placement="bottom" // 팝업이 아이콘 아래쪽에 위치
+          // showArrow={false}
+          // arrowStyle={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
+        >
+          <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            <TouchableOpacity
+              style={tw`p-4`}
+              onPress={() => {
+                // postDetailHandler.onRefresh();
+                onPressCommentReport(postCommentId, memberId);
+                setIsVisible(false);
+              }}>
+              <CustomText style={tw`text-white`}>신고</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`p-4`}
+              onPress={() => {
+                // postDetailHandler.handleOnPressPostReport();
+                setIsVisible(false);
+              }}>
+              <CustomText style={tw`text-white`}>차단</CustomText>
+            </TouchableOpacity>
+            {/* {postDetailHandler.postDetailed?.isWriter && (
+              <TouchableOpacity
+                style={tw`p-4`}
+                onPress={() => {
+                  postDetailHandler.setIsShowDeleteModal(true); //삭제 모달 표시
+                  setIsVisible(false);
+                }}>
+                <CustomText style={tw`text-white`}>삭제</CustomText>
+              </TouchableOpacity>
+            )} */}
+          </View>
+        </Popover>
         <View
           style={tw`flex-row justify-between items-center
         `}>
@@ -148,6 +193,16 @@ PostCommentItemProps) => {
               {formatDateComment(createdAt)}
             </CustomText>
           </View>
+          <TouchableOpacity
+            ref={iconRef}
+            onPress={() => {
+              setIsVisible(true);
+              // console.log('more button clicked');
+            }}
+            style={tw`px-2`}
+            activeOpacity={0.8}>
+            <MoreVerticalIcon width={14} height={14} />
+          </TouchableOpacity>
           {/* <IconButton
           Icon={MoreVerticalIcon}
           size={16}

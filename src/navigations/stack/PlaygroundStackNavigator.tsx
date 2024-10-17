@@ -19,6 +19,7 @@ import MusicIcon from '../../assets/svg/music.svg';
 import CustomText from '../../components/text/CustomText';
 import tw from 'twrnc';
 import PostReportScreen from '../../screens/playground/PostReportScreen';
+import CommentReportScreen from '../../screens/playground/CommentReportScreen';
 
 const Stack = createStackNavigator<PlaygroundStackParamList>();
 
@@ -108,6 +109,13 @@ function PlaygroundStackNavigator({navigation}: PlaygroundStackNavigatorProps) {
       <Stack.Screen
         name={playgroundStackNavigations.PLAYGROUND_POST_REPORT}
         component={PostReportScreen}
+        options={() => ({
+          headerTitle: '신고', // 헤더 제목을 비움
+        })}
+      />
+      <Stack.Screen
+        name={playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT}
+        component={CommentReportScreen}
         options={() => ({
           headerTitle: '신고', // 헤더 제목을 비움
         })}
