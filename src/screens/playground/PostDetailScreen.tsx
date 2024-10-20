@@ -15,11 +15,17 @@ import usePostDetail from '../../hooks/usePostDetail';
 import LikeIcon from '../../assets/svg/filledLike.svg';
 import LikeGrayIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
-import {CommentKeyboard, CustomModal, PostCommentItem} from '../../components';
+import {
+  CommentKeyboard,
+  CustomModal,
+  PostCommentItem,
+  SearchSongItem,
+} from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
 import {formatDateComment, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
+import useKeepListStore from '../../store/useKeepStore';
 
 type PostDetailScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -37,25 +43,6 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   useEffect(() => {
     logPageView(props.route.name);
   }, []);
-
-  // useEffect(() => {
-  //   // 키보드가 닫힐 때 실행할 추가 로직
-  //   const handleKeyboardHide = () => {
-  //     setFocusedCommentId(undefined);
-  //     postDetailHandler.setIsRecomment(false);
-  //   };
-
-  //   // 키보드가 닫힐 때 감지
-  //   const keyboardDidHideListener = Keyboard.addListener(
-  //     'keyboardDidHide',
-  //     handleKeyboardHide,
-  //   );
-
-  //   // 컴포넌트가 언마운트될 때 리스너 정리
-  //   return () => {
-  //     keyboardDidHideListener.remove();
-  //   };
-  // }, []);
 
   const [isVisible, setIsVisible] = useState(false);
   const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
@@ -196,6 +183,24 @@ function PostDetailScreen(props: PostDetailScreenProps) {
           <CustomText style={tw`text-[${designatedColor.WHITE}] py-4`}>
             {props.route.params.content}
           </CustomText>
+        </View>
+        <View style={tw`mb-4`}>
+          {postDetailHandler.postDetailed?.songs.map((item, index) => (
+            <View key={index} style={tw`py-2`}>
+              <SearchSongItem
+                songId={item.songId}
+                songNumber={item.songNumber}
+                songName={item.songName}
+                singerName={item.singerName}
+                album={item.album}
+                isKeep={false}
+                isMr={item.isMr}
+                isLive={item.isLive}
+                isShowKeepIcon={false}
+                onSongPress={() => {}}
+              />
+            </View>
+          ))}
         </View>
         <View style={tw`flex-row items-center justify-between`}>
           <TouchableOpacity
