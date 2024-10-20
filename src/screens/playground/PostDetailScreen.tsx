@@ -1,5 +1,11 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
-import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -11,7 +17,7 @@ import LikeGrayIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/comment.svg';
 import {CommentKeyboard, CustomModal, PostCommentItem} from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
-import {formatDateComment} from '../../utils';
+import {formatDateComment, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
 
@@ -27,6 +33,10 @@ function PostDetailScreen(props: PostDetailScreenProps) {
   });
 
   const flatListRef = useRef<FlatList<PostComments>>(null);
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   // useEffect(() => {
   //   // 키보드가 닫힐 때 실행할 추가 로직
@@ -252,6 +262,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
               renderItem={renderItem}
               keyExtractor={item => item.postCommentId.toString()}
               ListHeaderComponent={renderHeader}
+              onEndReached={postDetailHandler.handleDownRefreshComments}
+              onEndReachedThreshold={0.1}
               ListEmptyComponent={
                 <View
                   style={tw`flex-1 w-full h-full justify-center items-center`}>
@@ -272,6 +284,16 @@ function PostDetailScreen(props: PostDetailScreenProps) {
                   tintColor={designatedColor.VIOLET2} // RefreshControl indicator color (iOS)
                   colors={[designatedColor.VIOLET2]}
                 /> // RefreshControl indicator colors (Android)/>
+              }
+              ListFooterComponent={() =>
+                postDetailHandler.isLoading ? (
+                  <View style={tw`py-10`}>
+                    <ActivityIndicator
+                      size="large"
+                      color={designatedColor.VIOLET}
+                    />
+                  </View>
+                ) : null
               }
             />
           </View>

@@ -1,4 +1,10 @@
-import React, {useCallback} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
@@ -12,6 +18,9 @@ import PencilIcon from '../../assets/svg/pencil.svg';
 import RefreshIcon from '../../assets/svg/refresh.svg';
 import {PostList} from '../../components';
 import {useFocusEffect} from '@react-navigation/native';
+import {logPageView} from '../../utils';
+import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
+import Popover from 'react-native-popover-view';
 
 type PlaygroundScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -20,6 +29,10 @@ type PlaygroundScreenProps = StackScreenProps<
 
 function PlaygroundScreen(props: PlaygroundScreenProps) {
   const playgroundHandler = usePlayground({navigation: props.navigation});
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -30,11 +43,61 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
     }, [playgroundHandler.isFetching]),
   );
 
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
+
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          ref={iconRef}
+          onPress={() => {
+            setIsVisible(true);
+            console.log('more button clicked');
+          }}
+          style={tw`px-4`}
+          activeOpacity={0.8}>
+          <MoreVerticalIcon width={20} height={20} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [props.navigation]);
+
   return (
     <View
       style={[
         tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}] justify-center items-center`,
       ]}>
+      <Popover
+        isVisible={isVisible}
+        onRequestClose={() => setIsVisible(false)}
+        from={iconRef} // Popover를 MoreVerticalIcon에서 시작하도록 설정
+        arrowSize={{width: 0, height: 0}}
+        popoverStyle={{width: 150}}
+        // placement="bottom" // 팝업이 아이콘 아래쪽에 위치
+        // showArrow={false}
+        // arrowStyle={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
+      >
+        <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+          <TouchableOpacity
+            style={tw`p-4`}
+            onPress={() => {
+              playgroundHandler.onRefresh();
+              setIsVisible(false);
+            }}>
+            <CustomText style={tw`text-white`}>새로고침</CustomText>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={tw`p-4`}
+            onPress={() => {
+              setIsVisible(false);
+              playgroundHandler.handleOnPressWritePost();
+            }}>
+            <CustomText style={tw`text-white`}>글쓰기</CustomText>
+          </TouchableOpacity>
+        </View>
+      </Popover>
       {/* 로딩 중 */}
       {playgroundHandler.isFetchingPosts ? (
         <ActivityIndicator size="large" color={designatedColor.VIOLET} />

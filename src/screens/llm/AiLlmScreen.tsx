@@ -23,7 +23,7 @@ import SingsongsangsongIcon from '../../assets/svg/singsongsangsong.svg';
 import {SearchKeyboard} from '../../components';
 import useAiLlm from '../../hooks/useAiLlm';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {getRandomKeywords} from '../../utils';
+import {getRandomKeywords, logPageView} from '../../utils';
 import {ScrollView} from 'react-native-gesture-handler';
 import InfoIcon from '../../assets/svg/Info.svg';
 import {useFocusEffect} from '@react-navigation/native';
@@ -43,6 +43,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
     const randomIndex = Math.floor(Math.random() * 2); // 0 또는 1
     // console.log('randomIndex:', randomIndex);
     aiLlmHandler.setSelectedGif(randomIndex);
+    logPageView(props.route.name);
   }, []);
 
   // 여기는 키보드를 dismiss할 수 있는 특정 영역 (상단 배경)

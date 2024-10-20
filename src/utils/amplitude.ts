@@ -7,4 +7,8 @@ const logPageView = (name: string) => {
   amplitude.track(`${name}_page_view`);
 };
 
-export {logPageView};
+const logTrack = (name: string) => {
+  amplitude.track(name);
+};
+
+export {logPageView, logTrack};

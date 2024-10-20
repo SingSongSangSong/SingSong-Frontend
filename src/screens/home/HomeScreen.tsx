@@ -128,7 +128,10 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   const handleOnTagPress = useCallback(
     (tag: string) => {
-      amplitude.track('tag_button_click');
+      // amplitude.track('tag_button_click');
+      amplitude.track('tag_button_click', {
+        tag_name: tag,
+      });
       logButtonClick('tag_button_click');
       props.navigation.navigate(homeStackNavigations.RCD_DETAIL, {tag});
     },

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {logButtonClick, logRefresh} from '../utils';
+import {logButtonClick, logRefresh, logTrack} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {PlaygroundStackParamList} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -68,6 +68,7 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
     try {
       Keyboard.dismiss();
       await mutateAsync(); // 인자 없이 호출 가능
+      logTrack('post_write_complete_button_click');
     } catch (error) {
       console.log('Error occurred:', error);
     }

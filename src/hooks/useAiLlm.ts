@@ -3,6 +3,7 @@ import postRcdRecommendationLlm from '../api/recommendation/postRcdRecommendatio
 import {HomeStackParamList} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
+import {logTrack} from '../utils';
 
 type UseAiLlmProps = {
   navigation: StackNavigationProp<
@@ -23,6 +24,7 @@ const useAiLlm = ({navigation}: UseAiLlmProps) => {
     const tempData = await postRcdRecommendationLlm(sentence);
     // setSearchResult(tempData.data.songs);
     setIsLoading(false);
+    logTrack('ai_llm_search_button_click');
     navigation.navigate(homeStackNavigations.AI_LLM_RESULT, {
       resultSong: tempData.data.songs || [],
       character: selectedGif === 0 ? 'singsong' : 'sangsong',

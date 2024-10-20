@@ -15,6 +15,7 @@ import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
 import deletePosts from '../api/post/deletePosts';
 import usePostStore from '../store/usePostStore';
 import postBlacklist from '../api/comment/postBlacklist';
+import {logRefresh, logTrack} from '../utils';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -54,6 +55,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   const deletePostFromMemberId = usePostStore(
     state => state.deletePostFromMemberId,
   );
+  const [isRefreshLoading, setIsRefreshLoading] = useState<boolean>(false);
+  const [isEnded, setIsEnded] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyboardHide = () => {
@@ -116,7 +119,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
           position: 'bottom',
           visibilityTime: 2000,
         });
-        throw new Error('제목과 내용을 입력해주세요.');
+        // throw new Error('제목과 내용을 입력해주세요.');
+        return;
       }
       return postPostsComments(
         content,
@@ -292,7 +296,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       // console.log('postReComments: ', postReComments);
 
       // 마지막 커서 갱신
-      setLastCursor(tempPostCommentRecomment.data.lastCursor);
+      // setLastCursor(tempPostCommentRecomment.data.lastCursor);
     },
   });
 
@@ -330,7 +334,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     if (tempPostComment) {
       // console.log('refresh!!!');
       setPostComment(tempPostComment.postComments);
-      setLastCursor(tempPostComment.lastCursor);
+      setLastCursor(tempPostComment.lastCursor); //댓글 커서 갱신
+      // console.log('lastCursor:', tempPostComment.lastCursor);
       setCommentCount(tempPostComment.totalPostCommentCount);
     }
   }, [tempPostComment]);
@@ -347,6 +352,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     // setIgnoreNextDismiss(true); // 보내기 버튼을 눌렀으므로 키보드 dismiss 이벤트 무시
     await mutateAsync(content); // 여기서 postCommentId를 함께 전달
     // setIgnoreNextDismiss(false);
+    logTrack('post_comment_send_button_click');
     setIsRecomment(false); // 필요에 따라 isRecomment를 false로 설정
   };
 
@@ -358,7 +364,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   };
 
   const onPressPostLikeButton = async () => {
-    console.log('hi!!!');
+    // console.log('hi!!!');
     if (postDetailed && postDetailed.isLiked) {
       Toast.show({
         type: 'selectedToast',
@@ -368,10 +374,12 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       });
       return;
     }
+    logTrack('post_like_button_click');
     await mutateAsyncPostLike(route.params.postId);
   };
 
   const onPressCommentLikeButton = async (postCommentId: number) => {
+    logTrack('comment_like_button_click');
     await mutateAsyncCommentLike(postCommentId);
   };
 
@@ -384,6 +392,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   };
 
   const handleDeletePost = async () => {
+    logTrack('post_delete_button_click');
     await mutateAsyncDeletePost(route.params.postId);
   };
 
@@ -399,6 +408,45 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   const handleOnPressCommentBlacklist = async (memberId: number) => {
     await mutateAsyncCommentBlacklist(memberId);
+  };
+
+  const handleDownRefreshComments = async () => {
+    // console.log('lastCursor: ', lastCursor);
+    if (isRefreshLoading || isEnded) {
+      return;
+    }
+    try {
+      setIsRefreshLoading(true);
+      //20개 이상일 경우에만 api 호출
+      if (postComment && postComment.length >= 20) {
+        // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        logRefresh('down_post_Comments');
+        logTrack('down_post_Comments');
+        // console.log('pageId:', pageId);
+        getPostsComments(route.params.postId, lastCursor, 20)
+          // getSongsNew(lastCursor, 20)
+          .then(response => {
+            const commentData = response.data.postComments;
+            // console.log('newsongData:', response.data.songs);
+            // const newSongLst = updateRefreshSongs(initTag, songData);
+            if (commentData.length === 0) {
+              setIsEnded(true);
+            }
+            setPostComment(prev => [...(prev || []), ...commentData]);
+            setLastCursor(response.data.lastCursor);
+            setIsRefreshLoading(false);
+          })
+          .catch(error => {
+            console.error('Error post comment data:', error);
+            setIsRefreshLoading(false);
+          });
+      } else {
+        setIsRefreshLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching comment:', error);
+      setIsRefreshLoading(false);
+    }
   };
 
   return {
@@ -430,6 +478,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     handleDeletePost,
     handleOnPressCommentReport,
     handleOnPressCommentBlacklist,
+    isRefreshLoading,
+    handleDownRefreshComments,
   };
 };
 

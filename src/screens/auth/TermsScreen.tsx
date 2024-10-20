@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -19,6 +19,7 @@ import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import useTerms from '../../hooks/useTerms';
 import CustomText from '../../components/text/CustomText';
 import RadioGroup from 'react-native-radio-buttons-group';
+import {logPageView} from '../../utils';
 
 type TermsScreenProps = StackScreenProps<
   AppStackParamList,
@@ -31,6 +32,10 @@ function TermsScreen(props: TermsScreenProps) {
     // idToken: props.route.params.idToken,
     navigation: props.navigation,
   });
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   const {width, height} = useWindowDimensions(); // 화면의 너비와 높이를 가져옴
   const isLandscape = width > height;

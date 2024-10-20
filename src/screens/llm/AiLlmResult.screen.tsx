@@ -10,6 +10,7 @@ import CustomText from '../../components/text/CustomText';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
 import SingsongIcon from '../../assets/svg/singsong.svg';
 import SangsongIcon from '../../assets/svg/sangsong.svg';
+import {logPageView} from '../../utils';
 
 type AiLlmResultScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -47,6 +48,10 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
 
     return () => floatingAnimation.stop(); // 컴포넌트 언마운트 시 애니메이션 정지
   }, [translateY]);
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
 
   // ListHeaderComponent를 useMemo로 캐싱
   const renderHeader = useMemo(

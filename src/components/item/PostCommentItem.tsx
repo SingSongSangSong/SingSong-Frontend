@@ -6,7 +6,7 @@ import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
-import {formatDateComment} from '../../utils';
+import {formatDateComment, logTrack} from '../../utils';
 import CustomText from '../text/CustomText';
 import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
@@ -112,6 +112,7 @@ PostCommentItemProps) => {
     } else {
       onPressRecomment(postCommentId, lastCursor, 20);
       setIsPressedRecomment(true);
+      logTrack('open_recomment_button_click');
     }
   };
 
@@ -140,6 +141,7 @@ PostCommentItemProps) => {
   const handleOnPressWriteRecomment = () => {
     setIsRecomment(true);
     // inputRef.current?.focus(); // 키보드 포커싱
+    logTrack('write_recomment_button_click');
     setParentCommentId(postCommentId);
     onFocus(); // 포커싱 상태 요청
   };

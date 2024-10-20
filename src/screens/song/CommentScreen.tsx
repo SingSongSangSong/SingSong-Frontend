@@ -28,7 +28,7 @@ import {
 import ErrorIcon from '../../assets/svg/error.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
-import {logPageView} from '../../utils';
+import {logPageView, logTrack} from '../../utils';
 
 type CommentScreenProps =
   | StackScreenProps<
@@ -48,6 +48,7 @@ function CommentScreen(props: CommentScreenProps) {
   }, []);
 
   const handleOnPressRecomment = (comment: Comment) => {
+    logTrack('comment_recomment_button_click');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_COMMENT) {
         // KeepStack에서 왔을 때

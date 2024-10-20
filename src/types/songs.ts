@@ -112,6 +112,11 @@ interface RcdRefreshResponse {
   message: string;
 }
 
+interface RcdRefreshV2Response {
+  data: {nextPage: number; songs: Song[]};
+  message: string;
+}
+
 interface RcdSongResponse {
   data: RcdSong[];
   message: string;
@@ -314,4 +319,5 @@ export type {
   LlmSongResponse,
   NewSong,
   GetSongsNewResponse,
+  RcdRefreshV2Response,
 };

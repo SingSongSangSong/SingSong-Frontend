@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {
   View,
   TextInput,
@@ -13,6 +13,7 @@ import {PlaygroundStackParamList} from '../../types';
 import CustomText from '../../components/text/CustomText';
 import MusicIcon from '../../assets/svg/music.svg';
 import usePostWrite from '../../hooks/usePostWrite';
+import {logPageView} from '../../utils';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -24,6 +25,11 @@ type PostWriteScreenProps = StackScreenProps<
 function PostWriteScreen(props: PostWriteScreenProps) {
   const postWriteHandler = usePostWrite({navigation: props.navigation});
   // 네비게이션 옵션 설정
+
+  useEffect(() => {
+    logPageView(props.route.name);
+  }, []);
+
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (

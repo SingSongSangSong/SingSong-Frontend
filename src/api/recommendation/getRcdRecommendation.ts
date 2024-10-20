@@ -5,6 +5,7 @@ import axiosInstance from '../axiosIns';
 const getRcdRecommendation = async (pageId: number) => {
   try {
     // console.log('pageId for rcd recommendation song:', pageId);
+    console.log('pageId for rcd recommendation song:', pageId);
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetRcdRecommendationResponse>(

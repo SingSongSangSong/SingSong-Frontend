@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {logButtonClick, logRefresh} from '../utils';
+import {logButtonClick, logRefresh, logTrack} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {PlaygroundStackParamList, Post} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -27,15 +27,16 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   const [isLengthZero, setIsLengthZero] = useState<boolean>(false);
   const setPost = usePostStore(state => state.setPost);
   const size = 20;
+  const [isEnded, setIsEnded] = useState<boolean>(false);
 
   const {
     data: tempPosts,
     error: postsError,
     isFetching: isFetchingPosts,
-    // refetch: refetchPosts,
+    refetch: refetchPosts,
   } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts(lastCursor, size),
+    queryFn: () => getPosts(-1, size),
 
     staleTime: 0, // 1시간 동안 캐시 유지
     select: data => data.data,
@@ -44,7 +45,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   useEffect(() => {
     if (tempPosts) {
       if (tempPosts.posts.length == 0) {
-        console.log('length is zero');
+        // console.log('length is zero');
         setIsLengthZero(true);
       }
       setPosts(tempPosts.posts);
@@ -60,7 +61,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
       if (post.length == 0) {
         setIsLengthZero(true);
       }
-      console.log('post:', post);
+      // console.log('post:', post);
       setPosts(post);
     }
   }, [post]);
@@ -95,7 +96,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   const handleOnRefreshPosts = async () => {
     try {
       if (posts && posts.length < 200) {
-        const postData = await getPosts(-1, 20);
+        const postData = await getPosts(-1, size);
         setPosts(postData.data.posts);
         setLastCursor(postData.data.lastCursor);
       }
@@ -106,18 +107,24 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
   const handleDownRefreshPosts = async () => {
-    if (isLoading) {
+    // console.log('refresh!!');
+    if (isLoading || isEnded) {
       return;
     }
     try {
       setIsLoading(true);
       //20개 이상일 경우에만 api 호출
-      if (posts && posts.length >= 20 && posts.length < 200) {
+      if (posts && posts.length >= size) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('down_posts');
         getPosts(lastCursor, size)
           .then(response => {
             const postData = response.data.posts;
+            if (postData.length === 0) {
+              setIsEnded(true);
+              setIsLoading(false);
+              return;
+            }
             setPosts(prev => [...(prev || []), ...postData]);
             setLastCursor(response.data.lastCursor);
             setIsLoading(false);
@@ -130,14 +137,15 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error fetching songs:', error);
+      console.error('Error fetching posts:', error);
       setIsLoading(false);
     }
   };
 
   const handleOnPressWritePost = () => {
     setIsFetching(true);
-    console.log('write post');
+    // console.log('write post');
+    logTrack('write_post_button_click');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_WRITE);
   };
 
@@ -151,6 +159,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     commentCount: number,
   ) => {
     logButtonClick('post_detail');
+    logTrack('post_button_click');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_DETAIL, {
       postId,
       title,

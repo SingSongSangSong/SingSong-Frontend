@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import postRcdRefresh from '../api/recommendation/postRcdRefresh';
+// import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
 import {HomeStackParamList, Song} from '../types';
@@ -9,6 +9,7 @@ import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useKeepListStore from '../store/useKeepStore';
+import postRcdRefreshV2 from '../api/recommendation/postRcdRefreshV2';
 
 type UseSongProps = {
   initTag: string;
@@ -22,6 +23,7 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const setKeepList = useKeepListStore(state => state.setKeepList);
 
   //위로 당겨서 새로고침시 실행되는 함수
@@ -38,8 +40,9 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         // console.log('on refresh!!!!!!!!!!!!!!!!!!!');
-        const songData = await postRcdRefresh(initTag);
-        setSongLst(songData.data);
+        const songData = await postRcdRefreshV2(1, initTag);
+        setSongLst(songData.data.songs);
+        setPage(songData.data.nextPage);
         // setRefreshSongs(initTag, songData.data);
       }
     } catch (error) {
@@ -49,8 +52,9 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
 
   //초기 노래 리스트 세팅하는 함수
   const setInitSongs = async () => {
-    const initSongs = await postRcdRefresh(initTag);
-    setSongLst(initSongs.data);
+    const initSongs = await postRcdRefreshV2(1, initTag);
+    setSongLst(initSongs.data.songs);
+    setPage(initSongs.data.nextPage);
   };
 
   //밑으로 스크롤 시 데이터 추가로 불러오는 함수
@@ -64,11 +68,12 @@ const useSong = ({initTag, navigation}: UseSongProps) => {
       if (songLst && songLst.length >= 20 && songLst.length < 500) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('recommendation_down_songs');
-        postRcdRefresh(initTag)
+        postRcdRefreshV2(page, initTag)
           .then(response => {
             const songData = response.data;
             // const newSongLst = updateRefreshSongs(initTag, songData);
-            setSongLst(prev => [...(prev || []), ...songData]);
+            setSongLst(prev => [...(prev || []), ...songData.songs]);
+            setPage(songData.nextPage);
             setIsLoading(false);
           })
           .catch(error => {

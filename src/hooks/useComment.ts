@@ -6,6 +6,7 @@ import postCommentLike from '../api/comment/postCommentLike';
 import useCommentStore from '../store/useCommentStore';
 import postBlacklist from '../api/comment/postBlacklist';
 import Toast from 'react-native-toast-message';
+import {logTrack} from '../utils';
 
 const useComment = (songNumber: number, songId: number) => {
   // const [comments, setComments] = useState<Comment[]>();
@@ -53,6 +54,7 @@ const useComment = (songNumber: number, songId: number) => {
 
   //like 버튼 눌렀을 때
   const handleOnPressLikeButton = async (commentId: number) => {
+    logTrack('song_comment_like_button_click');
     await postCommentLike(String(commentId));
     updateLikesComment(commentId); //like 수 업데이트
     updateIsLikedComment(commentId, true); //like 상태 업데이트
@@ -60,6 +62,7 @@ const useComment = (songNumber: number, songId: number) => {
 
   //send 버튼 눌렀을 때
   const handleOnPressSendButton = async (content: string) => {
+    logTrack('song_comment_send_button_click');
     const tempComment = await postComment(content, false, 0, songId);
     addComment(tempComment.data); // 댓글 추가
   };

@@ -7,6 +7,7 @@ import postBlacklist from '../api/comment/postBlacklist';
 import getComment from '../api/comment/getComment';
 import Toast from 'react-native-toast-message';
 import {Alert} from 'react-native';
+import {logTrack} from '../utils';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,6 +56,7 @@ const useRecomment = (commentId: number) => {
 
   // 새 답글을 추가하는 함수
   const handleOnPressSendButton = async (content: string) => {
+    logTrack('song_recomment_send_button_click');
     const parentComment = comments.get(commentId);
     if (!parentComment) {
       return;
@@ -93,7 +95,6 @@ const useRecomment = (commentId: number) => {
     recommentId: number,
   ) => {
     //좋아요가 눌린 commentId 이용하여 업데이트
-
     await postCommentLike(String(recommentId));
 
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
@@ -104,7 +105,7 @@ const useRecomment = (commentId: number) => {
   const handleOnPressCommentLikeButton = async (commentId: number) => {
     //좋아요가 눌린 commentId 이용하여 업데이트
     await postCommentLike(String(commentId));
-
+    logTrack('song_recomment_like_button_click');
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
     updateIsLikedComment(commentId, true); // 좋아요 상태를 true로 설정
     updateLikesComment(commentId); // 좋아요 개수를 증가
