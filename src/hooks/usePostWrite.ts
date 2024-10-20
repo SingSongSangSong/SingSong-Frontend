@@ -86,6 +86,11 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
     );
   };
 
+  const handleOnPressClose = () => {
+    removeAllPostSong();
+    navigation.goBack();
+  };
+
   return {
     title,
     setTitle,
@@ -93,6 +98,7 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
     setContents,
     handleOnPressComplete,
     handleOnPressSongAddition,
+    handleOnPressClose,
   };
 };
 

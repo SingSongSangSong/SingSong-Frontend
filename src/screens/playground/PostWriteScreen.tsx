@@ -14,7 +14,8 @@ import CustomText from '../../components/text/CustomText';
 import MusicIcon from '../../assets/svg/music.svg';
 import usePostWrite from '../../hooks/usePostWrite';
 import {logPageView} from '../../utils';
-import {PostSongListModule} from '../../components';
+import {IconButton, PostSongListModule} from '../../components';
+import DeleteIcon from '../../assets/svg/delete.svg';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -33,6 +34,13 @@ function PostWriteScreen(props: PostWriteScreenProps) {
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
+      headerLeft: () => (
+        <IconButton
+          onPress={postWriteHandler.handleOnPressClose}
+          Icon={DeleteIcon}
+          size={28}
+        />
+      ),
       headerRight: () => (
         <TouchableOpacity onPress={postWriteHandler.handleOnPressComplete}>
           <CustomText style={tw`text-white mr-4`}>완료</CustomText>

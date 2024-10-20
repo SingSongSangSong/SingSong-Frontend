@@ -27,16 +27,8 @@ const SearchInputForPostSong = ({
   return (
     <View
       style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] p-3`}>
-      <TouchableOpacity
-        onPress={handleOnPressBack}
-        activeOpacity={0.8}
-        style={tw`pr-3`}>
-        {/* <Icon name="arrow-back" size={24} color="#FFFFFF" style={tw`mr-3`} /> */}
-        <ArrowLeftIcon width={28} height={28} />
-      </TouchableOpacity>
-
       <View
-        style={tw`flex-1 flex-row items-center bg-gray-600 rounded-lg px-3`}>
+        style={tw`flex-1 flex-row items-center rounded-lg px-3 border-b-[0.5px] border-[${designatedColor.WHITE}]`}>
         {Platform.OS === 'ios' ? (
           <SearchIcon width={20} height={20} style={tw`mr-3`} />
         ) : (

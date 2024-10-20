@@ -89,22 +89,8 @@ function PlaygroundStackNavigator({navigation}: PlaygroundStackNavigatorProps) {
       <Stack.Screen
         name={playgroundStackNavigations.PLAYGROUND_POST_WRITE}
         component={PostWriteScreen}
-        options={({navigation}) => ({
+        options={() => ({
           headerTitle: '글쓰기', // 헤더 제목을 비움
-          headerLeft: () => (
-            <IconButton
-              onPress={() => navigation.goBack()}
-              Icon={DeleteIcon}
-              size={28}
-            />
-          ),
-          //   headerRight: () => (
-          //     <NavButton
-          //       onPress={() => handleOnPress(navigation)}
-          //       title={'편집'}
-          //     />
-          //   ), // EditButton 컴포넌트를 전달
-          // headerLeft: () => null,
         })}
       />
       <Stack.Screen
