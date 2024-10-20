@@ -37,14 +37,14 @@ PostInSongItemProps) => {
   const removePostSong = usePostSongStore(state => state.removePostSong);
 
   const _handleOnPressKeepRemove = () => {
-    console.log('KeepRemove');
+    // console.log('KeepRemove');
     removePostSong(songId);
   };
 
   const handleOnPressRemove = () => {
     _handleOnPressKeepRemove();
   };
-  console.log('song', song);
+  // console.log('song', song);
 
   return (
     <View

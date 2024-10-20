@@ -13,7 +13,7 @@ const postPostsComments = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     // console.log(content, isRecomment, parentCommentId, songId);
-    console.log('content_hi~: ', content);
+    // console.log('content_hi~: ', content);
     const response = await axiosInstance.post<PostPostsCommentsResponse>(
       'v1/posts/comments',
       {
@@ -30,7 +30,7 @@ const postPostsComments = async (
         },
       },
     );
-    console.log('data for postPostsComments response', response.data);
+    // console.log('data for postPostsComments response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postPostsComments:', error);

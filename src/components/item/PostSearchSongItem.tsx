@@ -39,12 +39,12 @@ const PostSearchSongItem = ({
   const removePostSong = usePostSongStore(state => state.removePostSong);
 
   const _handleOnPressSearchSongAdd = () => {
-    console.log('SearchSongAdd');
+    // console.log('SearchSongAdd');
     addPostSong(song);
   };
 
   const _handleOnPressSearchSongRemove = () => {
-    console.log('SearchSongRemove');
+    // console.log('SearchSongRemove');
     removePostSong(songId);
   };
 

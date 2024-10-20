@@ -36,7 +36,7 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('focus');
+      // console.log('focus');
       if (playgroundHandler.isFetching) {
         playgroundHandler.focusOnRefresh();
       }
@@ -53,7 +53,7 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
           ref={iconRef}
           onPress={() => {
             setIsVisible(true);
-            console.log('more button clicked');
+            // console.log('more button clicked');
           }}
           style={tw`px-4`}
           activeOpacity={0.8}>

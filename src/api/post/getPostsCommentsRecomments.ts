@@ -8,9 +8,9 @@ const getPostsCommentsRecomments = async (
   size: number,
 ) => {
   try {
-    console.log('postCommentId for getPostsCommentsRecomments', postCommentId);
-    console.log('cursor for getPostsCommentsRecomments', cursor);
-    console.log('size for getPostsCommentsRecomments', size);
+    // console.log('postCommentId for getPostsCommentsRecomments', postCommentId);
+    // console.log('cursor for getPostsCommentsRecomments', cursor);
+    // console.log('size for getPostsCommentsRecomments', size);
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const params: {cursor?: number; size: number} = {size: size};
@@ -29,7 +29,7 @@ const getPostsCommentsRecomments = async (
           },
         },
       );
-    console.log('data for getPostsCommentsRecomments response', response.data);
+    // console.log('data for getPostsCommentsRecomments response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getPostsCommentsRecomments:', error);

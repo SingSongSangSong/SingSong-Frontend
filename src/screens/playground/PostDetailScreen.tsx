@@ -54,7 +54,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
           ref={iconRef}
           onPress={() => {
             setIsVisible(true);
-            console.log('more button clicked');
+            // console.log('more button clicked');
           }}
           style={tw`px-4`}>
           <MoreVerticalIcon width={20} height={20} />

@@ -8,9 +8,9 @@ const postPostsReport = async (
   subjectMemberId: number,
 ) => {
   try {
-    console.log('postId', postId);
-    console.log('reason', reason);
-    console.log('subjectMemberId', subjectMemberId);
+    // console.log('postId', postId);
+    // console.log('reason', reason);
+    // console.log('subjectMemberId', subjectMemberId);
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.post<DefaultResponse>(
@@ -26,7 +26,7 @@ const postPostsReport = async (
         },
       },
     );
-    console.log('data for postPostsReport response', response.data);
+    // console.log('data for postPostsReport response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching postPostsReport:', error);

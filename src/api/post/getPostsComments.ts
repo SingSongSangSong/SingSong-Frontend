@@ -10,9 +10,9 @@ const getPostsComments = async (
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log('postId: ', postId);
-    console.log('cursor: ', cursor);
-    console.log('size: ', size);
+    // console.log('postId: ', postId);
+    // console.log('cursor: ', cursor);
+    // console.log('size: ', size);
 
     const params: {postId: number; cursor?: number; size: number} = {
       postId: postId,
@@ -32,7 +32,7 @@ const getPostsComments = async (
         },
       },
     );
-    console.log('data for getPostsComments response', response.data);
+    // console.log('data for getPostsComments response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getPostsComments:', error);

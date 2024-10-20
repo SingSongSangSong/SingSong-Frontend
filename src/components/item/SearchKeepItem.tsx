@@ -54,12 +54,12 @@ SearchKeepItemProps) => {
   // };
 
   const _handleOnPressKeepAdd = () => {
-    console.log('KeepAdd');
+    // console.log('KeepAdd');
     addPostSong(song);
   };
 
   const _handleOnPressKeepRemove = () => {
-    console.log('KeepRemove');
+    // console.log('KeepRemove');
     removePostSong(songId);
   };
 
