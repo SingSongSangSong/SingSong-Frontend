@@ -16,6 +16,7 @@ import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import Toast from 'react-native-toast-message';
 
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -48,6 +49,15 @@ function SearchScreen(props: SearchScreenProps) {
   };
 
   const handleOnSubmit = async () => {
+    if (inputText.trim() == '') {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '검색어를 입력해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      return;
+    }
     setIsLoading(true);
     const currentDate = new Date().toISOString();
     addSearchRecent({recentText: inputText, date: currentDate});

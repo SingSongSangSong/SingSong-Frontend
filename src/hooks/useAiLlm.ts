@@ -22,24 +22,26 @@ const useAiLlm = ({navigation}: UseAiLlmProps) => {
   const [selectedGif, setSelectedGif] = useState<number>(0);
 
   const handleOnPressSearch = async (sentence: string) => {
-    setIsLoading(true);
-    logTrack('ai_llm_search_button_click');
-    await mutateAsync(sentence);
+    if (sentence.trim() === '') {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '내용을 입력해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      return;
+    } else {
+      setIsLoading(true);
+      logTrack('ai_llm_search_button_click');
+      await mutateAsync(sentence);
+    }
+
     // setSearchResult(tempData.data.songs);
     // setIsLoading(false);
   };
 
   const {mutateAsync} = useMutation({
     mutationFn: async (sentence: string) => {
-      if (!sampleText.trim()) {
-        Toast.show({
-          type: 'selectedToast',
-          text1: '내용을 입력해주세요.',
-          position: 'bottom',
-          visibilityTime: 2000,
-        });
-        throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
-      }
       return postRcdRecommendationLlm(sentence);
     },
     onError: (error: Error) => {
