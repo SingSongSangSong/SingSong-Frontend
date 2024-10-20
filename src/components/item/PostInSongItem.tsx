@@ -44,7 +44,7 @@ PostInSongItemProps) => {
   const handleOnPressRemove = () => {
     _handleOnPressKeepRemove();
   };
-  // console.log('song', song);
+  console.log('song', song);
 
   return (
     <View

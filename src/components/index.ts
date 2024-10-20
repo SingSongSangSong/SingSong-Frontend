@@ -95,3 +95,4 @@ export * from './list/PostSearchSongsList';
 export * from './item/PostInSongItem';
 export * from './list/PostInSongsList';
 export * from './module/post/PostSongListModule';
+export * from './item/SearchSongV2Item';

@@ -19,13 +19,12 @@ import {
   CommentKeyboard,
   CustomModal,
   PostCommentItem,
-  SearchSongItem,
+  SearchSongV2Item,
 } from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
 import {formatDateComment, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
-import useKeepListStore from '../../store/useKeepStore';
 
 type PostDetailScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -187,7 +186,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
         <View style={tw`mb-4`}>
           {postDetailHandler.postDetailed?.songs.map((item, index) => (
             <View key={index} style={tw`py-2`}>
-              <SearchSongItem
+              <SearchSongV2Item
                 songId={item.songId}
                 songNumber={item.songNumber}
                 songName={item.songName}
@@ -207,9 +206,18 @@ function PostDetailScreen(props: PostDetailScreenProps) {
             style={tw`flex-row items-center py-2 px-3 rounded-lg bg-[${designatedColor.GRAY5}]`}
             activeOpacity={0.9}
             onPress={postDetailHandler.onPressPostLikeButton}>
-            <LikeGrayIcon width={16} height={16} />
+            {postDetailHandler.postDetailed?.isLiked ? (
+              <LikeIcon width={16} height={16} />
+            ) : (
+              <LikeGrayIcon width={16} height={16} />
+            )}
+
             <CustomText
-              style={tw`text-[${designatedColor.GRAY1}] text-[12px] pl-1`}>
+              style={[
+                tw`text-[${designatedColor.GRAY1}] text-[12px] pl-1`,
+                postDetailHandler.postDetailed?.isLiked &&
+                  tw`text-[${designatedColor.PINK}]`,
+              ]}>
               좋아요
             </CustomText>
           </TouchableOpacity>
