@@ -4,6 +4,8 @@ import {HomeStackParamList} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {homeStackNavigations} from '../constants';
 import {logTrack} from '../utils';
+import {useMutation} from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
 type UseAiLlmProps = {
   navigation: StackNavigationProp<
@@ -21,15 +23,43 @@ const useAiLlm = ({navigation}: UseAiLlmProps) => {
 
   const handleOnPressSearch = async (sentence: string) => {
     setIsLoading(true);
-    const tempData = await postRcdRecommendationLlm(sentence);
-    // setSearchResult(tempData.data.songs);
-    setIsLoading(false);
     logTrack('ai_llm_search_button_click');
-    navigation.navigate(homeStackNavigations.AI_LLM_RESULT, {
-      resultSong: tempData.data.songs || [],
-      character: selectedGif === 0 ? 'singsong' : 'sangsong',
-    });
+    await mutateAsync(sentence);
+    // setSearchResult(tempData.data.songs);
+    // setIsLoading(false);
   };
+
+  const {mutateAsync} = useMutation({
+    mutationFn: async (sentence: string) => {
+      if (!sampleText.trim()) {
+        Toast.show({
+          type: 'selectedToast',
+          text1: '내용을 입력해주세요.',
+          position: 'bottom',
+          visibilityTime: 2000,
+        });
+        throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
+      }
+      return postRcdRecommendationLlm(sentence);
+    },
+    onError: (error: Error) => {
+      setIsLoading(false);
+      Toast.show({
+        type: 'selectedToast',
+        // text1: '에러가 발생했습니다.',
+        text1: error.message || '잠시 후 다시 시도해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: tempData => {
+      setIsLoading(false);
+      navigation.navigate(homeStackNavigations.AI_LLM_RESULT, {
+        resultSong: tempData.data.songs || [],
+        character: selectedGif === 0 ? 'singsong' : 'sangsong',
+      });
+    },
+  });
 
   return {
     isLoading,

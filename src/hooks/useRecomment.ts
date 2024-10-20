@@ -57,20 +57,28 @@ const useRecomment = (commentId: number) => {
   // 새 답글을 추가하는 함수
   const handleOnPressSendButton = async (content: string) => {
     logTrack('song_recomment_send_button_click');
-    const parentComment = comments.get(commentId);
-    if (!parentComment) {
-      return;
+    if (content.trim() == '') {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '답글을 입력해주세요.',
+        position: 'bottom',
+      });
+    } else {
+      const parentComment = comments.get(commentId);
+      if (!parentComment) {
+        return;
+      }
+
+      const tempRecomment = await postComment(
+        content,
+        true,
+        parentComment.commentId,
+        parentComment.songId,
+      );
+
+      // 답글을 스토어에 추가
+      addRecommentComment(commentId, tempRecomment.data);
     }
-
-    const tempRecomment = await postComment(
-      content,
-      true,
-      parentComment.commentId,
-      parentComment.songId,
-    );
-
-    // 답글을 스토어에 추가
-    addRecommentComment(commentId, tempRecomment.data);
   };
 
   const setInitRecomments = async () => {

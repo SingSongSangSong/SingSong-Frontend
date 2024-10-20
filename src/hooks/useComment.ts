@@ -63,8 +63,16 @@ const useComment = (songNumber: number, songId: number) => {
   //send 버튼 눌렀을 때
   const handleOnPressSendButton = async (content: string) => {
     logTrack('song_comment_send_button_click');
-    const tempComment = await postComment(content, false, 0, songId);
-    addComment(tempComment.data); // 댓글 추가
+    if (content.trim() === '') {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '댓글을 입력해주세요.',
+        position: 'bottom',
+      });
+    } else {
+      const tempComment = await postComment(content, false, 0, songId);
+      addComment(tempComment.data); // 댓글 추가
+    }
   };
 
   //더보기 버튼 눌렀을 때
