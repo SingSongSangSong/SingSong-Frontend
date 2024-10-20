@@ -98,6 +98,7 @@ type PlaygroundStackParamList = {
     reportCommentId: number;
     reportCommentSubjectMemberId: number;
   };
+  [playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION]: undefined;
 };
 
 export type {

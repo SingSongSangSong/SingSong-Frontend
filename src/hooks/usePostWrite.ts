@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message';
 import postPosts from '../api/post/postPosts';
 import {useMutation} from '@tanstack/react-query';
 import {Keyboard} from 'react-native';
+import usePostSongStore from '../store/usePostSongStore';
 
 type UsePostWriteProps = {
   navigation: StackNavigationProp<
@@ -19,7 +20,9 @@ type UsePostWriteProps = {
 const usePostWrite = ({navigation}: UsePostWriteProps) => {
   const [title, setTitle] = useState<string>('');
   const [contents, setContents] = useState<string>('');
-  const [songIds, setSongIds] = useState<number[]>([]);
+  const getPostSongId = usePostSongStore(state => state.getPostSongId);
+  const removeAllPostSong = usePostSongStore(state => state.removeAllPostSong);
+  // const [songIds, setSongIds] = useState<number[]>([]);
 
   const {mutateAsync, isLoading} = useMutation({
     mutationFn: async () => {
@@ -32,6 +35,7 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
         });
         throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
       }
+      const songIds = getPostSongId();
       return postPosts(contents, songIds, title);
     },
     onError: (error: Error) => {
@@ -44,6 +48,7 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
       });
     },
     onSuccess: () => {
+      removeAllPostSong();
       Toast.show({
         type: 'selectedToast',
         text1: '성공적으로 등록되었습니다.',
@@ -74,12 +79,20 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
     }
   };
 
+  const handleOnPressSongAddition = () => {
+    logButtonClick('post_write_song_addition_button_click');
+    navigation.navigate(
+      playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION,
+    );
+  };
+
   return {
     title,
     setTitle,
     contents,
     setContents,
     handleOnPressComplete,
+    handleOnPressSongAddition,
   };
 };
 

@@ -20,6 +20,7 @@ import CustomText from '../../components/text/CustomText';
 import tw from 'twrnc';
 import PostReportScreen from '../../screens/playground/PostReportScreen';
 import CommentReportScreen from '../../screens/playground/CommentReportScreen';
+import PostSongAdditionScreen from '../../screens/playground/PostSongAdditionScreen';
 
 const Stack = createStackNavigator<PlaygroundStackParamList>();
 
@@ -132,6 +133,14 @@ function PlaygroundStackNavigator({navigation}: PlaygroundStackNavigatorProps) {
           //     />
           //   ), // EditButton 컴포넌트를 전달
           // headerLeft: () => null,
+        })}
+      />
+      <Stack.Screen
+        name={playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION}
+        component={PostSongAdditionScreen}
+        options={({navigation}) => ({
+          headerTitle: '곡 추가', // 헤더 제목을 비움
+          // headerLeft: ()null,
         })}
       />
     </Stack.Navigator>

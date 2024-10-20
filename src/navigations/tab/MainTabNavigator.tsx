@@ -74,7 +74,10 @@ const MainTabNavigator = () => {
             routeName === playgroundStackNavigations.PLAYGROUND_POST_WRITE ||
             routeName === playgroundStackNavigations.PLAYGROUND_POST_DETAIL ||
             routeName === playgroundStackNavigations.PLAYGROUND_POST_REPORT ||
-            routeName === playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT
+            routeName ===
+              playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT ||
+            routeName ===
+              playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION
           ) {
             return true;
           }

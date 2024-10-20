@@ -14,6 +14,7 @@ import CustomText from '../../components/text/CustomText';
 import MusicIcon from '../../assets/svg/music.svg';
 import usePostWrite from '../../hooks/usePostWrite';
 import {logPageView} from '../../utils';
+import {PostSongListModule} from '../../components';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -56,18 +57,26 @@ function PostWriteScreen(props: PostWriteScreenProps) {
           onChangeText={postWriteHandler.setTitle}
         />
         <TextInput
-          style={[tw`text-white pb-2 mb-4 text-[14px]`]}
+          style={[
+            tw`text-white pb-2 mb-10 text-[14px]`,
+            {minHeight: 150, textAlignVertical: 'top'},
+          ]}
           placeholder="내용을 입력해보세요."
           placeholderTextColor="gray"
           value={postWriteHandler.contents}
           onChangeText={postWriteHandler.setContents}
           multiline
         />
+        <PostSongListModule
+          onPressSongAddition={postWriteHandler.handleOnPressSongAddition}
+        />
       </ScrollView>
 
       <View
-        style={tw`flex-row justify-evenly p-3 border border-t-[${designatedColor.GRAY5}] absolute bottom-0 w-full bg-[${designatedColor.BACKGROUND_BLACK}] justify-start`}>
-        <TouchableOpacity style={tw`flex-row items-center`}>
+        style={tw`flex-row justify-evenly border border-t-[${designatedColor.GRAY5}] absolute bottom-0 w-full bg-[${designatedColor.BACKGROUND_BLACK}] justify-start`}>
+        <TouchableOpacity
+          style={tw`flex-row p-3 items-center`}
+          onPress={postWriteHandler.handleOnPressSongAddition}>
           <MusicIcon width={20} height={20} />
           <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-2`}>
             플레이리스트 추가
