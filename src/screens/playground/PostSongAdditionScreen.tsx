@@ -21,6 +21,7 @@ import {
   SearchKeep,
   SearchResultForPostSong,
 } from '../../components';
+import Toast from 'react-native-toast-message';
 
 // const screenHeight = Dimensions.get('window').height;
 
@@ -116,6 +117,15 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
   const handleOnSubmit = async () => {
     setIsLoading(true);
     const currentDate = new Date().toISOString();
+    if (inputText.trim() == '') {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '검색어를 입력해주세요.',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+      return;
+    }
     addSearchRecent({recentText: inputText, date: currentDate});
     const tempSearchData = await getSearch(inputText);
     setSearchData(tempSearchData.data);

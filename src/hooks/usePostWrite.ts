@@ -33,7 +33,8 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
           position: 'bottom',
           visibilityTime: 2000,
         });
-        throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
+        return;
+        // throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
       }
       const songIds = getPostSongId();
       return postPosts(contents, songIds, title);
