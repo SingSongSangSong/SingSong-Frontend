@@ -6,7 +6,7 @@ const postPosts = async (content: string, songIds: number[], title: string) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log(content, songIds, title);
+    // console.log(content, songIds, title);
     const response = await axiosInstance.post<PostPostsResponse>(
       'v1/posts',
       {

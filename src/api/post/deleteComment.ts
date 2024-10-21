@@ -16,7 +16,7 @@ const deleteComment = async (commentId: number) => {
         //   data: {songIds: songNumbers},
       },
     );
-    console.log('data for deleteComment response', response.data);
+    // console.log('data for deleteComment response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching deleteComment:', error);

@@ -1,11 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {Comment} from '../../types';
 import {IconButton} from '../button/IconButton';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import RecommentIcon from '../../assets/svg/recomment.svg';
-import ArrowRecommentIcon from '../../assets/svg/arrowRecomment.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
@@ -57,7 +56,8 @@ const RecommentItem = ({
   };
 
   return (
-    <View style={tw`w-full flex-row`}>
+    <View
+      style={tw`w-full flex-row border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {/* <View style={tw`mt-2`}>
         <ArrowRecommentIcon width={16} height={16} />
       </View> */}

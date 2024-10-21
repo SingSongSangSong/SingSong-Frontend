@@ -56,7 +56,8 @@ const CommentItem = ({
     }
   };
   return (
-    <View style={tw`w-full`}>
+    <View
+      style={tw`w-full border-b-[0.5px] border-[${designatedColor.GRAY5}] py-2`}>
       <View
         style={tw`flex-row justify-between mb-2 items-center 
         `}>
@@ -77,7 +78,7 @@ const CommentItem = ({
         <CustomText style={tw`text-white ml-4`}>{content}</CustomText>
       </View>
 
-      <View style={tw`justify-between flex-row my-2 items-center`}>
+      <View style={tw`justify-start flex-row my-1 items-center`}>
         <TouchableOpacity
           onPress={handleOnPressLikeButton}
           style={tw`flex-row items-center`}
@@ -101,30 +102,25 @@ const CommentItem = ({
             {likes}
           </CustomText>
         </TouchableOpacity>
+        {isVisibleRecomment && recommentCount == 0 && (
+          <TouchableOpacity
+            onPress={onPressRecomment}
+            style={tw`flex-row items-center ml-1 py-0.5 px-2`}
+            activeOpacity={0.8}>
+            <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
+              답글 달기
+            </CustomText>
+          </TouchableOpacity>
+        )}
       </View>
-      {isVisibleRecomment && (
+      {isVisibleRecomment && recommentCount > 0 && (
         <TouchableOpacity
           onPress={onPressRecomment}
-          style={tw`flex-row items-center mx-2 py-1 px-2`}
+          style={tw`flex-row items-center mx-2 mb-2 px-2`}
           activeOpacity={0.8}>
-          {/* <IconButton
-            Icon={RecommentIcon}
-            size={20}
-            onPress={onPressRecomment}
-          /> */}
-          {recommentCount > 0 ? (
-            <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
-              답글 {recommentCount}개 모두 보기
-            </CustomText>
-          ) : (
-            <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
-              답글
-            </CustomText>
-          )}
-
-          <TouchableOpacity onPress={onPressRecomment} />
-
-          {/* <Text style={tw`text-[${designatedColor.GRAY1}]`}>답글 보기</Text> */}
+          <CustomText style={tw`text-[${designatedColor.VIOLET2}]`}>
+            답글 {recommentCount}개 모두 보기
+          </CustomText>
         </TouchableOpacity>
       )}
     </View>

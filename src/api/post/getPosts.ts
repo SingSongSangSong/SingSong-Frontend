@@ -18,7 +18,7 @@ const getPosts = async (cursor: number, size: number) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('data for getPosts response', response.data);
+    // console.log('data for getPosts response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getPosts:', error);

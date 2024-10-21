@@ -29,7 +29,7 @@ const Commentlist = ({
   // console.log('commentArray', commentArray);
 
   const renderItem = ({item}: {item: Comment}) => (
-    <View style={tw`px-2 py-2`}>
+    <View style={tw`px-2`}>
       <CommentItem
         commentId={item.commentId}
         content={item.content}

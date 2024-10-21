@@ -16,7 +16,7 @@ const deletePosts = async (postId: number) => {
         //   data: {songIds: songNumbers},
       },
     );
-    console.log('data for deleteKeep response', response.data);
+    // console.log('data for deleteKeep response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching deletePosts:', error);
