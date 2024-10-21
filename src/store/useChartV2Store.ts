@@ -71,6 +71,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
         isLive: false,
         songNumber: 0,
         album: '',
+        melonLink: '',
       } as ChartSong);
     }
 
@@ -113,6 +114,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
           isLive: false,
           songNumber: 0,
           album: '',
+          melonLink: '',
         } as ChartSong);
       }
 
@@ -160,7 +162,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
       const chartsForSelected =
         state.charts[userGender]?.[state.userAgeGroup] || [];
       set({
-        userGender,
+        userGender: userGender,
         selectedGender: userGender,
         selectedCharts: chartsForSelected,
       });
@@ -173,7 +175,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
       const chartsForSelected =
         state.charts[state.userGender]?.[userAgeGroup] || [];
       set({
-        userAgeGroup,
+        userAgeGroup: userAgeGroup,
         selectedAgeGroup: userAgeGroup,
         selectedCharts: chartsForSelected,
       });
@@ -186,7 +188,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
       const chartsForSelected =
         state.charts[selectedGender]?.[state.selectedAgeGroup] || [];
       set({
-        selectedGender,
+        selectedGender: selectedGender,
         selectedCharts: chartsForSelected,
       });
     }
@@ -198,7 +200,7 @@ const useChartV2Store = create<ChartV2State>((set, get) => ({
       const chartsForSelected =
         state.charts[state.selectedGender]?.[selectedAgeGroup] || [];
       set({
-        selectedAgeGroup,
+        selectedAgeGroup: selectedAgeGroup,
         selectedCharts: chartsForSelected,
       });
     }
