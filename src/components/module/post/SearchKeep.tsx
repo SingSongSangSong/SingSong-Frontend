@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
-import {designatedColor} from '../../../constants';
-import useSearchRecentStore from '../../../store/useSearchRecentStore';
-import CustomText from '../../text/CustomText';
 import {SearchKeepList} from '../..';
 import useKeepListStore from '../../../store/useKeepStore';
 import getKeep from '../../../api/keep/getKeep';
 
-interface SearchKeepProps {
-  onPressRecent: (searchText: string) => void;
-}
+// interface SearchKeepProps {
+//   onPressRecent: (searchText: string) => void;
+// }
 
-const SearchKeep = ({onPressRecent}: SearchKeepProps) => {
+const SearchKeep = () => {
   const keepList = useKeepListStore(state => state.keepList);
   const setKeepList = useKeepListStore(state => state.setKeepList);
   const [isKeepLoading, setIsKeepLoading] = useState<boolean>(false);

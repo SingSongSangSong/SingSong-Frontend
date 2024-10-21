@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
@@ -9,6 +9,7 @@ import {Song} from '../../types';
 import CheckCircleIcon from '../../assets/svg/checkCircle.svg';
 import PlusCircleIcon from '../../assets/svg/plusCircle.svg';
 import usePostSongStore from '../../store/usePostSongStore';
+import {logTrack} from '../../utils';
 
 interface PostSearchSongItemProps {
   song: Song;
@@ -35,16 +36,19 @@ const PostSearchSongItem = ({
   isLive = false,
 }: PostSearchSongItemProps) => {
   const [isPressed, setIsPressed] = useState(false);
+  const postSong = usePostSongStore(state => state.postSong);
   const addPostSong = usePostSongStore(state => state.addPostSong);
   const removePostSong = usePostSongStore(state => state.removePostSong);
 
   const _handleOnPressSearchSongAdd = () => {
     // console.log('SearchSongAdd');
+    logTrack('post_song_search_add_button_click');
     addPostSong(song);
   };
 
   const _handleOnPressSearchSongRemove = () => {
     // console.log('SearchSongRemove');
+    logTrack('post_song_search_remove_button_click');
     removePostSong(songId);
   };
 
@@ -56,9 +60,12 @@ const PostSearchSongItem = ({
       setIsPressed(!isPressed);
       _handleOnPressSearchSongAdd();
     }
-
-    // onSongAddPress();
   };
+
+  useEffect(() => {
+    const isSongInPost = postSong.some(song => song.songId === songId);
+    setIsPressed(isSongInPost);
+  }, [postSong, songId]);
 
   return (
     <View

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
@@ -9,6 +9,7 @@ import CheckCircleIcon from '../../assets/svg/checkCircle.svg';
 import PlusCircleIcon from '../../assets/svg/plusCircle.svg';
 import usePostSongStore from '../../store/usePostSongStore';
 import {Song} from '../../types';
+import {logTrack} from '../../utils';
 
 interface SearchKeepItemProps {
   song: Song;
@@ -36,30 +37,19 @@ const SearchKeepItem = ({
 }: // onSongAddPress,
 SearchKeepItemProps) => {
   const [isPressed, setIsPressed] = useState(false);
+  const postSong = usePostSongStore(state => state.postSong);
   const addPostSong = usePostSongStore(state => state.addPostSong);
   const removePostSong = usePostSongStore(state => state.removePostSong);
 
-  // 포커스가 돌아올 때마다 isPressed 초기화
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setIsPressed(false);
-  //   }, []),
-  // );
-
-  // const handleOnPress = () => {
-  //   if (!isPressed) {
-  //     setIsPressed(true);
-  //     //   onSongPress();
-  //   }
-  // };
-
   const _handleOnPressKeepAdd = () => {
     // console.log('KeepAdd');
+    logTrack('post_song_keep_add_button_click');
     addPostSong(song);
   };
 
   const _handleOnPressKeepRemove = () => {
     // console.log('KeepRemove');
+    logTrack('post_song_keep_remove_button_click');
     removePostSong(songId);
   };
 
@@ -74,6 +64,10 @@ SearchKeepItemProps) => {
 
     // onSongAddPress();
   };
+  useEffect(() => {
+    const isSongInPost = postSong.some(song => song.songId === songId);
+    setIsPressed(isSongInPost);
+  }, [postSong, songId]);
 
   return (
     <View
@@ -81,17 +75,6 @@ SearchKeepItemProps) => {
       <View style={tw`flex-row flex-1`}>
         <View style={tw`items-center justify-center w-[12] h-[12]`}>
           {album == '' ? (
-            // <View
-            //   style={[
-            //     {
-            //       backgroundColor: 'rgba(0, 0, 0, 1)',
-            //       width: 54,
-            //       height: 54,
-            //     },
-            //     tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY3}]`,
-            //   ]}>
-            //   <MusicIcon width={16} height={16} />
-            // </View>
             <View
               style={tw`flex-1 w-full h-full bg-[${designatedColor.BLACK}] rounded-sm justify-center items-center`}>
               <WhiteLogoIcon width={43.2} height={30.4} />
@@ -109,28 +92,6 @@ SearchKeepItemProps) => {
               />
             </TouchableOpacity>
           )}
-          {/* <View
-                style={[
-                  {
-                    backgroundColor: 'rgba(0, 0, 0, 1)',
-                    width: 54,
-                    height: 54,
-                  },
-                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
-                ]}>
-                <WhiteLogoIcon width={54} height={38} />
-              </View> */}
-          {/* <View
-                style={[
-                  {
-                    backgroundColor: 'rgba(0, 0, 0, 1)',
-                    width: 54,
-                    height: 54,
-                  },
-                  tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
-                ]}>
-                <WhiteLogoIcon width={54} height={38} />
-              </View> */}
         </View>
 
         <View style={tw`flex-1 h-full ml-4 mr-2`}>

@@ -12,7 +12,7 @@ import tw from 'twrnc';
 import {StackScreenProps} from '@react-navigation/stack';
 import {GetSearchSong, PlaygroundStackParamList} from '../../types';
 import CustomText from '../../components/text/CustomText';
-import {logButtonClick, logPageView, logTrack} from '../../utils';
+import {logPageView, logTrack} from '../../utils';
 import usePostSongAddition from '../../hooks/usePostSongAddition';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import getSearch from '../../api/search/getSearch';
@@ -107,12 +107,12 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
     props.navigation.goBack();
   };
 
-  const handleOnPressKeep = (searchText: string) => {
-    logTrack('post_write_keep_addition_button_click');
-    logButtonClick('post_write_keep_addition_button_click');
-    setInputText(searchText);
-    inputRef.current?.focus();
-  };
+  // const handleOnPressKeep = (searchText: string) => {
+  //   logTrack('post_write_keep_addition_button_click');
+  //   logButtonClick('post_write_keep_addition_button_click');
+  //   setInputText(searchText);
+  //   inputRef.current?.focus();
+  // };
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
@@ -131,7 +131,7 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
     setSearchData(tempSearchData.data);
     setIsLoading(false);
     setShowSearchResult(true); // 검색을 실행하면 검색 결과를 표시
-    logTrack('post_write_song_search_button_click');
+    logTrack('post_write_search_button_click');
   };
 
   const handleInputFocus = () => {
@@ -154,7 +154,7 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
       />
       {inputText === '' ? (
         <View style={tw`flex-1 w-full`}>
-          <SearchKeep onPressRecent={handleOnPressKeep} />
+          <SearchKeep />
         </View>
       ) : (
         <>
