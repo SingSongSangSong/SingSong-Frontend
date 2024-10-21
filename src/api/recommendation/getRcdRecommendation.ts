@@ -9,7 +9,7 @@ const getRcdRecommendation = async (pageId: number) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetRcdRecommendationResponse>(
-      `v1/recommend/recommendation/${pageId}`,
+      `v2/recommend/recommendation/${pageId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
