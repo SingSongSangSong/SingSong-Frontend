@@ -107,9 +107,9 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
     props.navigation.goBack();
   };
 
-  const handleOnPressRecent = (searchText: string) => {
-    logTrack('recent_search_button_click');
-    logButtonClick('recent_search_button_click');
+  const handleOnPressKeep = (searchText: string) => {
+    logTrack('post_write_keep_addition_button_click');
+    logButtonClick('post_write_keep_addition_button_click');
     setInputText(searchText);
     inputRef.current?.focus();
   };
@@ -131,6 +131,7 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
     setSearchData(tempSearchData.data);
     setIsLoading(false);
     setShowSearchResult(true); // 검색을 실행하면 검색 결과를 표시
+    logTrack('post_write_song_search_button_click');
   };
 
   const handleInputFocus = () => {
@@ -153,7 +154,7 @@ function PostSongAdditionScreen(props: PostSongAdditionScreenProps) {
       />
       {inputText === '' ? (
         <View style={tw`flex-1 w-full`}>
-          <SearchKeep onPressRecent={handleOnPressRecent} />
+          <SearchKeep onPressRecent={handleOnPressKeep} />
         </View>
       ) : (
         <>

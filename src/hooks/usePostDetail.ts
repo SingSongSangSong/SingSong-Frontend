@@ -381,7 +381,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   };
 
   const onPressCommentLikeButton = async (postCommentId: number) => {
-    logTrack('comment_like_button_click');
+    logTrack('post_comment_like_button_click');
     await mutateAsyncCommentLike(postCommentId);
   };
 
@@ -422,8 +422,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
       //20개 이상일 경우에만 api 호출
       if (postComment && postComment.length >= 20) {
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
-        logRefresh('down_post_Comments');
-        logTrack('down_post_Comments');
+        logRefresh('down_post_comments');
+        logTrack('down_post_comments');
         // console.log('pageId:', pageId);
         getPostsComments(route.params.postId, lastCursor, 20)
           // getSongsNew(lastCursor, 20)

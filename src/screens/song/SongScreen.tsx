@@ -15,7 +15,7 @@ import {
   SongReview,
 } from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
-import {logButtonClick, logPageView} from '../../utils';
+import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -46,6 +46,7 @@ function SongScreen(props: SongScreenProps) {
   }, []);
 
   const _onPressComment = (songNumber: number, songId: number) => {
+    logTrack('song_comment_button_click');
     if ('navigate' in props.navigation) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (

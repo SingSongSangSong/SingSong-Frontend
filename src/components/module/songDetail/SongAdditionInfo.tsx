@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import {SongInfo} from '../../../types';

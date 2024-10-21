@@ -14,7 +14,7 @@ import {
 import {SearchInput, SearchRecent, SearchResult} from '../../components';
 import getSearch from '../../api/search/getSearch';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
-import {logButtonClick, logPageView} from '../../utils';
+import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import Toast from 'react-native-toast-message';
 
@@ -64,6 +64,7 @@ function SearchScreen(props: SearchScreenProps) {
     const tempSearchData = await getSearch(inputText);
     setSearchData(tempSearchData.data);
     setIsLoading(false);
+    logTrack('search_submit_button_click');
     setShowSearchResult(true); // 검색을 실행하면 검색 결과를 표시
   };
 

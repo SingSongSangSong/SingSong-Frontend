@@ -11,6 +11,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList} from '../types';
 import GuestStore from '../store/GuestStore';
 import postMemberLoginV2 from '../api/member/postMemberLoginV2';
+import {logTrack} from '../utils';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<
@@ -62,8 +63,10 @@ const useLogin = ({navigation}: UseLoginProps) => {
       setIsLoggedProcess(false);
       if (tempData.data.isInfoRequired) {
         navigation.replace(appStackNavigations.TERMS);
+        logTrack('kakao_login_button_click');
       } else {
         navigation.replace(appStackNavigations.MAIN);
+        logTrack('kakao_login_button_click');
       }
     } catch (err) {
       console.error('Login Failed', err);
@@ -136,8 +139,10 @@ const useLogin = ({navigation}: UseLoginProps) => {
       setIsLoggedProcess(false);
       if (tempData.data.isInfoRequired) {
         navigation.replace(appStackNavigations.TERMS);
+        logTrack('apple_login_button_click');
       } else {
         navigation.replace(appStackNavigations.MAIN);
+        logTrack('apple_login_button_click');
       }
       // navigation.replace(appStackNavigations.TERMS, {
       //   provider: 'APPLE_KEY',
@@ -195,6 +200,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
     setIsLoggedProcess(false);
+    logTrack('guest_login_button_click');
     navigation.replace(appStackNavigations.MAIN);
   };
 

@@ -62,8 +62,8 @@ const useAiLlmResult = ({
   };
 
   const handleOnKeepAddPress = async (songId: number) => {
-    amplitude.track('recommendation_keep_button_click');
-    logButtonClick('recommendation_keep_button_click');
+    amplitude.track('llm_keep_button_click');
+    logButtonClick('llm_keep_button_click');
     const tempKeepList = await postKeep([songId]);
     setKeepList(tempKeepList.data);
     Toast.show({

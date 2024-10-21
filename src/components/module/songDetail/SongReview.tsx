@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import tw from 'twrnc';
 import getSongsReviews from '../../../api/songs/getSongsReviews';
 import deleteSongsReviews from '../../../api/songs/deleteSongsReviews';

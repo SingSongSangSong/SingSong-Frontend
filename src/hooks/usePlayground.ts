@@ -1,12 +1,10 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {logButtonClick, logRefresh, logTrack} from '../utils';
-import * as amplitude from '@amplitude/analytics-react-native';
 import {PlaygroundStackParamList, Post} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {playgroundStackNavigations} from '../constants';
 import {useQuery} from '@tanstack/react-query';
 import getPosts from '../api/post/getPosts';
-import {useFocusEffect} from '@react-navigation/native';
 import usePostStore from '../store/usePostStore';
 
 type UsePlaygroundProps = {

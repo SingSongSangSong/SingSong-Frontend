@@ -25,7 +25,7 @@ import CustomText from '../../components/text/CustomText';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import GuestStore from '../../store/GuestStore';
 import TokenStore from '../../store/TokenStore';
-import {logPageView} from '../../utils';
+import {logPageView, logTrack} from '../../utils';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -54,6 +54,7 @@ function SettingScreen(props: SettingScreenProps) {
 
   const handleLogoutButton = async () => {
     await settingHandler.handleKakaoLogout();
+    logTrack('logout');
     props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -64,6 +65,7 @@ function SettingScreen(props: SettingScreenProps) {
 
   const handleWithdrawButton = async () => {
     await settingHandler.handleWithdraw();
+    logTrack('withdraw');
     props.navigation.dispatch(
       CommonActions.reset({
         index: 0,

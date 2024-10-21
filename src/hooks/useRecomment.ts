@@ -1,12 +1,10 @@
 import {useState} from 'react';
-// import {useKeyboard} from '@react-native-community/hooks';
 import postComment from '../api/comment/postComment';
 import postCommentLike from '../api/comment/postCommentLike';
 import useCommentStore from '../store/useCommentStore';
 import postBlacklist from '../api/comment/postBlacklist';
 import getComment from '../api/comment/getComment';
 import Toast from 'react-native-toast-message';
-import {Alert} from 'react-native';
 import {logTrack} from '../utils';
 
 const useRecomment = (commentId: number) => {
@@ -104,6 +102,7 @@ const useRecomment = (commentId: number) => {
   ) => {
     //좋아요가 눌린 commentId 이용하여 업데이트
     await postCommentLike(String(recommentId));
+    logTrack('song_recomment_like_button_click');
 
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
     updateIsLikedRecomment(commentId, recommentId, true); // 좋아요 상태를 true로 설정
@@ -113,7 +112,7 @@ const useRecomment = (commentId: number) => {
   const handleOnPressCommentLikeButton = async (commentId: number) => {
     //좋아요가 눌린 commentId 이용하여 업데이트
     await postCommentLike(String(commentId));
-    logTrack('song_recomment_like_button_click');
+    logTrack('song_comment_like_button_click');
     // 해당 댓글이 답글인지, 원 댓글인지 확인하고 상태 업데이트
     updateIsLikedComment(commentId, true); // 좋아요 상태를 true로 설정
     updateLikesComment(commentId); // 좋아요 개수를 증가
@@ -148,23 +147,6 @@ const useRecomment = (commentId: number) => {
       position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
       visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
     });
-
-    // Alert.alert(
-    //   '차단',
-    //   '사용자를 차단하면 이 사용자의 댓글과 활동이 숨겨집니다. 차단하시겠습니까?',
-    //   [
-    //     {text: '취소', onPress: () => {}, style: 'cancel'},
-    //     {
-    //       text: '확인',
-    //       onPress: () => {},
-    //       style: 'destructive',
-    //     },
-    //   ],
-    //   {
-    //     cancelable: true,
-    //     onDismiss: () => {},
-    //   },
-    // );
   };
 
   return {

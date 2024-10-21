@@ -76,8 +76,8 @@ const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {
   };
 
   const handleOnKeepAddPress = async (songId: number) => {
-    amplitude.track('recommendation_keep_button_click');
-    logButtonClick('recommendation_keep_button_click');
+    amplitude.track('related_song_keep_button_click');
+    logButtonClick('related_song_keep_button_click');
     const tempKeepList = await postKeep([songId]);
     setKeepList(tempKeepList.data);
     Toast.show({

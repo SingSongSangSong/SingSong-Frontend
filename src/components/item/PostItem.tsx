@@ -1,15 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import tw from 'twrnc';
-import {Comment} from '../../types';
-import {IconButton} from '../button/IconButton';
-import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import CommentIcon from '../../assets/svg/commentGray.svg';
-import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import {formatDateComment} from '../../utils';
 import CustomText from '../text/CustomText';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface PostItemProps {
   postId: number;
@@ -36,10 +33,19 @@ const PostItem = ({
   // const [likeCount, setLikeCount] = useState(likes);
 
   return (
+    // <TouchableOpacity
+    //   onPress={onPressPost}
+    //   style={tw`w-full px-4 py-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}
+    //   activeOpacity={0.8}>
     <TouchableOpacity
       onPress={onPressPost}
-      style={tw`w-full px-4 py-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`}
-      activeOpacity={1.0}>
+      style={[
+        tw`w-full px-4 py-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
+        // {position: 'absolute'},
+      ]}
+      activeOpacity={0.8}
+      // hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} // 이 부분 추가
+    >
       <View
         style={tw`flex-row justify-between mb-2 items-center 
         `}>
@@ -47,10 +53,6 @@ const PostItem = ({
           <CustomText style={tw`text-white font-bold text-[16px]`}>
             {title}
           </CustomText>
-          {/* <CustomText
-            style={tw`text-[${designatedColor.GRAY3}] ml-2 text-[12px]`}>
-            {formatDateComment(createdAt)}
-          </CustomText> */}
         </View>
       </View>
       <View>
@@ -91,32 +93,6 @@ const PostItem = ({
           )}
         </View>
       </View>
-
-      {/* <View style={tw`justify-between flex-row my-2 items-center`}>
-        <TouchableOpacity
-          onPress={handleOnPressLikeButton}
-          style={tw`flex-row items-center`}
-          activeOpacity={0.8}
-          disabled={isLiked}>
-          {!isLiked ? (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <LikeIcon width={20} height={20} />
-            </View>
-          ) : (
-            <View style={tw`p-2 pr-1 justify-center items-center`}>
-              <FilledLikeIcon width={20} height={20} />
-            </View>
-          )}
-
-          <CustomText
-            style={[
-              isLiked ? tw`text-[${designatedColor.PINK}]` : tw`text-white`,
-              tw`text-[11px]`,
-            ]}>
-            {likes}
-          </CustomText>
-        </TouchableOpacity>
-      </View> */}
     </TouchableOpacity>
   );
 };

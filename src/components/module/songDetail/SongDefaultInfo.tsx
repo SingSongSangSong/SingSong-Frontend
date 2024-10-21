@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {Image, Linking, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Linking, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
-import MusicIcon from '../../../assets/svg/music.svg';
 import {CommonTag} from '../../tag/CommonTag';
 import CustomText from '../../text/CustomText';
 import {CustomModal} from '../..';

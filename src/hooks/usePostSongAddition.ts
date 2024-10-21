@@ -21,7 +21,7 @@ const usePostSongAddition = ({navigation}: UsePostSongAdditionProps) => {
   const handleOnPressComplete = () => {
     try {
       Keyboard.dismiss();
-      logTrack('post_write_complete_button_click');
+      logTrack('post_write_song_complete_button_click');
       navigation.goBack();
     } catch (error) {
       console.log('Error occurred:', error);
@@ -29,7 +29,7 @@ const usePostSongAddition = ({navigation}: UsePostSongAdditionProps) => {
   };
 
   const handleOnPressCancel = () => {
-    logButtonClick('post_write_cancel_button_click');
+    logButtonClick('post_write_song_cancel_button_click');
     setPostSong([]); // reset하기
     navigation.goBack();
   };

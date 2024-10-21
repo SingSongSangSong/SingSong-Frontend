@@ -56,7 +56,7 @@ const CommentInfoItem = ({
               {nickname}
             </CustomText>
             <CustomText
-              style={tw`text-[13px] text-[${designatedColor.WHITE}] leading-[16px] pr-1`}
+              style={tw`flex-1 text-[13px] text-[${designatedColor.WHITE}] leading-[16px] pr-1`}
               numberOfLines={2}
               ellipsizeMode="tail">
               {content}

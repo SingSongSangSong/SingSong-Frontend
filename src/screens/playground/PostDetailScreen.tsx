@@ -279,7 +279,12 @@ function PostDetailScreen(props: PostDetailScreenProps) {
               onEndReachedThreshold={0.1}
               ListEmptyComponent={
                 <View
-                  style={tw`flex-1 w-full h-full justify-center items-center`}>
+                  style={[
+                    tw`flex-1 w-full h-full justify-center items-center`,
+                    {
+                      minHeight: 300,
+                    },
+                  ]}>
                   <View style={tw`flex-1 justify-center items-center`}>
                     <CommentGrayIcon width={50} height={50} />
                     <CustomText

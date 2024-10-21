@@ -2,10 +2,8 @@ import React, {useEffect} from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Text,
   View,
   Platform,
-  useWindowDimensions,
   Modal,
   TouchableWithoutFeedback,
 } from 'react-native';

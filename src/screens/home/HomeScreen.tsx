@@ -32,7 +32,7 @@ import SettingsIcon from '../../assets/svg/settings.svg';
 // import LogoIcon from '../../assets/svg/logo.svg';
 import LogoIcon from '../../assets/svg/whiteLogo.svg';
 import SearchIcon from '../../assets/svg/search.svg';
-import {logButtonClick, logPageView} from '../../utils';
+import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -48,6 +48,7 @@ import {AppEventsLogger} from 'react-native-fbsdk-next';
 // import {getTrackingStatus} from 'react-native-tracking-transparency';
 import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
+import {log} from '@react-native-firebase/crashlytics';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -221,11 +222,13 @@ const HomeScreen = (props: HomeScreenProps) => {
   };
 
   const handleOnPressAiTotalButton = () => {
+    logTrack('ai_recommendation_total_button_click');
     props.navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
     // console.log('AI 추천 전체보기 버튼 클릭');
   };
 
   const handleOnPressNewSongTotalButton = () => {
+    logTrack('new_song_total_button_click');
     props.navigation.navigate(homeStackNavigations.NEW_SONG);
   };
 
@@ -235,6 +238,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     await setGuestState(false);
     clearMemberInfo();
     clearProvider();
+    logTrack('in_guest_login_button_click');
     props.navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -276,10 +280,12 @@ const HomeScreen = (props: HomeScreenProps) => {
   };
 
   const handleOnPressSearch = () => {
+    logButtonClick('search_button_click');
     props.navigation.navigate(homeStackNavigations.SEARCH);
   };
 
   const handleOnPressLlm = () => {
+    logButtonClick('llm_button_click');
     props.navigation.navigate(homeStackNavigations.AI_LLM);
   };
 
