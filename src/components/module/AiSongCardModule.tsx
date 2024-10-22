@@ -83,7 +83,7 @@ const AiSongCardModule = ({
 
   return (
     <View>
-      {rcdRecommendationSongs ? (
+      {rcdRecommendationSongs && !rcdRecommendationError ? (
         <View
           style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
           <View key="aiSong">

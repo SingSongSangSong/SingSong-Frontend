@@ -116,7 +116,7 @@ function CommentScreen(props: CommentScreenProps) {
   // const {width} = useWindowDimensions();
 
   return (
-    <View style={tw`flex-1 bg-black`}>
+    <View style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={[tw`flex-1`, {paddingBottom: insets.bottom + 70}]}>
         {!commentHandler.isLoading ? (
           <FlatList
@@ -226,7 +226,7 @@ function CommentScreen(props: CommentScreenProps) {
             justifyContent: 'flex-end',
             margin: 0,
           },
-          Platform.OS == 'ios' && {paddingBottom: insets.bottom},
+          Platform.OS == 'ios' && {paddingBottom: insets.bottom + 20},
         ]}>
         <TouchableWithoutFeedback
           onPress={() => commentHandler.setIsModalVisible(false)}>

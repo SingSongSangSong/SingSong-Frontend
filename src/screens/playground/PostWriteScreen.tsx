@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  SafeAreaView,
+  Platform,
 } from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
@@ -16,6 +18,8 @@ import usePostWrite from '../../hooks/usePostWrite';
 import {logPageView} from '../../utils';
 import {IconButton, PostSongListModule} from '../../components';
 import DeleteIcon from '../../assets/svg/delete.svg';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import PlusIcon from '../../assets/svg/plusCircle.svg';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -49,8 +53,20 @@ function PostWriteScreen(props: PostWriteScreenProps) {
     });
   }, [props.navigation, postWriteHandler.handleOnPressComplete]);
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+    <SafeAreaView
+      style={[
+        tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`,
+        // Platform.OS === 'ios' && {
+        //   // paddingTop: insets.top,
+        //   // // paddingBottom: 80,
+        //   paddingBottom: insets.bottom,
+        //   // paddingLeft: insets.left,
+        //   // paddingRight: insets.right,
+        // },
+      ]}>
       <ScrollView
         contentContainerStyle={[
           tw`px-4 pt-4 pb-16`,
@@ -64,6 +80,14 @@ function PostWriteScreen(props: PostWriteScreenProps) {
           value={postWriteHandler.title}
           onChangeText={postWriteHandler.setTitle}
         />
+        <TouchableOpacity
+          style={[tw`flex-row p-3 items-center`]}
+          onPress={postWriteHandler.handleOnPressSongAddition}>
+          <MusicIcon width={20} height={20} />
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-2 mb-1`}>
+            플레이리스트 추가하기
+          </CustomText>
+        </TouchableOpacity>
         <TextInput
           style={[
             tw`text-white pb-2 mb-10 text-[14px]`,
@@ -80,18 +104,25 @@ function PostWriteScreen(props: PostWriteScreenProps) {
         />
       </ScrollView>
 
-      <View
+      {/* <View
         style={tw`flex-row justify-evenly border border-t-[${designatedColor.GRAY5}] absolute bottom-0 w-full bg-[${designatedColor.BACKGROUND_BLACK}] justify-start`}>
-        <TouchableOpacity
-          style={tw`flex-row p-3 items-center`}
-          onPress={postWriteHandler.handleOnPressSongAddition}>
-          <MusicIcon width={20} height={20} />
-          <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-2`}>
-            플레이리스트 추가
-          </CustomText>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <View
+          style={[
+            Platform.OS === 'ios' && {
+              marginBottom: insets.bottom,
+            },
+          ]}>
+          <TouchableOpacity
+            style={[tw`flex-row p-3 items-center`]}
+            onPress={postWriteHandler.handleOnPressSongAddition}>
+            <MusicIcon width={20} height={20} />
+            <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-2`}>
+              플레이리스트 추가
+            </CustomText>
+          </TouchableOpacity>
+        </View>
+      </View> */}
+    </SafeAreaView>
   );
 }
 

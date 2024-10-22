@@ -66,7 +66,7 @@ function RecommentScreen(props: RecommentScreenProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaView style={tw`flex-1 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View
         style={[
           tw`flex-1`,
@@ -113,7 +113,7 @@ function RecommentScreen(props: RecommentScreenProps) {
         }}
         style={[
           {justifyContent: 'flex-end', margin: 0},
-          Platform.OS === 'ios' && {paddingBottom: insets.bottom},
+          Platform.OS === 'ios' && {paddingBottom: insets.bottom + 20},
         ]}>
         <TouchableWithoutFeedback
           onPress={() => {
