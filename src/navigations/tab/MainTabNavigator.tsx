@@ -124,16 +124,16 @@ const MainTabNavigator = () => {
         };
       }}>
       <Tab.Screen
+        name={mainTabNavigations.PLAYGROUND}
+        component={PlaygroundStackNavigator}
+      />
+      <Tab.Screen
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
       <Tab.Screen
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
-      />
-      <Tab.Screen
-        name={mainTabNavigations.PLAYGROUND}
-        component={PlaygroundStackNavigator}
       />
     </Tab.Navigator>
   );

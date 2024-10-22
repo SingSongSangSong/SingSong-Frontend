@@ -376,16 +376,15 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressCommentButton={handleOnCommentPress}
             refreshing={refreshing}
           />
-          <NewSongModule
-            onPressTotalButton={handleOnPressNewSongTotalButton}
+          <AiSongCardModule
+            onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
             refreshing={refreshing}
           />
-
           <LlmModule onPressSearch={handleOnPressLlm} />
           <KeywordModule refreshing={refreshing} />
-          <AiSongCardModule
-            onPressTotalButton={handleOnPressAiTotalButton}
+          <NewSongModule
+            onPressTotalButton={handleOnPressNewSongTotalButton}
             onPressSongButton={handleOnSongPress}
             refreshing={refreshing}
           />

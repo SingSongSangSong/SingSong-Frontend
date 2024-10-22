@@ -222,13 +222,18 @@ function PostDetailScreen(props: PostDetailScreenProps) {
             </CustomText>
           </TouchableOpacity>
           <View style={tw`flex-row items-center`}>
-            <View style={tw`flex-row items-center`}>
+            {/* <View style={tw`flex-row items-center`}> */}
+            <TouchableOpacity
+              style={tw`flex-row items-center`}
+              onPress={postDetailHandler.onPressPostLikeButton}
+              activeOpacity={0.9}>
               <LikeIcon width={14} height={14} />
               <CustomText
                 style={tw`text-[${designatedColor.PINK}] pl-1 text-[14px]`}>
                 {postDetailHandler.likes}
               </CustomText>
-            </View>
+            </TouchableOpacity>
+            {/* </View> */}
             <View style={tw`flex-row items-center pl-2`}>
               <CommentIcon width={14} height={14} />
               <CustomText
