@@ -75,10 +75,17 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
     // console.log('refreshing!!!!!');
+    // setRefreshing(true);
+
     setRefreshing(true);
     await handleOnRefreshPosts();
     logRefresh('up_posts');
     setRefreshing(false);
+    setTimeout(() => {
+      setRefreshing(false);
+      // 홈 컴포넌트 전체 리렌더링을 위한 로직
+      // 필요한 경우 상태 업데이트 등
+    }, 2000); // 새로고침 지연 시간
   };
 
   const focusOnRefresh = async () => {
@@ -93,6 +100,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   //위로 당길 시 노래 리스트 새로고침하는 함수
   const handleOnRefreshPosts = async () => {
     try {
+      console.log('refresh!!');
       if (posts && posts.length < 200) {
         const postData = await getPosts(-1, size);
         setPosts(postData.data.posts);

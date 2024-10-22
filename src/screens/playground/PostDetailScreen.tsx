@@ -2,6 +2,7 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   RefreshControl,
   TouchableOpacity,
   View,
@@ -25,6 +26,7 @@ import CommentGrayIcon from '../../assets/svg/commentGray.svg';
 import {formatDateComment, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type PostDetailScreenProps = StackScreenProps<
   PlaygroundStackParamList,
@@ -45,6 +47,22 @@ function PostDetailScreen(props: PostDetailScreenProps) {
 
   const [isVisible, setIsVisible] = useState(false);
   const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
+  const [inputVisible, setInputVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    // 뒤로 가기(슬라이드 포함) 직전에 감지
+    const beforeRemoveListener = props.navigation.addListener(
+      'beforeRemove',
+      e => {
+        console.log('Going back or closing the screen.');
+        setInputVisible(false);
+      },
+    );
+
+    return () => {
+      beforeRemoveListener();
+    };
+  }, [props.navigation]);
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -69,10 +87,48 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     }, 100);
   };
 
+  // const handleFocusComment = (commentId: number) => {
+  //   postDetailHandler.setFocusedCommentId(commentId);
+
+  //   // 포커스를 재설정하는 함수 호출
+  //   refocusInput();
+
+  //   // FlatList에서 해당 댓글로 스크롤
+  //   const index = postDetailHandler.postComment!.findIndex(
+  //     comment => comment.postCommentId === commentId,
+  //   );
+
+  //   if (index !== -1 && flatListRef.current) {
+  //     flatListRef.current.scrollToIndex({
+  //       index,
+  //       animated: true,
+  //       viewPosition: 0.2, // 스크롤 뷰에서 중간에 위치하게 설정
+  //     });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     e => {
+  //       setKeyboardHeight(e.endCoordinates.height); // 키보드 높이 저장
+  //     },
+  //   );
+  //   // const keyboardDidHideListener = Keyboard.addListener(
+  //   //   'keyboardDidHide',
+  //   //   () => {
+  //   //     setKeyboardHeight(0); // 키보드가 내려가면 0으로 설정
+  //   //   },
+  //   // );
+
+  //   return () => {
+  //     keyboardDidShowListener.remove();
+  //     // keyboardDidHideListener.remove();
+  //   };
+  // }, []);
+
   const handleFocusComment = (commentId: number) => {
     postDetailHandler.setFocusedCommentId(commentId);
-
-    // 포커스를 재설정하는 함수 호출
     refocusInput();
 
     // FlatList에서 해당 댓글로 스크롤
@@ -84,7 +140,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       flatListRef.current.scrollToIndex({
         index,
         animated: true,
-        viewPosition: 0.2, // 스크롤 뷰에서 중간에 위치하게 설정
+        viewPosition: 0.2, // 해당 아이템이 화면의 20% 위치에 오도록 설정
+        // viewOffset: keyboardHeight, // 키보드 높이만큼 추가로 스크롤
       });
     }
   };
@@ -259,6 +316,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     );
   };
 
+  const insets = useSafeAreaInsets();
+
   return (
     <View
       style={[
@@ -271,7 +330,18 @@ function PostDetailScreen(props: PostDetailScreenProps) {
         // },
       ]}>
       {postDetailHandler.postComment && (
-        <View style={tw`flex-1 w-full`}>
+        // <View style={tw`flex-1 w-full`}>
+        <View
+          style={[
+            tw`flex-1 w-full`,
+            {paddingBottom: insets.bottom + 80},
+            // {paddingBottom: 120},
+            // postDetailHandler.isRecomment
+            //   ? {marginBottom: keyboardHeight}
+            //   : {
+            //       paddingBottom: insets.bottom + 70,
+            //     },
+          ]}>
           {/* <PostCommentList postComment={postDetailHandler.postComment} /> */}
           <View style={tw`flex-1 w-full`}>
             <FlatList
@@ -316,7 +386,9 @@ function PostDetailScreen(props: PostDetailScreenProps) {
                       color={designatedColor.VIOLET}
                     />
                   </View>
-                ) : null
+                ) : (
+                  <View style={{height: 120}} />
+                )
               }
             />
           </View>
@@ -326,7 +398,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       {/* <CommentV2List postComment={postDetailHandler.postComment}  /> */}
 
       <View style={[tw`justify-end m-0 h-1 w-full`]}>
-        {postDetailHandler.isKeyboardVisible && (
+        {inputVisible && (
           <CommentKeyboard
             onSendPress={postDetailHandler.handleOnPressSendButton}
             text={postDetailHandler.isRecomment ? '답글' : '댓글'}

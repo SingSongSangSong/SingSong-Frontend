@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableOpacity, TextInput} from 'react-native';
+import {View, TextInput} from 'react-native';
 import tw from 'twrnc';
 import {PostComments, SongOnPostComment} from '../../types';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
@@ -10,6 +10,7 @@ import {formatDateComment, logTrack} from '../../utils';
 import CustomText from '../text/CustomText';
 import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 // import postBlacklist from '../../api/comment/postBlacklist';
 
 interface PostCommentItemProps {
@@ -152,7 +153,7 @@ PostCommentItemProps) => {
     <>
       <View
         style={[
-          tw`py-2 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
+          tw`pb-2 pt-3 px-4 border-b-[0.5px] border-[${designatedColor.GRAY5}]`,
           isFocused && tw`bg-[${designatedColor.GRAY5}] bg-opacity-70`,
         ]}>
         <Popover
@@ -226,7 +227,7 @@ PostCommentItemProps) => {
         /> */}
         </View>
         <View>
-          <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1`}>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] pl-1 pt-1`}>
             {content}
           </CustomText>
         </View>
@@ -253,7 +254,7 @@ PostCommentItemProps) => {
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              style={tw`flex-row items-center pr-2 py-1`}
+              style={tw`flex-row items-center px-2 py-2`}
               activeOpacity={0.8}
               onPress={handleOnPressWriteRecomment}
               //   disabled={isLiked}
