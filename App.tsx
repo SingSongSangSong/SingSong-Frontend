@@ -12,6 +12,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
+import CodePush from 'react-native-code-push';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -85,5 +86,16 @@ function App(): React.JSX.Element {
     </GestureHandlerRootView>
   );
 }
+const codePushOptions = {
+  checkFrequency: CodePush.InstallMode.ON_NEXT_RESTART,
+  // updateDialog: {
+  //   title: '...',
+  //   optionalUpdateMessage: '...',
+  //   optionalInstallButtonLabel: '업데이트',
+  //   optionalIgnoreButtonLabel: '아니요.',
+  // },
+  installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+};
 
-export default App;
+export default CodePush(codePushOptions)(App);
+// export default App;

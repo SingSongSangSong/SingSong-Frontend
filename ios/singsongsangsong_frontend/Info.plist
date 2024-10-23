@@ -34,6 +34,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>CodePushDeploymentKey</key>
+<string>${CODEPUSH_KEY}</string>
 	<key>FacebookAppID</key>
 	<string>8358574374255875</string> <!-- Facebook 앱 ID -->
 	<!-- <key>FacebookClientToken</key>
