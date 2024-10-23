@@ -12,6 +12,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
+import messaging from '@react-native-firebase/messaging';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -19,9 +20,19 @@ function App(): React.JSX.Element {
   // };
   const setTrackingStatus = TrackingStore().setTrackingStatus;
 
+  async function onAppBootstrap() {
+    // Register the device with FCM
+    await messaging().registerDeviceForRemoteMessages();
+
+    // Get the token
+    const token = await messaging().getToken();
+    console.log('Token:', token);
+  }
+
   useEffect(() => {
     // In-App Messaging 활성화
     crashlytics().log('App started');
+    // onAppBootstrap();
     // messaging().setMessagesDisplaySuppressed(false);
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
