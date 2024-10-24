@@ -1,13 +1,14 @@
-import {useCallback, useEffect, useState} from 'react';
-import {KeepSongV2} from '../types';
+import {useEffect, useState} from 'react';
+// import {KeepSongV2} from '../types';
 import getKeepV2 from '../api/keep/getKeepV2';
 import {logRefresh} from '../utils';
 import {useQuery} from '@tanstack/react-query';
+import useKeepV2Store from '../store/useKeepV2Store';
 
 const useKeep = () => {
-  const [isKeepLoading, setIsKeepLoading] = useState(false);
+  // const [isKeepLoading, setIsKeepLoading] = useState(false);
   const [filter, setFilter] = useState<string>('recent');
-  const [keepList, setKeepList] = useState<KeepSongV2[]>();
+  // const [keepList, setKeepList] = useState<KeepSongV2[]>();
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
@@ -15,21 +16,28 @@ const useKeep = () => {
   const [isLengthZero, setIsLengthZero] = useState<boolean>(false);
   const size = 20;
 
+  const isInitialized = useKeepV2Store(state => state.isInitialized);
+  const setIsInitialized = useKeepV2Store(state => state.setIsInitialized);
+  const keepList = useKeepV2Store(state => state.keepList);
+  const setKeepList = useKeepV2Store(state => state.setKeepList);
+  const addKeepList = useKeepV2Store(state => state.addKeepList);
+
   const {
     data: tempKeep,
     error: keepError,
     isFetching: isFetchingKeep,
-    refetch: refetchKeep,
   } = useQuery({
     queryKey: ['keeps'],
     queryFn: () => getKeepV2(filter, -1, size),
 
     staleTime: 0, // 1시간 동안 캐시 유지
     select: data => data.data,
+    enabled: !isInitialized,
   });
 
   useEffect(() => {
     if (tempKeep) {
+      setIsInitialized(true);
       if (tempKeep.songs.length == 0) {
         // console.log('length is zero');
         setIsLengthZero(true);
@@ -41,13 +49,13 @@ const useKeep = () => {
     }
   }, [tempKeep]);
 
-  const setInitKeep = useCallback(async () => {
-    setIsKeepLoading(true);
-    const tempData = await getKeepV2(filter, lastCursor, size);
-    setKeepList(tempData.data.songs);
-    setLastCursor(tempData.data.lastCursor);
-    setIsKeepLoading(false);
-  }, []); // 필요한 상태 및 함수들을 의존성 배열에 추가
+  // const setInitKeep = useCallback(async () => {
+  //   setIsKeepLoading(true);
+  //   const tempData = await getKeepV2(filter, lastCursor, size);
+  //   setKeepList(tempData.data.songs);
+  //   setLastCursor(tempData.data.lastCursor);
+  //   setIsKeepLoading(false);
+  // }, []); // 필요한 상태 및 함수들을 의존성 배열에 추가
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -93,7 +101,8 @@ const useKeep = () => {
               setIsLoading(false);
               return;
             }
-            setKeepList(prev => [...(prev || []), ...keepData]);
+            // setKeepList(prev => [...(prev || []), ...keepData]);
+            addKeepList(keepData);
             setLastCursor(response.data.lastCursor);
             setIsLoading(false);
           })
@@ -124,7 +133,6 @@ const useKeep = () => {
   };
 
   return {
-    isKeepLoading,
     keepList,
     handleDownRefreshKeep,
     onRefresh,

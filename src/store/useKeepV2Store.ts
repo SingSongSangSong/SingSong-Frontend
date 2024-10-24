@@ -1,0 +1,41 @@
+import {create} from 'zustand';
+import {KeepSongV2} from '../types';
+
+interface KeepV2State {
+  isInitialized: boolean;
+  keepList: KeepSongV2[]; //나중에 keep에 저장되어 있는지 true/false로 바꾸기
+  setKeepList: (songs: KeepSongV2[]) => void;
+  addKeepList: (songs: KeepSongV2[]) => void;
+  setIsInitialized: (isInitialized: boolean) => void;
+}
+
+const useKeepV2Store = create<KeepV2State>(set => {
+  const initState = {
+    keepList: [],
+    isInitialized: false,
+  };
+
+  return {
+    ...initState,
+
+    setKeepList: (songs: KeepSongV2[]) => {
+      set(() => ({
+        keepList: songs,
+      }));
+    },
+
+    addKeepList: (songs: KeepSongV2[]) => {
+      set(state => ({
+        keepList: [...state.keepList, ...songs],
+      }));
+    },
+
+    setIsInitialized: (isInitialized: boolean) => {
+      set(() => ({
+        isInitialized,
+      }));
+    },
+  };
+});
+
+export default useKeepV2Store;
