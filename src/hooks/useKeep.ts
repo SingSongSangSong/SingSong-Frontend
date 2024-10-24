@@ -1,164 +1,138 @@
-import {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
-import useKeepListStore from '../store/useKeepStore';
-import getKeep from '../api/keep/getKeep';
-import deleteKeep from '../api/keep/deleteKeep';
-import Toast from 'react-native-toast-message';
+import {useCallback, useEffect, useState} from 'react';
+import {KeepSongV2} from '../types';
+import getKeepV2 from '../api/keep/getKeepV2';
+import {logRefresh} from '../utils';
+import {useQuery} from '@tanstack/react-query';
 
 const useKeep = () => {
-  const [isAllSelected, setIsAllSelected] = useState(false);
-  const [isAllDeleted, setIsAllDeleted] = useState(false);
-  // const {keepList, setKeepList} = useKeepListStore();
-  const keepList = useKeepListStore(state => state.keepList);
-  const setKeepList = useKeepListStore(state => state.setKeepList);
-  const [removedSong, setRemovedSong] = useState<number[]>([]);
   const [isKeepLoading, setIsKeepLoading] = useState(false);
-  const [isRemoved, setIsRemoved] = useState(false);
+  const [filter, setFilter] = useState<string>('recent');
+  const [keepList, setKeepList] = useState<KeepSongV2[]>();
+  const [lastCursor, setLastCursor] = useState<number>(-1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isEnded, setIsEnded] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [isLengthZero, setIsLengthZero] = useState<boolean>(false);
+  const size = 20;
 
-  // const {
-  //   data: tempKeepList,
-  //   error,
-  //   isLoading,
-  // } = useQuery({
-  //   // 데이터를 가져오는 함수
-  //   queryKey: ['keepList'],
-  //   queryFn: getKeep,
-  //   staleTime: 3600000, // 1시간 동안 캐시 유지
-  //   select: data => data.data,
-  // });
+  const {
+    data: tempKeep,
+    error: keepError,
+    isFetching: isFetchingKeep,
+    refetch: refetchKeep,
+  } = useQuery({
+    queryKey: ['keeps'],
+    queryFn: () => getKeepV2(filter, -1, size),
+
+    staleTime: 0, // 1시간 동안 캐시 유지
+    select: data => data.data,
+  });
 
   useEffect(() => {
-    setInitKeep();
-    // if (tempKeepList) {
-    //   setKeepList(tempKeepList);
-    //   setIsKeepLoading(false);
-    // }
-  }, []);
-
-  // const handleOnPressSonglist = (songNumber: number) => {
-  //   navigation.navigate(keepStackNavigations.KEEP_SONG_DETAIL, {songNumber});
-  // };
-
-  const handleIsAllSelected = () => {
-    setIsAllDeleted(false);
-    setIsAllSelected(true);
-    // toggleIsAllSelected(!selectAll); // 모든 항목 선택 상태 업데이트
-  };
-
-  const handleIsAllDeleted = () => {
-    setIsAllSelected(false);
-    setIsAllDeleted(true);
-  };
-
-  const setInitKeep = async () => {
-    setIsKeepLoading(true);
-    const tempKeepList = await getKeep();
-    setKeepList(tempKeepList.data);
-    setIsKeepLoading(false);
-  };
-
-  const handleDeleteKeep = async (songNumbers: number[]) => {
-    // console.log(songNumbers);
-    const updatedSongs = await deleteKeep(songNumbers);
-    setKeepList(updatedSongs.data); //keepList 업데이트
-    // console.log(updatedSongs);
-  };
-
-  // const playlists = usePlaylistStore(state => state.playlists);
-  // const {playlists, getPlaylistInfo} = usePlaylistStore();
-
-  // const {removeSongFromPlaylist} = usePlaylistStore();
-
-  // const [modalVisible, setModalVisible] = useState(false);
-
-  // const playlistData: string[] = Object.entries(playlists).map(
-  //   ([id, value]) => ({
-  //     id,
-  //     name: value.playlistName,
-  //   }),
-  // );
-
-  // const buttonNames = ['전체', '최근', '인기', '신나는', '재밌는'];
-
-  // const buttonItems: buttonItem[] = buttonNames.map(name => ({
-  //   name,
-  //   onPress: () => {
-  //     console.log(`${name} 버튼이 눌렸습니다.`);
-  //   },
-  // }));
-
-  const handleRemoveButton = () => {
-    Alert.alert(
-      '삭제',
-      '정말로 삭제하시겠습니까?',
-      [
-        {text: '취소', onPress: () => {}, style: 'cancel'},
-        {
-          text: '삭제',
-          onPress: () => {
-            // removedSong.map(song => {
-            //   removeSongFromKeep(song);
-            // });
-            // console.log('삭제');
-            handleDeleteKeep(removedSong);
-            setRemovedSong([]);
-            Toast.show({
-              type: 'selectedToast',
-              text1: 'KEEP에서 삭제되었습니다.',
-              position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-              visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-            });
-          },
-          style: 'destructive',
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () => {},
-      },
-    );
-  };
-
-  const handleInCircleButton = (songNumber: number) => {
-    setRemovedSong(prevState => {
-      if (!prevState.includes(songNumber)) {
-        return [...prevState, songNumber];
+    if (tempKeep) {
+      if (tempKeep.songs.length == 0) {
+        // console.log('length is zero');
+        setIsLengthZero(true);
       }
-      return prevState;
-    });
+      setKeepList(tempKeep.songs);
+      if (tempKeep.songs.length != 0) {
+        setLastCursor(tempKeep.lastCursor);
+      }
+    }
+  }, [tempKeep]);
+
+  const setInitKeep = useCallback(async () => {
+    setIsKeepLoading(true);
+    const tempData = await getKeepV2(filter, lastCursor, size);
+    setKeepList(tempData.data.songs);
+    setLastCursor(tempData.data.lastCursor);
+    setIsKeepLoading(false);
+  }, []); // 필요한 상태 및 함수들을 의존성 배열에 추가
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // setInitKeep(); //keep을 항상 불러오기
+  //     refetchKeep();
+  //   }, []),
+  // ); //focusEffect시마다 refetch되게하면 안될 것 같음
+
+  const handleOnRefreshKeep = async () => {
+    try {
+      console.log('refresh!!');
+      if (keepList) {
+        const keepData = await getKeepV2(filter, -1, size);
+        setKeepList(keepData.data.songs);
+        setLastCursor(keepData.data.lastCursor);
+        setIsEnded(false);
+      }
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+    }
   };
 
-  const handleOutCircleButton = (songNumber: number) => {
-    setRemovedSong(prevState => prevState.filter(num => num !== songNumber));
+  const handleDownRefreshKeep = async () => {
+    console.log('refresh!!');
+    if (isLoading || isEnded) {
+      console.log('isLoading:', isLoading);
+      console.log('isEnded:', isEnded);
+      return;
+    }
+    try {
+      console.log('refreshing down keep');
+      setIsLoading(true);
+      //20개 이상일 경우에만 api 호출
+      if (keepList && keepList.length >= size) {
+        console.log('refreshing down keep');
+        // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
+        logRefresh('down_keep');
+        getKeepV2(filter, lastCursor, size)
+          .then(response => {
+            const keepData = response.data.songs;
+            if (keepData.length === 0) {
+              setIsEnded(true);
+              setIsLoading(false);
+              return;
+            }
+            setKeepList(prev => [...(prev || []), ...keepData]);
+            setLastCursor(response.data.lastCursor);
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error('Error post refreshing:', error);
+            setIsLoading(false);
+          });
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      setIsLoading(false);
+    }
   };
 
-  const handleConfirmRemove = () => {
-    handleDeleteKeep(removedSong);
-    setRemovedSong([]);
-    setIsRemoved(false);
-    Toast.show({
-      type: 'selectedToast',
-      text1: 'KEEP에서 삭제되었습니다.',
-      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-    });
+  const onRefresh = async () => {
+    // console.log('refreshing!!!!!');
+    // setRefreshing(true);
+
+    setRefreshing(true);
+    await handleOnRefreshKeep();
+    logRefresh('up_keep');
+    setRefreshing(false);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000); // 새로고침 지연 시간
   };
 
   return {
-    isRemoved,
-    setIsRemoved,
     isKeepLoading,
-    isAllSelected,
-    isAllDeleted,
     keepList,
-    removedSong,
-    handleIsAllSelected,
-    handleIsAllDeleted,
-    handleRemoveButton,
-    handleInCircleButton,
-    handleOutCircleButton,
-    handleConfirmRemove,
-    // handleOnPressSonglist,
+    handleDownRefreshKeep,
+    onRefresh,
+    isLoading,
+    refreshing,
+    keepError,
+    isFetchingKeep,
+    isLengthZero,
   };
 };
 

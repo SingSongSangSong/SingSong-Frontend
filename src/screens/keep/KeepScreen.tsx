@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {ActivityIndicator, View, Platform} from 'react-native';
-import {KeepSongsList} from '../../components';
+import {View, Platform} from 'react-native';
+import {KeepSongsV2List} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
@@ -60,27 +60,45 @@ function KeepScreen(props: KeepScreenProps) {
         },
       ]}>
       <View style={tw`w-full h-full pt-6`}>
-        {keepHandler.isKeepLoading ? (
+        {keepHandler.isFetchingKeep ? (
           <View style={tw`flex-1 justify-center items-center`}>
-            <ActivityIndicator size="small" color={designatedColor.VIOLET} />
+            {/* <ActivityIndicator size="small" color={designatedColor.VIOLET} /> */}
+          </View>
+        ) : keepHandler.keepError ? (
+          <View style={tw`h-full w-full justify-center items-center`}>
+            <CustomText style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
+              KEEP을 불러오는 중 에러가 발생했어요
+            </CustomText>
+          </View>
+        ) : keepHandler.keepList && keepHandler.keepList.length > 0 ? (
+          //KEEP이 에러가 발생하지 않은 경우
+          // <View>
+          //   {keepHandler.keepList && keepHandler.keepList.length > 0 ? (
+          <KeepSongsV2List
+            songs={keepHandler.keepList}
+            handleRefreshKeep={keepHandler.handleDownRefreshKeep}
+            onRefresh={keepHandler.onRefresh}
+            isLoading={keepHandler.isLoading}
+            refreshing={keepHandler.refreshing}
+            onSongPress={_onSongPress}
+          />
+        ) : keepHandler.isLengthZero ? (
+          //   ) : (
+          //     <View style={tw`h-full w-full justify-center items-center`}>
+          //       <CustomText
+          //         style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
+          //         KEEP이 비어있어요
+          //       </CustomText>
+          //     </View>
+          //   )}
+          // </View>
+          <View style={tw`h-full w-full justify-center items-center`}>
+            <CustomText style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
+              KEEP이 비어있어요
+            </CustomText>
           </View>
         ) : (
-          <View>
-            {keepHandler.keepList.length > 0 ? (
-              <KeepSongsList
-                songlistData={keepHandler.keepList}
-                isShowKeepIcon={false}
-                onSongPress={_onSongPress}
-              />
-            ) : (
-              <View style={tw`h-full w-full justify-center items-center`}>
-                <CustomText
-                  style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
-                  KEEP이 비어있어요
-                </CustomText>
-              </View>
-            )}
-          </View>
+          <View />
         )}
       </View>
     </View>
