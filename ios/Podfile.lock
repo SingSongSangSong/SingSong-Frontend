@@ -33,6 +33,9 @@ PODS:
   - Firebase/InAppMessaging (10.29.0):
     - Firebase/CoreOnly
     - FirebaseInAppMessaging (~> 10.29.0-beta)
+  - Firebase/Messaging (10.29.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.29.0)
   - Firebase/RemoteConfig (10.29.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 10.29.0)
@@ -76,6 +79,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.29.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseRemoteConfig (10.29.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
@@ -1747,23 +1759,28 @@ PODS:
     - React-Core
   - RNDeviceInfo (11.1.0):
     - React-Core
-  - RNFBAnalytics (20.4.0):
+  - RNFBAnalytics (20.5.0):
     - Firebase/AnalyticsWithoutAdIdSupport (= 10.29.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (20.4.0):
+  - RNFBApp (20.5.0):
     - Firebase/CoreOnly (= 10.29.0)
     - React-Core
-  - RNFBCrashlytics (20.4.0):
+  - RNFBCrashlytics (20.5.0):
     - Firebase/Crashlytics (= 10.29.0)
     - FirebaseCoreExtension
     - React-Core
     - RNFBApp
-  - RNFBInAppMessaging (20.4.0):
+  - RNFBInAppMessaging (20.5.0):
     - Firebase/InAppMessaging (= 10.29.0)
     - React-Core
     - RNFBApp
-  - RNFBRemoteConfig (20.4.0):
+  - RNFBMessaging (20.5.0):
+    - Firebase/Messaging (= 10.29.0)
+    - FirebaseCoreExtension
+    - React-Core
+    - RNFBApp
+  - RNFBRemoteConfig (20.5.0):
     - Firebase/RemoteConfig (= 10.29.0)
     - React-Core
     - RNFBApp
@@ -1987,6 +2004,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
+  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -2016,6 +2034,7 @@ SPEC REPOS:
     - FirebaseCrashlytics
     - FirebaseInAppMessaging
     - FirebaseInstallations
+    - FirebaseMessaging
     - FirebaseRemoteConfig
     - FirebaseRemoteConfigInterop
     - FirebaseSessions
@@ -2191,6 +2210,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/crashlytics"
   RNFBInAppMessaging:
     :path: "../node_modules/@react-native-firebase/in-app-messaging"
+  RNFBMessaging:
+    :path: "../node_modules/@react-native-firebase/messaging"
   RNFBRemoteConfig:
     :path: "../node_modules/@react-native-firebase/remote-config"
   RNGestureHandler:
@@ -2233,6 +2254,7 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: 34647b41e18de773717fdd348a22206f2f9bc774
   FirebaseInAppMessaging: c83ea74bf56bda665b9890a390d754b9e3e9f2fc
   FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
+  FirebaseMessaging: 7b5d8033e183ab59eb5b852a53201559e976d366
   FirebaseRemoteConfig: 48ef3f243742a8d72422ccfc9f986e19d7de53fd
   FirebaseRemoteConfigInterop: 6efda51fb5e2f15b16585197e26eaa09574e8a4d
   FirebaseSessions: dbd14adac65ce996228652c1fc3a3f576bdf3ecc
@@ -2316,11 +2338,12 @@ SPEC CHECKSUMS:
   RNCKakaoUser: 0ff68bd086f048ea9d85eff0fa779ef47e854090
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
-  RNFBAnalytics: cb56c22d47f8c22f33e6f033c40478d1347a5261
-  RNFBApp: 10819a4f67d634fe34aa607c6d1e8a8aef019308
-  RNFBCrashlytics: f465771d96a2eaf9f6104b30abb002cfe78fc0be
-  RNFBInAppMessaging: d939887c67723fd4488db05e583b2963a35dc02a
-  RNFBRemoteConfig: 335d444ea721a019deafcae9c7ebda7092e27260
+  RNFBAnalytics: 4fcff9d66db74816cf9216be847cb96b03d8ba76
+  RNFBApp: 017499cd7ea340963bfac43b4fcb28d2b0b21a09
+  RNFBCrashlytics: cc2c22e812c529c1cacb1d1df1b02f76f8d911f4
+  RNFBInAppMessaging: ed6705d3dc225c3e44533ce8620042f91a724af0
+  RNFBMessaging: 81f9447a3790df25c72753b446247ebeba95b182
+  RNFBRemoteConfig: 9b1a791f4861fbc4edb2174ee8d5b292a1d6369e
   RNGestureHandler: 634189dbe31ecedf6e75c0d8b5ec5ae208850074
   RNKeychain: bfe3d12bf4620fe488771c414530bf16e88f3678
   RNPermissions: c66ef921c7dd15ff2d69a3fdcd56ba185edfde56

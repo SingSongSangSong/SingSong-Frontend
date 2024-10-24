@@ -22,7 +22,9 @@ function App(): React.JSX.Element {
 
   async function onAppBootstrap() {
     // Register the device with FCM
+    console.log('Registering device for remote messages');
     await messaging().registerDeviceForRemoteMessages();
+    console.log('Registered device for remote messages');
 
     // Get the token
     const token = await messaging().getToken();
@@ -32,7 +34,7 @@ function App(): React.JSX.Element {
   useEffect(() => {
     // In-App Messaging 활성화
     crashlytics().log('App started');
-    // onAppBootstrap();
+    onAppBootstrap();
     // messaging().setMessagesDisplaySuppressed(false);
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
