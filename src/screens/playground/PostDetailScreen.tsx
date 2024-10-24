@@ -73,7 +73,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
             setIsVisible(true);
             // console.log('more button clicked');
           }}
-          style={tw`px-4`}>
+          style={tw`p-2 px-4`}>
           <MoreVerticalIcon width={20} height={20} />
         </TouchableOpacity>
       ),
@@ -178,6 +178,14 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     // </View>
   );
 
+  const handleOnOnPressDelete = () => {
+    setIsVisible(false);
+
+    setTimeout(() => {
+      postDetailHandler.setIsShowDeleteModal(true);
+    }, 300);
+  };
+
   const renderHeader = () => {
     return (
       <View
@@ -213,8 +221,9 @@ function PostDetailScreen(props: PostDetailScreenProps) {
               <TouchableOpacity
                 style={tw`p-4`}
                 onPress={() => {
-                  postDetailHandler.setIsShowDeleteModal(true); //삭제 모달 표시
-                  setIsVisible(false);
+                  console.log('delete button clicked');
+                  // postDetailHandler.setIsShowDeleteModal(true); //삭제 모달 표시
+                  handleOnOnPressDelete();
                 }}>
                 <CustomText style={tw`text-white`}>삭제</CustomText>
               </TouchableOpacity>
@@ -305,10 +314,14 @@ function PostDetailScreen(props: PostDetailScreenProps) {
           onClose={() => postDetailHandler.setIsShowDeleteModal(false)}
           message={'게시글을 삭제하시겠습니까?'}
           onConfirm={() => {
+            // setIsVisible(false);
             postDetailHandler.setIsShowDeleteModal(false);
             postDetailHandler.handleDeletePost();
           }}
-          onCancel={() => postDetailHandler.setIsShowDeleteModal(false)}
+          onCancel={() => {
+            // setIsVisible(false);
+            postDetailHandler.setIsShowDeleteModal(false);
+          }}
           confirmText="삭제"
           cancelText="취소"
         />

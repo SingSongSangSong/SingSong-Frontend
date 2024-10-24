@@ -55,7 +55,7 @@ function PlaygroundScreen(props: PlaygroundScreenProps) {
             setIsVisible(true);
             // console.log('more button clicked');
           }}
-          style={tw`px-4`}
+          style={tw`p-2 px-4`}
           activeOpacity={0.8}>
           <MoreVerticalIcon width={20} height={20} />
         </TouchableOpacity>

@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <CodePush/CodePush.h>
 #import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
@@ -10,6 +11,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 // #import <AppTrackingTransparency/AppTrackingTransparency.h>
 // #import <FBAEMKit/FBAEMKit-Swift.h>
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
 
 @implementation AppDelegate
 
@@ -21,6 +25,9 @@
   self.initialProps = @{};
   [FIRApp configure];
   [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   // return YES;
   // [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     //  [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -72,7 +79,8 @@
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
 #endif
 }
 @end
