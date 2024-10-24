@@ -2,6 +2,24 @@ PODS:
   - Alamofire (5.9.1)
   - amplitude-react-native (1.4.9):
     - React-Core
+  - appcenter-analytics (5.0.2):
+    - AppCenter/Analytics (~> 5.0)
+    - AppCenterReactNativeShared (~> 5.0)
+    - React-Core
+  - appcenter-core (5.0.2):
+    - AppCenterReactNativeShared (~> 5.0)
+    - React-Core
+  - appcenter-crashes (5.0.2):
+    - AppCenter/Crashes (~> 5.0)
+    - AppCenterReactNativeShared (~> 5.0)
+    - React-Core
+  - AppCenter/Analytics (5.0.5):
+    - AppCenter/Core
+  - AppCenter/Core (5.0.5)
+  - AppCenter/Crashes (5.0.5):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (5.0.2):
+    - AppCenter/Core (= 5.0.5)
   - Base64 (1.1.2)
   - BEMCheckBox (1.4.1)
   - boost (1.84.0)
@@ -1916,6 +1934,9 @@ PODS:
 
 DEPENDENCIES:
   - "amplitude-react-native (from `../node_modules/@amplitude/analytics-react-native`)"
+  - appcenter-analytics (from `../node_modules/appcenter-analytics`)
+  - appcenter-core (from `../node_modules/appcenter`)
+  - appcenter-crashes (from `../node_modules/appcenter-crashes`)
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - CodePush (from `../node_modules/react-native-code-push`)
@@ -2010,6 +2031,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AppCenter
+    - AppCenterReactNativeShared
     - Base64
     - BEMCheckBox
     - FBAEMKit
@@ -2047,6 +2070,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplitude-react-native:
     :path: "../node_modules/@amplitude/analytics-react-native"
+  appcenter-analytics:
+    :path: "../node_modules/appcenter-analytics"
+  appcenter-core:
+    :path: "../node_modules/appcenter"
+  appcenter-crashes:
+    :path: "../node_modules/appcenter-crashes"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   BVLinearGradient:
@@ -2228,6 +2257,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   amplitude-react-native: 5242bc60025abeed88de6e0debd991540649335d
+  AppCenter: 994875ea7941b9e168babb98299f900a94bcef13
+  appcenter-analytics: b90b12a9357d8e3f6174ac761f00c70d95a137ee
+  appcenter-core: 711583753e9b44d3a9c75f8f78baa23804be3e40
+  appcenter-crashes: be716cca49539023ab5778502230098dd4b41d54
+  AppCenterReactNativeShared: e6f6bd4d0e055bf1a3d7337edb4993bfce79185b
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   boost: 4cb898d0bf20404aab1850c656dcea009429d6c1

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {PostComments, SongOnPostComment} from '../../types';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
@@ -10,7 +10,7 @@ import {formatDateComment, logTrack} from '../../utils';
 import CustomText from '../text/CustomText';
 import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 // import postBlacklist from '../../api/comment/postBlacklist';
 
 interface PostCommentItemProps {
@@ -146,6 +146,15 @@ PostCommentItemProps) => {
     setParentCommentId(postCommentId);
     onFocus(); // 포커싱 상태 요청
   };
+
+  const handleOnPressBlacklist = () => {
+    console.log('차단 클릭');
+    setIsVisible(false);
+    setTimeout(() => {
+      setIsShowBlacklistModal(true);
+    }, 500);
+  };
+
   const [isVisible, setIsVisible] = useState(false);
   const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
 
@@ -171,6 +180,7 @@ PostCommentItemProps) => {
               style={tw`p-4`}
               onPress={() => {
                 // postDetailHandler.onRefresh();
+                // console.log('신고클릭');
                 onPressCommentReport(postCommentId, memberId);
                 setIsVisible(false);
               }}>
@@ -181,8 +191,9 @@ PostCommentItemProps) => {
               onPress={() => {
                 // postDetailHandler.handleOnPressPostReport();
                 // onPressCommentBlacklist(memberId);
-                setIsVisible(false);
-                setIsShowBlacklistModal(true);
+                // setIsVisible(false);
+                // setIsShowBlacklistModal(true);
+                handleOnPressBlacklist();
               }}>
               <CustomText style={tw`text-white`}>차단</CustomText>
             </TouchableOpacity>
@@ -216,7 +227,7 @@ PostCommentItemProps) => {
               setIsVisible(true);
               // console.log('more button clicked');
             }}
-            style={tw`px-2`}
+            style={tw`p-2`}
             activeOpacity={0.8}>
             <MoreVerticalIcon width={14} height={14} />
           </TouchableOpacity>

@@ -402,6 +402,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     commentId: number,
     subjectMemberId: number,
   ) => {
+    console.log('comment report button clicked');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT, {
       reportCommentId: commentId,
       reportCommentSubjectMemberId: subjectMemberId,
