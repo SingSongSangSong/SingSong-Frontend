@@ -280,6 +280,26 @@ interface GetSongsNewResponse {
   message: string;
 }
 
+interface GetKeepResponse {
+  data: {
+    lastCursor: number;
+    songs: KeepSongV2[];
+  };
+  message: string;
+}
+
+interface KeepSongV2 {
+  album: string;
+  isLive: boolean;
+  isMr: boolean;
+  keepSongId: number;
+  melonLink: string;
+  singerName: string;
+  songId: number;
+  songName: string;
+  songNumber: number;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -320,4 +340,6 @@ export type {
   NewSong,
   GetSongsNewResponse,
   RcdRefreshV2Response,
+  KeepSongV2,
+  GetKeepResponse,
 };

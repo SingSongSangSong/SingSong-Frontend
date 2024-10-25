@@ -18,9 +18,14 @@ const LlmModule = ({onPressSearch}: LlmModuleProps) => {
     <>
       <View
         style={tw`flex-1 justify-center items-center pt-6 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
-        <CustomText style={tw`text-white text-[4] my-1 font-bold`}>
-          노래방에서 부를 노래를 고민하고 있나요?
-        </CustomText>
+        <View style={tw`flex-row items-center justify-between w-full`}>
+          <CustomText style={tw`text-white text-[4] my-1 font-bold pl-5`}>
+            {/* 노래방에서 부를 노래를 고민하고 있나요? */}
+            맞는 상황이 없으신가요? AI에게 물어보세요!
+          </CustomText>
+          <View>{}</View>
+        </View>
+
         {/* <View style={tw`flex-row items-center`}>
           <SingsongIcon width={width * 0.2} height={186} />
           <TextIcon width={width * 0.5} height={186} />

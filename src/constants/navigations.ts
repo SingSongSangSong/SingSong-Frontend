@@ -9,9 +9,10 @@ const authNavigations = {
 } as const;
 
 const mainTabNavigations = {
-  HOME: 'Home',
-  PLAYGROUND: 'Playground',
-  KEEP: 'Keep',
+  HOME: '홈',
+  PLAYGROUND: '게시판',
+  KEEP: '보관함',
+  SEARCH: '검색',
 } as const;
 
 const appStackNavigations = {
@@ -57,6 +58,10 @@ const playgroundStackNavigations = {
   PLAYGROUND_POST_SONG_ADDITION: '_PlaygroundPostSongAddition',
 } as const;
 
+const searchStackNavigations = {
+  SEARCH: '_Search',
+} as const;
+
 export {
   authNavigations,
   playlistNavigations,
@@ -65,4 +70,5 @@ export {
   homeStackNavigations,
   keepStackNavigations,
   playgroundStackNavigations,
+  searchStackNavigations,
 };

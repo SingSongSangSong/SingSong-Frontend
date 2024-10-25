@@ -6,6 +6,7 @@ import {
   keepStackNavigations,
   mainTabNavigations,
   playgroundStackNavigations,
+  searchStackNavigations,
 } from '../../constants';
 import {MainTabParamList} from '../../types';
 import HomeStackNavigator from '../stack/HomeStackNavigator';
@@ -21,6 +22,9 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Platform} from 'react-native';
 import PlaygroundStackNavigator from '../stack/PlaygroundStackNavigator';
+import SearchIcon from '../../assets/svg/homeSearch.svg';
+import SearchIconActive from '../../assets/svg/homeSearchFilled.svg';
+import SearchStackNavigator from '../stack/SearchStackNavigator';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -35,6 +39,8 @@ const getTabBarIcon = (
       return focused ? HomeIconActive : HomeIcon;
     case mainTabNavigations.KEEP:
       return focused ? StarIconActive : StarIcon;
+    case mainTabNavigations.SEARCH:
+      return focused ? SearchIconActive : SearchIcon;
     default:
       return undefined;
   }
@@ -77,7 +83,8 @@ const MainTabNavigator = () => {
             routeName ===
               playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT ||
             routeName ===
-              playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION
+              playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION ||
+            routeName === homeStackNavigations.NEW_SONG
           ) {
             return true;
           }
@@ -124,16 +131,21 @@ const MainTabNavigator = () => {
         };
       }}>
       <Tab.Screen
-        name={mainTabNavigations.PLAYGROUND}
-        component={PlaygroundStackNavigator}
-      />
-      <Tab.Screen
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
       <Tab.Screen
+        name={mainTabNavigations.SEARCH}
+        // component={HomeStackNavigator}
+        component={SearchStackNavigator}
+      />
+      <Tab.Screen
         name={mainTabNavigations.KEEP}
         component={KeepStackNavigator}
+      />
+      <Tab.Screen
+        name={mainTabNavigations.PLAYGROUND}
+        component={PlaygroundStackNavigator}
       />
     </Tab.Navigator>
   );
