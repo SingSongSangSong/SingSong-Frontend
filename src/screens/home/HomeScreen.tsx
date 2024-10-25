@@ -11,6 +11,7 @@ import {
   Dimensions,
   TouchableOpacity,
   RefreshControl,
+  Linking,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -49,6 +50,8 @@ import {AppEventsLogger} from 'react-native-fbsdk-next';
 import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
 import {log} from '@react-native-firebase/crashlytics';
+import CuImageIcon from '../../assets/svg/cuImage.svg';
+import BannerIcon from '../../assets/svg/banner.svg';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -376,6 +379,25 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressCommentButton={handleOnCommentPress}
             refreshing={refreshing}
           />
+          <TouchableOpacity
+            style={tw`flex-row items-center justify-between bg-[${designatedColor.YELLOW}]`}
+            onPress={() => {
+              Linking.openURL('https://forms.gle/TXytjUW6Rfiqu7vw6');
+            }}
+            activeOpacity={1.0}>
+            <View style={tw`pl-3`}>
+              {/* <CustomText
+                style={tw`text-[${designatedColor.BLACK}] font-extrabold text-[16px]`}>
+                싱송생송 만족도 설문 조사하고
+              </CustomText>
+              <CustomText
+                style={tw`text-[${designatedColor.VIOLET4}] font-extrabold text-[16px]`}>
+                편의점 5000원 쿠폰 받자!
+              </CustomText> */}
+              <BannerIcon width={screen.width * 0.7} height={100} />
+            </View>
+            <CuImageIcon width={screen.width * 0.25} height={100} />
+          </TouchableOpacity>
           <TaglistModule
             onPressTagButton={handleOnTagPress}
             // onPressTotalButton={handleOnPressTotalButton}
