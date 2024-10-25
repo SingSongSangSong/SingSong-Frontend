@@ -6,6 +6,7 @@ const getKeepV2 = async (filter: string, cursor: number, size: number) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
+    console.log('token for getKeepV2', token);
 
     const params: {filter: string; cursor?: number; size: number} = {
       filter: filter,

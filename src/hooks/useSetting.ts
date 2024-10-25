@@ -6,6 +6,8 @@ import postMemberWithdraw from '../api/member/postMemberWithdraw';
 import Toast from 'react-native-toast-message';
 // import {useQuery} from '@tanstack/react-query';
 import {isEmptyObject} from '../utils';
+import useKeepV2Store from '../store/useKeepV2Store';
+import {reset} from '@react-native-firebase/remote-config';
 
 const useSetting = () => {
   const memberInfo = useMemberStore(state => state.memberInfo);
@@ -13,6 +15,8 @@ const useSetting = () => {
   const provider = useMemberStore(state => state.provider);
   const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
   const clearProvider = useMemberStore(state => state.clearProvider);
+  const resetKeepList = useKeepV2Store(state => state.resetKeepList);
+  const setIsInitalized = useKeepV2Store(state => state.setIsInitialized);
 
   // const {
   //   data: tempMemberInfo,
@@ -51,6 +55,8 @@ const useSetting = () => {
       const result = await postMemberLogout();
       clearMemberInfo();
       clearProvider();
+      resetKeepList();
+      // setIsInitalized(true);
 
       // console.log('Logout Result:', result);
     } catch (err) {
@@ -68,6 +74,8 @@ const useSetting = () => {
     await postMemberWithdraw();
     clearMemberInfo();
     clearProvider();
+    resetKeepList();
+    // setIsInitalized(true);
   };
 
   return {
@@ -77,6 +85,8 @@ const useSetting = () => {
     handleWithdraw,
     clearMemberInfo,
     clearProvider,
+    resetKeepList,
+    setIsInitalized,
   };
 };
 

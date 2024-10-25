@@ -224,12 +224,6 @@ const HomeScreen = (props: HomeScreenProps) => {
     });
   };
 
-  const handleOnPressAiTotalButton = () => {
-    logTrack('ai_recommendation_total_button_click');
-    props.navigation.navigate(homeStackNavigations.AI_RECOMMENDATION);
-    // console.log('AI 추천 전체보기 버튼 클릭');
-  };
-
   const handleOnPressNewSongTotalButton = () => {
     logTrack('new_song_total_button_click');
     props.navigation.navigate(homeStackNavigations.NEW_SONG);
@@ -386,14 +380,6 @@ const HomeScreen = (props: HomeScreenProps) => {
             }}
             activeOpacity={1.0}>
             <View style={tw`pl-3`}>
-              {/* <CustomText
-                style={tw`text-[${designatedColor.BLACK}] font-extrabold text-[16px]`}>
-                싱송생송 만족도 설문 조사하고
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.VIOLET4}] font-extrabold text-[16px]`}>
-                편의점 5000원 쿠폰 받자!
-              </CustomText> */}
               <BannerIcon width={screen.width * 0.7} height={100} />
             </View>
             <CuImageIcon width={screen.width * 0.25} height={100} />

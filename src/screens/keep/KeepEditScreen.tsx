@@ -61,7 +61,7 @@ function KeepEditScreen(props: KeepEditScreenProps) {
         ) : (
           <View style={tw`flex-1 justify-center items-center`}>
             <CustomText style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
-              KEEP이 비어있어요
+              보관함이 비어있어요
             </CustomText>
           </View>
         )}

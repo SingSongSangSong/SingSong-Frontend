@@ -78,6 +78,7 @@ type KeepStackParamList = {
     reportCommentId: number;
     reportSubjectMemberId: number;
   };
+  [keepStackNavigations.KEEP_AI_RECOMMENDATION]: undefined;
 };
 
 type SearchStackParamList = {

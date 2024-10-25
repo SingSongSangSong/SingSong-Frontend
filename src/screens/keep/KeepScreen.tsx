@@ -6,18 +6,20 @@ import {
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
-import {KeepSongsV2List} from '../../components';
+import {AiSongCardModule, KeepSongsV2List} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
-import {logButtonClick, logPageView} from '../../utils';
+import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
 import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
+import KeepInfoIcon from '../../assets/svg/keepInfo.svg';
 
 type KeepScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -55,7 +57,42 @@ function KeepScreen(props: KeepScreenProps) {
     });
   };
 
+  const handleOnPressAiTotalButton = () => {
+    logTrack('ai_recommendation_total_button_click');
+    props.navigation.navigate(keepStackNavigations.KEEP_AI_RECOMMENDATION);
+    // console.log('AI 추천 전체보기 버튼 클릭');
+  };
+
+  const handleOnSongPress = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+    melonLink: string,
+    isMr: boolean,
+    isLive: boolean,
+  ) => {
+    amplitude.track('preview_song_button_click');
+    logButtonClick('preview_song_button_click');
+    props.navigation.navigate({
+      key: 'MyUniqueKeyForSongDetail',
+      name: keepStackNavigations.KEEP_SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album: album || '',
+        melonLink,
+        isMr,
+        isLive,
+      },
+    });
+  };
+
   const insets = useSafeAreaInsets();
+  const screen = Dimensions.get('window');
 
   const showFilter = (filter: string) => {
     switch (filter) {
@@ -68,6 +105,17 @@ function KeepScreen(props: KeepScreenProps) {
       default:
         return filter; // 다른 값은 그대로 반환
     }
+  };
+
+  const renderHeader = () => {
+    return (
+      <AiSongCardModule
+        onPressTotalButton={handleOnPressAiTotalButton}
+        onPressSongButton={handleOnSongPress}
+        refreshing={keepHandler.refreshing}
+        isShowed={false}
+      />
+    );
   };
 
   return (
@@ -116,6 +164,7 @@ function KeepScreen(props: KeepScreenProps) {
               isLoading={keepHandler.isLoading}
               refreshing={keepHandler.refreshing}
               onSongPress={_onSongPress}
+              renderHeader={renderHeader}
             />
           </>
         ) : keepHandler.isLengthZero ? (
@@ -128,10 +177,26 @@ function KeepScreen(props: KeepScreenProps) {
           //     </View>
           //   )}
           // </View>
-          <View style={tw`h-full w-full justify-center items-center`}>
-            <CustomText style={tw`text-[${designatedColor.VIOLET2}] font-bold`}>
-              KEEP이 비어있어요
-            </CustomText>
+          <View style={tw`flex-1 h-full w-full items-center`}>
+            <AiSongCardModule
+              onPressTotalButton={handleOnPressAiTotalButton}
+              onPressSongButton={handleOnSongPress}
+              refreshing={keepHandler.refreshing}
+              isShowed={true}
+            />
+            <View style={tw`w-full items-center py-10`}>
+              <CustomText
+                style={tw`text-[${designatedColor.VIOLET2}] font-bold text-[18px] py-2`}>
+                보관함이 비어있어요
+              </CustomText>
+              <CustomText style={tw`text-[${designatedColor.GRAY1}] font-bold`}>
+                정확한 추천을 할 수 있도록 보관함에 노래를 추가해주세요
+              </CustomText>
+              <KeepInfoIcon
+                width={screen.width * 0.9}
+                height={screen.height * 0.2}
+              />
+            </View>
           </View>
         ) : (
           <View />

@@ -21,6 +21,7 @@ interface KeepSongsV2ListProps {
   onRefresh: () => void;
   isLoading: boolean;
   refreshing: boolean;
+  renderHeader: () => JSX.Element;
 }
 
 const KeepSongsV2List = ({
@@ -30,32 +31,39 @@ const KeepSongsV2List = ({
   onRefresh,
   isLoading,
   refreshing,
+  renderHeader,
 }: KeepSongsV2ListProps) => {
-  const renderItem = ({item}: {item: KeepSongV2}) => (
-    // <View>
-    <KeepSongV2Item
-      songId={item.songId}
-      songNumber={item.songNumber}
-      songName={item.songName}
-      singerName={item.singerName}
-      album={item.album}
-      melonLink={item.melonLink}
-      isMr={item.isMr}
-      isLive={item.isLive}
-      onSongPress={() =>
-        onSongPress(
-          item.songId,
-          item.songNumber,
-          item.songName,
-          item.singerName,
-          item.album,
-          item.melonLink || '',
-          item.isMr,
-          item.isLive || false,
-        )
-      }
-    />
-    // </View>
+  const renderItem = ({item, index}: {item: KeepSongV2; index: number}) => (
+    <>
+      {index === 0 && (
+        <View style={tw`mb-4`}>
+          {/* 헤더 컴포넌트를 여기 추가 */}
+          {renderHeader()}
+        </View>
+      )}
+      <KeepSongV2Item
+        songId={item.songId}
+        songNumber={item.songNumber}
+        songName={item.songName}
+        singerName={item.singerName}
+        album={item.album}
+        melonLink={item.melonLink}
+        isMr={item.isMr}
+        isLive={item.isLive}
+        onSongPress={() =>
+          onSongPress(
+            item.songId,
+            item.songNumber,
+            item.songName,
+            item.singerName,
+            item.album,
+            item.melonLink || '',
+            item.isMr,
+            item.isLive || false,
+          )
+        }
+      />
+    </>
   );
 
   return (
@@ -65,6 +73,9 @@ const KeepSongsV2List = ({
       keyExtractor={item => item.songId.toString()}
       onEndReached={handleRefreshKeep}
       onEndReachedThreshold={0.1}
+      contentContainerStyle={tw`py-2`}
+      // ListHeaderComponent={renderHeader}
+      // ListFooterComponentStyle={tw`py-10`}
       ListFooterComponent={() =>
         isLoading ? (
           <View style={tw`py-10`}>

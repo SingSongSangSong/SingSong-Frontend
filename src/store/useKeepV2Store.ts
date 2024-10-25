@@ -13,6 +13,7 @@ interface KeepV2State {
   setLastCursor: (lastCursor: number) => void;
   isEnded: boolean;
   setIsEnded: (isEnded: boolean) => void;
+  resetKeepList: () => void; // 초기화 함수 추가
 }
 
 const useKeepV2Store = create<KeepV2State>(set => {
@@ -61,6 +62,16 @@ const useKeepV2Store = create<KeepV2State>(set => {
       set(() => ({
         isEnded,
       }));
+    },
+
+    resetKeepList: () => {
+      set(() => ({
+        keepList: [],
+        isInitialized: true,
+        selectedFilter: 'recent',
+        lastCursor: -1,
+        isEnded: false,
+      })); // 상태를 initState로 재설정
     },
   };
 });

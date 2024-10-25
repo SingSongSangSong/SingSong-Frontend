@@ -58,6 +58,14 @@ const useKeep = () => {
     }
   }, [tempKeep]);
 
+  useEffect(() => {
+    if (keepList) {
+      if (keepList.length == 0) {
+        setIsLengthZero(true);
+      }
+    }
+  }, [keepList]);
+
   // const setInitKeep = useCallback(async () => {
   //   setIsKeepLoading(true);
   //   const tempData = await getKeepV2(filter, lastCursor, size);

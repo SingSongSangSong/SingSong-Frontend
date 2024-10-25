@@ -21,12 +21,14 @@ interface AiSongCardModuleProps {
     isLive: boolean,
   ) => void;
   refreshing: boolean;
+  isShowed: boolean;
 }
 
 const AiSongCardModule = ({
   onPressTotalButton,
   onPressSongButton,
   refreshing,
+  isShowed,
 }: AiSongCardModuleProps) => {
   const [isTimeoutReached, setIsTimeoutReached] = useState<boolean>(false);
   const setLoadingVisible = useSongStore(state => state.setLoadingVisible);
@@ -92,6 +94,7 @@ const AiSongCardModule = ({
               onPress={onPressTotalButton}
               data={rcdRecommendationSongs}
               onSongPress={onPressSongButton}
+              isShowed={isShowed}
             />
           </View>
         </View>

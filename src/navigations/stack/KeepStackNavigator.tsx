@@ -18,6 +18,7 @@ import RecommentScreen from '../../screens/song/RecommentScreen';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import ReportScreen from '../../screens/song/ReportScreen';
 import {Platform} from 'react-native';
+import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendationScreen';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -132,6 +133,23 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
           headerStyle: {
             backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
           },
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_AI_RECOMMENDATION}
+        component={RcdRecommendationScreen}
+        options={({navigation}) => ({
+          headerShown: true,
+          headerTitle: "AI's PICK",
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen

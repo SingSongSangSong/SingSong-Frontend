@@ -1,8 +1,8 @@
 import {SafeAreaView, View} from 'react-native';
 import React, {useEffect} from 'react';
 import tw from 'twrnc';
-import {HomeStackParamList} from '../../types';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {KeepStackParamList} from '../../types';
+import {designatedColor, keepStackNavigations} from '../../constants';
 import {RefreshSongsList} from '../../components';
 import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
@@ -10,8 +10,8 @@ import useAiSong from '../../hooks/useAiSong';
 import {StackScreenProps} from '@react-navigation/stack';
 
 type RcdRecommendationScreenProps = StackScreenProps<
-  HomeStackParamList,
-  typeof homeStackNavigations.AI_RECOMMENDATION
+  KeepStackParamList,
+  typeof keepStackNavigations.KEEP_AI_RECOMMENDATION
 >;
 
 function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
@@ -36,7 +36,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
   ) => {
     logButtonClick('ai_recommendation_song_button_click');
     amplitude.track('ai_recommendation_song_button_click');
-    props.navigation.push(homeStackNavigations.SONG_DETAIL, {
+    props.navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
       songId,
       songNumber,
       songName,

@@ -73,7 +73,7 @@ const MainTabNavigator = () => {
             routeName === homeStackNavigations.BLACKLIST ||
             routeName === keepStackNavigations.KEEP_SONG_DETAIL ||
             routeName === homeStackNavigations.TAG_DETAIL ||
-            routeName === homeStackNavigations.AI_RECOMMENDATION ||
+            // routeName === homeStackNavigations.AI_RECOMMENDATION ||
             routeName === homeStackNavigations.NICKNAME_CHANGE ||
             routeName === homeStackNavigations.AI_LLM ||
             routeName === homeStackNavigations.AI_LLM_RESULT ||
@@ -84,7 +84,8 @@ const MainTabNavigator = () => {
               playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT ||
             routeName ===
               playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION ||
-            routeName === homeStackNavigations.NEW_SONG
+            routeName === homeStackNavigations.NEW_SONG ||
+            routeName === keepStackNavigations.KEEP_AI_RECOMMENDATION
           ) {
             return true;
           }

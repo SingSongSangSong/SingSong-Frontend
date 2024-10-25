@@ -12,6 +12,7 @@ import {AppStackParamList} from '../types';
 import GuestStore from '../store/GuestStore';
 import postMemberLoginV2 from '../api/member/postMemberLoginV2';
 import {logTrack} from '../utils';
+import useKeepV2Store from '../store/useKeepV2Store';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<
@@ -32,6 +33,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
   // const [prValue, setPrValue] = useState('');
   const {setProvider} = useMemberStore();
   const {setSecureValue} = TokenStore();
+  const setIsInitialized = useKeepV2Store(state => state.setIsInitialized);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -50,6 +52,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
 
   //회원가입인 경우
   const handleKakaoLogin = async () => {
+    setIsInitialized(false);
     setProvider('KAKAO_KEY');
     try {
       setIsLoggedProcess(true); //true
@@ -118,6 +121,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
 
   //회원가입인 경우
   const handleAppleLogin = async () => {
+    setIsInitialized(false);
     setProvider('APPLE_KEY');
     try {
       setIsLoggedProcess(true); //true
@@ -194,6 +198,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
   // };
 
   const handleGuestLogin = async () => {
+    setIsInitialized(false);
     setGuestState(true);
     setIsLoggedProcess(true);
     const data = await postMemberLoginV2('', 'Anonymous');

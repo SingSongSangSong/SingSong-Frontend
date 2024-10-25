@@ -89,6 +89,8 @@ function SettingScreen(props: SettingScreenProps) {
     removeSecureValue(REFRESH_TOKEN);
     settingHandler.clearMemberInfo();
     settingHandler.clearProvider();
+    settingHandler.resetKeepList();
+    // settingHandler.setIsInitalized(true);
     await setGuestState(false);
     props.navigation.dispatch(
       CommonActions.reset({

@@ -87,7 +87,7 @@ function HomeStackNavigator() {
           ),
         })}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={homeStackNavigations.AI_RECOMMENDATION}
         component={RcdRecommendationScreen}
         options={({navigation}) => ({
@@ -103,7 +103,7 @@ function HomeStackNavigator() {
             />
           ),
         })}
-      />
+      /> */}
       <Stack.Screen
         name={homeStackNavigations.SONG_DETAIL}
         component={SongScreen}
