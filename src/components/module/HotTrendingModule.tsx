@@ -151,7 +151,7 @@ const HotTrendingModule = ({
 
   return (
     <View
-      style={tw`flex-1 pb-15 pt-5 mt-5 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
+      style={tw`flex-1 pb-2 mt-5 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
       {/* Header Section */}
       <View style={tw`flex-row justify-between mx-4 mt-6`}>
         <View style={tw`flex-row items-end mb-2`}>
@@ -183,6 +183,11 @@ const HotTrendingModule = ({
           </Text>
           <ToggleButton toggleSwitch={toggleSwitch} />
         </View> */}
+      </View>
+      <View style={tw`pl-4 pb-2`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
+          다른 사람들이 관심 가지고 있는 노래에요
+        </CustomText>
       </View>
       {/* Trending Content */}
       <View>

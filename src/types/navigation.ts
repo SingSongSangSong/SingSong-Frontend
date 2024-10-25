@@ -5,6 +5,7 @@ import {
   keepStackNavigations,
   mainTabNavigations,
   playgroundStackNavigations,
+  searchStackNavigations,
 } from '../constants';
 import {Comment} from './comment';
 import {Song} from './songs';
@@ -18,6 +19,7 @@ type MainTabParamList = {
   [mainTabNavigations.PLAYGROUND]: undefined;
   [mainTabNavigations.HOME]: undefined;
   [mainTabNavigations.KEEP]: undefined;
+  [mainTabNavigations.SEARCH]: undefined;
 };
 
 type AppStackParamList = {
@@ -78,6 +80,10 @@ type KeepStackParamList = {
   };
 };
 
+type SearchStackParamList = {
+  [searchStackNavigations.SEARCH]: undefined;
+};
+
 type PlaygroundStackParamList = {
   [playgroundStackNavigations.PLAYGROUND]: undefined;
   [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]: {
@@ -108,4 +114,5 @@ export type {
   HomeStackParamList,
   KeepStackParamList,
   PlaygroundStackParamList,
+  SearchStackParamList,
 };

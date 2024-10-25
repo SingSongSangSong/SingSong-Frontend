@@ -376,13 +376,24 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressCommentButton={handleOnCommentPress}
             refreshing={refreshing}
           />
-          <AiSongCardModule
+          <TaglistModule
+            onPressTagButton={handleOnTagPress}
+            // onPressTotalButton={handleOnPressTotalButton}
+          />
+          <LlmModule onPressSearch={handleOnPressLlm} />
+          {/* <KeywordModule refreshing={refreshing} /> */}
+
+          {/* <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
             onPressSongButton={handleOnSongPress}
             refreshing={refreshing}
+          /> */}
+          <HotTrendingModule
+            onPressSongButton={handleOnHotTrendingSongPress}
+            // isScrollingHome={isScrollingHome}
+            isScrollingHome={touchableRef}
+            refreshing={refreshing}
           />
-          <LlmModule onPressSearch={handleOnPressLlm} />
-          <KeywordModule refreshing={refreshing} />
           <NewSongModule
             onPressTotalButton={handleOnPressNewSongTotalButton}
             onPressSongButton={handleOnSongPress}
@@ -390,16 +401,7 @@ const HomeScreen = (props: HomeScreenProps) => {
           />
 
           {/* )} */}
-          <TaglistModule
-            onPressTagButton={handleOnTagPress}
-            // onPressTotalButton={handleOnPressTotalButton}
-          />
-          <HotTrendingModule
-            onPressSongButton={handleOnHotTrendingSongPress}
-            // isScrollingHome={isScrollingHome}
-            isScrollingHome={touchableRef}
-            refreshing={refreshing}
-          />
+
           {/* <SongCardModule
             onPressSongButton={handleOnSongPress}
             onPressTotalButton={handleOnPreviewTagPress}
