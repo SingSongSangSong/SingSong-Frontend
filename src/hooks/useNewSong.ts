@@ -7,6 +7,8 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import useKeepListStore from '../store/useKeepStore';
 import {NewSong} from '../types';
 import getSongsNew from '../api/newSong/getSongsNew';
+import useKeepV2Store from '../store/useKeepV2Store';
+import getKeepV2 from '../api/keep/getKeepV2';
 
 // type UseAiSongProps = {
 //   navigation: StackNavigationProp<
@@ -19,9 +21,14 @@ const useNewSong = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [newSongsLst, setNewSongsLst] = useState<NewSong[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);
-  const setKeepList = useKeepListStore(state => state.setKeepList);
+  // const setKeepList = useKeepListStore(state => state.setKeepList);
   //   const [pageId, setPageId] = useState<number>(1);
   const [lastCursor, setLastCursor] = useState<number>(-1);
+
+  const setKeepList = useKeepV2Store(state => state.setKeepList);
+  const setGlobalLastCursor = useKeepV2Store(state => state.setLastCursor);
+  const setIsEnded = useKeepV2Store(state => state.setIsEnded);
+  const selectedFilter = useKeepV2Store(state => state.selectedFilter);
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -93,8 +100,19 @@ const useNewSong = () => {
   const _onKeepAddPress = async (songId: number) => {
     amplitude.track('new_song_keep_button_click');
     logButtonClick('new_song_keep_button_click');
-    const tempKeepList = await postKeep([songId]);
-    setKeepList(tempKeepList.data);
+    // const tempKeepList = await postKeep([songId]);
+    // setKeepList(tempKeepList.data);
+    postKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // postKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setGlobalLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
+
     Toast.show({
       type: 'selectedToast',
       text1: '보관함에 추가되었습니다.',
@@ -105,8 +123,19 @@ const useNewSong = () => {
 
   const _onKeepRemovePress = async (songId: number) => {
     // await deleteKeep([songId]);
-    const tempKeepList = await deleteKeep([songId]);
-    setKeepList(tempKeepList.data);
+    // const tempKeepList = await deleteKeep([songId]);
+    // setKeepList(tempKeepList.data);
+    deleteKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // deleteKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setGlobalLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
+
     Toast.show({
       type: 'selectedToast',
       text1: '보관함에서 삭제되었습니다.',

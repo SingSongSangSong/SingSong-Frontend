@@ -80,37 +80,37 @@ const useKeepEdit = () => {
   //   }),
   // );
 
-  const handleRemoveButton = () => {
-    Alert.alert(
-      '삭제',
-      '정말로 삭제하시겠습니까?',
-      [
-        {text: '취소', onPress: () => {}, style: 'cancel'},
-        {
-          text: '삭제',
-          onPress: () => {
-            // removedSong.map(song => {
-            //   removeSongFromKeep(song);
-            // });
-            // console.log('삭제');
-            handleDeleteKeep(removedSong);
-            setRemovedSong([]);
-            Toast.show({
-              type: 'selectedToast',
-              text1: '보관함에서 삭제되었습니다.',
-              position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
-              visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
-            });
-          },
-          style: 'destructive',
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () => {},
-      },
-    );
-  };
+  // const handleRemoveButton = () => {
+  //   Alert.alert(
+  //     '삭제',
+  //     '정말로 삭제하시겠습니까?',
+  //     [
+  //       {text: '취소', onPress: () => {}, style: 'cancel'},
+  //       {
+  //         text: '삭제',
+  //         onPress: () => {
+  //           // removedSong.map(song => {
+  //           //   removeSongFromKeep(song);
+  //           // });
+  //           // console.log('삭제');
+  //           handleDeleteKeep(removedSong);
+  //           setRemovedSong([]);
+  //           Toast.show({
+  //             type: 'selectedToast',
+  //             text1: '보관함에서 삭제되었습니다.',
+  //             position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+  //             visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+  //           });
+  //         },
+  //         style: 'destructive',
+  //       },
+  //     ],
+  //     {
+  //       cancelable: true,
+  //       onDismiss: () => {},
+  //     },
+  //   );
+  // };
 
   const handleInCircleButton = (songNumber: number) => {
     setRemovedSong(prevState => {
@@ -147,7 +147,7 @@ const useKeepEdit = () => {
     removedSong,
     handleIsAllSelected,
     handleIsAllDeleted,
-    handleRemoveButton,
+    // handleRemoveButton,
     handleInCircleButton,
     handleOutCircleButton,
     handleConfirmRemove,

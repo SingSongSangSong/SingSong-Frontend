@@ -83,7 +83,8 @@ const MainTabNavigator = () => {
             routeName ===
               playgroundStackNavigations.PLAYGROUND_COMMENT_REPORT ||
             routeName ===
-              playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION
+              playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION ||
+            routeName === homeStackNavigations.NEW_SONG
           ) {
             return true;
           }

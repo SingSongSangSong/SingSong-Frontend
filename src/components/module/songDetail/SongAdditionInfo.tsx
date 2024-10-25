@@ -6,7 +6,7 @@ import {SongInfo} from '../../../types';
 import getSongs from '../../../api/songs/getSongs';
 import KeepCountIcon from '../../../assets/svg/keepGray.svg';
 import CommentCountIcon from '../../../assets/svg/commentGray.svg';
-import useKeepListStore from '../../../store/useKeepStore';
+// import useKeepListStore from '../../../store/useKeepStore';
 import deleteKeep from '../../../api/keep/deleteKeep';
 import postKeep from '../../../api/keep/postKeep';
 import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
@@ -17,6 +17,8 @@ import Toast from 'react-native-toast-message';
 import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import CustomText from '../../text/CustomText';
+import useKeepV2Store from '../../../store/useKeepV2Store';
+import getKeepV2 from '../../../api/keep/getKeepV2';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -28,10 +30,14 @@ const SongAdditionInfo = ({
   handleOnPressComment,
 }: SongAdditionInfoProps) => {
   const [songInfo, setSongInfo] = useState<SongInfo>();
-  const setKeepList = useKeepListStore(state => state.setKeepList);
+  // const setKeepList = useKeepListStore(state => state.setKeepList);
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
   const commentCount = useCommentStore(state => state.commentCount);
   const setCommentCount = useCommentStore(state => state.setCommentCount);
+  const setKeepList = useKeepV2Store(state => state.setKeepList);
+  const setLastCursor = useKeepV2Store(state => state.setLastCursor);
+  const setIsEnded = useKeepV2Store(state => state.setIsEnded);
+  const selectedFilter = useKeepV2Store(state => state.selectedFilter);
 
   const setInitSongAdditionInfo = async (songId: number) => {
     // console.log('setInitSongAdditionInfo');
@@ -56,9 +62,20 @@ const SongAdditionInfo = ({
         isKeep: false,
         keepCount: songInfo!.keepCount - 1,
       });
-      deleteKeep([songId]).then(tempData => {
-        setKeepList(tempData.data);
-      });
+      // deleteKeep([songId]).then(tempData => {
+      //   setKeepList(tempData.data);
+      // });
+      deleteKeep([songId])
+        .then(() => getKeepV2(selectedFilter, -1, 20)) // deleteKeep 후 getKeep 호출
+        .then(tempData => {
+          setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+          setLastCursor(tempData.data.lastCursor);
+          setIsEnded(false);
+        })
+        .catch(error => {
+          console.error('Error updating keep list:', error);
+        });
+
       Toast.show({
         type: 'selectedToast',
         text1: '보관함에서 삭제되었습니다.',
@@ -72,9 +89,16 @@ const SongAdditionInfo = ({
         keepCount: songInfo!.keepCount + 1,
       });
 
-      postKeep([songId]).then(tempData => {
-        setKeepList(tempData.data);
-      });
+      postKeep([songId])
+        .then(() => getKeepV2(selectedFilter, -1, 20)) // postKeep 후 getKeep 호출
+        .then(tempData => {
+          setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+          setLastCursor(tempData.data.lastCursor);
+          setIsEnded(false);
+        })
+        .catch(error => {
+          console.error('Error updating keep list:', error);
+        });
       Toast.show({
         type: 'selectedToast',
         text1: '보관함에 추가되었습니다.',

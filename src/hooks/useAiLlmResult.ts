@@ -8,6 +8,8 @@ import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
 import useKeepListStore from '../store/useKeepStore';
 import Toast from 'react-native-toast-message';
+import getKeepV2 from '../api/keep/getKeepV2';
+import useKeepV2Store from '../store/useKeepV2Store';
 
 type UseAiLlmResultProps = {
   navigation: StackNavigationProp<
@@ -24,8 +26,13 @@ const useAiLlmResult = ({
   character,
 }: UseAiLlmResultProps) => {
   const [searchResult, setSearchResult] = useState<Song[]>();
-  const setKeepList = useKeepListStore(state => state.setKeepList);
+  // const setKeepList = useKeepListStore(state => state.setKeepList);
   const [characterIcon, setCharacterIcon] = useState<string>();
+
+  const setKeepList = useKeepV2Store(state => state.setKeepList);
+  const setLastCursor = useKeepV2Store(state => state.setLastCursor);
+  const setIsEnded = useKeepV2Store(state => state.setIsEnded);
+  const selectedFilter = useKeepV2Store(state => state.selectedFilter);
 
   useEffect(() => {
     setSearchResult(resultSong);
@@ -64,8 +71,20 @@ const useAiLlmResult = ({
   const handleOnKeepAddPress = async (songId: number) => {
     amplitude.track('llm_keep_button_click');
     logButtonClick('llm_keep_button_click');
-    const tempKeepList = await postKeep([songId]);
-    setKeepList(tempKeepList.data);
+    // const tempKeepList = await postKeep([songId]);
+    // setKeepList(tempKeepList.data);
+
+    postKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // postKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
+
     Toast.show({
       type: 'selectedToast',
       text1: '보관함에 추가되었습니다.',
@@ -76,8 +95,18 @@ const useAiLlmResult = ({
 
   const handleOnKeepRemovePress = async (songId: number) => {
     // await deleteKeep([songId]);
-    const tempKeepList = await deleteKeep([songId]);
-    setKeepList(tempKeepList.data);
+    // const tempKeepList = await deleteKeep([songId]);
+    // setKeepList(tempKeepList.data);
+    deleteKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // deleteKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
     Toast.show({
       type: 'selectedToast',
       text1: '보관함에서 삭제되었습니다.',
