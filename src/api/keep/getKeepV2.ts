@@ -14,6 +14,7 @@ const getKeepV2 = async (filter: string, cursor: number, size: number) => {
     if (cursor !== -1) {
       params.cursor = cursor;
     }
+    console.log('params for getKeepV2', params);
 
     const response = await axiosInstance.get<GetKeepResponse>('v2/keep', {
       params,

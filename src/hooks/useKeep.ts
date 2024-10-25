@@ -7,7 +7,7 @@ import useKeepV2Store from '../store/useKeepV2Store';
 
 const useKeep = () => {
   // const [isKeepLoading, setIsKeepLoading] = useState(false);
-  const [filter, setFilter] = useState<string>('recent');
+  const [selectedFilter, setSelectedFilter] = useState<string>('recent');
   // const [keepList, setKeepList] = useState<KeepSongV2[]>();
   const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,6 +21,8 @@ const useKeep = () => {
   const keepList = useKeepV2Store(state => state.keepList);
   const setKeepList = useKeepV2Store(state => state.setKeepList);
   const addKeepList = useKeepV2Store(state => state.addKeepList);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const filters = ['recent', 'old'];
 
   const {
     data: tempKeep,
@@ -28,7 +30,7 @@ const useKeep = () => {
     isFetching: isFetchingKeep,
   } = useQuery({
     queryKey: ['keeps'],
-    queryFn: () => getKeepV2(filter, -1, size),
+    queryFn: () => getKeepV2(selectedFilter, -1, size),
 
     staleTime: 0, // 1시간 동안 캐시 유지
     select: data => data.data,
@@ -66,8 +68,22 @@ const useKeep = () => {
 
   const handleOnRefreshKeep = async () => {
     try {
-      console.log('refresh!!');
       if (keepList) {
+        console.log(selectedFilter);
+        const keepData = await getKeepV2(selectedFilter, -1, size);
+        setKeepList(keepData.data.songs);
+        setLastCursor(keepData.data.lastCursor);
+        setIsEnded(false);
+      }
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+    }
+  };
+
+  const handleOnChangeKeep = async (filter: string) => {
+    try {
+      if (keepList) {
+        console.log(filter);
         const keepData = await getKeepV2(filter, -1, size);
         setKeepList(keepData.data.songs);
         setLastCursor(keepData.data.lastCursor);
@@ -93,7 +109,7 @@ const useKeep = () => {
         console.log('refreshing down keep');
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('down_keep');
-        getKeepV2(filter, lastCursor, size)
+        getKeepV2(selectedFilter, lastCursor, size)
           .then(response => {
             const keepData = response.data.songs;
             if (keepData.length === 0) {
@@ -120,7 +136,7 @@ const useKeep = () => {
   };
 
   const onRefresh = async () => {
-    // console.log('refreshing!!!!!');
+    console.log('refreshing!!!!! up!!');
     // setRefreshing(true);
 
     setRefreshing(true);
@@ -132,6 +148,17 @@ const useKeep = () => {
     }, 2000); // 새로고침 지연 시간
   };
 
+  const handleOnPressFilter = () => {
+    // console.log('성별 변경');
+    setIsModalVisible(true);
+  };
+
+  const handleOnPressChangeFilter = async (filter: string) => {
+    setSelectedFilter(filter);
+    // await handleOnRefreshKeep();
+    await handleOnChangeKeep(filter);
+  };
+
   return {
     keepList,
     handleDownRefreshKeep,
@@ -141,6 +168,12 @@ const useKeep = () => {
     keepError,
     isFetchingKeep,
     isLengthZero,
+    selectedFilter,
+    handleOnPressFilter,
+    filters,
+    isModalVisible,
+    setIsModalVisible,
+    handleOnPressChangeFilter,
   };
 };
 
