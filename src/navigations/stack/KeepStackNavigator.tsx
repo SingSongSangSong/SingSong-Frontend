@@ -66,7 +66,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         name={keepStackNavigations.KEEP}
         component={KeepScreen}
         options={({navigation}) => ({
-          headerTitle: 'KEEP', // 헤더 제목을 비움
+          headerTitle: '보관함', // 헤더 제목을 비움
           headerRight: () => (
             <NavButton
               onPress={() => handleOnPress(navigation)}
@@ -158,7 +158,7 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
         component={KeepEditScreen}
         options={({navigation}) => ({
           animationEnabled: false,
-          headerTitle: 'KEEP 편집', // 헤더 제목을 비움s
+          headerTitle: '보관함 편집', // 헤더 제목을 비움s
           headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
           headerLeft: () => (
             <IconButton
