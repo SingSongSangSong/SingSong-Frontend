@@ -7,11 +7,11 @@ import useKeepV2Store from '../store/useKeepV2Store';
 
 const useKeep = () => {
   // const [isKeepLoading, setIsKeepLoading] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>('recent');
+  // const [selectedFilter, setSelectedFilter] = useState<string>('recent');
   // const [keepList, setKeepList] = useState<KeepSongV2[]>();
-  const [lastCursor, setLastCursor] = useState<number>(-1);
+  // const [lastCursor, setLastCursor] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isEnded, setIsEnded] = useState<boolean>(false);
+  // const [isEnded, setIsEnded] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isLengthZero, setIsLengthZero] = useState<boolean>(false);
   const size = 20;
@@ -21,6 +21,13 @@ const useKeep = () => {
   const keepList = useKeepV2Store(state => state.keepList);
   const setKeepList = useKeepV2Store(state => state.setKeepList);
   const addKeepList = useKeepV2Store(state => state.addKeepList);
+  const lastCursor = useKeepV2Store(state => state.lastCursor);
+  const setLastCursor = useKeepV2Store(state => state.setLastCursor);
+  const selectedFilter = useKeepV2Store(state => state.selectedFilter);
+  const setSelectedFilter = useKeepV2Store(state => state.setSelectedFilter);
+  const isEnded = useKeepV2Store(state => state.isEnded);
+  const setIsEnded = useKeepV2Store(state => state.setIsEnded);
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const filters = ['recent', 'old'];
 

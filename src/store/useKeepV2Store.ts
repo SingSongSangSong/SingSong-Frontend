@@ -7,12 +7,21 @@ interface KeepV2State {
   setKeepList: (songs: KeepSongV2[]) => void;
   addKeepList: (songs: KeepSongV2[]) => void;
   setIsInitialized: (isInitialized: boolean) => void;
+  selectedFilter: string;
+  setSelectedFilter: (filter: string) => void;
+  lastCursor: number;
+  setLastCursor: (lastCursor: number) => void;
+  isEnded: boolean;
+  setIsEnded: (isEnded: boolean) => void;
 }
 
 const useKeepV2Store = create<KeepV2State>(set => {
   const initState = {
     keepList: [],
     isInitialized: false,
+    selectedFilter: 'recent',
+    lastCursor: -1,
+    isEnded: false,
   };
 
   return {
@@ -33,6 +42,24 @@ const useKeepV2Store = create<KeepV2State>(set => {
     setIsInitialized: (isInitialized: boolean) => {
       set(() => ({
         isInitialized,
+      }));
+    },
+
+    setSelectedFilter: (filter: string) => {
+      set(() => ({
+        selectedFilter: filter,
+      }));
+    },
+
+    setLastCursor: (lastCursor: number) => {
+      set(() => ({
+        lastCursor,
+      }));
+    },
+
+    setIsEnded: (isEnded: boolean) => {
+      set(() => ({
+        isEnded,
       }));
     },
   };

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
-import useKeep from '../../hooks/useKeep';
 import {
   CheckButton,
   CustomModal,
@@ -14,6 +13,7 @@ import CustomText from '../../components/text/CustomText';
 import {KeepStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import {logPageView} from '../../utils';
+import useKeepEdit from '../../hooks/useKeepEdit';
 
 type KeepEditScreenProps = StackScreenProps<
   KeepStackParamList,
@@ -21,7 +21,7 @@ type KeepEditScreenProps = StackScreenProps<
 >;
 
 function KeepEditScreen(props: KeepEditScreenProps) {
-  const keepHandler = useKeep();
+  const keepHandler = useKeepEdit();
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
