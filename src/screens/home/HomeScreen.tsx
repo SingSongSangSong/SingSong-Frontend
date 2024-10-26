@@ -388,8 +388,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressTagButton={handleOnTagPress}
             // onPressTotalButton={handleOnPressTotalButton}
           />
-          <LlmModule onPressSearch={handleOnPressLlm} />
-          {/* <KeywordModule refreshing={refreshing} /> */}
+          <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} />
 
           {/* <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}

@@ -5,6 +5,7 @@ import {TagIconButton} from '../button/TagIconButton';
 import * as Icons from '../../assets/svg/tags';
 import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import CustomText from '../text/CustomText';
+import {designatedColor} from '../../constants';
 
 type TaglistProps = {
   tags: string[];
@@ -43,10 +44,16 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
         onPress={rotateArrow}
         activeOpacity={0.8}
         style={tw`flex-row justify-between px-4 items-center mb-2`}>
-        <CustomText style={tw`text-white text-base my-2 font-bold`}>
-          {/* 어떤 노래를 찾으시나요? */}
-          상황에 맞는 노래를 찾아보세요!
-        </CustomText>
+        <View style={tw`flex-row items-center`}>
+          <CustomText
+            style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2 items-center`}>
+            장르별 노래
+          </CustomText>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[11px]`}>
+            상황에 맞는 노래를 찾아보세요!
+          </CustomText>
+        </View>
+
         <View style={tw`items-center my-2`}>
           <Animated.View style={{transform: [{rotate}]}}>
             {/* <Text style={tw`text-white text-xl`}>➤</Text> */}

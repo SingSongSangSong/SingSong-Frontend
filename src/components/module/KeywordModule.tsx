@@ -1,33 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ScrollView, View} from 'react-native';
 import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
 import tw from 'twrnc';
-// import InfoIcon from '../../assets/svg/Info.svg';
-// import {CustomTooltipInfo} from '../info/CustomTooltipInfo';
 import {Tooltip} from 'react-native-elements';
 import InfoIcon from '../../assets/svg/Info.svg';
 import {useQuery} from '@tanstack/react-query';
 import getRcdRecommendationSearchLog from '../../api/recommendation/getRcdRecommendationSearchLog';
-// import {useState} from 'react';
+
 interface KeywordModuleProps {
   refreshing: boolean;
 }
 
 const KeywordModule = ({refreshing}: KeywordModuleProps) => {
   const [sampleKeywords, setSampleKeywords] = useState<string[]>([]);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  //   const [visible, setVisible] = useState(false);
-  // useEffect(() => {
-  //   const randomKeywords = getRandomKeywords(keywordList, 3);
-  //   setSampleKeywords(randomKeywords);
-  // }, []);
-  const {
-    data: tempSearchLogs,
-    error: searchLogsError,
-    isFetching: isFetchingSearchLogs,
-    refetch,
-  } = useQuery({
+  const {data: tempSearchLogs, refetch} = useQuery({
     queryKey: ['searchLogs'],
     queryFn: getRcdRecommendationSearchLog,
     staleTime: 3600000,
@@ -42,17 +32,46 @@ const KeywordModule = ({refreshing}: KeywordModuleProps) => {
 
   useEffect(() => {
     if (tempSearchLogs) {
+      // console.log('tempSearchLogs:', tempSearchLogs);
       setSampleKeywords(tempSearchLogs);
     }
   }, [tempSearchLogs]);
 
+  const itemHeight = 40; // 각 키워드 항목의 높이를 설정하세요
+
+  useEffect(() => {
+    // 자동 스크롤 애니메이션
+    const interval = setInterval(() => {
+      if (scrollViewRef.current) {
+        setCurrentIndex(prevIndex => {
+          const nextIndex = prevIndex + 1;
+
+          if (nextIndex < sampleKeywords.length) {
+            // 마지막 항목이 아닐 때
+            scrollViewRef.current.scrollTo({
+              y: itemHeight * nextIndex,
+              animated: true,
+            });
+          } else {
+            // 마지막 항목에서 첫 번째로 부드럽게 이동
+            scrollViewRef.current.scrollTo({
+              y: 0,
+              animated: false,
+            });
+            return 0; // 인덱스를 처음으로 리셋
+          }
+
+          return nextIndex;
+        });
+      }
+    }, 2000); // 2초 간격으로 스크롤
+
+    return () => clearInterval(interval);
+  }, [sampleKeywords]);
+
   return (
-    <View
-      style={tw`flex-1 pb-4 mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
-      <View style={tw`flex-row items-center mx-4`}>
-        <CustomText style={tw`text-base text-white py-2 mr-1`}>
-          다른 사용자들이 검색한 키워드
-        </CustomText>
+    <View style={tw`flex-1 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+      {/* <View style={tw`flex-row items-center`}>
         <Tooltip
           popover={
             <CustomText
@@ -62,32 +81,47 @@ const KeywordModule = ({refreshing}: KeywordModuleProps) => {
               ]}>
               다른 사용자들이 검색한 키워드 중 가장 최근 검색어가 노출됩니다.
             </CustomText>
-          } // 툴팁에 표시할 내용
-          backgroundColor={designatedColor.GRAY5} // 툴팁 배경 색상
-          height={60} // 툴팁 높이
-          width={200} // 툴팁 너비
-          containerStyle={{borderRadius: 10}} // 툴팁 컨테이너 스타일
-          withOverlay={false} // 배경이 흐려지는 효과를 없앰
+          }
+          backgroundColor={designatedColor.GRAY5}
+          height={60}
+          width={200}
+          containerStyle={{borderRadius: 10}}
+          withOverlay={false}
           placement="top"
-          skipAndroidStatusBar // 안드로이드 상태 표시줄을 피해서 위치가 밀리는 현상을 줄임
-        >
-          {/* <Icon name="info" type="material" color="purple" size={24} /> */}
-          <InfoIcon width={16} height={16} />
+          skipAndroidStatusBar>
+          <InfoIcon width={14} height={14} />
         </Tooltip>
+        <CustomText
+          style={tw`text-[11px] text-white py-1 ml-1 text-[${designatedColor.GRAY1}]`}>
+          다른 사용자들이 검색한 키워드
+        </CustomText>
+      </View> */}
 
-        {/* <CustomTooltipInfo text=" 다른 사용자들이 검색한 키워드 중 가장 인기 있는 검색어가 노출됩니다." /> */}
-      </View>
-      {sampleKeywords.map((keyword, index) => (
-        <View key={index} style={tw`flex-row items-center mx-4 py-1`}>
-          <CustomText
-            style={[tw`text-base mr-2`, {color: designatedColor.VIOLET}]}>
-            #
-          </CustomText>
-          <CustomText style={[tw`text-sm`, {color: designatedColor.GRAY1}]}>
-            {keyword}
-          </CustomText>
-        </View>
-      ))}
+      {/* 텍스트 슬라이드 애니메이션 */}
+      <ScrollView
+        ref={scrollViewRef}
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        snapToInterval={itemHeight}
+        decelerationRate="normal"
+        style={{height: itemHeight}}>
+        {sampleKeywords &&
+          sampleKeywords.map((keyword, index) => (
+            <View key={index} style={{height: itemHeight}}>
+              <View style={tw`flex-row items-center mx-2 py-1`}>
+                <CustomText
+                  style={[tw`text-base mr-2`, {color: designatedColor.VIOLET}]}>
+                  #
+                </CustomText>
+                <CustomText
+                  style={[tw`text-sm`, {color: designatedColor.WHITE}]}>
+                  {keyword}
+                </CustomText>
+              </View>
+            </View>
+          ))}
+      </ScrollView>
     </View>
   );
 };
