@@ -11,7 +11,7 @@ const getSearchSongName = async (
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetDetailSearchSongResponse>(
-      'v1/search/song-name',
+      'v2/search/song-name',
       {
         params: {keyword: searchKeyword, page: page, size: size},
         headers: {

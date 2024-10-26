@@ -7,7 +7,7 @@ const getSearch = async (searchKeyword: string) => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<GetSearchSongResponse>(
-      `v1/search/${searchKeyword}`,
+      `v2/search/${searchKeyword}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -15,7 +15,7 @@ const getSearch = async (searchKeyword: string) => {
         },
       },
     );
-    // console.log('data for getSearch response', response.data);
+    console.log('data for getSearch response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getSearch:', error);

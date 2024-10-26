@@ -17,6 +17,10 @@ import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import Toast from 'react-native-toast-message';
+import deleteKeep from '../../api/keep/deleteKeep';
+import getKeepV2 from '../../api/keep/getKeepV2';
+import useKeepV2Store from '../../store/useKeepV2Store';
+import postKeep from '../../api/keep/postKeep';
 
 type SearchScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -29,6 +33,10 @@ function SearchScreen(props: SearchScreenProps) {
   const [showSearchResult, setShowSearchResult] = useState<boolean>(true); // 상태 추가
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const addSearchRecent = useSearchRecentStore(state => state.addSearchRecent);
+  const selectedFilter = useKeepV2Store(state => state.selectedFilter);
+  const setKeepList = useKeepV2Store(state => state.setKeepList);
+  const setLastCursor = useKeepV2Store(state => state.setLastCursor);
+  const setIsEnded = useKeepV2Store(state => state.setIsEnded);
 
   useEffect(() => {
     logPageView(props.route.name);
@@ -74,6 +82,53 @@ function SearchScreen(props: SearchScreenProps) {
 
   const isAllKeysEmpty = (searchData: GetSearchSong) => {
     return Object.values(searchData).every(list => list.length === 0);
+  };
+
+  const handleOnKeepAddPress = async (songId: number) => {
+    amplitude.track('search_result_keep_button_click');
+    logButtonClick('search_result_keep_button_click');
+    // const tempKeepList = await postKeep([songId]);
+    // setKeepList(tempKeepList.data);
+
+    postKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // postKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
+
+    Toast.show({
+      type: 'selectedToast',
+      text1: '보관함에 추가되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
+  };
+
+  const handleOnKeepRemovePress = async (songId: number) => {
+    // await deleteKeep([songId]);
+    // const tempKeepList = await deleteKeep([songId]);
+    // setKeepList(tempKeepList.data);
+    deleteKeep([songId])
+      .then(() => getKeepV2(selectedFilter, -1, 20)) // deleteKeep 후 getKeep 호출
+      .then(tempData => {
+        setKeepList(tempData.data.songs); // getKeep 결과로 상태 업데이트
+        setLastCursor(tempData.data.lastCursor);
+        setIsEnded(false);
+      })
+      .catch(error => {
+        console.error('Error updating keep list:', error);
+      });
+    Toast.show({
+      type: 'selectedToast',
+      text1: '보관함에서 삭제되었습니다.',
+      position: 'bottom', // 토스트 메시지가 화면 아래에 뜨도록 설정
+      visibilityTime: 2000, // 토스트가 표시될 시간 (밀리초 단위, 2초로 설정)
+    });
   };
 
   return (
@@ -125,6 +180,8 @@ function SearchScreen(props: SearchScreenProps) {
             inputText={inputText}
             searchData={searchData}
             navigation={props.navigation}
+            handleOnKeepAddPress={handleOnKeepAddPress}
+            handleOnKeepRemovePress={handleOnKeepRemovePress}
           />
         ))}
     </SafeAreaView>

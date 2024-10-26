@@ -70,7 +70,8 @@ const KeywordModule = ({refreshing}: KeywordModuleProps) => {
   }, [sampleKeywords]);
 
   return (
-    <View style={tw`flex-1 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+    <View
+      style={tw`flex-1 w-full mt-2 bg-[${designatedColor.BACKGROUND_BLACK}] ml-8`}>
       {/* <View style={tw`flex-row items-center`}>
         <Tooltip
           popover={

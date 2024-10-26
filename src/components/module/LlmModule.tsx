@@ -15,7 +15,7 @@ const LlmModule = ({onPressSearch, refreshing}: LlmModuleProps) => {
   return (
     <>
       <View
-        style={tw`flex-1 justify-center items-center pt-6 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
+        style={tw`flex-1 items-center pt-6 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
         <View style={tw`w-full justify-start pl-6`}>
           <CustomText
             style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2`}>
@@ -26,7 +26,6 @@ const LlmModule = ({onPressSearch, refreshing}: LlmModuleProps) => {
             나에게 딱 맞는 맞춤 노래를 추천받아 보세요!
           </CustomText>
         </View>
-
         <KeywordModule refreshing={refreshing} />
 
         {/* <View style={tw`flex-row items-center`}>

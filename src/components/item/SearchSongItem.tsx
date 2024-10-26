@@ -162,9 +162,9 @@ const SearchSongItem = ({
                 activeOpacity={0.8}
                 style={tw`p-2`}>
                 {isKeepPressed ? (
-                  <KeepFilledIcon width={20} height={20} />
+                  <KeepFilledIcon width={16} height={16} />
                 ) : (
-                  <KeepIcon width={20} height={20} />
+                  <KeepIcon width={16} height={16} />
                 )}
               </TouchableOpacity>
             )}

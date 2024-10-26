@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {GetDetailSearchSongResponse, GetSearchSong, Song} from '../../../types';
-import {OutlineButton, SearchSongsList, SongsList} from '../..';
+import {OutlineButton, SearchSongsList} from '../..';
 import {designatedColor, homeStackNavigations} from '../../../constants';
 import {
   View,
-  Text,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -21,6 +20,8 @@ type SearchResultProps = {
   inputText: string;
   searchData: GetSearchSong;
   navigation: any;
+  handleOnKeepAddPress: (songId: number) => void;
+  handleOnKeepRemovePress: (songId: number) => void;
 };
 
 const categories = [
@@ -34,6 +35,8 @@ const SearchResult = ({
   inputText,
   searchData,
   navigation,
+  handleOnKeepAddPress,
+  handleOnKeepRemovePress,
 }: SearchResultProps) => {
   const [category, setCategory] = useState<string>('all');
   const [page, setPage] = useState<number>(1);
@@ -152,8 +155,10 @@ const SearchResult = ({
         )}
         <SearchSongsList
           songlistData={songs}
-          isShowKeepIcon={false}
+          isShowKeepIcon={true}
           onSongPress={_onSongPress}
+          onKeepAddPress={handleOnKeepAddPress}
+          onKeepRemovePress={handleOnKeepRemovePress}
         />
       </View>
     );
