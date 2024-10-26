@@ -83,6 +83,22 @@ type KeepStackParamList = {
 
 type SearchStackParamList = {
   [searchStackNavigations.SEARCH]: undefined;
+  [searchStackNavigations.SEARCH_SONG_DETAIL]: {
+    songId: number;
+    songNumber: number;
+    songName: string;
+    singerName: string;
+    album: string;
+    melonLink: string;
+    isMr: boolean;
+    isLive: boolean;
+  };
+  [searchStackNavigations.SEARCH_COMMENT]: {songNumber: number; songId: number};
+  [searchStackNavigations.SEARCH_RECOMMENT]: {comment: Comment};
+  [searchStackNavigations.SEARCH_REPORT]: {
+    reportCommentId: number;
+    reportSubjectMemberId: number;
+  };
 };
 
 type PlaygroundStackParamList = {

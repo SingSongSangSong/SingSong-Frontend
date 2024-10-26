@@ -32,7 +32,7 @@ const homeStackNavigations = {
   REPORT: '_Report',
   TAG_DETAIL: '_TagDetail',
   BLACKLIST: '_Blacklist',
-  SEARCH: '_Search',
+  // SEARCH: '_Search',
   AI_RECOMMENDATION: '_AiRecommendation',
   NICKNAME_CHANGE: '_NicknameChange',
   AI_LLM: '_AiLlm',
@@ -61,6 +61,10 @@ const playgroundStackNavigations = {
 
 const searchStackNavigations = {
   SEARCH: '_Search',
+  SEARCH_SONG_DETAIL: '_SearchSongDetail',
+  SEARCH_COMMENT: '_SearchComment',
+  SEARCH_RECOMMENT: '_SearchRecomment',
+  SEARCH_REPORT: '_SearchReport',
 } as const;
 
 export {

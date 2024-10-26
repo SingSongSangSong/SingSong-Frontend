@@ -13,6 +13,11 @@ import {Platform} from 'react-native';
 import {SearchStackParamList} from '../../types';
 
 import SearchScreen from '../../screens/search/SearchScreen';
+import SongScreen from '../../screens/song/SongScreen';
+import CommentScreen from '../../screens/song/CommentScreen';
+import RecommentScreen from '../../screens/song/RecommentScreen';
+import ReportScreen from '../../screens/song/ReportScreen';
+import DeleteIcon from '../../assets/svg/delete.svg';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -23,6 +28,7 @@ type SearchStackNavigatorProps = {
 function SearchStackNavigator({navigation}: SearchStackNavigatorProps) {
   return (
     <Stack.Navigator
+      initialRouteName={searchStackNavigations.SEARCH}
       screenOptions={{
         headerLeft: () => (
           <IconButton
@@ -59,6 +65,83 @@ function SearchStackNavigator({navigation}: SearchStackNavigatorProps) {
         options={() => ({
           headerShown: false,
           //   headerTitle: '글쓰기', // 헤더 제목을 비움
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_SONG_DETAIL}
+        component={SongScreen}
+        options={({navigation}) => ({
+          headerTitle: '', //route.params.tag, // 헤더 제목을 tag로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_COMMENT}
+        component={CommentScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerTitle: '댓글', // 헤더 제목을 비움
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+          headerTintColor: 'white', // 헤더 텍스트 색상을 흰색으로 설정
+          headerLeft: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_RECOMMENT}
+        component={RecommentScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerTitle: '답글', // 헤더 제목을 비움
+          headerTitleAlign: 'center', // 헤더 제목을 중간으로 정렬
+          headerTitleStyle: {
+            fontSize: 18, // 헤더 글씨 크기를 줄임
+          },
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_REPORT}
+        component={ReportScreen}
+        options={({navigation}) => ({
+          animationEnabled: false,
+          headerTitle: '신고', // 헤더 제목을 비움
+          headerLeft: () => null,
+          headerRight: () => (
+            <IconButton
+              onPress={() => navigation.goBack()}
+              Icon={DeleteIcon}
+              size={24}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: 'black', // 헤더 배경색을 검정색으로 설정
+          },
         })}
       />
     </Stack.Navigator>

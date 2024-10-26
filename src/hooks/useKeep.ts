@@ -59,7 +59,7 @@ const useKeep = () => {
   }, [tempKeep]);
 
   useEffect(() => {
-    if (keepList) {
+    if (keepList && !isFetchingKeep) {
       if (keepList.length == 0) {
         setIsLengthZero(true);
       }

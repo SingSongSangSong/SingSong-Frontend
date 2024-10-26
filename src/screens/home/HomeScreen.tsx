@@ -311,13 +311,13 @@ const HomeScreen = (props: HomeScreenProps) => {
         <View style={tw`justify-between flex-row p-3 pl-0 items-center`}>
           <LogoIcon width={90} height={48} />
           <View style={tw`flex-row`}>
-            <View style={tw`mr-2`}>
+            {/* <View style={tw`mr-2`}>
               <IconButton
                 Icon={SearchIcon}
                 onPress={handleOnPressSearch}
                 size={28}
               />
-            </View>
+            </View> */}
 
             <IconButton
               Icon={SettingsIcon}

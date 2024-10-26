@@ -119,7 +119,7 @@ const KeywordModule = ({refreshing}: KeywordModuleProps) => {
                   style={{
                     color: designatedColor.WHITE,
                     fontSize: 14,
-                    maxWidth: '85%', // 텍스트가 부모 View의 85%까지만 확장되도록 설정
+                    maxWidth: '90%', // 텍스트가 부모 View의 85%까지만 확장되도록 설정
                   }}
                   numberOfLines={1} // 최대 한 줄까지만 표시
                   ellipsizeMode="tail" // 두 줄 초과 시 '...'으로 생략

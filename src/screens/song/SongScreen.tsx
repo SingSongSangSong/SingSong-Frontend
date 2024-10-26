@@ -2,11 +2,16 @@ import React, {useEffect} from 'react';
 import {View, FlatList} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList, KeepStackParamList} from '../../types';
+import {
+  HomeStackParamList,
+  KeepStackParamList,
+  SearchStackParamList,
+} from '../../types';
 import {
   designatedColor,
   homeStackNavigations,
   keepStackNavigations,
+  searchStackNavigations,
 } from '../../constants';
 import {
   SongAdditionInfo,
@@ -27,6 +32,10 @@ type SongScreenProps =
   | StackScreenProps<
       HomeStackParamList,
       typeof homeStackNavigations.SONG_DETAIL
+    >
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_SONG_DETAIL
     >;
 
 function SongScreen(props: SongScreenProps) {
@@ -56,6 +65,12 @@ function SongScreen(props: SongScreenProps) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.COMMENT, {songNumber, songId});
+      } else if (
+        props.route.name === searchStackNavigations.SEARCH_SONG_DETAIL
+      ) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_COMMENT, {songNumber, songId});
       }
     }
   };
@@ -91,6 +106,21 @@ function SongScreen(props: SongScreenProps) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.SONG_DETAIL, {
+          songId,
+          songNumber,
+          songName,
+          singerName,
+          album,
+          melonLink,
+          isMr,
+          isLive,
+        });
+      } else if (
+        props.route.name === searchStackNavigations.SEARCH_SONG_DETAIL
+      ) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_SONG_DETAIL, {
           songId,
           songNumber,
           songName,

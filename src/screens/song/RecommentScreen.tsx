@@ -8,11 +8,16 @@ import {
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList, KeepStackParamList} from '../../types';
+import {
+  HomeStackParamList,
+  KeepStackParamList,
+  SearchStackParamList,
+} from '../../types';
 import {
   designatedColor,
   homeStackNavigations,
   keepStackNavigations,
+  searchStackNavigations,
 } from '../../constants';
 import {
   CommentKeyboard,
@@ -30,7 +35,11 @@ type RecommentScreenProps =
       KeepStackParamList,
       typeof keepStackNavigations.KEEP_RECOMMENT
     >
-  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.RECOMMENT>;
+  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.RECOMMENT>
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_RECOMMENT
+    >;
 
 function RecommentScreen(props: RecommentScreenProps) {
   const commentId = props.route?.params?.comment.commentId; // 초기 카테고리
@@ -59,6 +68,11 @@ function RecommentScreen(props: RecommentScreenProps) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.REPORT, reportParams);
+      } else if (props.route.name === searchStackNavigations.SEARCH_RECOMMENT) {
+        // SearchStack에서 왔을 때 처리
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_REPORT, reportParams);
       }
     }
   };

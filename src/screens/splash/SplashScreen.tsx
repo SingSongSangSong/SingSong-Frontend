@@ -28,7 +28,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
       if (tempIsValidToken) {
         Animated.timing(logoOpacity, {
           toValue: 1,
-          duration: 1000,
+          duration: 700,
           useNativeDriver: true,
         }).start(async () => {
           // 버전 체크 실행

@@ -167,7 +167,9 @@ function KeepScreen(props: KeepScreenProps) {
               renderHeader={renderHeader}
             />
           </>
-        ) : keepHandler.isLengthZero ? (
+        ) : keepHandler.keepList &&
+          keepHandler.keepList.length == 0 &&
+          keepHandler.isLengthZero ? (
           //   ) : (
           //     <View style={tw`h-full w-full justify-center items-center`}>
           //       <CustomText

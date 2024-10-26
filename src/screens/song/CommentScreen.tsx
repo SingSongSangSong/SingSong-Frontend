@@ -9,11 +9,17 @@ import {
 } from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {Comment, HomeStackParamList, KeepStackParamList} from '../../types';
+import {
+  Comment,
+  HomeStackParamList,
+  KeepStackParamList,
+  SearchStackParamList,
+} from '../../types';
 import {
   designatedColor,
   homeStackNavigations,
   keepStackNavigations,
+  searchStackNavigations,
 } from '../../constants';
 import useComment from '../../hooks/useComment';
 import {
@@ -33,7 +39,11 @@ type CommentScreenProps =
       KeepStackParamList,
       typeof keepStackNavigations.KEEP_COMMENT
     >
-  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.COMMENT>;
+  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.COMMENT>
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_COMMENT
+    >;
 
 function CommentScreen(props: CommentScreenProps) {
   const songNumber = props.route?.params?.songNumber; // 초기 카테고리
@@ -58,6 +68,10 @@ function CommentScreen(props: CommentScreenProps) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.RECOMMENT, {comment});
+      } else if (props.route.name === searchStackNavigations.SEARCH_COMMENT) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_RECOMMENT, {comment});
       }
     }
   };
@@ -81,6 +95,10 @@ function CommentScreen(props: CommentScreenProps) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.REPORT, reportParams);
+      } else if (props.route.name === searchStackNavigations.SEARCH_COMMENT) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_REPORT, reportParams);
       }
     }
   };

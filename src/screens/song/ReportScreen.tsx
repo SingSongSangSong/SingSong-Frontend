@@ -2,11 +2,16 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, TextInput, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {HomeStackParamList, KeepStackParamList} from '../../types';
+import {
+  HomeStackParamList,
+  KeepStackParamList,
+  SearchStackParamList,
+} from '../../types';
 import {
   designatedColor,
   homeStackNavigations,
   keepStackNavigations,
+  searchStackNavigations,
 } from '../../constants';
 import {OutlineButton, RadioButton} from '../../components';
 import useReport from '../../hooks/useReport';
@@ -18,7 +23,11 @@ type ReportScreenProps =
       KeepStackParamList,
       typeof keepStackNavigations.KEEP_REPORT
     >
-  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.REPORT>;
+  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.REPORT>
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_REPORT
+    >;
 
 function ReportScreen(props: ReportScreenProps) {
   const commentId = props.route?.params?.reportCommentId; // 초기 카테고리

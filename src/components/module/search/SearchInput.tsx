@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity, Platform} from 'react-native';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
@@ -27,13 +33,14 @@ const SearchInput = ({
   return (
     <View
       style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] p-3`}>
-      <TouchableOpacity
-        onPress={handleOnPressBack}
+      {/* <TouchableOpacity
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
         activeOpacity={0.8}
         style={tw`pr-3`}>
-        {/* <Icon name="arrow-back" size={24} color="#FFFFFF" style={tw`mr-3`} /> */}
         <ArrowLeftIcon width={28} height={28} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View
         style={tw`flex-1 flex-row items-center bg-gray-600 rounded-lg px-3`}>

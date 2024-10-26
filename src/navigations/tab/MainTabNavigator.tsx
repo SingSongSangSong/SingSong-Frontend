@@ -85,7 +85,11 @@ const MainTabNavigator = () => {
             routeName ===
               playgroundStackNavigations.PLAYGROUND_POST_SONG_ADDITION ||
             routeName === homeStackNavigations.NEW_SONG ||
-            routeName === keepStackNavigations.KEEP_AI_RECOMMENDATION
+            routeName === keepStackNavigations.KEEP_AI_RECOMMENDATION ||
+            routeName === searchStackNavigations.SEARCH_SONG_DETAIL ||
+            routeName === searchStackNavigations.SEARCH_COMMENT ||
+            routeName === searchStackNavigations.SEARCH_RECOMMENT ||
+            routeName === searchStackNavigations.SEARCH_REPORT
           ) {
             return true;
           }
@@ -129,12 +133,14 @@ const MainTabNavigator = () => {
           //   ), // 버튼을 기본 Touchable로 사용
           tabBarActiveTintColor: designatedColor.VIOLET2,
           tabBarInactiveTintColor: 'gray',
+          tabBarHideOnKeyboard: Platform.OS !== 'ios',
         };
       }}>
       <Tab.Screen
         name={mainTabNavigations.HOME}
         component={HomeStackNavigator}
       />
+
       <Tab.Screen
         name={mainTabNavigations.SEARCH}
         // component={HomeStackNavigator}

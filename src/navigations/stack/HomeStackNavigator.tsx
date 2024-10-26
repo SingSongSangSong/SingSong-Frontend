@@ -238,7 +238,7 @@ function HomeStackNavigator() {
           ),
         })}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={homeStackNavigations.SEARCH}
         component={SearchScreen}
         options={({navigation}) => ({
@@ -253,7 +253,7 @@ function HomeStackNavigator() {
             />
           ),
         })}
-      />
+      /> */}
       <Stack.Screen
         name={homeStackNavigations.AI_LLM}
         component={AiLlmScreen}

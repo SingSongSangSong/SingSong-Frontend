@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {GetDetailSearchSongResponse, GetSearchSong, Song} from '../../../types';
 import {OutlineButton, SearchSongsList} from '../..';
-import {designatedColor, homeStackNavigations} from '../../../constants';
+import {designatedColor, searchStackNavigations} from '../../../constants';
 import {
   View,
   FlatList,
@@ -57,7 +57,7 @@ const SearchResult = ({
   ) => {
     logButtonClick('search_result_song_button_click');
     amplitude.track('search_result_song_button_click');
-    navigation.push(homeStackNavigations.SONG_DETAIL, {
+    navigation.push(searchStackNavigations.SEARCH_SONG_DETAIL, {
       songId,
       songNumber,
       songName,

@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
-import {GetSearchSong, HomeStackParamList} from '../../types';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {GetSearchSong, SearchStackParamList} from '../../types';
+import {designatedColor, searchStackNavigations} from '../../constants';
 import {
   ActivityIndicator,
   Keyboard,
@@ -21,10 +21,12 @@ import deleteKeep from '../../api/keep/deleteKeep';
 import getKeepV2 from '../../api/keep/getKeepV2';
 import useKeepV2Store from '../../store/useKeepV2Store';
 import postKeep from '../../api/keep/postKeep';
+import {useFocusEffect} from '@react-navigation/native';
+// import {useFocusEffect} from '@react-navigation/native';
 
 type SearchScreenProps = StackScreenProps<
-  HomeStackParamList,
-  typeof homeStackNavigations.SEARCH
+  SearchStackParamList,
+  typeof searchStackNavigations.SEARCH
 >;
 
 function SearchScreen(props: SearchScreenProps) {
@@ -41,6 +43,30 @@ function SearchScreen(props: SearchScreenProps) {
   useEffect(() => {
     logPageView(props.route.name);
   }, []);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // 특정 화면에서 포커스될 때 탭 바를 강제로 보이도록 설정
+  //     props.navigation
+  //       .getParent()
+  //       ?.setOptions({tabBarStyle: {display: 'flex'}});
+  //   }, [props.navigation]),
+  // );
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     props.navigation.getParent()?.setOptions({tabBarVisible: true});
+  //   }, []),
+  // );
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // 화면이 포커스될 때 tabBarHideOnKeyboard를 false로 설정
+  //     Keyboard.dismiss();
+
+  //     // 화면이 벗어날 때는 기본값으로 복원
+  //   }, []),
+  // );
 
   const inputRef = useRef<TextInput>(null);
 
