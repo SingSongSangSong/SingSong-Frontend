@@ -110,13 +110,20 @@ const KeywordModule = ({refreshing}: KeywordModuleProps) => {
         {sampleKeywords &&
           sampleKeywords.map((keyword, index) => (
             <View key={index} style={{height: itemHeight}}>
-              <View style={tw`flex-row items-center mx-2 py-1`}>
+              <View style={tw`flex-row items-center mx-2 my-1`}>
                 <CustomText
                   style={[tw`text-base mr-2`, {color: designatedColor.VIOLET}]}>
                   #
                 </CustomText>
                 <CustomText
-                  style={[tw`text-sm`, {color: designatedColor.WHITE}]}>
+                  style={{
+                    color: designatedColor.WHITE,
+                    fontSize: 14,
+                    maxWidth: '85%', // 텍스트가 부모 View의 85%까지만 확장되도록 설정
+                  }}
+                  numberOfLines={1} // 최대 한 줄까지만 표시
+                  ellipsizeMode="tail" // 두 줄 초과 시 '...'으로 생략
+                >
                   {keyword}
                 </CustomText>
               </View>

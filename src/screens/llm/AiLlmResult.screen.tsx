@@ -1,5 +1,11 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {Animated, Easing, useWindowDimensions, View} from 'react-native';
+import {
+  Animated,
+  Easing,
+  FlatList,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {designatedColor, homeStackNavigations} from '../../constants';
 import tw from 'twrnc';
 import {HomeStackParamList} from '../../types';
@@ -110,6 +116,30 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
     </View>
   );
 
+  const renderEmptyComponent = () => (
+    <View style={tw`flex-1 items-center justify-center py-8`}>
+      <CustomText
+        style={tw`text-[${designatedColor.VIOLET3}] text-lg font-bold`}>
+        추천 노래가 없어요
+      </CustomText>
+      <View style={tw`px-4 py-6`}>
+        <CustomText style={tw`text-[${designatedColor.VIOLET2}] text-[14px]`}>
+          더 정확한 추천을 받기 위한 TIP
+        </CustomText>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
+          1. 부르고 싶은 노래와 비슷한 노래의 가수와 노래 제목을 언급해보세요.
+        </CustomText>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
+          2. 분위기나 상황을 묘사해보세요. 이를 통해 맞춤형 추천을 받을 수
+          있어요.
+        </CustomText>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
+          3. 특별히 부르고 싶은 특정 연도가 있다면, 그 연도를 언급해보세요.
+        </CustomText>
+      </View>
+    </View>
+  );
+
   return (
     <View
       style={[
@@ -123,16 +153,27 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
           <ArrowBottomIcon />
         </Animated.View>
       </View> */}
-      <SongsList
-        songlistData={aiLlmResultHandler.searchResult || []}
-        isShowKeepIcon={true}
-        onSongPress={aiLlmResultHandler.handleOnSongPress}
-        onKeepAddPress={aiLlmResultHandler.handleOnKeepAddPress}
-        onKeepRemovePress={aiLlmResultHandler.handleOnKeepRemovePress}
-        listHeader={renderHeader}
-        listFooter={renderFooter}
-        isShowInfo={true}
-      />
+      {aiLlmResultHandler.searchResult?.length === 0 ? (
+        <FlatList
+          data={aiLlmResultHandler.searchResult}
+          // renderItem={renderItem}
+          // keyExtractor={item => item.id.toString()}
+          ListHeaderComponent={renderHeader} // 기존 헤더
+          ListFooterComponent={renderFooter} // 기존 푸터
+          ListEmptyComponent={renderEmptyComponent} // 데이터가 없을 때 가운데에 표시
+        />
+      ) : (
+        <SongsList
+          songlistData={aiLlmResultHandler.searchResult || []}
+          isShowKeepIcon={true}
+          onSongPress={aiLlmResultHandler.handleOnSongPress}
+          onKeepAddPress={aiLlmResultHandler.handleOnKeepAddPress}
+          onKeepRemovePress={aiLlmResultHandler.handleOnKeepRemovePress}
+          listHeader={renderHeader}
+          listFooter={renderFooter}
+          isShowInfo={true}
+        />
+      )}
     </View>
   );
 }
