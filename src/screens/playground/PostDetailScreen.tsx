@@ -23,7 +23,7 @@ import {
   SearchSongV2Item,
 } from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
-import {formatDateComment, logPageView} from '../../utils';
+import {formatDateComment, formatDatePost, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -237,7 +237,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
           <CustomText
             style={tw`text-[${designatedColor.GRAY1}] py-1 text-[12px]`}>
             {'  '}
-            {formatDateComment(props.route.params.createdAt)}
+            {formatDatePost(props.route.params.createdAt)}
           </CustomText>
         </View>
         <View style={tw`py-2`}>
