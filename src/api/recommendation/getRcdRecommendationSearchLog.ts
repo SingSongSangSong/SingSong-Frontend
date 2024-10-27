@@ -7,7 +7,7 @@ const getRcdRecommendationSearchLog = async () => {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
     const response = await axiosInstance.get<SearchLogResponse>(
-      'v1/recommend/recommendation/searchLog',
+      'v2/recommend/recommendation/searchLog',
       {
         headers: {
           Authorization: `Bearer ${token}`,
