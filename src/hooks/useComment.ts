@@ -6,7 +6,9 @@ import postCommentLike from '../api/comment/postCommentLike';
 import useCommentStore from '../store/useCommentStore';
 import postBlacklist from '../api/comment/postBlacklist';
 import Toast from 'react-native-toast-message';
-import {logTrack} from '../utils';
+import {logTrack, showToast} from '../utils';
+import deleteComment from '../api/post/deleteComment';
+import {useMutation} from '@tanstack/react-query';
 
 const useComment = (songNumber: number, songId: number) => {
   // const [comments, setComments] = useState<Comment[]>();
@@ -16,6 +18,7 @@ const useComment = (songNumber: number, songId: number) => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isBlacklist, setIsBlacklist] = useState(false);
+  const [isWriter, setIsWriter] = useState<boolean>(false);
   // const {
   //   comments,
   //   setComments,
@@ -28,6 +31,7 @@ const useComment = (songNumber: number, songId: number) => {
   const comments = useCommentStore(state => state.comments);
   const setComments = useCommentStore(state => state.setComments);
   const addComment = useCommentStore(state => state.addComment);
+  const deleteComments = useCommentStore(state => state.deleteComment);
   const updateIsLikedComment = useCommentStore(
     state => state.updateIsLikedComment,
   );
@@ -51,6 +55,26 @@ const useComment = (songNumber: number, songId: number) => {
 
     setIsLoading(false);
   };
+
+  const {mutateAsync: mutateAsyncDeleteComment} = useMutation({
+    mutationFn: async (commentId: number) => {
+      return deleteComment(commentId);
+    },
+    onError: () => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '댓글 삭제에 실패했습니다. 다시 시도해주세요',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: () => {
+      deleteComments(reportCommentId);
+      showToast('댓글이 삭제되었습니다.');
+      setIsModalVisible(false);
+      setIsWriter(false);
+    },
+  });
 
   //like 버튼 눌렀을 때
   const handleOnPressLikeButton = async (commentId: number) => {
@@ -79,8 +103,10 @@ const useComment = (songNumber: number, songId: number) => {
   const handleOnPressMoreInfo = (
     reportCommentId: number,
     reportSubjectMemberId: number,
+    isWriter: boolean,
   ) => {
     setIsModalVisible(true);
+    setIsWriter(isWriter);
     // setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
@@ -88,6 +114,7 @@ const useComment = (songNumber: number, songId: number) => {
 
   const handleOnPressBlacklistForIOS = () => {
     _handleOnPressBlacklist(reportSubjectMemberId);
+    setIsWriter(false);
     setIsModalVisible(false);
     // setIsKeyboardVisible(true);
     // setIsBlacklist(false);
@@ -135,6 +162,10 @@ const useComment = (songNumber: number, songId: number) => {
     await setInitComments();
   };
 
+  const handleOnPressDeleteComment = async () => {
+    await mutateAsyncDeleteComment(reportCommentId);
+  };
+
   return {
     isBlacklist,
     setIsBlacklist,
@@ -153,6 +184,9 @@ const useComment = (songNumber: number, songId: number) => {
     handleOnPressBlacklist,
     orderedComments,
     handleOnPressBlacklistForIOS,
+    isWriter,
+    setIsWriter,
+    handleOnPressDeleteComment,
   };
 };
 

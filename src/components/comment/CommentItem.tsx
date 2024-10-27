@@ -24,7 +24,8 @@ interface CommentItemProps {
   songId: number;
   isVisibleRecomment: boolean;
   onPressRecomment: () => void;
-  onPressMoreInfo: () => void;
+  isShowMoreInfo?: boolean;
+  onPressMoreInfo?: () => void;
   onPressLikeButton: () => void;
   recommentCount: number;
 }
@@ -42,7 +43,8 @@ const CommentItem = ({
   recomments,
   songId,
   onPressRecomment,
-  onPressMoreInfo,
+  isShowMoreInfo = true,
+  onPressMoreInfo = () => {},
   isVisibleRecomment,
   onPressLikeButton,
   recommentCount,
@@ -68,11 +70,13 @@ const CommentItem = ({
             {formatDateComment(createdAt)}
           </CustomText>
         </View>
-        <IconButton
-          Icon={MoreVerticalIcon}
-          size={16}
-          onPress={onPressMoreInfo}
-        />
+        {isShowMoreInfo && (
+          <IconButton
+            Icon={MoreVerticalIcon}
+            size={16}
+            onPress={onPressMoreInfo}
+          />
+        )}
       </View>
       <View>
         <CustomText style={tw`text-white ml-4`}>{content}</CustomText>

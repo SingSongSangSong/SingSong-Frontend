@@ -5,6 +5,7 @@ interface Comment {
   content: string;
   createdAt: string;
   isRecomment: boolean;
+  isWriter?: boolean;
   isLiked: boolean;
   likes: number;
   memberId: number;

@@ -78,6 +78,7 @@ function CommentScreen(props: CommentScreenProps) {
 
   const handleOnPressReport = () => {
     commentHandler.setIsModalVisible(false);
+    commentHandler.setIsWriter(false);
     commentHandler.setIsKeyboardVisible(true);
     const reportParams = {
       reportCommentId: commentHandler.reportCommentId,
@@ -119,7 +120,11 @@ function CommentScreen(props: CommentScreenProps) {
         songId={item.songId}
         onPressRecomment={() => handleOnPressRecomment(item)}
         onPressMoreInfo={() =>
-          commentHandler.handleOnPressMoreInfo(item.commentId, item.memberId)
+          commentHandler.handleOnPressMoreInfo(
+            item.commentId,
+            item.memberId,
+            item.isWriter || false,
+          )
         }
         onPressLikeButton={() =>
           commentHandler.handleOnPressLikeButton(item.commentId)
@@ -238,6 +243,7 @@ function CommentScreen(props: CommentScreenProps) {
         onRequestClose={() => {
           commentHandler.setIsKeyboardVisible(true);
           commentHandler.setIsModalVisible(false);
+          commentHandler.setIsWriter(false);
         }}
         style={[
           {
@@ -247,7 +253,10 @@ function CommentScreen(props: CommentScreenProps) {
           Platform.OS == 'ios' && {paddingBottom: insets.bottom + 20},
         ]}>
         <TouchableWithoutFeedback
-          onPress={() => commentHandler.setIsModalVisible(false)}>
+          onPress={() => {
+            commentHandler.setIsModalVisible(false);
+            commentHandler.setIsWriter(false);
+          }}>
           <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
             <TouchableWithoutFeedback>
               {/* View로 감싸서 여러 자식을 포함 */}
@@ -257,7 +266,17 @@ function CommentScreen(props: CommentScreenProps) {
                 </CustomText>
                 <View
                   style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-                  <View style={tw`mb-3`}>
+                  {commentHandler.isWriter && (
+                    <View style={tw`mb-3`}>
+                      <TextButton
+                        title="삭제하기"
+                        onPress={commentHandler.handleOnPressDeleteComment}
+                        color="white"
+                        size={4}
+                      />
+                    </View>
+                  )}
+                  <View style={tw`my-3`}>
                     <TextButton
                       title="신고하기"
                       onPress={handleOnPressReport}
@@ -288,6 +307,7 @@ function CommentScreen(props: CommentScreenProps) {
                     onPress={() => {
                       commentHandler.setIsKeyboardVisible(true);
                       commentHandler.setIsModalVisible(false);
+                      commentHandler.setIsWriter(false);
                     }}
                     color="white"
                     size={4}

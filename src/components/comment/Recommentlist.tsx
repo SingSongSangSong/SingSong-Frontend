@@ -11,6 +11,8 @@ interface RecommentlistProps {
   onPressMoreInfo: (
     reportCommentId: number,
     reportSubjectMemberId: number,
+    isWriter: boolean,
+    parentCommentId?: number,
   ) => void;
   onPressCommentLikeButton: (commentId: number) => void;
   onPressRecommentLikeButton: (commentId: number, recommentId: number) => void;
@@ -42,7 +44,12 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
         isVisibleRecomment={false}
         onPressRecomment={() => {}}
         onPressMoreInfo={() => {
-          onPressMoreInfo(item.commentId, item.memberId);
+          onPressMoreInfo(
+            item.commentId,
+            item.memberId,
+            item.isWriter || false,
+            item.parentCommentId,
+          );
         }}
         onPressLikeButton={() => {
           onPressRecommentLikeButton(item.parentCommentId, item.commentId);
@@ -68,9 +75,10 @@ const Recommentlist: React.FC<RecommentlistProps> = ({
           likes={parentComment.likes}
           isVisibleRecomment={false}
           onPressRecomment={() => {}}
-          onPressMoreInfo={() => {
-            onPressMoreInfo(parentComment.commentId, parentComment.memberId);
-          }}
+          isShowMoreInfo={false}
+          // onPressMoreInfo={() => {
+          //   onPressMoreInfo(parentComment.commentId, parentComment.memberId);
+          // }}
           onPressLikeButton={() => {
             onPressCommentLikeButton(parentComment.commentId);
           }}

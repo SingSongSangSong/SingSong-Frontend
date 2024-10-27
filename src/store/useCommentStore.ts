@@ -2,11 +2,11 @@ import {create} from 'zustand';
 import {Comment} from '../types';
 
 interface CommentState {
-  comments: Map<number, Comment>; // Map으로 변경
+  comments: Map<number, Comment>;
   recomments: {[commentId: number]: Map<number, Comment>};
   commentCount: number;
-  setComments: (comments: Comment[]) => void; // 댓글 배열을 설정
-  addComment: (comment: Comment) => void; // 댓글 추가
+  setComments: (comments: Comment[]) => void;
+  addComment: (comment: Comment) => void;
   updateIsLikedComment: (commentId: number, isLiked: boolean) => void;
   updateLikesComment: (commentId: number) => void;
   updateIsLikedRecomment: (
@@ -15,12 +15,13 @@ interface CommentState {
     isLiked: boolean,
   ) => void;
   updateLikesRecomment: (commentId: number, recommentId: number) => void;
-  addRecommentComment: (commentId: number, recomment: Comment) => void; // recomment 더하기
+  addRecommentComment: (commentId: number, recomment: Comment) => void;
   getRecommentCount: (commentId: number) => number;
   getOrderedComments: () => Comment[];
   getOrderedRecomments: (commentId: number) => Comment[];
   setCommentCount: (count: number) => void;
-  // addCommentCount: () => void;
+  deleteComment: (commentId: number) => void;
+  deleteRecomment: (commentId: number, recommentId: number) => void;
 }
 
 const useCommentStore = create<CommentState>((set, get) => ({
@@ -28,7 +29,6 @@ const useCommentStore = create<CommentState>((set, get) => ({
   recomments: {},
   commentCount: 0,
 
-  // 댓글 배열을 설정하는 함수
   setComments: (comments: Comment[]) => {
     const commentsMap = new Map(
       comments.map(comment => [comment.commentId, comment]),
@@ -51,8 +51,7 @@ const useCommentStore = create<CommentState>((set, get) => ({
 
   addComment: (comment: Comment) => {
     set(state => {
-      const newComments = new Map();
-      newComments.set(comment.commentId, comment); // 새 댓글을 먼저 추가
+      const newComments = new Map([[comment.commentId, comment]]); // 새 댓글을 먼저 추가
       state.comments.forEach((value, key) => {
         newComments.set(key, value); // 기존 댓글을 뒤에 추가
       });
@@ -67,12 +66,6 @@ const useCommentStore = create<CommentState>((set, get) => ({
     set({commentCount: count});
   },
 
-  // addCommentCount: () => {
-  //   set(state => {
-  //     return {commentCount: state.commentCount + 1};
-  //   });
-  // },
-
   getOrderedComments: () => {
     return Array.from(get().comments.values());
   },
@@ -82,7 +75,6 @@ const useCommentStore = create<CommentState>((set, get) => ({
     return recommentsMap ? Array.from(recommentsMap.values()) : [];
   },
 
-  // 특정 댓글 ID의 좋아요 상태를 업데이트하는 함수
   updateIsLikedComment: (commentId: number, isLiked: boolean) => {
     set(state => {
       const newComments = new Map(state.comments);
@@ -90,13 +82,10 @@ const useCommentStore = create<CommentState>((set, get) => ({
       if (comment) {
         comment.isLiked = isLiked;
       }
-      return {
-        comments: new Map(newComments),
-      };
+      return {comments: new Map(newComments)};
     });
   },
 
-  // 특정 댓글 ID의 좋아요 개수를 1 증가시키는 함수
   updateLikesComment: (commentId: number) => {
     set(state => {
       const newComments = new Map(state.comments);
@@ -104,13 +93,10 @@ const useCommentStore = create<CommentState>((set, get) => ({
       if (comment) {
         comment.likes += 1;
       }
-      return {
-        comments: new Map(newComments),
-      };
+      return {comments: new Map(newComments)};
     });
   },
 
-  // 특정 답글의 좋아요 상태를 업데이트하는 함수
   updateIsLikedRecomment: (
     commentId: number,
     recommentId: number,
@@ -131,7 +117,6 @@ const useCommentStore = create<CommentState>((set, get) => ({
     });
   },
 
-  // 특정 답글의 좋아요 개수를 1 증가시키는 함수
   updateLikesRecomment: (commentId: number, recommentId: number) => {
     set(state => {
       const newRecomments = new Map(state.recomments[commentId]);
@@ -150,9 +135,7 @@ const useCommentStore = create<CommentState>((set, get) => ({
 
   addRecommentComment: (commentId: number, recomment: Comment) => {
     set(state => {
-      const newRecomments = new Map(state.recomments[commentId]); // 기존 답글을 먼저 복사
-
-      // 새 답글을 뒤에 추가
+      const newRecomments = new Map(state.recomments[commentId]);
       newRecomments.set(recomment.commentId, recomment);
 
       return {
@@ -168,6 +151,36 @@ const useCommentStore = create<CommentState>((set, get) => ({
     const state = get();
     const recommentsForComment = state.recomments[commentId];
     return recommentsForComment ? recommentsForComment.size : 0;
+  },
+
+  deleteComment: (commentId: number) => {
+    set(state => {
+      const newComments = new Map(state.comments);
+      const newRecomments = {...state.recomments};
+
+      newComments.delete(commentId);
+      delete newRecomments[commentId]; // 해당 댓글의 답글도 함께 삭제
+
+      return {
+        comments: newComments,
+        recomments: newRecomments,
+        commentCount: state.commentCount - 1,
+      };
+    });
+  },
+
+  deleteRecomment: (commentId: number, recommentId: number) => {
+    set(state => {
+      const newRecomments = new Map(state.recomments[commentId]);
+      newRecomments.delete(recommentId);
+
+      return {
+        recomments: {
+          ...state.recomments,
+          [commentId]: newRecomments,
+        },
+      };
+    });
   },
 }));
 

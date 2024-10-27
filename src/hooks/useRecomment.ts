@@ -5,7 +5,9 @@ import useCommentStore from '../store/useCommentStore';
 import postBlacklist from '../api/comment/postBlacklist';
 import getComment from '../api/comment/getComment';
 import Toast from 'react-native-toast-message';
-import {logTrack} from '../utils';
+import {logTrack, showToast} from '../utils';
+import {useMutation} from '@tanstack/react-query';
+import deleteComment from '../api/post/deleteComment';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -13,6 +15,8 @@ const useRecomment = (commentId: number) => {
   const [reportCommentId, setReportCommentId] = useState<number>(0);
   const [reportSubjectMemberId, setReportSubjectMemberId] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(true);
+  const [isWriter, setIsWriter] = useState<boolean>(false);
+  const [parentCommentId, setParentCommentId] = useState<number>(0);
 
   // const {
   //   comments,
@@ -29,6 +33,7 @@ const useRecomment = (commentId: number) => {
   const comments = useCommentStore(state => state.comments);
   const recomments = useCommentStore(state => state.recomments);
   const setComments = useCommentStore(state => state.setComments);
+  const deleteRecomments = useCommentStore(state => state.deleteRecomment);
   const updateIsLikedComment = useCommentStore(
     state => state.updateIsLikedComment,
   );
@@ -51,6 +56,26 @@ const useRecomment = (commentId: number) => {
 
   // 특정 댓글(commentId)의 답글 가져오기
   // const currentRecomments = recomments[commentId] || {};
+
+  const {mutateAsync: mutateAsyncDeleteRecomment} = useMutation({
+    mutationFn: async (commentId: number) => {
+      return deleteComment(commentId);
+    },
+    onError: () => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '댓글 삭제에 실패했습니다. 다시 시도해주세요',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: () => {
+      deleteRecomments(parentCommentId, reportCommentId);
+      showToast('답글이 삭제되었습니다.');
+      setIsModalVisible(false);
+      setIsWriter(false);
+    },
+  });
 
   // 새 답글을 추가하는 함수
   const handleOnPressSendButton = async (content: string) => {
@@ -89,11 +114,17 @@ const useRecomment = (commentId: number) => {
   const handleOnPressMoreInfo = (
     reportCommentId: number,
     reportSubjectMemberId: number,
+    isWriter: boolean,
+    parentCommentId?: number,
   ) => {
     setIsModalVisible(true);
     // setIsKeyboardVisible(false);
     setReportCommentId(reportCommentId);
     setReportSubjectMemberId(reportSubjectMemberId);
+    setIsWriter(isWriter);
+    if (parentCommentId) {
+      setParentCommentId(parentCommentId);
+    }
   };
 
   const handleOnPressRecommentLikeButton = async (
@@ -121,6 +152,7 @@ const useRecomment = (commentId: number) => {
   const handleOnPressBlacklistForIOS = () => {
     _handleOnPressBlacklist(reportSubjectMemberId);
     setIsModalVisible(false);
+    setIsWriter(false);
     setIsKeyboardVisible(true);
     // setIsBlacklist(false);
     Toast.show({
@@ -149,6 +181,10 @@ const useRecomment = (commentId: number) => {
     });
   };
 
+  const handleOnPressDeleteRecomment = async () => {
+    await mutateAsyncDeleteRecomment(reportCommentId);
+  };
+
   return {
     recomments: recomments[commentId], // 특정 댓글의 답글들을 반환
     reportCommentId,
@@ -167,6 +203,9 @@ const useRecomment = (commentId: number) => {
     isBlacklist,
     setIsBlacklist,
     handleOnPressBlacklistForIOS,
+    isWriter,
+    setIsWriter,
+    handleOnPressDeleteRecomment,
   };
 };
 

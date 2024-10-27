@@ -52,6 +52,7 @@ function RecommentScreen(props: RecommentScreenProps) {
   const handleOnPressReport = () => {
     recommentHandler.setIsModalVisible(false);
     recommentHandler.setIsKeyboardVisible(true);
+    recommentHandler.setIsWriter(false);
     const reportParams = {
       reportCommentId: recommentHandler.reportCommentId,
       reportSubjectMemberId: recommentHandler.reportSubjectMemberId,
@@ -124,6 +125,7 @@ function RecommentScreen(props: RecommentScreenProps) {
         onRequestClose={() => {
           recommentHandler.setIsKeyboardVisible(true);
           recommentHandler.setIsModalVisible(false);
+          recommentHandler.setIsWriter(false);
         }}
         style={[
           {justifyContent: 'flex-end', margin: 0},
@@ -132,6 +134,7 @@ function RecommentScreen(props: RecommentScreenProps) {
         <TouchableWithoutFeedback
           onPress={() => {
             recommentHandler.setIsModalVisible(false);
+            recommentHandler.setIsWriter(false);
             // recommentHandler.setIsKeyboardVisible(true);
           }}>
           <View style={tw`flex-1 bg-[rgba(0,0,0,0.5)] justify-end`}>
@@ -142,7 +145,17 @@ function RecommentScreen(props: RecommentScreenProps) {
                 </CustomText>
                 <View
                   style={tw`items-start border-b border-[${designatedColor.GRAY4}] py-4`}>
-                  <View style={tw`mb-3`}>
+                  {recommentHandler.isWriter && (
+                    <View style={tw`mb-3`}>
+                      <TextButton
+                        title="삭제하기"
+                        onPress={recommentHandler.handleOnPressDeleteRecomment}
+                        color="white"
+                        size={4}
+                      />
+                    </View>
+                  )}
+                  <View style={tw`my-3`}>
                     <TextButton
                       title="신고하기"
                       onPress={handleOnPressReport}
@@ -150,7 +163,7 @@ function RecommentScreen(props: RecommentScreenProps) {
                       size={4}
                     />
                   </View>
-                  <View style={tw`mt-3`}>
+                  <View style={tw`my-3`}>
                     <TextButton
                       title="차단하기"
                       onPress={() => {
@@ -167,6 +180,7 @@ function RecommentScreen(props: RecommentScreenProps) {
                     onPress={() => {
                       recommentHandler.setIsKeyboardVisible(true);
                       recommentHandler.setIsModalVisible(false);
+                      recommentHandler.setIsWriter(false);
                     }}
                     color="white"
                     size={4}
