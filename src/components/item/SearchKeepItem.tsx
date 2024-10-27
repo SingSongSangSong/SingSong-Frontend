@@ -9,7 +9,7 @@ import CheckCircleIcon from '../../assets/svg/checkCircle.svg';
 import PlusCircleIcon from '../../assets/svg/plusCircle.svg';
 import usePostSongStore from '../../store/usePostSongStore';
 import {Song} from '../../types';
-import {logTrack} from '../../utils';
+import {logTrack, showToast} from '../../utils';
 
 interface SearchKeepItemProps {
   song: Song;
@@ -58,6 +58,10 @@ SearchKeepItemProps) => {
       setIsPressed(!isPressed);
       _handleOnPressKeepRemove();
     } else {
+      if (postSong.length >= 10) {
+        showToast('곡은 최대 10곡까지 추가할 수 있어요.');
+        return;
+      }
       setIsPressed(!isPressed);
       _handleOnPressKeepAdd();
     }
