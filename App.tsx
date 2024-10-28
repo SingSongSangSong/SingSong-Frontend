@@ -13,6 +13,7 @@ import {request, PERMISSIONS} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
 import CodePush from 'react-native-code-push';
+import {navigationRef} from './src/navigations/rootNavigation';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -76,7 +77,7 @@ function App(): React.JSX.Element {
       <SafeAreaProvider>
         {/* <SafeAreaView style={{flex: 1}}> */}
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer>
+          <NavigationContainer ref={navigationRef}>
             <AppStackNavigator />
             <CustomToast />
           </NavigationContainer>

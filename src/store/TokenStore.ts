@@ -1,119 +1,9 @@
-// import {jwtDecode} from 'jwt-decode';
-// import * as Keychain from 'react-native-keychain';
-// import postMemberReissue from '../api/member/postmemberReissue';
-// import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
-
-// const TokenStore = () => {
-//   // get
-//   async function getSecureValue(key: string): Promise<string> {
-//     const result = await Keychain.getInternetCredentials(key);
-//     if (result) {
-//       return result.password;
-//     }
-//     return '';
-//   }
-
-//   // set
-//   function setSecureValue(key: string, value: string) {
-//     Keychain.setInternetCredentials(key, key, value);
-//   }
-
-//   // remove
-//   function removeSecureValue(key: string) {
-//     Keychain.resetInternetCredentials(key);
-//   }
-
-//   const isExpiredToken = (token: string) => {
-//     try {
-//       const decoded = jwtDecode<{exp: number}>(token);
-//       const currentTime = Date.now() / 1000;
-//       // console.log(':', decoded);
-//       // console.log('current Time:', currentTime);
-//       return decoded.exp < currentTime;
-//     } catch (error) {
-//       console.error('Invalid token:', error);
-//       return true;
-//     }
-//   };
-
-//   // const isValidAccessToken = async () => {
-//   //   const accessToken = await getSecureValue(ACCESS_TOKEN);
-//   //   const refreshToken = await getSecureValue(REFRESH_TOKEN);
-//   //   if (accessToken && isExpiredToken(accessToken)) {
-//   //     console.log('Token expired');
-//   //     const reissueData = await postMemberReissue(accessToken, refreshToken);
-//   //     setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-//   //     setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-//   //   }
-//   // };
-
-//   // const isValidRefreshToken = async () => {
-//   //   const refreshToken = await getSecureValue(REFRESH_TOKEN);
-//   //   return refreshToken && isExpiredToken(refreshToken);
-//   // };
-
-//   const getAccessToken = async () => {
-//     const accessToken = await getSecureValue(ACCESS_TOKEN);
-//     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-//     // console.log(accessToken, refreshToken);
-//     //accessToken이 만료된 경우
-//     if (isExpiredToken(accessToken)) {
-//       const reissueData = await postMemberReissue(accessToken, refreshToken);
-//       setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-//       setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-//       return reissueData.data.accessToken;
-//     }
-
-//     return accessToken;
-//   };
-
-//   const getIsValidToken = async (): Promise<boolean> => {
-//     const accessToken = await getSecureValue(ACCESS_TOKEN);
-//     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-//     console.log(accessToken, refreshToken);
-
-//     //토큰이 없는지 검사
-//     if (!accessToken || !refreshToken) {
-//       return false; //로그인 화면
-//     }
-
-//     //리프레시 토큰이 만료된 경우
-//     if (isExpiredToken(refreshToken)) {
-//       removeSecureValue(ACCESS_TOKEN);
-//       removeSecureValue(REFRESH_TOKEN);
-//       return false; //로그인 화면
-//     }
-
-//     //액세스 토큰이 만료된 경우
-//     if (isExpiredToken(accessToken)) {
-//       // console.log(accessToken);
-//       // console.log(refreshToken);
-//       const reissueData = await postMemberReissue(accessToken, refreshToken);
-//       setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-
-//       setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-//       return true;
-//     }
-
-//     return true;
-//   };
-
-//   return {
-//     getSecureValue,
-//     setSecureValue,
-//     removeSecureValue,
-//     isExpiredToken,
-//     getAccessToken,
-//     getIsValidToken,
-//   };
-// };
-
-// export default TokenStore;
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import postMemberReissue from '../api/member/postmemberReissue';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
+import {navigateToLogin} from '../navigations/rootNavigation';
+import {showToast} from '../utils';
 
 const TokenStore = () => {
   // get
@@ -162,12 +52,26 @@ const TokenStore = () => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
 
+    if (isExpiredToken(refreshToken)) {
+      removeSecureValue(ACCESS_TOKEN);
+      removeSecureValue(REFRESH_TOKEN);
+      navigateToLogin(); // 토큰 재발급 실패 시 로그인 화면으로 이동
+      throw new Error('Refresh token is expired'); // 에러를 상위로 다시 던져서 호출한 쪽에서 추가 처리할 수 있도록
+    }
+
     // accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
-      const reissueData = await postMemberReissue(accessToken, refreshToken);
-      setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-      setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-      return reissueData.data.accessToken;
+      try {
+        const reissueData = await postMemberReissue(accessToken, refreshToken);
+        setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
+        setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
+        return reissueData.data.accessToken;
+      } catch (error) {
+        console.error('Token reissue failed:', error);
+        showToast('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+        navigateToLogin(); // 토큰 재발급 실패 시 로그인 화면으로 이동
+        throw error; // 에러를 상위로 다시 던져서 호출한 쪽에서 추가 처리할 수 있도록
+      }
     }
 
     return accessToken;
