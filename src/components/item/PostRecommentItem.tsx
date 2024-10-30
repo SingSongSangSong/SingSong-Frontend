@@ -1,16 +1,14 @@
 import React, {useRef, useState} from 'react';
-import {View, TouchableOpacity, TextInput} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
-import {PostComments, SongOnPostComment} from '../../types';
+// import {PostComments} from '../../types';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
 import {formatDateComment} from '../../utils';
 import CustomText from '../text/CustomText';
-import getPostsCommentsRecomments from '../../api/post/getPostsCommentsRecomments';
-import Toast from 'react-native-toast-message';
-import {useMutation} from '@tanstack/react-query';
+// import getPostsCommentsRecomments from '../../api/post/getPostsCommentsRecomments';
 import CornerDownIcon from '../../assets/svg/cornerDown.svg';
 import Popover from 'react-native-popover-view';
 import {CustomModal} from '../message/CustomModal';
@@ -22,6 +20,7 @@ interface PostRecommentItemProps {
   createdAt: string;
   likes: number;
   isLiked: boolean;
+  isWriter: boolean;
   //   isRecomment: boolean;
   memberId: number;
   nickname: string;
@@ -35,6 +34,7 @@ interface PostRecommentItemProps {
   //   inputRef: React.RefObject<TextInput>;
   // onPressRecomment: () => void;
   //   setParentCommentId: (parentCommentId: number) => void;
+  mutateAsyncDeleteRecomment: (childCommentId: number) => void;
 }
 
 const PostRecommentItem = ({
@@ -44,12 +44,14 @@ const PostRecommentItem = ({
   createdAt,
   likes,
   isLiked,
+  isWriter,
   memberId,
   nickname,
   parentCommentId,
   onPressCommentLike,
   onPressRecommentReport,
   onPressRecommentBlacklist,
+  mutateAsyncDeleteRecomment,
 }: // onPressRecomment,
 PostRecommentItemProps) => {
   // const [isLike, setIsLike] = useState(isLiked);
@@ -64,9 +66,9 @@ PostRecommentItemProps) => {
   const [isLike, setIsLike] = useState<boolean>(isLiked);
   //   const [recommentCount, setRecommentCount] =
   //     useState<number>(postRecommentsCount);
-  const [commentRecomments, setCommentRecomments] = useState<PostComments[]>();
-  const [lastCursor, setLastCursor] = useState<number>(-1);
-  const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
+  // const [commentRecomments, setCommentRecomments] = useState<PostComments[]>();
+  // const [lastCursor, setLastCursor] = useState<number>(-1);
+  // const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState(false);
   const iconRef = useRef(null); // MoreVerticalIcon의 위치를 참조할 ref 생성
   const [isShowBlacklistModal, setIsShowBlacklistModal] = useState(false);
@@ -80,6 +82,11 @@ PostRecommentItemProps) => {
       setLikeCount(likeCount + 1);
       setIsLike(true);
     }
+  };
+
+  const handleOnPressRecommentDelete = async (postCommentId: number) => {
+    await mutateAsyncDeleteRecomment(postCommentId);
+    setIsVisible(false);
   };
 
   return (
@@ -162,6 +169,15 @@ PostRecommentItemProps) => {
         // arrowStyle={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
       >
         <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+          {isWriter && (
+            <TouchableOpacity
+              style={tw`p-4`}
+              onPress={() => {
+                handleOnPressRecommentDelete(postCommentId);
+              }}>
+              <CustomText style={tw`text-white`}>삭제</CustomText>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={tw`p-4`}
             onPress={() => {

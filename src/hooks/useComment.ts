@@ -7,8 +7,8 @@ import useCommentStore from '../store/useCommentStore';
 import postBlacklist from '../api/comment/postBlacklist';
 import Toast from 'react-native-toast-message';
 import {logTrack, showToast} from '../utils';
-import deleteComment from '../api/post/deleteComment';
 import {useMutation} from '@tanstack/react-query';
+import deleteComment from '../api/comment/deleteComment';
 
 const useComment = (songNumber: number, songId: number) => {
   // const [comments, setComments] = useState<Comment[]>();

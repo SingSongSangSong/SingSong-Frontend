@@ -15,7 +15,8 @@ import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
 import deletePosts from '../api/post/deletePosts';
 import usePostStore from '../store/usePostStore';
 import postBlacklist from '../api/comment/postBlacklist';
-import {logRefresh, logTrack} from '../utils';
+import {logRefresh, logTrack, showToast} from '../utils';
+import deletePostComment from '../api/post/deletePostComment';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<
@@ -326,6 +327,28 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     },
   });
 
+  const {mutateAsync: mutateAsyncDeleteComment} = useMutation({
+    mutationFn: async (postCommentId: number) => {
+      return deletePostComment(postCommentId);
+    },
+    onError: () => {
+      Toast.show({
+        type: 'selectedToast',
+        text1: '댓글 삭제에 실패했습니다. 다시 시도해주세요',
+        position: 'bottom',
+        visibilityTime: 2000,
+      });
+    },
+    onSuccess: (data, postCommentId) => {
+      setPostComment(prevComments =>
+        prevComments?.filter(
+          comment => comment.postCommentId !== postCommentId,
+        ),
+      );
+      showToast('댓글이 삭제되었습니다.');
+    },
+  });
+
   useEffect(() => {
     if (tempPostDetailed) {
       setPostDetailed(tempPostDetailed);
@@ -483,6 +506,8 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     handleOnPressCommentBlacklist,
     isRefreshLoading,
     handleDownRefreshComments,
+    mutateAsyncDeleteComment,
+    setCommentRecomments,
   };
 };
 

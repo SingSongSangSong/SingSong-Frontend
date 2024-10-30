@@ -7,7 +7,7 @@ import getComment from '../api/comment/getComment';
 import Toast from 'react-native-toast-message';
 import {logTrack, showToast} from '../utils';
 import {useMutation} from '@tanstack/react-query';
-import deleteComment from '../api/post/deleteComment';
+import deleteComment from '../api/comment/deleteComment';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);

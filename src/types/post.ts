@@ -45,6 +45,7 @@ interface PostComments {
   createdAt: string;
   isLiked: boolean;
   isRecomment: boolean;
+  isWriter: boolean;
   likes: number;
   memberId: number;
   nickname: string;

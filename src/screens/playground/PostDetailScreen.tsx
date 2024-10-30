@@ -2,7 +2,6 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Keyboard,
   RefreshControl,
   TouchableOpacity,
   View,
@@ -23,7 +22,7 @@ import {
   SearchSongV2Item,
 } from '../../components';
 import CommentGrayIcon from '../../assets/svg/commentGray.svg';
-import {formatDateComment, formatDatePost, logPageView} from '../../utils';
+import {formatDatePost, logPageView} from '../../utils';
 import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import Popover from 'react-native-popover-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -157,6 +156,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       isLiked={item.isLiked}
       likes={item.likes}
       isRecomment={item.isRecomment}
+      isWriter={item.isWriter}
       memberId={item.memberId}
       nickname={item.nickname}
       parentCommentId={item.parentPostCommentId}
@@ -169,9 +169,11 @@ function PostDetailScreen(props: PostDetailScreenProps) {
       isFocused={postDetailHandler.focusedCommentId === item.postCommentId} // 포커싱된 상태 전달
       onFocus={() => handleFocusComment(item.postCommentId)}
       commentRecomments={postDetailHandler.commentRecomments}
+      setCommentRecomments={postDetailHandler.setCommentRecomments}
       mutateAsyncCommentRecomment={
         postDetailHandler.mutateAsyncCommentRecomment
       }
+      mutateAsyncDeleteComment={postDetailHandler.mutateAsyncDeleteComment}
       onPressCommentReport={postDetailHandler.handleOnPressCommentReport}
       onPressCommentBlacklist={postDetailHandler.handleOnPressCommentBlacklist}
     />

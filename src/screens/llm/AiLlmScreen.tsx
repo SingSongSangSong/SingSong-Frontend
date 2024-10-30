@@ -181,7 +181,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
             />
           </>
-          // </InputAccessoryView>
+          // {/* </InputAccessoryView> */}
         )}
       </View>
 

@@ -6,10 +6,12 @@ import MoreVerticalIcon from '../../assets/svg/moreVertical.svg';
 import {designatedColor} from '../../constants';
 import LikeIcon from '../../assets/svg/like.svg';
 import FilledLikeIcon from '../../assets/svg/filledLike.svg';
-import {formatDateComment, logTrack} from '../../utils';
+import {formatDateComment, logTrack, showToast} from '../../utils';
 import CustomText from '../text/CustomText';
 import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
+import {useMutation} from '@tanstack/react-query';
+import deletePostComment from '../../api/post/deletePostComment';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 // import postBlacklist from '../../api/comment/postBlacklist';
 
@@ -21,6 +23,7 @@ interface PostCommentItemProps {
   likes: number;
   isLiked: boolean;
   isRecomment: boolean;
+  isWriter: boolean;
   memberId: number;
   nickname: string;
   parentCommentId: number;
@@ -36,11 +39,15 @@ interface PostCommentItemProps {
   commentRecomments: {
     [key: number]: PostComments[];
   };
+  setCommentRecomments: React.Dispatch<
+    React.SetStateAction<{[key: number]: PostComments[]}>
+  >;
   mutateAsyncCommentRecomment: (data: {
     postCommentId: number;
     cursor: number;
     size: number;
   }) => Promise<any>;
+  mutateAsyncDeleteComment: (postCommentId: number) => Promise<any>;
   onPressCommentReport: (commentId: number, subjectMemberId: number) => void;
   onPressCommentBlacklist: (memberId: number) => void;
 }
@@ -52,6 +59,7 @@ const PostCommentItem = ({
   createdAt,
   likes,
   isLiked,
+  isWriter,
   memberId,
   nickname,
   parentCommentId,
@@ -64,7 +72,9 @@ const PostCommentItem = ({
   isFocused,
   onFocus,
   commentRecomments,
+  setCommentRecomments,
   mutateAsyncCommentRecomment,
+  mutateAsyncDeleteComment,
   onPressCommentReport,
   onPressCommentBlacklist,
 }: // onPressRecomment,
@@ -83,7 +93,7 @@ PostCommentItemProps) => {
     useState<number>(postRecommentsCount);
   // const [commentRecomments, setCommentRecomments] = useState<PostComments[]>();
   const [lastCursor, setLastCursor] = useState<number>(-1);
-  const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
+  // const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
   const [isPressedRecomment, setIsPressedRecomment] = useState<boolean>(false);
   const [isShowBlacklistModal, setIsShowBlacklistModal] =
     useState<boolean>(false);
@@ -94,6 +104,25 @@ PostCommentItemProps) => {
       // console.log('commentRecomments: ', commentRecomments);
     }
   }, [commentRecomments]);
+
+  const {mutateAsync: mutateAsyncDeleteRecomment} = useMutation({
+    mutationFn: async (childCommentId: number) => {
+      return deletePostComment(childCommentId);
+    },
+    onError: () => {
+      showToast('답글 삭제에 실패했습니다. 다시 시도해주세요');
+    },
+    onSuccess: (data, childCommentId) => {
+      setCommentRecomments(prevComments => ({
+        ...prevComments,
+        [postCommentId]: prevComments[postCommentId].filter(
+          comment => comment.postCommentId !== childCommentId,
+        ),
+      }));
+
+      showToast('답글이 삭제되었습니다.');
+    },
+  });
 
   const handleOnPressCommentLike = () => {
     onPressCommentLike(postCommentId);
@@ -127,6 +156,10 @@ PostCommentItemProps) => {
       cursor,
       size,
     });
+  };
+
+  const handleOnPressCommentDelete = async (postCommentId: number) => {
+    await mutateAsyncDeleteComment(postCommentId);
   };
 
   // const onPressCommentBlacklist = async (memberId: number) => {
@@ -176,6 +209,16 @@ PostCommentItemProps) => {
           // arrowStyle={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}
         >
           <View style={tw`bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            {isWriter && (
+              <TouchableOpacity
+                style={tw`p-4`}
+                onPress={() => {
+                  handleOnPressCommentDelete(postCommentId);
+                  setIsVisible(false);
+                }}>
+                <CustomText style={tw`text-white`}>삭제</CustomText>
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               style={tw`p-4`}
               onPress={() => {
@@ -338,6 +381,7 @@ PostCommentItemProps) => {
                   createdAt={item.createdAt}
                   likes={item.likes}
                   isLiked={item.isLiked}
+                  isWriter={item.isWriter}
                   memberId={item.memberId}
                   nickname={item.nickname}
                   parentCommentId={item.parentPostCommentId}
@@ -350,6 +394,8 @@ PostCommentItemProps) => {
                   onPressRecommentBlacklist={() => {
                     onPressCommentBlacklist(item.memberId);
                   }}
+                  // mutateAsyncDeleteRecomment={mutateAsyncDeleteComment}
+                  mutateAsyncDeleteRecomment={mutateAsyncDeleteRecomment}
                   // postRecommentsCount={item.postRecommentsCount}
                   // songOnPostComment={item.songOnPostComment}
                   // onPressCommentLike={handleOnPressCommentLike}
