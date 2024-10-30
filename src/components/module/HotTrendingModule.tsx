@@ -104,11 +104,15 @@ const HotTrendingModule = ({
         setSelectedGender('MIXED');
         setUserGender('MIXED');
         setSelectedCharts('MIXED', tempCharts.ageGroup);
-      } else {
+      } else if (tempCharts.gender) {
         // console.log('selectedGender!');
         setSelectedGender(tempCharts.gender);
         setUserGender(tempCharts.gender);
         setSelectedCharts(tempCharts.gender, tempCharts.ageGroup);
+      } else {
+        setSelectedGender('MIXED');
+        setUserGender('MIXED');
+        setSelectedCharts('MIXED', tempCharts.ageGroup);
       }
     }
   }, [tempCharts]);
