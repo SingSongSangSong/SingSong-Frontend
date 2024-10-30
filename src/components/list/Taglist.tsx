@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Animated} from 'react-native';
+import {View, TouchableOpacity, ScrollView, Animated} from 'react-native';
 import tw from 'twrnc';
 import {TagIconButton} from '../button/TagIconButton';
 import * as Icons from '../../assets/svg/tags';
@@ -49,7 +49,7 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
             style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2 items-center`}>
             장르별 노래
           </CustomText>
-          <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[11px]`}>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
             상황에 맞는 노래를 찾아보세요!
           </CustomText>
         </View>

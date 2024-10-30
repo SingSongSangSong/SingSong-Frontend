@@ -12,7 +12,10 @@ const SongComment = ({handleOnPressComment}: SongCommentProps) => {
   // console.log('songComment');
   const commentCount = useCommentStore(state => state.commentCount);
   return (
-    <View style={tw`w-full px-2 mt-4`}>
+    <TouchableOpacity
+      style={tw`w-full px-2 mt-4`}
+      onPress={handleOnPressComment}
+      activeOpacity={0.8}>
       <View style={tw`flex-row my-2 items-center`}>
         <CustomText
           style={tw`text-[${designatedColor.TEXT_WHITE}] mr-2 text-lg font-bold`}>
@@ -22,15 +25,13 @@ const SongComment = ({handleOnPressComment}: SongCommentProps) => {
           {commentCount}
         </CustomText>
       </View>
-      <TouchableOpacity
-        style={tw`flex-row items-center p-2 rounded-lg bg-[${designatedColor.GRAY5}]`}
-        onPress={handleOnPressComment}
-        activeOpacity={0.8}>
+      <View
+        style={tw`flex-row items-center p-3 rounded-lg bg-[${designatedColor.GRAY5}]`}>
         <CustomText style={tw`text-[${designatedColor.GRAY1}]`}>
-          댓글 추가...
+          댓글 보기...
         </CustomText>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
