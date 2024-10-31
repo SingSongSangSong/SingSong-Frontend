@@ -50,7 +50,7 @@ const CommentInfoItem = ({
           <View style={tw`flex-row items-center`}>
             <CommentIcon width={16} height={16} />
             <CustomText
-              style={tw`text-[13px] text-[${designatedColor.VIOLET3}] leading-[16px] px-2`}
+              style={tw`text-[13px] text-[${designatedColor.GRAY1}] leading-[16px] px-2`}
               numberOfLines={2}
               ellipsizeMode="tail">
               {nickname}
@@ -64,26 +64,31 @@ const CommentInfoItem = ({
           </View>
         </View>
         <View style={tw`flex-row items-center mt-2 justify-between`}>
+          <View style={tw`flex-row items-center`}>
+            <CustomText
+              style={tw`text-[12px] text-[${designatedColor.VIOLET}] leading-[16px] pr-2`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {songNumber}
+            </CustomText>
+            <CustomText
+              style={[
+                tw`text-[12px] text-[${designatedColor.VIOLET3}] leading-[16px] pr-1 flex-shrink overflow-hidden`,
+                {
+                  width: commentWidth,
+                },
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {songName}
+            </CustomText>
+          </View>
           <CustomText
             style={tw`text-[12px] text-[${designatedColor.GRAY1}] leading-[16px] pr-1`}
             numberOfLines={2}
             ellipsizeMode="tail">
             {formatDateComment(createdAt)}
           </CustomText>
-          <View style={tw`flex-row items-center`}>
-            <CustomText
-              style={tw`text-[11px] text-[${designatedColor.VIOLET3}] leading-[16px] pr-2`}
-              numberOfLines={1}
-              ellipsizeMode="tail">
-              {songNumber}
-            </CustomText>
-            <CustomText
-              style={tw`text-[11px] text-[${designatedColor.GRAY1}] leading-[16px] pr-1 flex-shrink overflow-hidden`}
-              numberOfLines={1}
-              ellipsizeMode="tail">
-              {songName}
-            </CustomText>
-          </View>
         </View>
 
         {/* <View style={tw`flex-row m-1`}>
