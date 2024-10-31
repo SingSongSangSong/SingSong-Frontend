@@ -15,13 +15,9 @@ import useKeepV2Store from '../store/useKeepV2Store';
 
 type UseSongProps = {
   initTag: string;
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.RCD_DETAIL
-  >;
 };
 
-const useSong = ({initTag, navigation}: UseSongProps) => {
+const useSong = ({initTag}: UseSongProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [songLst, setSongLst] = useState<Song[]>(); //songlist를 렌더링하기 위함
   const [isLoading, setIsLoading] = useState(false);

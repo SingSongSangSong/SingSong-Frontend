@@ -98,3 +98,5 @@ export * from './module/post/PostSongListModule';
 export * from './item/SearchSongV2Item';
 export * from './item/KeepSongV2Item';
 export * from './list/KeepSongsV2List';
+export * from './list/TagExploreList';
+export * from './item/TagExploreItem';

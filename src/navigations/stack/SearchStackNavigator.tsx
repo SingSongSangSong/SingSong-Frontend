@@ -21,6 +21,7 @@ import DeleteIcon from '../../assets/svg/delete.svg';
 import SearchFocusScreen from '../../screens/search/SearchFocusScreen';
 import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
 import AiLlmScreen from '../../screens/llm/AiLlmScreen';
+import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -91,6 +92,31 @@ function SearchStackNavigator({navigation}: SearchStackNavigatorProps) {
         component={AiLlmResultScreen}
         options={() => ({
           headerTitle: '',
+        })}
+      />
+      {/* <Stack.Screen
+        name={searchStackNavigations.SEARCH_RCD_DETAIL}
+        component={RcdHomeScreen}
+        options={() => ({
+          headerTitle: 'AI 검색',
+        })}
+      /> */}
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_RCD_DETAIL}
+        component={RcdHomeScreen}
+        // initialParams={{tag}}
+        options={({route, navigation}) => ({
+          headerShown: true,
+          headerTitle: `${route?.params?.tag}`, // route.params.tag
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
         })}
       />
       <Stack.Screen

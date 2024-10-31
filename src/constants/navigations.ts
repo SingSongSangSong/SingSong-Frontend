@@ -68,6 +68,7 @@ const searchStackNavigations = {
   SEARCH_FOCUSED: '_SearchFocused',
   SEARCH_AI_LLM: '_SearchAiLlm',
   SEARCH_AI_LLM_RESULT: '_SearchAiLlmResult',
+  SEARCH_RCD_DETAIL: '_SearchRcdDetail',
 } as const;
 
 export {

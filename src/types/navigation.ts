@@ -105,6 +105,7 @@ type SearchStackParamList = {
     resultSong: Song[];
     character: string;
   };
+  [searchStackNavigations.SEARCH_RCD_DETAIL]: {tag: string};
 };
 
 type PlaygroundStackParamList = {

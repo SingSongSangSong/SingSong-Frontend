@@ -11,9 +11,9 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import MusicIcon from '../../../assets/svg/music.svg';
 import {LikeButton} from '../../button/LikeButton';
 import LikeIcon from '../../../assets/svg/like.svg';
-import FilledLikeIcon from '../../../assets/svg/filledLike.svg';
+import FilledLikeIcon from '../../../assets/svg/FilledLikeViolet.svg';
 import DislikeIcon from '../../../assets/svg/dislike.svg';
-import FilledDislikeIcon from '../../../assets/svg/filledDislike.svg';
+import FilledDislikeIcon from '../../../assets/svg/FilledDislikeViolet.svg';
 import CustomText from '../../text/CustomText';
 
 type SongReviewProps = {
