@@ -66,7 +66,6 @@ const MainTabNavigator = () => {
             routeName === keepStackNavigations.KEEP_RECOMMENT ||
             routeName === homeStackNavigations.REPORT ||
             routeName === keepStackNavigations.KEEP_REPORT ||
-            routeName === homeStackNavigations.SEARCH ||
             routeName === homeStackNavigations.RCD_DETAIL ||
             routeName === homeStackNavigations.SONG_DETAIL ||
             routeName === homeStackNavigations.SETTING ||
@@ -89,7 +88,10 @@ const MainTabNavigator = () => {
             routeName === searchStackNavigations.SEARCH_SONG_DETAIL ||
             routeName === searchStackNavigations.SEARCH_COMMENT ||
             routeName === searchStackNavigations.SEARCH_RECOMMENT ||
-            routeName === searchStackNavigations.SEARCH_REPORT
+            routeName === searchStackNavigations.SEARCH_REPORT ||
+            routeName === searchStackNavigations.SEARCH_FOCUSED ||
+            routeName === searchStackNavigations.SEARCH_AI_LLM ||
+            routeName === searchStackNavigations.SEARCH_AI_LLM_RESULT
           ) {
             return true;
           }

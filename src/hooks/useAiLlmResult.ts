@@ -1,29 +1,35 @@
 import {useEffect, useState} from 'react';
-import {HomeStackParamList, Song} from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {homeStackNavigations} from '../constants';
+import {HomeStackParamList, SearchStackParamList, Song} from '../types';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
+import {homeStackNavigations, searchStackNavigations} from '../constants';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {logButtonClick} from '../utils';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
-import useKeepListStore from '../store/useKeepStore';
 import Toast from 'react-native-toast-message';
 import getKeepV2 from '../api/keep/getKeepV2';
 import useKeepV2Store from '../store/useKeepV2Store';
 
 type UseAiLlmResultProps = {
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.AI_LLM_RESULT
-  >;
+  navigation:
+    | StackNavigationProp<
+        HomeStackParamList,
+        typeof homeStackNavigations.AI_LLM_RESULT
+      >
+    | StackNavigationProp<
+        SearchStackParamList,
+        typeof searchStackNavigations.SEARCH_AI_LLM_RESULT
+      >;
   resultSong: Song[];
   character: string;
+  routeName: string;
 };
 
 const useAiLlmResult = ({
   navigation,
   resultSong,
   character,
+  routeName,
 }: UseAiLlmResultProps) => {
   const [searchResult, setSearchResult] = useState<Song[]>();
   // const setKeepList = useKeepListStore(state => state.setKeepList);
@@ -52,20 +58,50 @@ const useAiLlmResult = ({
   ) => {
     amplitude.track('llm_song_button_click');
     logButtonClick('llm_song_button_click');
-    navigation.navigate({
-      key: 'MyUniqueKeyForSongDetail',
-      name: homeStackNavigations.SONG_DETAIL,
-      params: {
-        songId,
-        songNumber,
-        songName,
-        singerName,
-        album: album || '',
-        melonLink,
-        isMr,
-        isLive,
-      },
-    });
+    if ('navigate' in navigation) {
+      if (routeName === searchStackNavigations.SEARCH_AI_LLM_RESULT) {
+        (
+          navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).push(searchStackNavigations.SEARCH_SONG_DETAIL, {
+          songId,
+          songNumber,
+          songName,
+          singerName,
+          album: album || '',
+          melonLink,
+          isMr,
+          isLive,
+        });
+      } else if (routeName === homeStackNavigations.AI_LLM_RESULT) {
+        (navigation as StackScreenProps<HomeStackParamList>['navigation']).push(
+          homeStackNavigations.SONG_DETAIL,
+          {
+            songId,
+            songNumber,
+            songName,
+            singerName,
+            album: album || '',
+            melonLink,
+            isMr,
+            isLive,
+          },
+        );
+      }
+    }
+    // navigation.navigate({
+    //   key: 'MyUniqueKeyForSongDetail',
+    //   name: homeStackNavigations.SONG_DETAIL,
+    //   params: {
+    //     songId,
+    //     songNumber,
+    //     songName,
+    //     singerName,
+    //     album: album || '',
+    //     melonLink,
+    //     isMr,
+    //     isLive,
+    //   },
+    // });
   };
 
   const handleOnKeepAddPress = async (songId: number) => {

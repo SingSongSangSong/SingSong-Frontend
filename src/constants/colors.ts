@@ -49,6 +49,7 @@ const designatedColor = {
   VIOLET4: '#6734E6',
   MINT: '#6DFBFB',
   YELLOW: '#E7F232',
+  BEIGE: '#BEBEBE',
 } as const;
 
 export {randomColor, designatedColor};

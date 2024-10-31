@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Platform,
-  Keyboard,
-} from 'react-native';
+import {View, TextInput, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
-import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
 import SearchIcon from '../../../assets/svg/search.svg';
 import {designatedColor} from '../../../constants';
+import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
 
 type SearchInputProps = {
   inputText: string;
@@ -33,17 +27,11 @@ const SearchInput = ({
   return (
     <View
       style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] p-3`}>
-      {/* <TouchableOpacity
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
-        activeOpacity={0.8}
-        style={tw`pr-3`}>
-        <ArrowLeftIcon width={28} height={28} />
-      </TouchableOpacity> */}
-
+      <TouchableOpacity onPress={handleOnPressBack}>
+        <ArrowLeftIcon width={20} height={20} style={tw`mr-3`} />
+      </TouchableOpacity>
       <View
-        style={tw`flex-1 flex-row items-center bg-gray-600 rounded-lg px-3`}>
+        style={tw`flex-1 flex-row items-center bg-[${designatedColor.GRAY4}] rounded-lg px-3`}>
         {Platform.OS === 'ios' ? (
           <SearchIcon width={20} height={20} style={tw`mr-3`} />
         ) : (
@@ -53,7 +41,7 @@ const SearchInput = ({
           ref={inputRef}
           style={tw`flex-1 text-white h-10`}
           placeholder="검색어를 입력해보세요."
-          placeholderTextColor="#BEBEBE"
+          placeholderTextColor={designatedColor.BEIGE}
           value={inputText}
           onChangeText={setInputText}
           onSubmitEditing={handleOnSubmit} // 엔터 키를 눌렀을 때 handleOnSubmit 호출

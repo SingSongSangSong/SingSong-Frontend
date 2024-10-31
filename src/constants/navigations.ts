@@ -65,6 +65,9 @@ const searchStackNavigations = {
   SEARCH_COMMENT: '_SearchComment',
   SEARCH_RECOMMENT: '_SearchRecomment',
   SEARCH_REPORT: '_SearchReport',
+  SEARCH_FOCUSED: '_SearchFocused',
+  SEARCH_AI_LLM: '_SearchAiLlm',
+  SEARCH_AI_LLM_RESULT: '_SearchAiLlmResult',
 } as const;
 
 export {

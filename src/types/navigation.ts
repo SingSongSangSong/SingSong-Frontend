@@ -51,7 +51,7 @@ type HomeStackParamList = {
   };
   [homeStackNavigations.TAG_DETAIL]: undefined;
   [homeStackNavigations.BLACKLIST]: undefined;
-  [homeStackNavigations.SEARCH]: undefined;
+  // [homeStackNavigations.SEARCH]: undefined;
   [homeStackNavigations.AI_RECOMMENDATION]: undefined;
   [homeStackNavigations.NICKNAME_CHANGE]: {nickname: string};
   [homeStackNavigations.AI_LLM]: undefined;
@@ -98,6 +98,12 @@ type SearchStackParamList = {
   [searchStackNavigations.SEARCH_REPORT]: {
     reportCommentId: number;
     reportSubjectMemberId: number;
+  };
+  [searchStackNavigations.SEARCH_FOCUSED]: undefined;
+  [searchStackNavigations.SEARCH_AI_LLM]: undefined;
+  [searchStackNavigations.SEARCH_AI_LLM_RESULT]: {
+    resultSong: Song[];
+    character: string;
   };
 };
 

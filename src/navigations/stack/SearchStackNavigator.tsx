@@ -18,6 +18,9 @@ import CommentScreen from '../../screens/song/CommentScreen';
 import RecommentScreen from '../../screens/song/RecommentScreen';
 import ReportScreen from '../../screens/song/ReportScreen';
 import DeleteIcon from '../../assets/svg/delete.svg';
+import SearchFocusScreen from '../../screens/search/SearchFocusScreen';
+import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
+import AiLlmScreen from '../../screens/llm/AiLlmScreen';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -65,6 +68,29 @@ function SearchStackNavigator({navigation}: SearchStackNavigatorProps) {
         options={() => ({
           headerShown: false,
           //   headerTitle: '글쓰기', // 헤더 제목을 비움
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_FOCUSED}
+        component={SearchFocusScreen}
+        options={() => ({
+          headerShown: false,
+          animationEnabled: false,
+          //   headerTitle: '글쓰기', // 헤더 제목을 비움
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_AI_LLM}
+        component={AiLlmScreen}
+        options={() => ({
+          headerTitle: 'AI 검색',
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_AI_LLM_RESULT}
+        component={AiLlmResultScreen}
+        options={() => ({
+          headerTitle: '',
         })}
       />
       <Stack.Screen

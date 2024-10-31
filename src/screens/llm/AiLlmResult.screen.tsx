@@ -6,9 +6,13 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {designatedColor, homeStackNavigations} from '../../constants';
+import {
+  designatedColor,
+  homeStackNavigations,
+  searchStackNavigations,
+} from '../../constants';
 import tw from 'twrnc';
-import {HomeStackParamList} from '../../types';
+import {HomeStackParamList, SearchStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import useAiLlmResult from '../../hooks/useAiLlmResult';
 import {OutlineButton, SongsList} from '../../components';
@@ -18,16 +22,22 @@ import SingsongIcon from '../../assets/svg/singsong.svg';
 import SangsongIcon from '../../assets/svg/sangsong.svg';
 import {logPageView} from '../../utils';
 
-type AiLlmResultScreenProps = StackScreenProps<
-  HomeStackParamList,
-  typeof homeStackNavigations.AI_LLM_RESULT
->;
+type AiLlmResultScreenProps =
+  | StackScreenProps<
+      HomeStackParamList,
+      typeof homeStackNavigations.AI_LLM_RESULT
+    >
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_AI_LLM_RESULT
+    >;
 
 function AiLlmResultScreen(props: AiLlmResultScreenProps) {
   const aiLlmResultHandler = useAiLlmResult({
     navigation: props.navigation,
     resultSong: props.route.params.resultSong,
     character: props.route.params.character,
+    routeName: props.route.name,
   });
   const {width} = useWindowDimensions();
   const translateY = useRef(new Animated.Value(0)).current;
@@ -88,6 +98,34 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
     [translateY, aiLlmResultHandler.characterIcon],
   );
 
+  const handleOnNavigateYes = () => {
+    if ('navigate' in props.navigation) {
+      if (props.route.name === searchStackNavigations.SEARCH_AI_LLM_RESULT) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).navigate(searchStackNavigations.SEARCH_AI_LLM);
+      } else if (props.route.name === homeStackNavigations.AI_LLM_RESULT) {
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.AI_LLM);
+      }
+    }
+  };
+
+  const handleOnNavigateNo = () => {
+    if ('navigate' in props.navigation) {
+      if (props.route.name === searchStackNavigations.SEARCH_AI_LLM_RESULT) {
+        (
+          props.navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).navigate(searchStackNavigations.SEARCH);
+      } else if (props.route.name === homeStackNavigations.AI_LLM_RESULT) {
+        (
+          props.navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.RCD_HOME);
+      }
+    }
+  };
+
   // FlatList의 FooterComponent
   const renderFooter = () => (
     <View style={tw`py-8`}>
@@ -101,16 +139,12 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
         <OutlineButton
           title="네, 다시 추천 받을래요"
           color={designatedColor.VIOLET2}
-          onPress={() => {
-            props.navigation.navigate(homeStackNavigations.AI_LLM);
-          }}
+          onPress={handleOnNavigateYes}
         />
         <OutlineButton
           title="아니요, 홈으로 이동할래요"
           color={designatedColor.GRAY1}
-          onPress={() => {
-            props.navigation.navigate(homeStackNavigations.RCD_HOME);
-          }}
+          onPress={handleOnNavigateNo}
         />
       </View>
     </View>

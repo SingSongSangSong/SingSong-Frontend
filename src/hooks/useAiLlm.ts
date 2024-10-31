@@ -1,20 +1,26 @@
 import {useState} from 'react';
 import postRcdRecommendationLlm from '../api/recommendation/postRcdRecommendationLlm';
-import {HomeStackParamList} from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {homeStackNavigations} from '../constants';
+import {HomeStackParamList, SearchStackParamList} from '../types';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
+import {homeStackNavigations, searchStackNavigations} from '../constants';
 import {logTrack} from '../utils';
 import {useMutation} from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 
 type UseAiLlmProps = {
-  navigation: StackNavigationProp<
-    HomeStackParamList,
-    typeof homeStackNavigations.AI_LLM
-  >;
+  navigation:
+    | StackNavigationProp<
+        HomeStackParamList,
+        typeof homeStackNavigations.AI_LLM
+      >
+    | StackNavigationProp<
+        SearchStackParamList,
+        typeof searchStackNavigations.SEARCH_AI_LLM
+      >;
+  routeName: string;
 };
 
-const useAiLlm = ({navigation}: UseAiLlmProps) => {
+const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const [searchResult, setSearchResult] = useState<Song[]>();
   const [randomKeywords, setRandomKeywords] = useState<string[]>([]);
@@ -56,10 +62,23 @@ const useAiLlm = ({navigation}: UseAiLlmProps) => {
     },
     onSuccess: tempData => {
       setIsLoading(false);
-      navigation.navigate(homeStackNavigations.AI_LLM_RESULT, {
-        resultSong: tempData.data.songs || [],
-        character: selectedGif === 0 ? 'singsong' : 'sangsong',
-      });
+      if ('navigate' in navigation) {
+        if (routeName === searchStackNavigations.SEARCH_AI_LLM) {
+          (
+            navigation as StackScreenProps<SearchStackParamList>['navigation']
+          ).navigate(searchStackNavigations.SEARCH_AI_LLM_RESULT, {
+            resultSong: tempData.data.songs || [],
+            character: selectedGif === 0 ? 'singsong' : 'sangsong',
+          });
+        } else if (routeName === homeStackNavigations.AI_LLM) {
+          (
+            navigation as StackScreenProps<HomeStackParamList>['navigation']
+          ).navigate(homeStackNavigations.AI_LLM_RESULT, {
+            resultSong: tempData.data.songs || [],
+            character: selectedGif === 0 ? 'singsong' : 'sangsong',
+          });
+        }
+      }
     },
   });
 

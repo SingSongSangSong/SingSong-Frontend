@@ -14,10 +14,11 @@ import {
   designatedColor,
   homeStackNavigations,
   keywordList,
+  searchStackNavigations,
 } from '../../constants';
 import tw from 'twrnc';
 import CustomText from '../../components/text/CustomText';
-import {HomeStackParamList} from '../../types';
+import {HomeStackParamList, SearchStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import SingsongsangsongIcon from '../../assets/svg/singsongsangsong.svg';
 import {SearchKeyboard} from '../../components';
@@ -28,13 +29,18 @@ import {ScrollView} from 'react-native-gesture-handler';
 import InfoIcon from '../../assets/svg/Info.svg';
 import {useFocusEffect} from '@react-navigation/native';
 
-type AiLlmScreenProps = StackScreenProps<
-  HomeStackParamList,
-  typeof homeStackNavigations.AI_LLM
->;
+type AiLlmScreenProps =
+  | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.AI_LLM>
+  | StackScreenProps<
+      SearchStackParamList,
+      typeof searchStackNavigations.SEARCH_AI_LLM
+    >;
 
 function AiLlmScreen(props: AiLlmScreenProps) {
-  const aiLlmHandler = useAiLlm({navigation: props.navigation});
+  const aiLlmHandler = useAiLlm({
+    navigation: props.navigation,
+    routeName: props.route.name,
+  });
   const insets = useSafeAreaInsets();
 
   // 처음 한 번만 랜덤 키워드를 생성
