@@ -40,27 +40,34 @@ const useInit = () => {
 
     // Remote Config 설정
     await remoteConfig().setConfigSettings({
-      minimumFetchIntervalMillis: 0, // 1시간
+      minimumFetchIntervalMillis: 86400000, // 1시간
+      fetchTimeMillis: 3000,
     });
   };
 
   const versionCheck = async () => {
     try {
+      // console.log('Remote Config 설정 시작');
       await setRemoteConfig();
+      // console.log('Remote Config 설정 완료');
 
-      const fetchedRemotely = await remoteConfig().fetchAndActivate();
+      // fetchAndActivate에 2초 타임아웃 적용
+      const activated = await Promise.race([
+        remoteConfig().fetchAndActivate(),
+        new Promise(resolve => setTimeout(() => resolve(true), 1500)), // 2초 후에 true 반환
+      ]);
+
+      // console.log('Remote Config 업데이트 완료:', activated);
 
       // 로컬에서 현재 버전 정보 가져오기
       const currentVersion = await getCurrentVersion();
       setCurrentVersion(currentVersion);
+      // console.log('현재 버전:', currentVersion);
 
       let latestVersion;
       let forceUpdateVersion;
       let updateUrl;
 
-      // Remote Config에서 최신 버전 정보 가져오기
-      // const latestVersion = remoteConfig().getString('latestVersion');
-      // const forceUpdateVersion = remoteConfig().getString('forceUpdateVersion');
       if (Platform.OS === 'ios') {
         latestVersion = remoteConfig().getString('latestVersionForIOS');
         forceUpdateVersion = remoteConfig().getString(
@@ -73,29 +80,30 @@ const useInit = () => {
         updateUrl = remoteConfig().getString('updateUrl');
       }
 
-      setUpdateUrl(updateUrl!);
-
-      // console.log('현재 버전:', currentVersion);
       // console.log('최신 버전:', latestVersion);
       // console.log('강제 업데이트 버전:', forceUpdateVersion);
+      // console.log('업데이트 URL:', updateUrl);
 
-      // 강제 업데이트가 필요할 경우
-      if (currentVersion < forceUpdateVersion) {
-        // console.log('강제 업데이트가 필요합니다.');
-        setIsForced(true);
-        setIsModalVisible(true);
-
-        return false; // 강제 업데이트가 필요하므로 false 반환
-      } else if (currentVersion < latestVersion) {
-        // console.log('선택적 업데이트를 권장합니다.');
-        setIsModalVisible(true);
-        return false; // 선택적 업데이트일 경우 true 반환
+      if (!latestVersion || !forceUpdateVersion || !updateUrl) {
+        throw new Error('Remote Config에서 필요한 값이 없습니다');
       }
 
-      return true; // 업데이트가 필요하지 않으면 true 반환
+      setUpdateUrl(updateUrl!);
+
+      // 강제 업데이트 체크
+      if (currentVersion < forceUpdateVersion) {
+        setIsForced(true);
+        setIsModalVisible(true);
+        return false;
+      } else if (currentVersion < latestVersion) {
+        setIsModalVisible(true);
+        return false;
+      }
+
+      return true;
     } catch (error) {
       console.error('버전 체크 중 오류가 발생했습니다:', error);
-      return true; // 오류 발생 시에도 앱을 계속 진행할 수 있도록 true 반환
+      return true;
     }
   };
 
