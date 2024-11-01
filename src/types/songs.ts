@@ -34,6 +34,8 @@ interface Song {
   keepCount?: number;
   commentCount?: number;
   melonLink?: string;
+  tjYoutubeLink?: string;
+  lyricsYoutubeLink?: string;
 }
 
 interface LlmSongResponse {
@@ -153,6 +155,8 @@ interface SongInfo {
   keepCount: number;
   commentCount: number;
   melonLink?: string;
+  tjYoutubeLink?: string;
+  lyricsYoutubeLink?: string;
 }
 
 interface SongInfoResponse {
@@ -270,6 +274,8 @@ interface NewSong {
   songId: number;
   songName: string;
   songNumber: number;
+  tjYoutubeLink?: string;
+  lyricsYoutubeLink?: string;
 }
 
 interface GetSongsNewResponse {
@@ -298,6 +304,8 @@ interface KeepSongV2 {
   songId: number;
   songName: string;
   songNumber: number;
+  tjYoutubeLink?: string;
+  lyricsYoutubeLink?: string;
 }
 
 export type {

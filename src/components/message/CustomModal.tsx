@@ -35,7 +35,7 @@ const CustomModal = ({
           <View />
           <CustomText
             style={[
-              tw`text-black text-[17px] mb-4 text-center`,
+              tw`text-black text-[17px] mb-4 text-center mx-6`,
               {lineHeight: 24},
             ]}>
             {message}

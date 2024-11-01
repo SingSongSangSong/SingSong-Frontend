@@ -90,16 +90,16 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         Platform.OS === 'ios' && {paddingBottom: insets.bottom},
       ]}>
       {/* 터치 시 키보드가 닫히는 상단 영역 */}
-      <View
-        style={[
-          tw`flex-1 justify-start`,
-          {
-            paddingTop: height * 0.1,
-            paddingBottom: bottomHeight,
-          },
-        ]}>
+      <View style={[tw`flex-1 justify-start`]}>
         <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
-          <ScrollView contentContainerStyle={tw`flex-grow justify-start pb-20`}>
+          <ScrollView
+            contentContainerStyle={[
+              tw`flex-grow justify-start pb-20`,
+              {
+                paddingTop: height * 0.1,
+                paddingBottom: bottomHeight,
+              },
+            ]}>
             <View style={tw`w-full pl-2 pt-4 pb-10`}>
               <AiSangsongIcon />
               <CustomText style={tw`text-white text-[15px] mt-2`}>

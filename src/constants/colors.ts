@@ -50,6 +50,7 @@ const designatedColor = {
   MINT: '#6DFBFB',
   YELLOW: '#E7F232',
   BEIGE: '#BEBEBE',
+  TJORANGE: '#FF5603',
 } as const;
 
 export {randomColor, designatedColor};

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Linking, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import {SongInfo} from '../../../types';
@@ -14,11 +14,13 @@ import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import useCommentStore from '../../../store/useCommentStore';
 import Toast from 'react-native-toast-message';
-import {logButtonClick} from '../../../utils';
+import {logButtonClick, showToast} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import CustomText from '../../text/CustomText';
 import useKeepV2Store from '../../../store/useKeepV2Store';
 import getKeepV2 from '../../../api/keep/getKeepV2';
+import YoutubeIcon from '../../../assets/svg/youtube.svg';
+import TjIcon from '../../../assets/svg/tj.svg';
 
 type SongAdditionInfoProps = {
   songId: number;
@@ -113,55 +115,46 @@ const SongAdditionInfo = ({
   }, []);
 
   return (
-    <View style={tw` border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
-      <View style={tw`flex-row items-center justify-between mx-2`}>
-        <View>
-          <View style={tw`flex-row py-2 mx-1`}>
-            <View style={tw`flex-row mr-4 items-center`}>
-              {!songInfo || !songInfo.isKeep ? (
-                <KeepCountIcon width={18} height={18} />
-              ) : (
-                <OutlineKeepIcon width={18} height={18} />
-              )}
-              <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-                {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
-              </CustomText>
-            </View>
-            <TouchableOpacity
-              style={tw`flex-row items-center`}
-              onPress={handleOnPressComment}
-              activeOpacity={0.8}>
-              <CommentCountIcon width={18} height={18} />
-              <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
-                {commentCount}
-              </CustomText>
-            </TouchableOpacity>
-          </View>
-          <View style={tw`flex-row items-center py-1 pb-4`}>
-            <CustomText style={tw`text-white text-[3] mr-2`}>
-              최고 음역대{' '}
+    <View style={tw`border-b-[0.5px] border-[${designatedColor.GRAY5}]`}>
+      <View style={tw`flex-row items-center justify-between px-3 py-2`}>
+        <View style={tw`flex-row items-center`}>
+          <View style={tw`flex-row mr-2 items-center`}>
+            {!songInfo || !songInfo.isKeep ? (
+              <KeepCountIcon width={18} height={18} />
+            ) : (
+              <OutlineKeepIcon width={18} height={18} />
+            )}
+            <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              {!songInfo ? <>0</> : <>{songInfo.keepCount}</>}
             </CustomText>
-            {songInfo &&
-              (songInfo.octave == '' ? (
-                <CustomText
-                  style={tw`text-[3] text-[${designatedColor.DARK_GRAY}]`}>
-                  없음
-                </CustomText>
-              ) : (
-                <CustomText
-                  style={tw`text-[3] text-[${designatedColor.GREEN}]`}>
-                  {songInfo.octave}
-                </CustomText>
-              ))}
           </View>
+          <TouchableOpacity
+            style={tw`flex-row items-center`}
+            onPress={handleOnPressComment}
+            activeOpacity={0.8}>
+            <CommentCountIcon width={18} height={18} />
+            <CustomText style={tw`text-[${designatedColor.GRAY1}] ml-1`}>
+              {commentCount}
+            </CustomText>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2 pr-4`}>
-          {!songInfo || !songInfo.isKeep ? (
-            <KeepIcon width={24} height={24} />
-          ) : (
-            <KeepFilledIcon width={24} height={24} />
-          )}
-        </TouchableOpacity>
+        <View style={tw`flex-row items-center mr-2`}>
+          <CustomText style={tw`text-white text-[3] mr-2`}>
+            최고 음역대{' '}
+          </CustomText>
+          {songInfo &&
+            (songInfo.octave == '' ? (
+              <CustomText
+                style={tw`text-[3] text-[${designatedColor.DARK_GRAY}]`}>
+                없음
+              </CustomText>
+            ) : (
+              <CustomText style={tw`text-[3] text-[${designatedColor.GREEN}]`}>
+                {songInfo.octave}
+              </CustomText>
+            ))}
+        </View>
+
         {/* <View style={tw`m-1`}>
           {songInfo && songInfo.description != '' ? (
             <Text style={tw`text-[${designatedColor.PINK2}]`}>
@@ -171,6 +164,51 @@ const SongAdditionInfo = ({
             <Text>''</Text>
           )}
         </View> */}
+      </View>
+      <View style={tw`flex-row justify-between px-3 pb-3 pt-5 items-center`}>
+        <View style={tw`flex-row items-center`}>
+          <TouchableOpacity
+            style={tw` flex-row items-center rounded-full py-0.5 px-2 mx-1 border border-[${designatedColor.TJORANGE}] bg-[${designatedColor.BLACK}]`}
+            activeOpacity={0.8}
+            onPress={() => {
+              if (songInfo && songInfo.tjYoutubeLink) {
+                Linking.openURL(songInfo.tjYoutubeLink);
+              } else {
+                showToast('곧 업데이트 될 예정입니다.');
+              }
+            }}>
+            <TjIcon width={28} height={28} />
+
+            <CustomText
+              style={tw`text-[${designatedColor.TJORANGE}] text-[12px] pr-1`}>
+              TJ
+            </CustomText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw` flex-row items-center rounded-full py-1 px-3 mx-1 border border-[${designatedColor.GRAY1}] bg-[${designatedColor.BLACK}]`}
+            activeOpacity={0.8}
+            onPress={() => {
+              if (songInfo && songInfo.lyricsYoutubeLink) {
+                Linking.openURL(songInfo.lyricsYoutubeLink);
+              } else {
+                showToast('곧 업데이트 될 예정입니다.');
+              }
+            }}>
+            <YoutubeIcon width={24} height={24} />
+
+            <CustomText
+              style={tw`text-[${designatedColor.TEXT_WHITE}] text-[12px] pl-1`}>
+              Youtube
+            </CustomText>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={handleOnPressKeep} style={tw`p-2 pr-4`}>
+          {!songInfo || !songInfo.isKeep ? (
+            <KeepIcon width={24} height={24} />
+          ) : (
+            <KeepFilledIcon width={24} height={24} />
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
