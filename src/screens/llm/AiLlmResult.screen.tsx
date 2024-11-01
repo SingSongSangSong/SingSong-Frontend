@@ -3,12 +3,14 @@ import {
   Animated,
   Easing,
   FlatList,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
 import {
   designatedColor,
   homeStackNavigations,
+  mainTitleList,
   searchStackNavigations,
 } from '../../constants';
 import tw from 'twrnc';
@@ -21,6 +23,7 @@ import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
 import SingsongIcon from '../../assets/svg/singsong.svg';
 import SangsongIcon from '../../assets/svg/sangsong.svg';
 import {logPageView} from '../../utils';
+import ArrowRightIcon from '../../assets/svg/arrowRightGray.svg';
 
 type AiLlmResultScreenProps =
   | StackScreenProps<
@@ -151,25 +154,33 @@ function AiLlmResultScreen(props: AiLlmResultScreenProps) {
   );
 
   const renderEmptyComponent = () => (
-    <View style={tw`flex-1 items-center justify-center py-8`}>
+    <View style={tw`flex-1 justify-center py-8`}>
       <CustomText
-        style={tw`text-[${designatedColor.VIOLET3}] text-lg font-bold`}>
+        style={tw`text-[${designatedColor.VIOLET3}] text-lg font-bold text-center`}>
         추천 노래가 없어요
       </CustomText>
-      <View style={tw`px-4 py-6`}>
-        <CustomText style={tw`text-[${designatedColor.VIOLET2}] text-[14px]`}>
-          더 정확한 추천을 받기 위한 TIP
+
+      <View style={tw`w-full py-6 px-4`}>
+        <CustomText
+          style={tw`text-[${designatedColor.VIOLET2}] text-[16px] py-2`}>
+          다음 키워드를 참고해보세요
         </CustomText>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
-          1. 부르고 싶은 노래와 비슷한 노래의 가수와 노래 제목을 언급해보세요.
-        </CustomText>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
-          2. 분위기나 상황을 묘사해보세요. 이를 통해 맞춤형 추천을 받을 수
-          있어요.
-        </CustomText>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] pt-1`}>
-          3. 특별히 부르고 싶은 특정 연도가 있다면, 그 연도를 언급해보세요.
-        </CustomText>
+        {mainTitleList.map((title, index) => (
+          <CustomText
+            key={index}
+            style={tw`text-[${designatedColor.GRAY1}] py-1 px-2 text-[15px]`}>
+            {index + 1}. {title}
+          </CustomText>
+        ))}
+        <TouchableOpacity
+          style={tw`w-full flex-row justify-between items-center mt-4 pt-2 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}
+          onPress={aiLlmResultHandler.handleOnPressInfo}
+          activeOpacity={1.0}>
+          <CustomText style={tw`text-[${designatedColor.GRAY2}]`}>
+            더 정확한 추천을 받고 싶다면?
+          </CustomText>
+          <ArrowRightIcon width={24} height={24} />
+        </TouchableOpacity>
       </View>
     </View>
   );

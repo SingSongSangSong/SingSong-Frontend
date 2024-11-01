@@ -151,12 +151,27 @@ const useAiLlmResult = ({
     });
   };
 
+  const handleOnPressInfo = () => {
+    if ('navigate' in navigation) {
+      if (routeName === searchStackNavigations.SEARCH_AI_LLM_RESULT) {
+        (
+          navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).navigate(searchStackNavigations.SEARCH_AI_LLM_INFO);
+      } else if (routeName === homeStackNavigations.AI_LLM_RESULT) {
+        (
+          navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.AI_LLM_INFO);
+      }
+    }
+  };
+
   return {
     characterIcon,
     searchResult,
     handleOnSongPress,
     handleOnKeepAddPress,
     handleOnKeepRemovePress,
+    handleOnPressInfo,
   };
 };
 
