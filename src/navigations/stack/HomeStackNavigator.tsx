@@ -26,6 +26,7 @@ import NicknameChangeScreen from '../../screens/home/NicknameChangeScreen';
 import AiLlmScreen from '../../screens/llm/AiLlmScreen';
 import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
 import NewSongScreen from '../../screens/home/NewSongScreen';
+import AiLlmInfoScreen from '../../screens/llm/AiLlmInfoScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -260,6 +261,24 @@ function HomeStackNavigator() {
         options={({navigation}) => ({
           // headerShown: false,
           headerTitle: 'AI 검색',
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+              Icon={ArrowLeftIcon}
+              size={28}
+            />
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name={homeStackNavigations.AI_LLM_INFO}
+        component={AiLlmInfoScreen}
+        options={({navigation}) => ({
+          // headerShown: false,
+          headerTitle: '도움말',
           headerLeft: () => (
             <IconButton
               onPress={() => {

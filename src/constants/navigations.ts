@@ -37,6 +37,7 @@ const homeStackNavigations = {
   NICKNAME_CHANGE: '_NicknameChange',
   AI_LLM: '_AiLlm',
   AI_LLM_RESULT: '_AiLlmResult',
+  AI_LLM_INFO: '_AiLlmInfo',
   NEW_SONG: '_NewSong',
 } as const;
 
@@ -68,6 +69,7 @@ const searchStackNavigations = {
   SEARCH_FOCUSED: '_SearchFocused',
   SEARCH_AI_LLM: '_SearchAiLlm',
   SEARCH_AI_LLM_RESULT: '_SearchAiLlmResult',
+  SEARCH_AI_LLM_INFO: '_SearchAiLlmInfo',
   SEARCH_RCD_DETAIL: '_SearchRcdDetail',
 } as const;
 

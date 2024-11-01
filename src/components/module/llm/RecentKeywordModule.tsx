@@ -5,7 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
-import CommentVioletIcon from '../../../assets/svg/commentViolet.svg';
+import CommentMintIcon from '../../../assets/svg/commentMint.svg';
 
 type RecentKeywordModuleProps = {
   onPressRecentKeyword: (recentKeyword: string) => void;
@@ -31,7 +31,7 @@ const RecentKeywordModule = ({
   }, [tempSearchLogs]);
 
   return (
-    <View style={tw`flex-1`}>
+    <View style={tw`flex-1 mt-4`}>
       <CustomText style={tw`text-[${designatedColor.GRAY3}] ml-2`}>
         최근 검색
       </CustomText>
@@ -39,15 +39,15 @@ const RecentKeywordModule = ({
         {recentKeywords?.map((keyword, index) => (
           <TouchableOpacity
             key={index}
-            style={tw`flex-row items-center py-1.5 ml-4`}
+            style={tw`flex-row items-center py-2 ml-4`}
             onPress={() => {
               onPressRecentKeyword(keyword);
             }}
             activeOpacity={0.9}>
-            <CommentVioletIcon width={20} height={20} />
+            <CommentMintIcon width={20} height={20} />
             <CustomText
               style={[
-                tw`text-[${designatedColor.TEXT_WHITE}] text-[15px] pl-1`,
+                tw`text-[${designatedColor.TEXT_WHITE}] text-[15px] pl-1 mr-2`,
                 {
                   width: width * 0.9,
                 },

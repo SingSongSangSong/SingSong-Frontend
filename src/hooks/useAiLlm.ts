@@ -115,6 +115,29 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
     }
   };
 
+  const handleOnPressRcdKeyword = (rcdKeyword: string) => {
+    if (!isKeyboardVisible) {
+      setSampleText(rcdKeyword);
+      inputRef.current?.focus();
+    } else {
+      Keyboard.dismiss();
+    }
+  };
+
+  const handleOnPressInfo = () => {
+    if ('navigate' in navigation) {
+      if (routeName === searchStackNavigations.SEARCH_AI_LLM) {
+        (
+          navigation as StackScreenProps<SearchStackParamList>['navigation']
+        ).navigate(searchStackNavigations.SEARCH_AI_LLM_INFO);
+      } else if (routeName === homeStackNavigations.AI_LLM) {
+        (
+          navigation as StackScreenProps<HomeStackParamList>['navigation']
+        ).navigate(homeStackNavigations.AI_LLM_INFO);
+      }
+    }
+  };
+
   return {
     isLoading,
     handleOnPressSearch,
@@ -126,6 +149,8 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
     setSelectedGif,
     handleOnPressRecentKeyword,
     inputRef,
+    handleOnPressInfo,
+    handleOnPressRcdKeyword,
   };
 };
 

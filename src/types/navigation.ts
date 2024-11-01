@@ -55,6 +55,7 @@ type HomeStackParamList = {
   [homeStackNavigations.AI_RECOMMENDATION]: undefined;
   [homeStackNavigations.NICKNAME_CHANGE]: {nickname: string};
   [homeStackNavigations.AI_LLM]: undefined;
+  [homeStackNavigations.AI_LLM_INFO]: undefined;
   [homeStackNavigations.AI_LLM_RESULT]: {resultSong: Song[]; character: string};
   [homeStackNavigations.NEW_SONG]: undefined;
 };
@@ -101,6 +102,7 @@ type SearchStackParamList = {
   };
   [searchStackNavigations.SEARCH_FOCUSED]: undefined;
   [searchStackNavigations.SEARCH_AI_LLM]: undefined;
+  [searchStackNavigations.SEARCH_AI_LLM_INFO]: undefined;
   [searchStackNavigations.SEARCH_AI_LLM_RESULT]: {
     resultSong: Song[];
     character: string;

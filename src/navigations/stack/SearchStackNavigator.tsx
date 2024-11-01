@@ -22,6 +22,7 @@ import SearchFocusScreen from '../../screens/search/SearchFocusScreen';
 import AiLlmResultScreen from '../../screens/llm/AiLlmResult.screen';
 import AiLlmScreen from '../../screens/llm/AiLlmScreen';
 import RcdHomeScreen from '../../screens/recommendation/RcdHomeScreen';
+import AiLlmInfoScreen from '../../screens/llm/AiLlmInfoScreen';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -85,6 +86,13 @@ function SearchStackNavigator({navigation}: SearchStackNavigatorProps) {
         component={AiLlmScreen}
         options={() => ({
           headerTitle: 'AI 검색',
+        })}
+      />
+      <Stack.Screen
+        name={searchStackNavigations.SEARCH_AI_LLM_INFO}
+        component={AiLlmInfoScreen}
+        options={() => ({
+          headerTitle: '도움말',
         })}
       />
       <Stack.Screen

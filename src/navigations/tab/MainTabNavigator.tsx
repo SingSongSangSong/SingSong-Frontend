@@ -92,7 +92,9 @@ const MainTabNavigator = () => {
             routeName === searchStackNavigations.SEARCH_FOCUSED ||
             routeName === searchStackNavigations.SEARCH_AI_LLM ||
             routeName === searchStackNavigations.SEARCH_AI_LLM_RESULT ||
-            routeName === searchStackNavigations.SEARCH_RCD_DETAIL
+            routeName === searchStackNavigations.SEARCH_RCD_DETAIL ||
+            routeName === homeStackNavigations.AI_LLM_INFO ||
+            routeName === searchStackNavigations.SEARCH_AI_LLM_INFO
           ) {
             return true;
           }

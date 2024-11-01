@@ -5,6 +5,7 @@ import {
   Keyboard,
   LayoutChangeEvent,
   Platform,
+  ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
@@ -20,7 +21,7 @@ import tw from 'twrnc';
 import CustomText from '../../components/text/CustomText';
 import {HomeStackParamList, SearchStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
-import SingsongsangsongIcon from '../../assets/svg/singsongsangsong.svg';
+// import SingsongsangsongIcon from '../../assets/svg/singsongsangsong.svg';
 import {
   RcdKeywordModule,
   RecentKeywordModule,
@@ -29,10 +30,11 @@ import {
 import useAiLlm from '../../hooks/useAiLlm';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {getRandomKeywords, logPageView} from '../../utils';
-import {ScrollView} from 'react-native-gesture-handler';
-import InfoIcon from '../../assets/svg/Info.svg';
+// import {ScrollView} from 'react-native-gesture-handler';
+// import InfoIcon from '../../assets/svg/Info.svg';
 import {useFocusEffect} from '@react-navigation/native';
 import AiSangsongIcon from '../../assets/svg/aiSangsong.svg';
+import ArrowRightIcon from '../../assets/svg/arrowRightGray.svg';
 
 type AiLlmScreenProps =
   | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.AI_LLM>
@@ -97,60 +99,20 @@ function AiLlmScreen(props: AiLlmScreenProps) {
           },
         ]}>
         <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
-          {/* <View style={tw`justify-center items-center bg-pink-200`}> */}
-          <View style={tw`flex-1 justify-start`}>
-            <View style={tw`w-full pl-2`}>
+          <ScrollView contentContainerStyle={tw`flex-grow justify-start pb-20`}>
+            <View style={tw`w-full pl-2 pt-4 pb-10`}>
               <AiSangsongIcon />
               <CustomText style={tw`text-white text-[15px] mt-2`}>
                 안녕하세요! 저에게 부르고 싶은 노래를 물어보세요!
               </CustomText>
             </View>
-            <RcdKeywordModule />
+            <RcdKeywordModule
+              onPressRcdKeyword={aiLlmHandler.handleOnPressRcdKeyword}
+            />
             <RecentKeywordModule
               onPressRecentKeyword={aiLlmHandler.handleOnPressRecentKeyword}
             />
-
-            {/* <View style={tw`items-center my-4`}>
-                <SingsongsangsongIcon />
-              </View> */}
-            {/* <View
-              style={tw`bg-[${designatedColor.HOT_TRENDING_COLOR}] mx-4 p-4 rounded-lg mt-2`}>
-              <View style={tw`flex-row items-center mb-2`}>
-                <InfoIcon />
-                <CustomText style={tw`text-white text-[12px] font-bold ml-1`}>
-                  더 정확한 추천을 받으려면 아래 키워드를 사용해보세요
-                </CustomText>
-              </View>
-              <CustomText
-                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px] mb-1`}>
-                1. 부르고 싶은 노래와 비슷한 노래의 가수와 노래 제목을
-                언급해보세요.
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
-                예시) "빅뱅의 '뱅뱅뱅' 같은 노래 추천해줘"
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px] mb-1`}>
-                2. 분위기나 상황을 묘사해보세요. 이를 통해 맞춤형 추천을 받을 수
-                있어요.
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
-                예시) "편안한 느낌의 노래 추천해줘"
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.GRAY_E5}] text-[11px]`}>
-                3. 특별히 부르고 싶은 특정 연도가 있다면, 그 연도를
-                언급해보세요.
-              </CustomText>
-              <CustomText
-                style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
-                예시) "2010년대 초반의 노래 추천해줘"
-              </CustomText>
-            </View> */}
-          </View>
-          {/* </View> */}
+          </ScrollView>
         </TouchableWithoutFeedback>
       </View>
 
@@ -165,30 +127,15 @@ function AiLlmScreen(props: AiLlmScreenProps) {
           //   backgroundColor={designatedColor.BACKGROUND_BLACK}
           //   style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <>
-            {/* <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={tw`flex-row px-4 pt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}
-              keyboardShouldPersistTaps="always" // ScrollView 터치 시 키보드를 유지
-            >
-              {aiLlmHandler.randomKeywords.map((keyword, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[
-                    tw`bg-[${designatedColor.GRAY5}] rounded-lg px-4 py-3 mr-3 items-center justify-center`,
-                    {
-                      width: width * 0.4,
-                    },
-                  ]}
-                  onPress={() => aiLlmHandler.setSampleText(keyword)}
-                  activeOpacity={0.8}>
-                  <CustomText
-                    style={tw`text-[${designatedColor.GRAY_E5}] text-[10px]`}>
-                    {keyword}
-                  </CustomText>
-                </TouchableOpacity>
-              ))}
-            </ScrollView> */}
+            <TouchableOpacity
+              style={tw`flex-row justify-between items-center px-6 pt-2 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}
+              onPress={aiLlmHandler.handleOnPressInfo}
+              activeOpacity={1.0}>
+              <CustomText style={tw`text-[${designatedColor.GRAY2}]`}>
+                더 정확한 추천을 받고 싶다면?
+              </CustomText>
+              <ArrowRightIcon width={24} height={24} />
+            </TouchableOpacity>
 
             <SearchKeyboard
               text="문장으로 검색하고, 맞춤 노래를 추천 받으세요."
