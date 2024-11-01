@@ -14,6 +14,10 @@ import Icon13 from './013.svg';
 import Icon14 from './014.svg';
 import Icon15 from './015.svg';
 import Icon16 from './016.svg';
+import Icon17 from './017.svg';
+import Icon18 from './018.svg';
+import Icon19 from './019.svg';
+import Icon20 from './020.svg';
 
 export {
   Icon1,
@@ -32,4 +36,8 @@ export {
   Icon14,
   Icon15,
   Icon16,
+  Icon17,
+  Icon18,
+  Icon19,
+  Icon20,
 };

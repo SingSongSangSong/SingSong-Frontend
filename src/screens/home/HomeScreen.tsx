@@ -373,8 +373,14 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressCommentButton={handleOnCommentPress}
             refreshing={refreshing}
           />
+
+          <TaglistModule
+            onPressTagButton={handleOnTagPress}
+            // onPressTotalButton={handleOnPressTotalButton}
+          />
+          <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} />
           <TouchableOpacity
-            style={tw`flex-row items-center justify-between bg-[${designatedColor.YELLOW}]`}
+            style={tw`flex-row items-center justify-between bg-[${designatedColor.YELLOW}] mt-6`}
             onPress={() => {
               Linking.openURL('https://forms.gle/TXytjUW6Rfiqu7vw6');
             }}
@@ -384,11 +390,6 @@ const HomeScreen = (props: HomeScreenProps) => {
             </View>
             <CuImageIcon width={screen.width * 0.25} height={100} />
           </TouchableOpacity>
-          <TaglistModule
-            onPressTagButton={handleOnTagPress}
-            // onPressTotalButton={handleOnPressTotalButton}
-          />
-          <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} />
 
           {/* <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}
