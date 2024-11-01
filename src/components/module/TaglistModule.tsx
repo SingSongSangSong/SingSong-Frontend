@@ -39,7 +39,7 @@ const TaglistModule = React.memo(({onPressTagButton}: TaglistModuleProps) => {
 
   return (
     <View
-      style={tw`flex-1 border-t-[0.5px] border-[${designatedColor.GRAY5}] mx-2 mt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+      style={tw`flex-1 border-t-[0.5px] border-[${designatedColor.GRAY5}] mx-2 mt-2 pb-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
       <View style={tw`justify-between flex-row mx-4 items-center mb-2`} />
       <Taglist tags={memoizedTags} handleOnTagButton={onPressTagButton} />
     </View>

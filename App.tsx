@@ -95,7 +95,8 @@ const codePushOptions = {
   //   optionalInstallButtonLabel: '업데이트',
   //   optionalIgnoreButtonLabel: '아니요.',
   // },
-  installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+  // installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+  installMode: CodePush.InstallMode.IMMEDIATE,
 };
 
 export default CodePush(codePushOptions)(App);

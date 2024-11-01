@@ -276,10 +276,10 @@ const HomeScreen = (props: HomeScreenProps) => {
     props.navigation.navigate(homeStackNavigations.SETTING);
   };
 
-  const handleOnPressSearch = () => {
-    logButtonClick('search_button_click');
-    props.navigation.navigate(homeStackNavigations.SEARCH);
-  };
+  // const handleOnPressSearch = () => {
+  //   logButtonClick('search_button_click');
+  //   props.navigation.navigate(homeStackNavigations.SEARCH);
+  // };
 
   const handleOnPressLlm = () => {
     logButtonClick('llm_button_click');

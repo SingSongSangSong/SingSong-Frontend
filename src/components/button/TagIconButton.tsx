@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import CustomText from '../text/CustomText';
-import {CommonTag} from '../tag/CommonTag';
 import {designatedColor} from '../../constants';
 
 type TagIconButtonProps = {
@@ -12,7 +11,7 @@ type TagIconButtonProps = {
   Icon: any;
 };
 
-// 적절한 위치에서 텍스트를 두 줄로 나눔
+// 텍스트를 적절한 위치에서 두 줄로 나누는 함수
 const splitTextToTwoLines = (text: string, maxLength: number) => {
   if (text.length <= maxLength) {
     return text;
@@ -24,8 +23,6 @@ const splitTextToTwoLines = (text: string, maxLength: number) => {
 };
 
 const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
-  // const deviceWidth = Dimensions.get('window').width;
-  // const viewWidth = deviceWidth * 0.25; // 전체 너비의 80%로 제한
   const maxLength = 7; // 한 줄에 표시할 최대 글자 수
 
   return (
@@ -34,18 +31,32 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
         onPress={onPress}
         style={tw`w-full justify-center items-center`}
         activeOpacity={0.8}>
-        <Icon width={48} height={48} onPress={onPress} />
+        {/* NEW 뱃지 */}
         {index >= 0 && index < 4 && (
           <View
-            style={tw`border border-[${designatedColor.MINT}] rounded-sm py-0.2 px-1 mr-1 my-1`}>
-            <CustomText style={tw`text-[${designatedColor.MINT}] text-[8px]`}>
+            style={[
+              tw`rounded-sm py-0.2`,
+              {
+                position: 'absolute',
+                top: -1, // 아이콘의 상단에 붙도록 설정
+                left: 6, // 아이콘의 왼쪽에 붙도록 설정
+                zIndex: 2, // 아이콘보다 위에 표시되도록 설정
+              },
+            ]}>
+            <CustomText
+              style={tw`text-[${designatedColor.MINT}] text-[10px] font-bold`}>
               NEW
             </CustomText>
           </View>
         )}
+
+        {/* 아이콘 */}
+        <Icon width={48} height={48} onPress={onPress} />
+
+        {/* 텍스트 */}
         <CustomText
-          style={tw`w-full text-white text-[11px] mx-2 text-center mt-0.2`}
-          numberOfLines={1} // 최대 두 줄로 표시되도록 설정
+          style={tw`w-full text-white text-[11px] mx-2 text-center mt-0.4`}
+          numberOfLines={2} // 최대 두 줄로 표시되도록 설정
           ellipsizeMode="tail" // 텍스트가 넘칠 경우 말줄임표(...)로 표시
         >
           {splitTextToTwoLines(tag, maxLength)}

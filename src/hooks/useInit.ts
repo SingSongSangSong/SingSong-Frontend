@@ -80,9 +80,9 @@ const useInit = () => {
         updateUrl = remoteConfig().getString('updateUrl');
       }
 
-      // console.log('최신 버전:', latestVersion);
-      // console.log('강제 업데이트 버전:', forceUpdateVersion);
-      // console.log('업데이트 URL:', updateUrl);
+      console.log('최신 버전:', latestVersion);
+      console.log('강제 업데이트 버전:', forceUpdateVersion);
+      console.log('업데이트 URL:', updateUrl);
 
       if (!latestVersion || !forceUpdateVersion || !updateUrl) {
         throw new Error('Remote Config에서 필요한 값이 없습니다');

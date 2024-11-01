@@ -100,3 +100,5 @@ export * from './item/KeepSongV2Item';
 export * from './list/KeepSongsV2List';
 export * from './list/TagExploreList';
 export * from './item/TagExploreItem';
+export * from './module/llm/RcdKeywordModule';
+export * from './module/llm/RecentKeywordModule';

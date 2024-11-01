@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import postRcdRecommendationLlm from '../api/recommendation/postRcdRecommendationLlm';
 import {HomeStackParamList, SearchStackParamList} from '../types';
 import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
@@ -6,6 +6,7 @@ import {homeStackNavigations, searchStackNavigations} from '../constants';
 import {logTrack} from '../utils';
 import {useMutation} from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
+import {Keyboard, TextInput} from 'react-native';
 
 type UseAiLlmProps = {
   navigation:
@@ -26,6 +27,29 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
   const [randomKeywords, setRandomKeywords] = useState<string[]>([]);
   const [sampleText, setSampleText] = useState<string>('');
   const [selectedGif, setSelectedGif] = useState<number>(0);
+  const inputRef = useRef<TextInput>(null);
+
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const handleOnPressSearch = async (sentence: string) => {
     if (sentence.trim() === '') {
@@ -82,6 +106,15 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
     },
   });
 
+  const handleOnPressRecentKeyword = (recentKeyword: string) => {
+    if (!isKeyboardVisible) {
+      setSampleText(recentKeyword);
+      inputRef.current?.focus();
+    } else {
+      Keyboard.dismiss();
+    }
+  };
+
   return {
     isLoading,
     handleOnPressSearch,
@@ -91,6 +124,8 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
     setSampleText,
     selectedGif,
     setSelectedGif,
+    handleOnPressRecentKeyword,
+    inputRef,
   };
 };
 

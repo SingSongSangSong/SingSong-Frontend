@@ -4,8 +4,13 @@ import postMemberReissue from '../api/member/postmemberReissue';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 import {navigateToLogin} from '../navigations/rootNavigation';
 import {showToast} from '../utils';
+// import useMemberStore from './useMemberStore';
+// import useKeepV2Store from './useKeepV2Store';
 
 const TokenStore = () => {
+  // const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
+  // const clearProvider = useMemberStore(state => state.clearProvider);
+  // const resetKeepList = useKeepV2Store(state => state.resetKeepList);
   // get
   async function getSecureValue(key: string): Promise<string> {
     const result = await AsyncStorage.getItem(key);
@@ -68,6 +73,9 @@ const TokenStore = () => {
         return reissueData.data.accessToken;
       } catch (error) {
         console.error('Token reissue failed:', error);
+        // clearMemberInfo();
+        // clearProvider();
+        // resetKeepList();
         showToast('토큰이 만료되었습니다. 다시 로그인 해주세요.');
         navigateToLogin(); // 토큰 재발급 실패 시 로그인 화면으로 이동
         throw error; // 에러를 상위로 다시 던져서 호출한 쪽에서 추가 처리할 수 있도록

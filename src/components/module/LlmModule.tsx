@@ -5,6 +5,7 @@ import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import ArrowRightGrayIcon from '../../assets/svg/arrowRightGray.svg';
 import {KeywordModule} from './KeywordModule';
+import AiSangsongIcon from '../../assets/svg/aiSangsong.svg';
 
 interface LlmModuleProps {
   onPressSearch: () => void;
@@ -16,15 +17,18 @@ const LlmModule = ({onPressSearch, refreshing}: LlmModuleProps) => {
     <>
       <View
         style={tw`flex-1 items-center pt-6 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}>
-        <View style={tw`w-full justify-start pl-6`}>
-          <CustomText
-            style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2`}>
-            AI에게 물어봐
-          </CustomText>
-          <CustomText
-            style={tw`text-[${designatedColor.GRAY1}] text-[12px] pt-1`}>
-            나에게 딱 맞는 맞춤 노래를 추천받아 보세요!
-          </CustomText>
+        <View style={tw`w-full justify-start flex-row pl-6 items-center`}>
+          <AiSangsongIcon width={40} height={40} />
+          <View style={tw`ml-3`}>
+            <CustomText
+              style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2`}>
+              AI에게 물어봐
+            </CustomText>
+            <CustomText
+              style={tw`text-[${designatedColor.GRAY1}] text-[12px] pt-1`}>
+              나에게 딱 맞는 맞춤 노래를 추천받아 보세요!
+            </CustomText>
+          </View>
         </View>
         <KeywordModule refreshing={refreshing} />
 

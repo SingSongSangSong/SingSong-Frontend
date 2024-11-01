@@ -21,13 +21,18 @@ import CustomText from '../../components/text/CustomText';
 import {HomeStackParamList, SearchStackParamList} from '../../types';
 import {StackScreenProps} from '@react-navigation/stack';
 import SingsongsangsongIcon from '../../assets/svg/singsongsangsong.svg';
-import {SearchKeyboard} from '../../components';
+import {
+  RcdKeywordModule,
+  RecentKeywordModule,
+  SearchKeyboard,
+} from '../../components';
 import useAiLlm from '../../hooks/useAiLlm';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {getRandomKeywords, logPageView} from '../../utils';
 import {ScrollView} from 'react-native-gesture-handler';
 import InfoIcon from '../../assets/svg/Info.svg';
 import {useFocusEffect} from '@react-navigation/native';
+import AiSangsongIcon from '../../assets/svg/aiSangsong.svg';
 
 type AiLlmScreenProps =
   | StackScreenProps<HomeStackParamList, typeof homeStackNavigations.AI_LLM>
@@ -57,7 +62,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
     Keyboard.dismiss();
   };
 
-  const {width} = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const [bottomHeight, setBottomHeight] = useState<number>(0); // 하단 컴포넌트 높이 상태 저장
 
   // 하단 영역의 높이를 계산하여 상태에 저장
@@ -85,26 +90,30 @@ function AiLlmScreen(props: AiLlmScreenProps) {
       {/* 터치 시 키보드가 닫히는 상단 영역 */}
       <View
         style={[
-          tw`flex-1 justify-center items-center`,
+          tw`flex-1 justify-start`,
           {
+            paddingTop: height * 0.1,
             paddingBottom: bottomHeight,
           },
         ]}>
         <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
           {/* <View style={tw`justify-center items-center bg-pink-200`}> */}
-          <View style={tw`justify-center items-center`}>
-            <View style={tw`items-center`}>
-              <CustomText style={tw`text-white text-lg font-bold`}>
-                싱송이와 생송이에게
+          <View style={tw`flex-1 justify-start`}>
+            <View style={tw`w-full pl-2`}>
+              <AiSangsongIcon />
+              <CustomText style={tw`text-white text-[15px] mt-2`}>
+                안녕하세요! 저에게 부르고 싶은 노래를 물어보세요!
               </CustomText>
-              <CustomText style={tw`text-white text-lg font-bold`}>
-                부르고 싶은 노래를 물어보세요
-              </CustomText>
-              <View style={tw`items-center my-4`}>
-                <SingsongsangsongIcon />
-              </View>
             </View>
-            <View
+            <RcdKeywordModule />
+            <RecentKeywordModule
+              onPressRecentKeyword={aiLlmHandler.handleOnPressRecentKeyword}
+            />
+
+            {/* <View style={tw`items-center my-4`}>
+                <SingsongsangsongIcon />
+              </View> */}
+            {/* <View
               style={tw`bg-[${designatedColor.HOT_TRENDING_COLOR}] mx-4 p-4 rounded-lg mt-2`}>
               <View style={tw`flex-row items-center mb-2`}>
                 <InfoIcon />
@@ -139,7 +148,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                 style={tw`text-[${designatedColor.VIOLET2}] text-[11px] mb-1`}>
                 예시) "2010년대 초반의 노래 추천해줘"
               </CustomText>
-            </View>
+            </View> */}
           </View>
           {/* </View> */}
         </TouchableWithoutFeedback>
@@ -156,7 +165,7 @@ function AiLlmScreen(props: AiLlmScreenProps) {
           //   backgroundColor={designatedColor.BACKGROUND_BLACK}
           //   style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
           <>
-            <ScrollView
+            {/* <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={tw`flex-row px-4 pt-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}
@@ -179,12 +188,13 @@ function AiLlmScreen(props: AiLlmScreenProps) {
                   </CustomText>
                 </TouchableOpacity>
               ))}
-            </ScrollView>
+            </ScrollView> */}
 
             <SearchKeyboard
               text="문장으로 검색하고, 맞춤 노래를 추천 받으세요."
               onSearchPress={aiLlmHandler.handleOnPressSearch}
               sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
+              inputRef={aiLlmHandler.inputRef}
             />
           </>
           // {/* </InputAccessoryView> */}

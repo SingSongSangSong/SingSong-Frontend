@@ -25,7 +25,7 @@ const splitTextToTwoLines = (text: string, maxLength: number) => {
 const TagExploreItem = ({tag, index, onPress, Icon}: TagExploreItemProps) => {
   // const deviceWidth = Dimensions.get('window').width;
   // const viewWidth = deviceWidth * 0.25; // 전체 너비의 80%로 제한
-  const maxLength = 5; // 한 줄에 표시할 최대 글자 수
+  const maxLength = 8; // 한 줄에 표시할 최대 글자 수
 
   return (
     // <View style={[tw`justify-center items-center my-1`]}>

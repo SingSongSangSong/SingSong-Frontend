@@ -20,12 +20,14 @@ interface SearchKeyboardProps {
   onSearchPress: (content: string) => void;
   text: string;
   sampleText?: string;
+  inputRef?: React.RefObject<TextInput>;
 }
 
 const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
   onSearchPress,
   text,
   sampleText,
+  inputRef,
 }) => {
   const [sentence, setSentence] = useState<string>('');
   const [inputHeight, setInputHeight] = useState(0);
@@ -64,6 +66,7 @@ const SearchKeyboard: React.FC<SearchKeyboardProps> = ({
             // {height: Math.min(Math.max(40, inputHeight), 60)},
           ]}
           value={sentence}
+          ref={inputRef}
           onChangeText={setSentence}
           placeholder={text}
           placeholderTextColor="gray"
