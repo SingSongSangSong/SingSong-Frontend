@@ -94,7 +94,8 @@ const MainTabNavigator = () => {
             routeName === searchStackNavigations.SEARCH_AI_LLM_RESULT ||
             routeName === searchStackNavigations.SEARCH_RCD_DETAIL ||
             routeName === homeStackNavigations.AI_LLM_INFO ||
-            routeName === searchStackNavigations.SEARCH_AI_LLM_INFO
+            routeName === searchStackNavigations.SEARCH_AI_LLM_INFO ||
+            routeName === keepStackNavigations.KEEP_SONG_ADDITION
           ) {
             return true;
           }

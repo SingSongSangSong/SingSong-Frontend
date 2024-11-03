@@ -8,7 +8,11 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
-import {AiSongCardModule, KeepSongsV2List} from '../../components';
+import {
+  AddTextButton,
+  AiSongCardModule,
+  KeepSongsV2List,
+} from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
@@ -144,7 +148,16 @@ function KeepScreen(props: KeepScreenProps) {
           // <View>
           //   {keepHandler.keepList && keepHandler.keepList.length > 0 ? (
           <>
-            <View style={tw`flex-row justify-end mx-3 py-3`}>
+            <View style={tw`flex-row justify-between items-center mx-3 py-3`}>
+              <AddTextButton
+                title="곡 추가"
+                onPress={() => {
+                  props.navigation.navigate(
+                    keepStackNavigations.KEEP_SONG_ADDITION,
+                  );
+                }}
+                isCenter={true}
+              />
               <TouchableOpacity
                 style={tw`flex-row items-center rounded-lg bg-[${designatedColor.GRAY5}] px-2 py-2`}
                 activeOpacity={0.8}
@@ -198,6 +211,19 @@ function KeepScreen(props: KeepScreenProps) {
                 width={screen.width * 0.9}
                 height={screen.height * 0.2}
               />
+              <TouchableOpacity
+                style={tw`w-3/5 py-3 rounded-full bg-[${designatedColor.VIOLET}] justify-center items-center`}
+                onPress={() => {
+                  props.navigation.navigate(
+                    keepStackNavigations.KEEP_SONG_ADDITION,
+                  );
+                }}
+                activeOpacity={0.9}>
+                <CustomText
+                  style={tw`text-[${designatedColor.WHITE}] font-bold text-[16px]`}>
+                  곡 추가하기
+                </CustomText>
+              </TouchableOpacity>
             </View>
           </View>
         ) : (

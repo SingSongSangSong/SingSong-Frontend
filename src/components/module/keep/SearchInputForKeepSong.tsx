@@ -3,11 +3,10 @@ import {View, TextInput, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import RoundDeleteIcon from '../../../assets/svg/roundDelete.svg';
-import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
 import SearchIcon from '../../../assets/svg/search.svg';
 import {designatedColor} from '../../../constants';
 
-type SearchInputForPostSongProps = {
+type SearchInputForKeepSongProps = {
   inputText: string;
   setInputText: (inputText: string) => void;
   handleOnPressBack: () => void;
@@ -16,14 +15,14 @@ type SearchInputForPostSongProps = {
   inputRef?: React.RefObject<TextInput>;
 };
 
-const SearchInputForPostSong = ({
+const SearchInputForKeepSong = ({
   inputText,
   setInputText,
   handleOnPressBack,
   handleOnSubmit,
   handleInputFocus,
   inputRef,
-}: SearchInputForPostSongProps) => {
+}: SearchInputForKeepSongProps) => {
   return (
     <View
       style={tw`flex-row items-center bg-[${designatedColor.BACKGROUND_BLACK}] p-3`}>
@@ -59,4 +58,4 @@ const SearchInputForPostSong = ({
   );
 };
 
-export {SearchInputForPostSong};
+export {SearchInputForKeepSong};

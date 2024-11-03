@@ -49,6 +49,7 @@ const keepStackNavigations = {
   KEEP_RECOMMENT: '_KeepRecomment',
   KEEP_REPORT: '_KeepReport',
   KEEP_AI_RECOMMENDATION: '_KeepAiRecommendation',
+  KEEP_SONG_ADDITION: '_KeepSongAddition',
 } as const;
 
 const playgroundStackNavigations = {

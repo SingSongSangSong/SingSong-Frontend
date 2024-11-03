@@ -19,6 +19,7 @@ import DeleteIcon from '../../assets/svg/delete.svg';
 import ReportScreen from '../../screens/song/ReportScreen';
 import {Platform} from 'react-native';
 import RcdRecommendationScreen from '../../screens/recommendation/RcdRecommendationScreen';
+import KeepSongAdditionScreen from '../../screens/keep/KeepAdditionScreen';
 
 const Stack = createStackNavigator<KeepStackParamList>();
 
@@ -110,6 +111,14 @@ function KeepStackNavigator({navigation}: KeepStackNavigatorProps) {
               size={28}
             />
           ),
+        })}
+      />
+      <Stack.Screen
+        name={keepStackNavigations.KEEP_SONG_ADDITION}
+        component={KeepSongAdditionScreen}
+        options={() => ({
+          headerTitle: '곡 추가', // 헤더 제목을 비움
+          // headerLeft: ()null,
         })}
       />
       <Stack.Screen

@@ -1,12 +1,10 @@
 import React, {useEffect, useLayoutEffect} from 'react';
 import {
-  View,
   TextInput,
   TouchableOpacity,
   ScrollView,
   Dimensions,
   SafeAreaView,
-  Platform,
 } from 'react-native';
 import {designatedColor, playgroundStackNavigations} from '../../constants';
 import tw from 'twrnc';
@@ -19,7 +17,6 @@ import {logPageView} from '../../utils';
 import {IconButton, PostSongListModule} from '../../components';
 import DeleteIcon from '../../assets/svg/delete.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import PlusIcon from '../../assets/svg/plusCircle.svg';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -52,8 +49,6 @@ function PostWriteScreen(props: PostWriteScreenProps) {
       ),
     });
   }, [props.navigation, postWriteHandler.handleOnPressComplete]);
-
-  const insets = useSafeAreaInsets();
 
   return (
     <SafeAreaView

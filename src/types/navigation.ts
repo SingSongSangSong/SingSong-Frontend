@@ -80,6 +80,7 @@ type KeepStackParamList = {
     reportSubjectMemberId: number;
   };
   [keepStackNavigations.KEEP_AI_RECOMMENDATION]: undefined;
+  [keepStackNavigations.KEEP_SONG_ADDITION]: undefined;
 };
 
 type SearchStackParamList = {
