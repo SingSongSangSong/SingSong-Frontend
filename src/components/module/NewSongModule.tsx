@@ -127,7 +127,7 @@ const NewSongModule = ({
                 </TouchableOpacity>
               </View>
               <CustomText
-                style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
+                style={tw`text-[${designatedColor.GRAY1}] text-[13px]`}>
                 가장 최신에 발매된 노래부터 확인할 수 있어요
               </CustomText>
             </View>

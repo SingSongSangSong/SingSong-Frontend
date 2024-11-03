@@ -25,7 +25,7 @@ const LlmModule = ({onPressSearch, refreshing}: LlmModuleProps) => {
               AI에게 물어봐
             </CustomText>
             <CustomText
-              style={tw`text-[${designatedColor.GRAY1}] text-[12px] pt-1`}>
+              style={tw`text-[${designatedColor.GRAY1}] text-[13px] pt-1`}>
               나에게 딱 맞는 맞춤 노래를 추천받아 보세요!
             </CustomText>
           </View>

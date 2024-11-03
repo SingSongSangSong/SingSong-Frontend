@@ -189,7 +189,7 @@ const HotTrendingModule = ({
         </View> */}
       </View>
       <View style={tw`pl-4 pb-2`}>
-        <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
+        <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[13px]`}>
           다른 사람들이 관심 가지고 있는 노래에요
         </CustomText>
       </View>

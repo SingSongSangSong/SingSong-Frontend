@@ -49,7 +49,7 @@ const Taglist = ({tags, handleOnTagButton}: TaglistProps) => {
             style={tw`text-[${designatedColor.VIOLET3}] text-lg mr-2 items-center`}>
             장르별 노래
           </CustomText>
-          <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
+          <CustomText style={tw`text-[${designatedColor.GRAY1}] text-[13px]`}>
             상황에 맞는 노래를 찾아보세요!
           </CustomText>
         </View>

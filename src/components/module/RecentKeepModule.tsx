@@ -68,8 +68,8 @@ const RecentKeepModule = ({
                 </View>
               </View>
               <CustomText
-                style={tw`text-[${designatedColor.GRAY1}] text-[12px]`}>
-                다른사람들이 최근 보관한 노래들을 확인해보세요
+                style={tw`text-[${designatedColor.GRAY1}] text-[13px] mt-1`}>
+                다른 사람들이 보관한 노래들을 확인해보세요
               </CustomText>
             </View>
             <RecentKeepSongCardList
