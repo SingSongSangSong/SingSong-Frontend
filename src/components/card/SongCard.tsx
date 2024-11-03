@@ -1,16 +1,8 @@
-import React, {useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  Linking,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
-import MusicIcon from '../../assets/svg/music.svg';
-import {CommonTag, CustomModal} from '..';
+import {CommonTag} from '..';
 import CustomText from '../text/CustomText';
 // import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
@@ -38,8 +30,6 @@ const SongCard = ({
 }: SongCardProps) => {
   const deviceWidth = Dimensions.get('window').width;
   const cardWidth = deviceWidth * 0.3;
-  // console.log('album', album);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
     <>
@@ -48,28 +38,14 @@ const SongCard = ({
         onPress={onSongPress}
         activeOpacity={1}>
         {album != '' ? (
-          // <View
-          //   style={[
-          //     {
-          //       width: cardWidth,
-          //       height: cardWidth,
-          //     },
-          //     tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
-          //   ]}>
           <View
-            // <TouchableOpacity
             style={[
               {
                 width: cardWidth,
                 height: cardWidth,
               },
-              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
-            ]}
-            // onPress={() => {
-            //   setIsModalVisible(true);
-            // }}
-            // activeOpacity={1.0}
-          >
+              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
+            ]}>
             <Image
               source={{uri: album}}
               style={[
@@ -83,18 +59,6 @@ const SongCard = ({
             {/* </TouchableOpacity> */}
           </View>
         ) : (
-          // </View>
-          // <View
-          //   style={[
-          //     {
-          //       backgroundColor: 'rgba(0, 0, 0, 1)',
-          //       width: cardWidth,
-          //       height: cardWidth,
-          //     },
-          //     tw`m-1 rounded-sm justify-center items-center border border-[${designatedColor.GRAY4}]`,
-          //   ]}>
-          //   <MusicIcon width={40} height={40} />
-          // </View>
           <View
             style={[
               {
@@ -102,22 +66,11 @@ const SongCard = ({
                 width: cardWidth,
                 height: cardWidth,
               },
-              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
+              tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`,
             ]}>
             <WhiteLogoIcon width={108} height={76} />
           </View>
         )}
-        {/* <View
-          style={[
-            {
-              backgroundColor: 'rgba(0, 0, 0, 1)',
-              width: cardWidth,
-              height: cardWidth,
-            },
-            tw`m-1 rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`,
-          ]}>
-          <WhiteLogoIcon width={108} height={76} />
-        </View> */}
         <View style={tw`flex-row m-1`}>
           <View
             style={tw`px-2 py-0.5 border border-[${designatedColor.VIOLET}] rounded-full`}>
@@ -160,24 +113,6 @@ const SongCard = ({
           </View>
         </View>
       </TouchableOpacity>
-
-      {/* {album && album != '' && melonLink && (
-        <CustomModal
-          visible={isModalVisible}
-          onClose={() => {
-            setIsModalVisible(false);
-          }}
-          message="해당 노래에 대한 가사를 볼 수 있는 외부 링크로 이동하게 됩니다. 이동하시겠습니까?"
-          onConfirm={() => {
-            Linking.openURL(melonLink);
-          }}
-          onCancel={() => {
-            setIsModalVisible(false);
-          }}
-          confirmText="확인"
-          cancelText="취소"
-        />
-      )} */}
     </>
   );
 };

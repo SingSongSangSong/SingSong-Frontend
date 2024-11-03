@@ -15,12 +15,13 @@ import {
 } from 'react-native';
 import tw from 'twrnc';
 import {
-  AiSongCardModule,
   HotTrendingModule,
   IconButton,
   LatestCommentModule,
   LlmModule,
   NewSongModule,
+  RecentCommentSongModule,
+  RecentKeepModule,
   TaglistModule,
 } from '../../components';
 import {HomeStackParamList} from '../../types';
@@ -32,7 +33,6 @@ import {
 import SettingsIcon from '../../assets/svg/settings.svg';
 // import LogoIcon from '../../assets/svg/logo.svg';
 import LogoIcon from '../../assets/svg/whiteLogo.svg';
-import SearchIcon from '../../assets/svg/search.svg';
 import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
@@ -272,6 +272,62 @@ const HomeScreen = (props: HomeScreenProps) => {
     });
   };
 
+  const handleOnPressRecentKeepSong = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+    melonLink: string,
+    isMr: boolean,
+    isLive: boolean,
+  ) => {
+    amplitude.track('recent_keep_song_button_click');
+    logButtonClick('recent_keep_song_button_click');
+    props.navigation.navigate({
+      key: 'MyUniqueKeyForSongDetail',
+      name: homeStackNavigations.SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album,
+        melonLink,
+        isMr,
+        isLive,
+      },
+    });
+  };
+
+  const handleOnPressRecentCommentSong = (
+    songId: number,
+    songNumber: number,
+    songName: string,
+    singerName: string,
+    album: string,
+    melonLink: string,
+    isMr: boolean,
+    isLive: boolean,
+  ) => {
+    amplitude.track('recent_comment_song_button_click');
+    logButtonClick('recent_comment_song_button_click');
+    props.navigation.navigate({
+      key: 'MyUniqueKeyForSongDetail',
+      name: homeStackNavigations.SONG_DETAIL,
+      params: {
+        songId,
+        songNumber,
+        songName,
+        singerName,
+        album,
+        melonLink,
+        isMr,
+        isLive,
+      },
+    });
+  };
+
   const handleOnPressSetting = () => {
     props.navigation.navigate(homeStackNavigations.SETTING);
   };
@@ -405,6 +461,14 @@ const HomeScreen = (props: HomeScreenProps) => {
           <NewSongModule
             onPressTotalButton={handleOnPressNewSongTotalButton}
             onPressSongButton={handleOnSongPress}
+            refreshing={refreshing}
+          />
+          <RecentKeepModule
+            onPressRecentKeepSong={handleOnPressRecentKeepSong}
+            refreshing={refreshing}
+          />
+          <RecentCommentSongModule
+            onPressRecentCommentSong={handleOnPressRecentCommentSong}
             refreshing={refreshing}
           />
 

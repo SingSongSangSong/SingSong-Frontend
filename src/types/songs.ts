@@ -308,6 +308,21 @@ interface KeepSongV2 {
   lyricsYoutubeLink?: string;
 }
 
+interface GetRecentCommentResponse {
+  data: Song[];
+  message: string;
+}
+
+interface GetRecentKeepResponse {
+  data: Song[];
+  message: string;
+}
+
+interface GetRecentSearchResponse {
+  data: string[];
+  message: string;
+}
+
 export type {
   KeepSong,
   RcdHomeSong,
@@ -350,4 +365,7 @@ export type {
   RcdRefreshV2Response,
   KeepSongV2,
   GetKeepResponse,
+  GetRecentCommentResponse,
+  GetRecentKeepResponse,
+  GetRecentSearchResponse,
 };

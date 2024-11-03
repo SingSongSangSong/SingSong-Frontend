@@ -102,3 +102,6 @@ export * from './list/TagExploreList';
 export * from './item/TagExploreItem';
 export * from './module/llm/RcdKeywordModule';
 export * from './module/llm/RecentKeywordModule';
+export * from './list/RecentKeepSongCardList';
+export * from './module/RecentKeepModule';
+export * from './module/RecentCommentSongModule';

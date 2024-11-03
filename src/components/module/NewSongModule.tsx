@@ -84,7 +84,7 @@ const NewSongModule = ({
     <View>
       {newSongsLst ? (
         <View
-          style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] mb-15 border-[${designatedColor.GRAY5}] pb-2`}>
+          style={tw`w-full flex-wrap flex-row justify-center items-center border-t-[0.5px] border-[${designatedColor.GRAY5}] pb-2`}>
           <View key="newSong">
             <View style={tw`px-2 px-8 mb-4 pt-4`}>
               <View style={tw`flex-row justify-between items-center`}>
