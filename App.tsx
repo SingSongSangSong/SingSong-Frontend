@@ -1,5 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {QueryClientProvider} from '@tanstack/react-query';
 // import MainTabNavigator from './src/navigations/tab/MainTabNavigator';
 import AppStackNavigator from './src/navigations/stack/AppStackNavigator';
@@ -10,16 +10,18 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import {AppState, Platform} from 'react-native';
+import {AppState, AppStateStatus, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
 import CodePush from 'react-native-code-push';
 import {navigationRef} from './src/navigations/rootNavigation';
+import TokenStore from './src/store/TokenStore';
 
 function App(): React.JSX.Element {
   // const onSwipeRight = {navigation}: SplashScreenProps => {
   //   navigation.navigate(playlistNavigations.PLAYLIST);
   // };
   const setTrackingStatus = TrackingStore().setTrackingStatus;
+  const {getAccessToken} = TokenStore();
 
   useEffect(() => {
     // In-App Messaging 활성화
@@ -47,6 +49,34 @@ function App(): React.JSX.Element {
   //   const trackingStatus = await TrackingStore().getTrackingStatus();
   //   return trackingStatus;
   // };
+  const appState = useRef<AppStateStatus>(AppState.currentState);
+  const timeoutRef = useRef<number | null>(null);
+  const TIMEOUT_DURATION = 2 * 60 * 1000;
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  const handleAppStateChange = (nextAppState: AppStateStatus) => {
+    if (nextAppState === 'background') {
+      // 백그라운드로 전환될 때 시간 기록
+      timeoutRef.current = Date.now();
+    } else if (appState.current === 'background' && nextAppState === 'active') {
+      // 포그라운드로 돌아올 때 즉시 타임아웃 검사
+      const timeDiff = Date.now() - (timeoutRef.current ?? Date.now());
+      if (timeDiff > TIMEOUT_DURATION) {
+        // 타임아웃이 지난 경우 토큰 받기
+        getAccessToken();
+      }
+    }
+    appState.current = nextAppState;
+  };
 
   useEffect(() => {
     // AppState 이벤트 리스너 추가

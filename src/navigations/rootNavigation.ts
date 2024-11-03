@@ -18,3 +18,14 @@ export function navigateToLogin() {
     );
   }
 }
+
+export function navigateToSplash() {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: appStackNavigations.SPLASH}],
+      }),
+    );
+  }
+}

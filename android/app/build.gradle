@@ -84,8 +84,8 @@ android {
         applicationId "com.singsongsangsong_frontend"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 18
-        versionName "1.4.2"
+        versionCode 19
+        versionName "1.5.0"
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
 
