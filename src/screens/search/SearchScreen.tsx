@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {SearchStackParamList} from '../../types';
@@ -16,7 +16,8 @@ import SearchIcon from '../../assets/svg/search.svg';
 import {Icon} from 'react-native-elements';
 import AiSangsongIcon from '../../assets/svg/aiSangsong.svg';
 import ArrowRightIcon from '../../assets/svg/arrowRightGray.svg';
-import {ExploreTagList} from '../../components';
+import {ExploreTagList, SearchRecentKeyword} from '../../components';
+// import { useFocusEffect } from '@react-navigation/native';
 
 type SearchScreenProps = StackScreenProps<
   SearchStackParamList,
@@ -24,12 +25,26 @@ type SearchScreenProps = StackScreenProps<
 >;
 
 function SearchScreen(props: SearchScreenProps) {
+  // const [keyword, setKeyword] = useState<string>('');
+
   useEffect(() => {
     logPageView(props.route.name);
   }, []);
 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setKeyword(''); // 화면이 focus될 때 keyword 초기화
+  //   }, [])
+  // );
+
   const handleOnTagButton = (tag: string) => {
     props.navigation.navigate(searchStackNavigations.SEARCH_RCD_DETAIL, {tag});
+  };
+
+  const handleOnPressRecentKeyword = (keyword: string) => {
+    props.navigation.navigate(searchStackNavigations.SEARCH_FOCUSED, {
+      keyword: keyword,
+    });
   };
 
   return (
@@ -40,7 +55,9 @@ function SearchScreen(props: SearchScreenProps) {
           <TouchableOpacity
             style={tw`flex-1 flex-row items-center bg-[${designatedColor.GRAY4}] rounded-lg px-3 h-10`}
             onPress={() =>
-              props.navigation.navigate(searchStackNavigations.SEARCH_FOCUSED)
+              props.navigation.navigate(searchStackNavigations.SEARCH_FOCUSED, {
+                keyword: '',
+              })
             }
             activeOpacity={1.0}>
             {Platform.OS === 'ios' ? (
@@ -49,12 +66,12 @@ function SearchScreen(props: SearchScreenProps) {
               <Icon name="search" size={20} color="#BEBEBE" style={tw`mr-3`} />
             )}
             <CustomText style={tw`flex-1 text-[${designatedColor.BEIGE}]`}>
-              검색어를 입력해보세요.
+              노래 제목/가수 이름/노래방 번호
             </CustomText>
           </TouchableOpacity>
         </View>
-        <View style={tw`w-full justify-start pl-6 py-2`}>
-          <CustomText
+        <View style={tw`w-full`}>
+          {/* <CustomText
             style={tw`text-[${designatedColor.WHITE}] font-bold text-[14px] py-2`}>
             검색 TIP
           </CustomText>
@@ -66,7 +83,10 @@ function SearchScreen(props: SearchScreenProps) {
           </CustomText>
           <CustomText style={tw`text-[${designatedColor.VIOLET3}] pt-1`}>
             노래방 번호 검색 - 예시) 86820
-          </CustomText>
+          </CustomText> */}
+          <SearchRecentKeyword
+            onPressRecentKeyword={handleOnPressRecentKeyword}
+          />
         </View>
         <TouchableOpacity
           style={tw`flex-row m-2 bg-[${designatedColor.GRAY5}] rounded-xl py-2`}

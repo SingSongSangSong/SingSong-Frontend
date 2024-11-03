@@ -40,7 +40,7 @@ const SearchInput = ({
         <TextInput
           ref={inputRef}
           style={tw`flex-1 text-white h-10`}
-          placeholder="검색어를 입력해보세요."
+          placeholder="노래 제목/가수 이름/노래방 번호"
           placeholderTextColor={designatedColor.BEIGE}
           value={inputText}
           onChangeText={setInputText}

@@ -105,3 +105,4 @@ export * from './module/llm/RecentKeywordModule';
 export * from './list/RecentKeepSongCardList';
 export * from './module/RecentKeepModule';
 export * from './module/RecentCommentSongModule';
+export * from './module/search/SearchRecentKeyword';

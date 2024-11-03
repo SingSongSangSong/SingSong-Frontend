@@ -21,7 +21,6 @@ import deleteKeep from '../../api/keep/deleteKeep';
 import getKeepV2 from '../../api/keep/getKeepV2';
 import useKeepV2Store from '../../store/useKeepV2Store';
 import postKeep from '../../api/keep/postKeep';
-import {useFocusEffect} from '@react-navigation/native';
 // import {useFocusEffect} from '@react-navigation/native';
 
 type SearchFocusScreenProps = StackScreenProps<
@@ -42,6 +41,10 @@ function SearchFocusScreen(props: SearchFocusScreenProps) {
 
   useEffect(() => {
     logPageView(props.route.name);
+
+    if (props.route.params.keyword != '') {
+      setInputText(props.route.params.keyword);
+    }
 
     const timer = setTimeout(() => {
       if (inputRef.current) {

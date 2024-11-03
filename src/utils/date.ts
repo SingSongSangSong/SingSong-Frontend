@@ -83,4 +83,17 @@ const formatDatePost = (createdAt: string) => {
   }
 };
 
-export {formatDateString, formatDateComment, formatDate, formatDatePost};
+const formatDateRecentSearch = () => {
+  const date = new Date();
+  const hours = String(date.getHours()).padStart(2, '0'); // 시를 2자리로 맞춤
+  const minutes = String(date.getMinutes()).padStart(2, '0'); // 분을 2자리로 맞춤
+  return `${hours}:${minutes}`;
+};
+
+export {
+  formatDateString,
+  formatDateComment,
+  formatDate,
+  formatDatePost,
+  formatDateRecentSearch,
+};

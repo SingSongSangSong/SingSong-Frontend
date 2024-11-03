@@ -100,7 +100,7 @@ type SearchStackParamList = {
     reportCommentId: number;
     reportSubjectMemberId: number;
   };
-  [searchStackNavigations.SEARCH_FOCUSED]: undefined;
+  [searchStackNavigations.SEARCH_FOCUSED]: {keyword: string};
   [searchStackNavigations.SEARCH_AI_LLM]: undefined;
   [searchStackNavigations.SEARCH_AI_LLM_INFO]: undefined;
   [searchStackNavigations.SEARCH_AI_LLM_RESULT]: {
