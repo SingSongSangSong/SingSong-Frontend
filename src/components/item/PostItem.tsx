@@ -2,8 +2,8 @@ import React from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
-import LikeIcon from '../../assets/svg/like.svg';
-import CommentIcon from '../../assets/svg/commentGray.svg';
+import LikeIcon from '../../assets/svg/filledLike.svg';
+import CommentIcon from '../../assets/svg/comment.svg';
 import {formatDateComment} from '../../utils';
 import CustomText from '../text/CustomText';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -77,7 +77,7 @@ const PostItem = ({
             <View style={tw`flex-row items-center`}>
               <LikeIcon width={12} height={12} />
               <CustomText
-                style={tw`text-[${designatedColor.GRAY3}] text-[12px] pl-1`}>
+                style={tw`text-[${designatedColor.PINK}] text-[12px] pl-1`}>
                 {likes}
               </CustomText>
             </View>
@@ -86,7 +86,7 @@ const PostItem = ({
             <View style={tw`flex-row items-center ml-2`}>
               <CommentIcon width={12} height={12} />
               <CustomText
-                style={tw`text-[${designatedColor.GRAY3}] text-[12px] pl-1`}>
+                style={tw`text-[${designatedColor.MINT}] text-[12px] pl-1`}>
                 {commentCount}
               </CustomText>
             </View>
