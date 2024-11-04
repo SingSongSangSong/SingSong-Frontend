@@ -15,7 +15,7 @@ const getSearch = async (searchKeyword: string) => {
         },
       },
     );
-    console.log('data for getSearch response', response.data);
+    // console.log('data for getSearch response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getSearch:', error);

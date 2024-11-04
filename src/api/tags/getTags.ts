@@ -3,7 +3,7 @@ import axiosInstance from '../axiosIns';
 
 const getTags = async () => {
   const response = await axiosInstance.get<TagsResponse>('v4/tags');
-  console.log('data for tag response', response.data);
+  // console.log('data for tag response', response.data);
   return response.data;
 };
 

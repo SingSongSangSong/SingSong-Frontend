@@ -181,7 +181,7 @@ PostCommentItemProps) => {
   };
 
   const handleOnPressBlacklist = () => {
-    console.log('차단 클릭');
+    // console.log('차단 클릭');
     setIsVisible(false);
     setTimeout(() => {
       setIsShowBlacklistModal(true);

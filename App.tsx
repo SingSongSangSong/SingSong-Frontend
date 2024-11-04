@@ -118,15 +118,17 @@ function App(): React.JSX.Element {
   );
 }
 const codePushOptions = {
-  checkFrequency: CodePush.InstallMode.ON_NEXT_RESTART,
-  // updateDialog: {
-  //   title: '...',
-  //   optionalUpdateMessage: '...',
-  //   optionalInstallButtonLabel: '업데이트',
-  //   optionalIgnoreButtonLabel: '아니요.',
-  // },
-  // installMode: CodePush.InstallMode.ON_NEXT_RESTART,
-  installMode: CodePush.InstallMode.IMMEDIATE,
+  // checkFrequency: CodePush.InstallMode.ON_NEXT_RESTART,
+  // // updateDialog: {
+  // //   title: '...',
+  // //   optionalUpdateMessage: '...',
+  // //   optionalInstallButtonLabel: '업데이트',
+  // //   optionalIgnoreButtonLabel: '아니요.',
+  // // },
+  // // installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+  // installMode: CodePush.InstallMode.IMMEDIATE,
+  checkFrequency: CodePush.CheckFrequency.ON_APP_START, // 앱 시작 시 한 번만 확인
+  installMode: CodePush.InstallMode.ON_NEXT_RESTART,
 };
 
 export default CodePush(codePushOptions)(App);

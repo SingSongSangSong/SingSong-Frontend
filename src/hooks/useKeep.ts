@@ -84,7 +84,6 @@ const useKeep = () => {
   const handleOnRefreshKeep = async () => {
     try {
       if (keepList) {
-        console.log(selectedFilter);
         const keepData = await getKeepV2(selectedFilter, -1, size);
         setKeepList(keepData.data.songs);
         setLastCursor(keepData.data.lastCursor);
@@ -98,7 +97,6 @@ const useKeep = () => {
   const handleOnChangeKeep = async (filter: string) => {
     try {
       if (keepList) {
-        console.log(filter);
         const keepData = await getKeepV2(filter, -1, size);
         setKeepList(keepData.data.songs);
         setLastCursor(keepData.data.lastCursor);
@@ -110,18 +108,13 @@ const useKeep = () => {
   };
 
   const handleDownRefreshKeep = async () => {
-    console.log('refresh!!');
     if (isLoading || isEnded) {
-      console.log('isLoading:', isLoading);
-      console.log('isEnded:', isEnded);
       return;
     }
     try {
-      console.log('refreshing down keep');
       setIsLoading(true);
       //20개 이상일 경우에만 api 호출
       if (keepList && keepList.length >= size) {
-        console.log('refreshing down keep');
         // 새로운 API 호출을 비동기로 실행 (await 하지 않음)
         logRefresh('down_keep');
         getKeepV2(selectedFilter, lastCursor, size)
@@ -151,7 +144,6 @@ const useKeep = () => {
   };
 
   const onRefresh = async () => {
-    console.log('refreshing!!!!! up!!');
     // setRefreshing(true);
 
     setRefreshing(true);

@@ -6,7 +6,7 @@ const getKeepV2 = async (filter: string, cursor: number, size: number) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
-    console.log('token for getKeepV2', token);
+    // console.log('token for getKeepV2', token);
 
     const params: {filter: string; cursor?: number; size: number} = {
       filter: filter,
@@ -23,7 +23,7 @@ const getKeepV2 = async (filter: string, cursor: number, size: number) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('data for getKeepV2 response', response.data);
+    // console.log('data for getKeepV2 response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching getKeep:', error);

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 // import postRcdRefresh from '../api/recommendation/postRcdRefresh';
 import postKeep from '../api/keep/postKeep';
 import deleteKeep from '../api/keep/deleteKeep';
@@ -10,7 +10,6 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import postRcdRefreshV2 from '../api/recommendation/postRcdRefreshV2';
 import getKeepV2 from '../api/keep/getKeepV2';
 import useKeepV2Store from '../store/useKeepV2Store';
-import {useQuery} from '@tanstack/react-query';
 
 type UseSongProps = {
   initTag: string;
@@ -28,27 +27,27 @@ const useSong = ({initTag}: UseSongProps) => {
   const setIsEnded = useKeepV2Store(state => state.setIsEnded);
   const selectedFilter = useKeepV2Store(state => state.selectedFilter);
 
-  const {data: tempAiSongs} = useQuery({
-    queryKey: [`tag_${initTag}`],
-    queryFn: () => postRcdRefreshV2(1, initTag),
-    staleTime: 0,
-    select: data => data.data,
-  });
+  // const {data: tempAiSongs} = useQuery({
+  //   queryKey: [`tag_${initTag}`],
+  //   queryFn: () => postRcdRefreshV2(1, initTag),
+  //   staleTime: 0,
+  //   select: data => data.data,
+  // });
 
-  useEffect(() => {
-    if (tempAiSongs) {
-      console.log('init!!!!!!!!!!!');
-      setSongLst(tempAiSongs.songs);
-      setPage(tempAiSongs.nextPage);
-    }
-  }, [tempAiSongs]);
+  // useEffect(() => {
+  //   if (tempAiSongs) {
+  //     setSongLst(tempAiSongs.songs);
+  //     console.log('tempAiSongs:', tempAiSongs);
+  //     setPage(tempAiSongs.nextPage);
+  //   }
+  // }, [tempAiSongs]);
 
-  // //초기 노래 리스트 세팅하는 함수
-  // const setInitSongs = async () => {
-  //   const initSongs = await postRcdRefreshV2(1, initTag);
-  //   setSongLst(initSongs.data.songs);
-  //   setPage(initSongs.data.nextPage);
-  // };
+  //초기 노래 리스트 세팅하는 함수
+  const setInitSongs = async () => {
+    const initSongs = await postRcdRefreshV2(1, initTag);
+    setSongLst(initSongs.data.songs);
+    setPage(initSongs.data.nextPage);
+  };
 
   //위로 당겨서 새로고침시 실행되는 함수
   const onRefresh = async () => {
@@ -160,7 +159,7 @@ const useSong = ({initTag}: UseSongProps) => {
     // handleOnPressSong,
     refreshing,
     onRefresh,
-    // setInitSongs,
+    setInitSongs,
     _onKeepAddPress,
     _onKeepRemovePress,
   };

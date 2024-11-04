@@ -100,7 +100,6 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
   //위로 당길 시 노래 리스트 새로고침하는 함수
   const handleOnRefreshPosts = async () => {
     try {
-      console.log('refresh!!');
       if (posts && posts.length < 200) {
         const postData = await getPosts(-1, size);
         setPosts(postData.data.posts);

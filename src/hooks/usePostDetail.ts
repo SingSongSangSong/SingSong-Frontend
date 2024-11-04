@@ -96,8 +96,6 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
     if (tempPostDetailed) {
       setPostDetailed(tempPostDetailed);
       setLikes(tempPostDetailed.likes);
-      console.log('tempPostDetailed:', tempPostDetailed);
-      console.log('tempPostDetailed song:', tempPostDetailed.songs);
     }
   }, [tempPostDetailed]);
 

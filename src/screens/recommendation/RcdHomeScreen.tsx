@@ -25,9 +25,9 @@ function RcdHomeScreen(props: RcdHomeScreenProps) {
   const songHandler = useSong({initTag});
 
   useEffect(() => {
-    // if (!songHandler.songLst) {
-    //   songHandler.setInitSongs(); //처음에 불러온 노래 세팅
-    // }
+    if (!songHandler.songLst) {
+      songHandler.setInitSongs(); //처음에 불러온 노래 세팅
+    }
     logPageView(props.route.name);
   }, []);
 

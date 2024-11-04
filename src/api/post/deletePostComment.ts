@@ -15,7 +15,7 @@ const deletePostComment = async (postCommentId: number) => {
         },
       },
     );
-    console.log('data for deleteComment response', response.data);
+    // console.log('data for deleteComment response', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching deletePostComment:', error);

@@ -50,14 +50,14 @@ const KeepAdditionSongItem = ({
     // console.log('SearchSongAdd');
     logTrack('keep_addition_song_search_add_button_click');
     addKeepAdditionSong(song);
-    console.log('addKeepAdditionSong:', song);
+    // console.log('addKeepAdditionSong:', song);
   };
 
   const _handleOnPressSearchSongRemove = () => {
     // console.log('SearchSongRemove');
     logTrack('post_song_search_remove_button_click');
     removeKeepAdditionSong(songId);
-    console.log('removeKeepAdditionSong:', songId);
+    // console.log('removeKeepAdditionSong:', songId);
   };
 
   const handleOnPressSearchSong = () => {
