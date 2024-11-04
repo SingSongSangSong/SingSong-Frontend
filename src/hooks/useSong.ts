@@ -31,7 +31,7 @@ const useSong = ({initTag}: UseSongProps) => {
   const {data: tempAiSongs} = useQuery({
     queryKey: [`tag_${initTag}`],
     queryFn: () => postRcdRefreshV2(1, initTag),
-    staleTime: 3600000,
+    staleTime: 0,
     select: data => data.data,
   });
 

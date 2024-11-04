@@ -177,15 +177,15 @@ SongItemProps) => {
                 </TouchableOpacity> */}
               </View>
               <View style={tw`flex-row items-center justify-between mt-1 ml-1`}>
-                <View>
+                <View style={tw`flex-1`}>
                   <CustomText
-                    style={tw`pl-1 text-white text-sm flex-1 text-[${designatedColor.GRAY2}]`}
+                    style={tw`pl-1 text-white text-sm text-[${designatedColor.GRAY2}]`}
                     numberOfLines={1}
                     ellipsizeMode="tail">
                     {singerName}
                   </CustomText>
                   {isShowInfo && (
-                    <View style={tw`flex-row items-center items-center`}>
+                    <View style={tw`flex-row items-center`}>
                       {isShowKeepIcon && (
                         <TouchableOpacity
                           onPress={handleOnKeepPress}
@@ -193,7 +193,6 @@ SongItemProps) => {
                           style={tw`p-1`}>
                           {keepCounts > 0 ? (
                             <View style={tw`flex-row items-center`}>
-                              {/* <KeepFilledIcon width={12} height={12} /> */}
                               <OutLineKeepIcon width={12} height={12} />
                               <CustomText
                                 style={tw`text-white text-[3] text-[${designatedColor.VIOLET2}] ml-1`}>
@@ -218,7 +217,6 @@ SongItemProps) => {
                         ) : (
                           <CommentIcon width={12} height={12} />
                         )}
-
                         <CustomText
                           style={[
                             tw`text-white text-[3] text-[${designatedColor.GRAY3}] ml-1`,
@@ -231,6 +229,7 @@ SongItemProps) => {
                     </View>
                   )}
                 </View>
+
                 {isShowKeepIcon && (
                   <TouchableOpacity
                     onPress={handleOnKeepPress}

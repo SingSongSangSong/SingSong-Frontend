@@ -68,7 +68,7 @@ const RecentCommentSongModule = ({
               </View>
               <CustomText
                 style={tw`text-[${designatedColor.GRAY1}] text-[13px] mt-1`}>
-                다른 사람들이 댓글을 달은 노래를 확인해보세요
+                다른 사람들이 댓글을 단 노래를 확인해보세요
               </CustomText>
             </View>
             <RecentKeepSongCardList
