@@ -5,8 +5,6 @@ import {useQuery} from '@tanstack/react-query';
 import getRcdRecommendation from '../../../api/recommendation/getRcdRecommendation';
 import {Song} from '../../../types';
 import {SearchAiSongsList} from '../..';
-import CustomText from '../../text/CustomText';
-import {designatedColor} from '../../../constants';
 
 const SearchAiSong = () => {
   const [searchAiSongsList, setSearchAiSongsList] = useState<Song[]>();

@@ -7,7 +7,7 @@ import CustomText from '../../text/CustomText';
 import {designatedColor} from '../../../constants';
 import RefreshIcon from '../../../assets/svg/refreshIcon.svg';
 import SearchIcon from '../../../assets/svg/searchViolet.svg';
-import {formatDateRecentSearch} from '../../../utils';
+import {formatDateRecentSearch, showToast} from '../../../utils';
 
 interface SearchRecentKeywordProps {
   onPressRecentKeyword: (keyword: string) => void;
@@ -54,6 +54,11 @@ const SearchRecentKeyword = ({
     setCurrentPage(pageIndex);
   };
 
+  const handleOnRefresh = async () => {
+    await refetch();
+    showToast('새로고침되었습니다.');
+  };
+
   return (
     <View>
       <View
@@ -67,9 +72,7 @@ const SearchRecentKeyword = ({
           <TouchableOpacity
             style={tw`p-1 flex-row items-center`}
             activeOpacity={0.9}
-            onPress={() => {
-              refetch();
-            }}>
+            onPress={handleOnRefresh}>
             <CustomText
               style={tw`text-[${designatedColor.GRAY1}] mr-1.5 text-[12px]`}>
               {`${currentDate} 기준`}
