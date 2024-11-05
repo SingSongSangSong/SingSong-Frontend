@@ -6,7 +6,7 @@ import {homeStackNavigations, searchStackNavigations} from '../constants';
 import {logTrack} from '../utils';
 import {useMutation} from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
-import {Keyboard, TextInput} from 'react-native';
+import {Keyboard, Platform, TextInput} from 'react-native';
 
 type UseAiLlmProps = {
   navigation:
@@ -32,14 +32,20 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
   useEffect(() => {
+    const keyboardShowEvent =
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const keyboardHideEvent =
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+
     const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
+      keyboardShowEvent,
       () => {
         setIsKeyboardVisible(true);
       },
     );
+
     const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
+      keyboardHideEvent,
       () => {
         setIsKeyboardVisible(false);
       },
@@ -107,21 +113,30 @@ const useAiLlm = ({navigation, routeName}: UseAiLlmProps) => {
   });
 
   const handleOnPressRecentKeyword = (recentKeyword: string) => {
-    if (!isKeyboardVisible) {
-      setSampleText(recentKeyword);
-      inputRef.current?.focus();
-    } else {
-      Keyboard.dismiss();
-    }
+    // console.log('press recent keyword');
+    // console.log('isKeyboardVisible:', isKeyboardVisible);
+    setSampleText(recentKeyword);
+    inputRef.current?.focus();
+    // if (!isKeyboardVisible) {
+    //   setSampleText(recentKeyword);
+    //   inputRef.current?.focus();
+    // } else {
+    //   Keyboard.dismiss();
+    // }
   };
 
   const handleOnPressRcdKeyword = (rcdKeyword: string) => {
-    if (!isKeyboardVisible) {
-      setSampleText(rcdKeyword);
-      inputRef.current?.focus();
-    } else {
-      Keyboard.dismiss();
-    }
+    // console.log('press rcd keyword');
+    // console.log('isKeyboardVisible:', isKeyboardVisible);
+    setSampleText(rcdKeyword);
+    inputRef.current?.focus();
+
+    // if (!isKeyboardVisible) {
+    //   setSampleText(rcdKeyword);
+    //   inputRef.current?.focus();
+    // } else {
+    //   Keyboard.dismiss();
+    // }
   };
 
   const handleOnPressInfo = () => {

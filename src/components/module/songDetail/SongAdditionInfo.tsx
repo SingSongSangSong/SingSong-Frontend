@@ -14,7 +14,7 @@ import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import useCommentStore from '../../../store/useCommentStore';
 import Toast from 'react-native-toast-message';
-import {logButtonClick, showToast} from '../../../utils';
+import {logButtonClick, logTrack, showToast} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import CustomText from '../../text/CustomText';
 import useKeepV2Store from '../../../store/useKeepV2Store';
@@ -171,6 +171,7 @@ const SongAdditionInfo = ({
             style={tw` flex-row items-center rounded-full py-0.5 px-2 mx-1 border border-[${designatedColor.TJORANGE}] bg-[${designatedColor.BLACK}]`}
             activeOpacity={0.8}
             onPress={() => {
+              logTrack('song_tj_button_click');
               if (songInfo && songInfo.tjYoutubeLink) {
                 Linking.openURL(songInfo.tjYoutubeLink);
               } else {
@@ -188,6 +189,7 @@ const SongAdditionInfo = ({
             style={tw` flex-row items-center rounded-full py-1 px-3 mx-1 border border-[${designatedColor.GRAY1}] bg-[${designatedColor.BLACK}]`}
             activeOpacity={0.8}
             onPress={() => {
+              logTrack('song_youtube_button_click');
               if (songInfo && songInfo.lyricsYoutubeLink) {
                 Linking.openURL(songInfo.lyricsYoutubeLink);
               } else {

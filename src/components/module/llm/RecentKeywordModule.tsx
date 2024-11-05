@@ -41,6 +41,7 @@ const RecentKeywordModule = ({
             key={index}
             style={tw`flex-row items-center py-2 ml-4`}
             onPress={() => {
+              console.log('press recent keyword');
               onPressRecentKeyword(keyword);
             }}
             activeOpacity={0.9}>

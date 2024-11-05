@@ -122,11 +122,11 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         style={tw`w-full absolute bottom-0 bg-[${designatedColor.BACKGROUND_BLACK}]`}
         onLayout={handleLayoutBottom}>
         {!aiLlmHandler.isLoading && (
-          // <InputAccessoryView
-          //   // nativeID="uniqueInputAccessoryViewID"
-          //   backgroundColor={designatedColor.BACKGROUND_BLACK}
-          //   style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
-          <>
+          <InputAccessoryView
+            // nativeID="uniqueInputAccessoryViewID"
+            backgroundColor={designatedColor.BACKGROUND_BLACK}
+            style={tw`py-2 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
+            {/* <> */}
             <TouchableOpacity
               style={tw`flex-row justify-between items-center px-6 pt-2 border-t-[0.5px] border-[${designatedColor.GRAY5}]`}
               onPress={aiLlmHandler.handleOnPressInfo}
@@ -143,8 +143,8 @@ function AiLlmScreen(props: AiLlmScreenProps) {
               sampleText={aiLlmHandler.sampleText} // 선택한 텍스트 전달
               inputRef={aiLlmHandler.inputRef}
             />
-          </>
-          // </InputAccessoryView>
+            {/* </> */}
+          </InputAccessoryView>
         )}
       </View>
 

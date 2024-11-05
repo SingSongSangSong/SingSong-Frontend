@@ -223,7 +223,7 @@ function PostDetailScreen(props: PostDetailScreenProps) {
               <TouchableOpacity
                 style={tw`p-4`}
                 onPress={() => {
-                  console.log('delete button clicked');
+                  // console.log('delete button clicked');
                   // postDetailHandler.setIsShowDeleteModal(true); //삭제 모달 표시
                   handleOnOnPressDelete();
                 }}>

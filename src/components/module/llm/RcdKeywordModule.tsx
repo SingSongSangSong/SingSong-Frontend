@@ -21,6 +21,7 @@ const RcdKeywordModule = ({onPressRcdKeyword}: RcdKeywordModuleProps) => {
             key={index}
             style={tw`flex-row items-center py-2 ml-4`}
             onPress={() => {
+              console.log('press rcd keyword')!;
               onPressRcdKeyword(keyword);
             }}
             activeOpacity={0.9}>
