@@ -275,7 +275,8 @@ const codePushOptions = {
   installMode: CodePush.InstallMode.ON_NEXT_RESTART,
 };
 
-export default CodePush(codePushOptions)(App);
+// export default CodePush(codePushOptions)(App);
+export default App;
 
 // useEffect(() => {
 //   const tempStatus = setInitTracking();
