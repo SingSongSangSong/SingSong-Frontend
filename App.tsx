@@ -1,4 +1,4 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useRef} from 'react';
 import {QueryClientProvider} from '@tanstack/react-query';
 // import MainTabNavigator from './src/navigations/tab/MainTabNavigator';
@@ -10,7 +10,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import {Alert, AppState, AppStateStatus, Platform} from 'react-native';
+import {AppState, AppStateStatus, Linking, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
 import CodePush from 'react-native-code-push';
 import {navigationRef} from './src/navigations/rootNavigation';
@@ -19,9 +19,15 @@ import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import {
+  deepLinkNavigations,
   homeStackNavigations,
   playgroundStackNavigations,
 } from './src/constants';
+import {
+  AppStackParamList,
+  HomeStackParamList,
+  PlaygroundStackParamList,
+} from './src/types';
 
 function App(): React.JSX.Element {
   PushNotification.createChannel(
@@ -34,7 +40,7 @@ function App(): React.JSX.Element {
       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
     },
-    created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    // created => console.log(`createChannel returned '${created}'`),
   );
 
   // const onSwipeRight = {navigation}: SplashScreenProps => {
@@ -75,7 +81,7 @@ function App(): React.JSX.Element {
 
   //   return unsubscribe;
   // }, []);
-  function onMessageReceived(message) {
+  function onMessageReceived(message: any) {
     // 알림 채널을 통해 로컬 알림으로 표시
     PushNotification.localNotification({
       channelId: 'rn-push-notification-channel-id-4-300', // 생성한 채널 ID
@@ -87,18 +93,89 @@ function App(): React.JSX.Element {
     });
   }
 
-  const linking = {
+  const linking: LinkingOptions<
+    AppStackParamList | HomeStackParamList | PlaygroundStackParamList
+  > = {
     prefixes: ['singsongsangsong://app'], // 딥링크 URL 스킴 설정
     config: {
       screens: {
         [homeStackNavigations.RCD_HOME]: 'home',
-        [homeStackNavigations.SONG_DETAIL]: 'song/:songId', // songId라는 파라미터를 받는 SongScreen 설정
-        [playgroundStackNavigations.PLAYGROUND]: 'playground',
+        [homeStackNavigations.SONG_DETAIL]:
+          'song/:songId/:songNumber/:songName/:singerName/:album/:melonLink/:isMr/:isLive', // songId라는 파라미터를 받는 SongScreen 설정
         [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]:
-          'playground/:playgroundId',
+          'playground/:postId/:title/:content/:createdAt/:nickname/:likes/:commentCount', // postId라는 파라미터를 받는 PlaygroundPostScreen 설정
       },
     },
   };
+
+  useEffect(() => {
+    const handleDeepLink = (url: string) => {
+      const route = url.replace(/.*?:\/\//g, '');
+      const [screen, params] = route.split('/');
+
+      // 딥링크가 `song` 경로라면 Home을 스택에 추가 후 SongScreen으로 이동
+      if (screen === deepLinkNavigations.SONG) {
+        const songParams = {
+          songId: params[0],
+          songNumber: params[1],
+          songName: params[2],
+          singerName: params[3],
+          album: params[4],
+          melonLink: params[5],
+          isMr: params[6] === 'true',
+          isLive: params[7] === 'true',
+        };
+
+        navigationRef.reset({
+          index: 1,
+          routes: [
+            {name: homeStackNavigations.RCD_HOME}, // Home 화면을 스택에 추가
+            {name: homeStackNavigations.SONG_DETAIL, params: songParams},
+          ],
+        });
+      }
+
+      // 딥링크가 `playground` 경로라면 Playground를 스택에 추가 후 PlaygroundPostDetail로 이동
+      else if (screen === deepLinkNavigations.PLAYGROUND) {
+        const playgroundParams = {
+          postId: params[0],
+          title: params[1],
+          content: params[2],
+          createdAt: params[3],
+          nickname: params[4],
+          likes: parseInt(params[5]),
+          commentCount: parseInt(params[6]),
+        };
+
+        navigationRef.reset({
+          index: 1,
+          routes: [
+            {name: playgroundStackNavigations.PLAYGROUND}, // Playground 화면을 스택에 추가
+            {
+              name: playgroundStackNavigations.PLAYGROUND_POST_DETAIL,
+              params: playgroundParams,
+            },
+          ],
+        });
+      }
+    };
+
+    // 앱 시작 시 초기 URL을 처리
+    Linking.getInitialURL().then(url => {
+      if (url) {
+        handleDeepLink(url);
+      }
+    });
+
+    // 앱이 실행 중일 때 딥링크 이벤트를 수신하여 처리
+    const subscription = Linking.addEventListener('url', ({url}) => {
+      handleDeepLink(url);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [navigationRef]);
 
   // 포그라운드에서 메시지를 수신할 때
   messaging().onMessage(onMessageReceived);
@@ -118,7 +195,6 @@ function App(): React.JSX.Element {
   }
 
   useEffect(() => {
-    // In-App Messaging 활성화
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
@@ -128,25 +204,6 @@ function App(): React.JSX.Element {
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
 
-  // useEffect(() => {
-  //   const tempStatus = setInitTracking();
-  //   console.log('tempStatus:', tempStatus);
-  //   const listener = AppState.addEventListener('change', status => {
-  //     if (!tempStatus && Platform.OS === 'ios' && status === 'active') {
-  //       request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
-  //         .then(result => setTrackingStatus(result))
-  //         .catch(error => console.warn(error));
-  //     }
-  //   });
-
-  //   return () => {
-  //     listener.remove();
-  //   };
-  // }, []);
-  // const setInitTracking = async () => {
-  //   const trackingStatus = await TrackingStore().getTrackingStatus();
-  //   return trackingStatus;
-  // };
   const appState = useRef<AppStateStatus>(AppState.currentState);
   const timeoutRef = useRef<number | null>(null);
   const TIMEOUT_DURATION = 2 * 60 * 1000;
@@ -203,31 +260,39 @@ function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
-        {/* <SafeAreaView style={{flex: 1}}> */}
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer ref={navigationRef}>
+          <NavigationContainer ref={navigationRef} linking={linking}>
             <AppStackNavigator />
             <CustomToast />
           </NavigationContainer>
         </QueryClientProvider>
-        {/* </SafeAreaView> */}
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
 const codePushOptions = {
-  // checkFrequency: CodePush.InstallMode.ON_NEXT_RESTART,
-  // // updateDialog: {
-  // //   title: '...',
-  // //   optionalUpdateMessage: '...',
-  // //   optionalInstallButtonLabel: '업데이트',
-  // //   optionalIgnoreButtonLabel: '아니요.',
-  // // },
-  // // installMode: CodePush.InstallMode.ON_NEXT_RESTART,
-  // installMode: CodePush.InstallMode.IMMEDIATE,
   checkFrequency: CodePush.CheckFrequency.ON_APP_START, // 앱 시작 시 한 번만 확인
   installMode: CodePush.InstallMode.ON_NEXT_RESTART,
 };
 
 export default CodePush(codePushOptions)(App);
-// export default App;
+
+// useEffect(() => {
+//   const tempStatus = setInitTracking();
+//   console.log('tempStatus:', tempStatus);
+//   const listener = AppState.addEventListener('change', status => {
+//     if (!tempStatus && Platform.OS === 'ios' && status === 'active') {
+//       request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+//         .then(result => setTrackingStatus(result))
+//         .catch(error => console.warn(error));
+//     }
+//   });
+
+//   return () => {
+//     listener.remove();
+//   };
+// }, []);
+// const setInitTracking = async () => {
+//   const trackingStatus = await TrackingStore().getTrackingStatus();
+//   return trackingStatus;
+// };

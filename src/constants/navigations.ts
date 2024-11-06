@@ -74,6 +74,12 @@ const searchStackNavigations = {
   SEARCH_RCD_DETAIL: '_SearchRcdDetail',
 } as const;
 
+const deepLinkNavigations = {
+  HOME: 'home',
+  PLAYGROUND: 'playground',
+  SONG: 'song',
+} as const;
+
 export {
   authNavigations,
   playlistNavigations,
@@ -83,4 +89,5 @@ export {
   keepStackNavigations,
   playgroundStackNavigations,
   searchStackNavigations,
+  deepLinkNavigations,
 };
