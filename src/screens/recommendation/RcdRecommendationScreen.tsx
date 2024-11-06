@@ -37,14 +37,14 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
     logButtonClick('ai_recommendation_song_button_click');
     amplitude.track('ai_recommendation_song_button_click');
     props.navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
-      songId,
-      songNumber,
-      songName,
-      singerName,
-      album,
-      melonLink,
-      isMr,
-      isLive,
+      songId: songId,
+      songNumber: songNumber,
+      songName: songName,
+      singerName: singerName,
+      album: album || '',
+      melonLink: melonLink,
+      isMr: isMr,
+      isLive: isLive,
     });
   };
 

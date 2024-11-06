@@ -49,27 +49,27 @@ function RcdHomeScreen(props: RcdHomeScreenProps) {
         (
           props.navigation as StackScreenProps<SearchStackParamList>['navigation']
         ).push(searchStackNavigations.SEARCH_SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
-          album,
-          melonLink,
-          isMr,
-          isLive,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
+          album: album || '',
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       } else if (props.route.name === homeStackNavigations.RCD_DETAIL) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
-          album,
-          melonLink,
-          isMr,
-          isLive,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
+          album: album || '',
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       }
     }

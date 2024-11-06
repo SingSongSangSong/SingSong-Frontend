@@ -63,27 +63,27 @@ const useAiLlmResult = ({
         (
           navigation as StackScreenProps<SearchStackParamList>['navigation']
         ).push(searchStackNavigations.SEARCH_SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
           album: album || '',
-          melonLink,
-          isMr,
-          isLive,
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       } else if (routeName === homeStackNavigations.AI_LLM_RESULT) {
         (navigation as StackScreenProps<HomeStackParamList>['navigation']).push(
           homeStackNavigations.SONG_DETAIL,
           {
-            songId,
-            songNumber,
-            songName,
-            singerName,
+            songId: songId,
+            songNumber: songNumber,
+            songName: songName,
+            singerName: singerName,
             album: album || '',
-            melonLink,
-            isMr,
-            isLive,
+            melonLink: melonLink,
+            isMr: isMr,
+            isLive: isLive,
           },
         );
       }

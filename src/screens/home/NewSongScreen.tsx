@@ -37,14 +37,14 @@ function NewSongScreen(props: NewSongScreenProps) {
     logButtonClick('new_song_button_click');
     amplitude.track('new_song_button_click');
     props.navigation.push(homeStackNavigations.SONG_DETAIL, {
-      songId,
-      songNumber,
-      songName,
-      singerName,
-      album,
-      melonLink,
-      isMr,
-      isLive,
+      songId: songId,
+      songNumber: songNumber,
+      songName: songName,
+      singerName: singerName,
+      album: album || '',
+      melonLink: melonLink,
+      isMr: isMr,
+      isLive: isLive,
     });
   };
 

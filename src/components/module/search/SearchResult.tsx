@@ -58,14 +58,14 @@ const SearchResult = ({
     logButtonClick('search_result_song_button_click');
     amplitude.track('search_result_song_button_click');
     navigation.push(searchStackNavigations.SEARCH_SONG_DETAIL, {
-      songId,
-      songNumber,
-      songName,
-      singerName,
-      album,
-      melonLink,
-      isMr,
-      isLive,
+      songId: songId,
+      songNumber: songNumber,
+      songName: songName,
+      singerName: singerName,
+      album: album,
+      melonLink: melonLink,
+      isMr: isMr,
+      isLive: isLive,
     });
   };
 

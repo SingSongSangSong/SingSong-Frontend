@@ -53,11 +53,25 @@
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize"
         android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            
-        </intent-filter>
+
+    <!-- 메인 런처 설정 -->
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+
+    <!-- 딥링크 설정 -->
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="singsongsangsong" />
+        
+        <!-- 각 딥링크 경로에 대한 설정 -->
+        <!-- <data android:scheme="singsongsangsong" android:pathPrefix="/song" /> -->
+        <!-- <data android:scheme="singsongsangsong" android:pathPrefix="/playground" /> -->
+        <!-- <data android:scheme="singsongsangsong" android:pathPrefix="/home" /> -->
+    </intent-filter>
       </activity>
 
       <activity 
@@ -67,9 +81,6 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="singsongsangsong" android:host="app" android:pathPrefix="/song" />
-       <data android:scheme="singsongsangsong" android:host="app" android:pathPrefix="/playground" />
-       <data android:scheme="singsongsangsong" android:host="app" android:pathPrefix="/home" />
         <data android:host="oauth"
                 android:scheme="kakao2de29a7b3583418860f9e5705cca20cf" />
                

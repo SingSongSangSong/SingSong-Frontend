@@ -35,7 +35,7 @@ type HomeStackParamList = {
   [homeStackNavigations.SETTING]: undefined;
   [homeStackNavigations.SONG_DETAIL]: {
     songId: number;
-    songNumber: number;
+    songNumber?: number;
     songName: string;
     singerName: string;
     album: string;
@@ -65,7 +65,7 @@ type KeepStackParamList = {
   [keepStackNavigations.KEEP_EDIT]: undefined;
   [keepStackNavigations.KEEP_SONG_DETAIL]: {
     songId: number;
-    songNumber: number;
+    songNumber?: number;
     songName: string;
     singerName: string;
     album: string;
@@ -87,7 +87,7 @@ type SearchStackParamList = {
   [searchStackNavigations.SEARCH]: undefined;
   [searchStackNavigations.SEARCH_SONG_DETAIL]: {
     songId: number;
-    songNumber: number;
+    songNumber?: number;
     songName: string;
     singerName: string;
     album: string;

@@ -104,6 +104,7 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
         const postData = await getPosts(-1, size);
         setPosts(postData.data.posts);
         setLastCursor(postData.data.lastCursor);
+        setIsEnded(false);
       }
     } catch (error) {
       console.error('Error fetching songs:', error);

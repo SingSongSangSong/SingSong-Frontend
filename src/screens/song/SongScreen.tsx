@@ -13,12 +13,7 @@ import {
   keepStackNavigations,
   searchStackNavigations,
 } from '../../constants';
-import {
-  SongAdditionInfo,
-  SongComment,
-  SongDefaultInfo,
-  SongReview,
-} from '../../components';
+import {SongComment, SongInfo2, SongReview} from '../../components';
 import {SongRelated} from '../../components/module/songDetail/SongRelated';
 import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
@@ -41,7 +36,7 @@ type SongScreenProps =
 function SongScreen(props: SongScreenProps) {
   const {
     songId,
-    songNumber,
+    songNumber = null,
     songName,
     singerName,
     album,
@@ -49,6 +44,14 @@ function SongScreen(props: SongScreenProps) {
     isMr,
     isLive,
   } = props.route?.params || {};
+  console.log('songId', songId);
+  console.log('songNumber', songNumber);
+  console.log('songName', songName);
+  console.log('singerName', singerName);
+  console.log('album', album);
+  console.log('melonLink', melonLink);
+  console.log('isMr', isMr);
+  console.log('isLive', isLive);
 
   useEffect(() => {
     logPageView(props.route.name);
@@ -60,17 +63,26 @@ function SongScreen(props: SongScreenProps) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).push(keepStackNavigations.KEEP_COMMENT, {songNumber, songId});
+        ).push(keepStackNavigations.KEEP_COMMENT, {
+          songNumber: songNumber,
+          songId: songId,
+        });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).push(homeStackNavigations.COMMENT, {songNumber, songId});
+        ).push(homeStackNavigations.COMMENT, {
+          songNumber: songNumber,
+          songId: songId,
+        });
       } else if (
         props.route.name === searchStackNavigations.SEARCH_SONG_DETAIL
       ) {
         (
           props.navigation as StackScreenProps<SearchStackParamList>['navigation']
-        ).push(searchStackNavigations.SEARCH_COMMENT, {songNumber, songId});
+        ).push(searchStackNavigations.SEARCH_COMMENT, {
+          songNumber: songNumber,
+          songId: songId,
+        });
       }
     }
   };
@@ -93,27 +105,27 @@ function SongScreen(props: SongScreenProps) {
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
         ).push(keepStackNavigations.KEEP_SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
-          album,
-          melonLink,
-          isMr,
-          isLive,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
+          album: album || '',
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
         ).push(homeStackNavigations.SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
-          album,
-          melonLink,
-          isMr,
-          isLive,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
+          album: album || '',
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       } else if (
         props.route.name === searchStackNavigations.SEARCH_SONG_DETAIL
@@ -121,14 +133,14 @@ function SongScreen(props: SongScreenProps) {
         (
           props.navigation as StackScreenProps<SearchStackParamList>['navigation']
         ).push(searchStackNavigations.SEARCH_SONG_DETAIL, {
-          songId,
-          songNumber,
-          songName,
-          singerName,
-          album,
-          melonLink,
-          isMr,
-          isLive,
+          songId: songId,
+          songNumber: songNumber,
+          songName: songName,
+          singerName: singerName,
+          album: album || '',
+          melonLink: melonLink,
+          isMr: isMr,
+          isLive: isLive,
         });
       }
     }
@@ -136,21 +148,23 @@ function SongScreen(props: SongScreenProps) {
 
   const renderHeader = () => (
     <View>
-      <SongDefaultInfo
-        songNumber={songNumber}
+      <SongInfo2
+        songId={songId}
+        songNumber={songNumber || 0}
         songName={songName}
         singerName={singerName}
         album={album}
         melonLink={melonLink}
         isMr={isMr}
         isLive={isLive}
+        handleOnPressComment={_onPressComment}
       />
-      <SongAdditionInfo
+      {/* <SongAdditionInfo
         songId={songId}
         handleOnPressComment={() => {
           _onPressComment(songNumber, songId);
         }}
-      />
+      /> */}
       <View>
         {/* <Text style={tw`text-white font-bold text-xl my-4`}>
           이 노래는 어떻송

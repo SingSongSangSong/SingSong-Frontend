@@ -50,14 +50,14 @@ function KeepScreen(props: KeepScreenProps) {
     logButtonClick('keep_song_button_click');
     amplitude.track('keep_song_button_click');
     props.navigation.push(keepStackNavigations.KEEP_SONG_DETAIL, {
-      songId,
-      songNumber,
-      songName,
-      singerName,
-      album,
-      melonLink,
-      isMr,
-      isLive,
+      songId: songId,
+      songNumber: songNumber,
+      songName: songName,
+      singerName: singerName,
+      album: album || '',
+      melonLink: melonLink,
+      isMr: isMr,
+      isLive: isLive,
     });
   };
 
@@ -83,14 +83,14 @@ function KeepScreen(props: KeepScreenProps) {
       key: 'MyUniqueKeyForSongDetail',
       name: keepStackNavigations.KEEP_SONG_DETAIL,
       params: {
-        songId,
-        songNumber,
-        songName,
-        singerName,
+        songId: songId,
+        songNumber: songNumber,
+        songName: songName,
+        singerName: singerName,
         album: album || '',
-        melonLink,
-        isMr,
-        isLive,
+        melonLink: melonLink,
+        isMr: isMr,
+        isLive: isLive,
       },
     });
   };

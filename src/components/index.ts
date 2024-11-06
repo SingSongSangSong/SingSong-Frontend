@@ -112,3 +112,4 @@ export * from './list/KeepAdditionSongsList';
 export * from './item/KeepAdditionSongItem';
 export * from './module/keep/SearchAiSong';
 export * from './list/SearchAiSongsList';
+export * from './module/songDetail/SongInfo2';
