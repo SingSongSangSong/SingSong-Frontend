@@ -10,22 +10,120 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import {AppState, AppStateStatus, Platform} from 'react-native';
+import {Alert, AppState, AppStateStatus, Platform} from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
 import CodePush from 'react-native-code-push';
 import {navigationRef} from './src/navigations/rootNavigation';
 import TokenStore from './src/store/TokenStore';
+import messaging from '@react-native-firebase/messaging';
+import {PermissionsAndroid} from 'react-native';
+import PushNotification, {Importance} from 'react-native-push-notification';
+import {
+  homeStackNavigations,
+  playgroundStackNavigations,
+} from './src/constants';
 
 function App(): React.JSX.Element {
+  PushNotification.createChannel(
+    {
+      channelId: 'rn-push-notification-channel-id-4-300', // (required)
+      channelName: 'My channel', // (required)
+      channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+      playSound: false, // (optional) default: true
+      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+      importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+      vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+    },
+    created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  );
+
   // const onSwipeRight = {navigation}: SplashScreenProps => {
   //   navigation.navigate(playlistNavigations.PLAYLIST);
   // };
+
+  // function onMessageReceived(message) {
+  //   notifee.displayNotification(JSON.parse(message.notification));
+  // }
+
+  // // messaging().onMessage(onMessageReceived);
+  // messaging().setBackgroundMessageHandler(onMessageReceived);
+
+  // messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //   console.log('Message handled in the background!', remoteMessage);
+
+  //   // 알림 표시
+  //   // notifee.displayNotification({
+  //   //   title: remoteMessage.notification?.title || 'Default Title',
+  //   //   body: remoteMessage.notification?.body || 'Default Body',
+  //   //   android: {
+  //   //     channelId: 'default-channel-id', // 알림 채널 ID 설정
+  //   //     importance: AndroidImportance.HIGH,
+  //   //     smallIcon: 'ic_notification', // 아이콘 설정 필요
+  //   //   },
+  //   // });
+  // });
+
+  // messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //   console.log('Message handled in the background!', remoteMessage);
+  // });
   const setTrackingStatus = TrackingStore().setTrackingStatus;
   const {getAccessToken} = TokenStore();
+  // useEffect(() => {
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
+  function onMessageReceived(message) {
+    // 알림 채널을 통해 로컬 알림으로 표시
+    PushNotification.localNotification({
+      channelId: 'rn-push-notification-channel-id-4-300', // 생성한 채널 ID
+      title: message.notification?.title, // 메시지의 제목
+      message: message.notification?.body, // 메시지의 내용
+      playSound: true, // 사운드 재생 여부
+      soundName: 'default', // 사운드 이름
+      importance: 'high', // 중요도
+    });
+  }
+
+  const linking = {
+    prefixes: ['singsongsangsong://app'], // 딥링크 URL 스킴 설정
+    config: {
+      screens: {
+        [homeStackNavigations.RCD_HOME]: 'home',
+        [homeStackNavigations.SONG_DETAIL]: 'song/:songId', // songId라는 파라미터를 받는 SongScreen 설정
+        [playgroundStackNavigations.PLAYGROUND]: 'playground',
+        [playgroundStackNavigations.PLAYGROUND_POST_DETAIL]:
+          'playground/:playgroundId',
+      },
+    },
+  };
+
+  // 포그라운드에서 메시지를 수신할 때
+  messaging().onMessage(onMessageReceived);
+
+  // 백그라운드와 종료 상태에서 메시지를 수신할 때
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    onMessageReceived(remoteMessage);
+  });
+
+  async function onAppBootstrap() {
+    // Register the device with FCM
+    await messaging().registerDeviceForRemoteMessages();
+
+    // Get the token
+    const token = await messaging().getToken();
+    console.log('Token:', token);
+  }
 
   useEffect(() => {
     // In-App Messaging 활성화
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
     crashlytics().log('App started');
+    onAppBootstrap();
     // messaging().setMessagesDisplaySuppressed(false);
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
