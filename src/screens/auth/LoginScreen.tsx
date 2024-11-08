@@ -32,9 +32,11 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const deviceHeight = Dimensions.get('window').height;
 
   useEffect(() => {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
+    setTimeout(() => {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }, 100);
     logPageView('login');
   }, []);
 

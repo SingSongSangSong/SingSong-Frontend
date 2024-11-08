@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, Image, Linking} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {View, Image, Linking} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {CommonTag} from '../tag/CommonTag';
@@ -11,6 +11,8 @@ import CustomText from '../text/CustomText';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
 import OutLineKeepIcon from '../../assets/svg/outlineKeep.svg';
 import OutlineCommentIcon from '../../assets/svg/comment.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface SongItemProps {
   songId: number;
@@ -60,11 +62,11 @@ SongItemProps) => {
   const [keepCounts, setKeepCounts] = useState<number>(keepCount);
 
   // const dragX = useSharedValue(0);
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setIsPressed(false);
-  //   }, []),
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      setIsPressed(false);
+    }, []),
+  );
 
   const handleOnKeepPress = () => {
     if (isKeepPressed) {
