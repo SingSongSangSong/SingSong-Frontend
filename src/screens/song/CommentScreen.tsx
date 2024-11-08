@@ -52,6 +52,7 @@ function CommentScreen(props: CommentScreenProps) {
   const commentHandler = useComment(songNumber, songId);
 
   useEffect(() => {
+    console.log('comment screen!');
     logPageView(props.route.name);
   }, []);
 

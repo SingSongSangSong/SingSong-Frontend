@@ -63,14 +63,14 @@ function SongScreen(props: SongScreenProps) {
       if (props.route.name === keepStackNavigations.KEEP_SONG_DETAIL) {
         (
           props.navigation as StackScreenProps<KeepStackParamList>['navigation']
-        ).push(keepStackNavigations.KEEP_COMMENT, {
+        ).navigate(keepStackNavigations.KEEP_COMMENT, {
           songNumber: songNumber,
           songId: songId,
         });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         (
           props.navigation as StackScreenProps<HomeStackParamList>['navigation']
-        ).push(homeStackNavigations.COMMENT, {
+        ).navigate(homeStackNavigations.COMMENT, {
           songNumber: songNumber,
           songId: songId,
         });
@@ -79,7 +79,7 @@ function SongScreen(props: SongScreenProps) {
       ) {
         (
           props.navigation as StackScreenProps<SearchStackParamList>['navigation']
-        ).push(searchStackNavigations.SEARCH_COMMENT, {
+        ).navigate(searchStackNavigations.SEARCH_COMMENT, {
           songNumber: songNumber,
           songId: songId,
         });

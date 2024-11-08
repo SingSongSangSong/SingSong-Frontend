@@ -1,11 +1,16 @@
 import {LoginV2Response} from '../../types';
 import axiosInstance from '../axiosIns';
 
-const postMemberLoginV2 = async (idToken: string, provider: string) => {
+const postMemberLoginV2 = async (
+  token: string,
+  idToken: string,
+  provider: string,
+) => {
   try {
     const response = await axiosInstance.post<LoginV2Response>(
       'v2/member/login',
       {
+        deviceToken: token,
         idToken: idToken,
         provider: provider,
       },

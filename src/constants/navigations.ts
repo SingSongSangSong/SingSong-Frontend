@@ -78,6 +78,7 @@ const deepLinkNavigations = {
   HOME: 'home',
   PLAYGROUND: 'playground',
   SONG: 'song',
+  POST: 'post',
 } as const;
 
 export {

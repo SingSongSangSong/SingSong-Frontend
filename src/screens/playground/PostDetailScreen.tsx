@@ -38,6 +38,8 @@ function PostDetailScreen(props: PostDetailScreenProps) {
     navigation: props.navigation,
   });
 
+  console.log('props: ', props.route.params);
+
   const flatListRef = useRef<FlatList<PostComments>>(null);
 
   useEffect(() => {

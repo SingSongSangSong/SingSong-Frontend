@@ -44,12 +44,10 @@ import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
 import TokenStore from '../../store/TokenStore';
 import useMemberStore from '../../store/useMemberStore';
-import {KeywordModule} from '../../components/module/KeywordModule';
 import {AppEventsLogger} from 'react-native-fbsdk-next';
 // import {getTrackingStatus} from 'react-native-tracking-transparency';
 import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
-import {log} from '@react-native-firebase/crashlytics';
 import CuImageIcon from '../../assets/svg/cuImage.svg';
 import BannerIcon from '../../assets/svg/banner.svg';
 

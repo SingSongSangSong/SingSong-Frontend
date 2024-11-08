@@ -6,6 +6,7 @@ const getPostsDetailed = async (postId: number) => {
   try {
     const {getAccessToken} = TokenStore();
     const token = await getAccessToken();
+    console.log('postId:', postId);
     const response = await axiosInstance.get<GetPostsDetailedResponse>(
       `v1/posts/${postId}`,
       {

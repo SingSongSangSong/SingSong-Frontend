@@ -13,6 +13,7 @@ import GuestStore from '../store/GuestStore';
 import postMemberLoginV2 from '../api/member/postMemberLoginV2';
 import {logTrack} from '../utils';
 import useKeepV2Store from '../store/useKeepV2Store';
+import messaging from '@react-native-firebase/messaging';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<
@@ -57,7 +58,10 @@ const useLogin = ({navigation}: UseLoginProps) => {
     try {
       setIsLoggedProcess(true); //true
       const result = await login();
+      const token = await getToken();
+      console.log('token', token);
       const tempData = await postMemberLoginV2(
+        token,
         result.idToken || '',
         'KAKAO_KEY',
       );
@@ -119,6 +123,10 @@ const useLogin = ({navigation}: UseLoginProps) => {
   //   }
   // };
 
+  const getToken = async () => {
+    const token = await messaging().getToken();
+    return token;
+  };
   //회원가입인 경우
   const handleAppleLogin = async () => {
     setIsInitialized(false);
@@ -132,8 +140,10 @@ const useLogin = ({navigation}: UseLoginProps) => {
       });
 
       const {identityToken} = appleAuthRequestResponse;
+      const token = await getToken();
 
       const tempData = await postMemberLoginV2(
+        token,
         identityToken || '',
         'APPLE_KEY',
       );
@@ -201,7 +211,8 @@ const useLogin = ({navigation}: UseLoginProps) => {
     setIsInitialized(false);
     setGuestState(true);
     setIsLoggedProcess(true);
-    const data = await postMemberLoginV2('', 'Anonymous');
+    const token = await getToken();
+    const data = await postMemberLoginV2(token, '', 'Anonymous');
     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
     setIsLoggedProcess(false);

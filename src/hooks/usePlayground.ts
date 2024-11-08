@@ -167,13 +167,13 @@ const usePlayground = ({navigation}: UsePlaygroundProps) => {
     logButtonClick('post_detail');
     logTrack('post_button_click');
     navigation.navigate(playgroundStackNavigations.PLAYGROUND_POST_DETAIL, {
-      postId,
-      title,
-      content,
-      createdAt,
-      nickname,
-      likes,
-      commentCount,
+      postId: postId,
+      title: title,
+      content: content,
+      createdAt: createdAt,
+      nickname: nickname,
+      likes: likes,
+      commentCount: commentCount,
     });
   };
 
