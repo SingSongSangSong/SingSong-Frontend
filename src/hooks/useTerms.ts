@@ -7,6 +7,7 @@ import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
 import {Keyboard} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
+import {scheduleNotification} from '../utils';
 
 type UseTermsProps = {
   // provider: string;
@@ -133,6 +134,7 @@ const useTerms = ({navigation}: UseTermsProps) => {
       // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
       setIsLoggedProcess(false); //false
       // setPermissionValue('true');
+      scheduleNotification(); //로컬알람 예약
       navigation.replace(appStackNavigations.MAIN);
     } else {
       let message = '모든 정보를 입력해주세요.';

@@ -211,8 +211,8 @@ const useLogin = ({navigation}: UseLoginProps) => {
     setIsInitialized(false);
     setGuestState(true);
     setIsLoggedProcess(true);
-    const token = await getToken();
-    const data = await postMemberLoginV2(token, '', 'Anonymous');
+    // const token = await getToken();
+    const data = await postMemberLoginV2('', '', 'Anonymous');
     setSecureValue(ACCESS_TOKEN, data.data.accessToken);
     setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
     setIsLoggedProcess(false);
