@@ -5,9 +5,10 @@ import Toast from 'react-native-toast-message';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
-import {Keyboard} from 'react-native';
+import {Keyboard, Platform} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
 import {scheduleNotification} from '../utils';
+import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 type UseTermsProps = {
   // provider: string;
@@ -127,18 +128,43 @@ const useTerms = ({navigation}: UseTermsProps) => {
   };
 
   const handleOnPressSubmission = async () => {
-    if (birthYear != '' && gender != '' && birthYear.length == 4) {
+    if (birthYear !== '' && gender !== '' && birthYear.length === 4) {
       setIsLoggedProcess(true);
-      const data = await postMemberLoginExtra(birthYear, gender); //accessToken 받기, 설정해야됨
+      const data = await postMemberLoginExtra(birthYear, gender); // accessToken 받기, 설정해야됨
+      setIsLoggedProcess(false); // false
       // setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
-      setIsLoggedProcess(false); //false
-      // setPermissionValue('true');
-      scheduleNotification(); //로컬알람 예약
-      navigation.replace(appStackNavigations.MAIN);
+
+      try {
+        if (Number(Platform.Version) === 33) {
+          // Android 13 (API 33)
+          const notificationPermission = await check(
+            PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+          );
+
+          if (notificationPermission === RESULTS.GRANTED) {
+            console.log(
+              'canScheduleExactAlarms for Android 13 with granted notification permission',
+            );
+            scheduleNotification(); // 알람 예약
+          } else {
+            console.log('Notification permission not granted on Android 13');
+          }
+        } else if (Number(Platform.Version) < 33) {
+          console.log('canScheduleExactAlarms for Android 12 and below');
+          scheduleNotification(); // 알람 예약
+        } else {
+          console.log('canScheduleExactAlarms for Android 14 and above');
+          // scheduleNotification(); // 알람 예약
+        }
+      } catch (error) {
+        console.log('Error scheduling notification:', error);
+      }
+
+      navigation.replace(appStackNavigations.MAIN); // 메인 화면으로 이동
     } else {
       let message = '모든 정보를 입력해주세요.';
-      if (gender != '' && birthYear != '' && birthYear.length != 4) {
+      if (gender !== '' && birthYear !== '' && birthYear.length !== 4) {
         message = '태어난 년도를 정확히 입력해주세요.';
       }
       Toast.show({

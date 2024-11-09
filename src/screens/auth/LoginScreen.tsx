@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
   Platform,
-  PermissionsAndroid,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {LargeButton} from '../../components';
@@ -32,11 +31,11 @@ function LoginScreen({navigation}: LoginScreenProps) {
   const deviceHeight = Dimensions.get('window').height;
 
   useEffect(() => {
-    setTimeout(() => {
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      );
-    }, 100);
+    // setTimeout(() => {
+    //   PermissionsAndroid.request(
+    //     PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    //   );
+    // }, 100);
     logPageView('login');
   }, []);
 

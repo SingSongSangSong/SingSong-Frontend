@@ -107,7 +107,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   } = useQuery({
     queryKey: [`postsComment_${route.params.postId}`],
     queryFn: () => getPostsComments(route.params.postId, -1, 20),
-    staleTime: 0, // 1시간 동안 캐시 유지
+    staleTime: 0,
     select: data => data.data,
   });
 

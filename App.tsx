@@ -8,7 +8,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {request, PERMISSIONS} from 'react-native-permissions';
+import {request, PERMISSIONS, RESULTS, check} from 'react-native-permissions';
 import {
   ActivityIndicator,
   AppState,
@@ -22,6 +22,7 @@ import {navigationRef} from './src/navigations/rootNavigation';
 import TokenStore from './src/store/TokenStore';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification, {Importance} from 'react-native-push-notification';
+// import {checkNotifications} from 'react-native-permissions';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import {
@@ -34,6 +35,7 @@ import {
 import tw from 'twrnc';
 import useDeeplinkStore from './src/store/useDeeplinkStore';
 import useSongStore from './src/store/useSongStore';
+import CodePush from 'react-native-code-push';
 
 function App(): React.JSX.Element {
   // const [isNavigationReady, setIsNavigationReady] = useState<boolean>(false);
@@ -47,14 +49,64 @@ function App(): React.JSX.Element {
     state => state.isDeepLinkReceived,
   );
   const loadingVisible = useSongStore(state => state.loadingVisible);
+  const setTrackingStatus = TrackingStore().setTrackingStatus;
+  const {getAccessToken} = TokenStore();
 
   async function onAppBootstrap() {
     await messaging().registerDeviceForRemoteMessages();
   }
 
+  const requestNotificationPermissions = async () => {
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+      // 현재 권한 상태를 확인
+      const notificationPermission = await check(
+        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+      );
+
+      // 이미 허용된 경우 추가 요청하지 않음
+      if (notificationPermission === RESULTS.GRANTED) {
+        console.log('POST_NOTIFICATIONS permission already granted');
+        return;
+      }
+
+      // 거부된 경우에도 요청하지 않음
+      if (notificationPermission === RESULTS.BLOCKED) {
+        console.log(
+          'POST_NOTIFICATIONS permission was denied or blocked. No further requests.',
+        );
+        return;
+      }
+
+      // 처음 요청하는 경우에만 권한 요청
+      const requestResult = await request(
+        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+      );
+      if (requestResult === RESULTS.GRANTED) {
+        console.log('POST_NOTIFICATIONS permission granted');
+      } else {
+        console.log('POST_NOTIFICATIONS permission denied');
+      }
+    }
+  };
+
+  useEffect(() => {
+    requestNotificationPermissions();
+  }, []);
+
+  // const checkNotificationPermission = async () => {
+  //   try {
+  //     const {status} = await checkNotifications();
+  //     console.log('알림 상태 :', status); // granted 또는 denied
+  //     setIsNotificationEnabled(status === 'granted'); // granted면 true, denied면 false
+  //   } catch (error) {
+  //     console.error('알림 권한을 확인하지 못했습니다. :', error);
+  //   }
+  // };
+
   useEffect(() => {
     crashlytics().log('App started');
     onAppBootstrap();
+    requestNotificationPermissions();
   }, []);
 
   useEffect(() => {
@@ -135,9 +187,6 @@ function App(): React.JSX.Element {
       },
     },
   };
-
-  const setTrackingStatus = TrackingStore().setTrackingStatus;
-  const {getAccessToken} = TokenStore();
 
   PushNotification.configure({
     onNotification: function (notification: any) {
@@ -271,4 +320,10 @@ function App(): React.JSX.Element {
   );
 }
 
-export default App;
+const codePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_START, // 앱 시작 시 한 번만 확인
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
+
+// export default App;
+export default CodePush(codePushOptions)(App);
