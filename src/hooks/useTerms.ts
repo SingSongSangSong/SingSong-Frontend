@@ -5,8 +5,10 @@ import Toast from 'react-native-toast-message';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
-import {Keyboard} from 'react-native';
+import {Keyboard, Platform} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
+import messaging from '@react-native-firebase/messaging';
+import {scheduleNotification, scheduleNotificationTest} from '../utils';
 
 type UseTermsProps = {
   // provider: string;
@@ -125,18 +127,50 @@ const useTerms = ({navigation}: UseTermsProps) => {
     setIsAllChecked(allSelected);
   };
 
+  // const handleOnPressSubmission = async () => {
+  //   if (birthYear != '' && gender != '' && birthYear.length == 4) {
+  //     setIsLoggedProcess(true);
+  //     const data = await postMemberLoginExtra(birthYear, gender); //accessToken 받기, 설정해야됨
+  //     // setSecureValue(ACCESS_TOKEN, data.data.accessToken);
+  //     // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
+  //     setIsLoggedProcess(false); //false
+  //     // setPermissionValue('true');
+  //     navigation.replace(appStackNavigations.MAIN);
+  //   } else {
+  //     let message = '모든 정보를 입력해주세요.';
+  //     if (gender != '' && birthYear != '' && birthYear.length != 4) {
+  //       message = '태어난 년도를 정확히 입력해주세요.';
+  //     }
+  //     Toast.show({
+  //       type: 'selectedToast',
+  //       text1: message,
+  //       position: 'bottom',
+  //     });
+  //     return false;
+  //   }
+  // };
+
   const handleOnPressSubmission = async () => {
-    if (birthYear != '' && gender != '' && birthYear.length == 4) {
+    if (birthYear !== '' && gender !== '' && birthYear.length === 4) {
       setIsLoggedProcess(true);
-      const data = await postMemberLoginExtra(birthYear, gender); //accessToken 받기, 설정해야됨
+      const data = await postMemberLoginExtra(birthYear, gender); // accessToken 받기, 설정해야됨
       // setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
-      setIsLoggedProcess(false); //false
-      // setPermissionValue('true');
-      navigation.replace(appStackNavigations.MAIN);
+
+      try {
+        const authStatus = await messaging().hasPermission();
+        if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+          scheduleNotification();
+        }
+      } catch (error) {
+        console.log('Error scheduling notification:', error);
+      }
+      setIsLoggedProcess(false); // false
+
+      navigation.replace(appStackNavigations.MAIN); // 메인 화면으로 이동
     } else {
       let message = '모든 정보를 입력해주세요.';
-      if (gender != '' && birthYear != '' && birthYear.length != 4) {
+      if (gender !== '' && birthYear !== '' && birthYear.length !== 4) {
         message = '태어난 년도를 정확히 입력해주세요.';
       }
       Toast.show({

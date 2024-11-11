@@ -13,6 +13,7 @@ import GuestStore from '../store/GuestStore';
 import postMemberLoginV2 from '../api/member/postMemberLoginV2';
 import {logTrack} from '../utils';
 import useKeepV2Store from '../store/useKeepV2Store';
+import messaging from '@react-native-firebase/messaging';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<
@@ -57,7 +58,9 @@ const useLogin = ({navigation}: UseLoginProps) => {
     try {
       setIsLoggedProcess(true); //true
       const result = await login();
+      const token = await messaging().getToken();
       const tempData = await postMemberLoginV2(
+        token || '',
         result.idToken || '',
         'KAKAO_KEY',
       );
@@ -125,6 +128,8 @@ const useLogin = ({navigation}: UseLoginProps) => {
     setProvider('APPLE_KEY');
     try {
       setIsLoggedProcess(true); //true
+      const token = await messaging().getToken();
+      console.log('token', token);
 
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
@@ -134,6 +139,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
       const {identityToken} = appleAuthRequestResponse;
 
       const tempData = await postMemberLoginV2(
+        token || '',
         identityToken || '',
         'APPLE_KEY',
       );
