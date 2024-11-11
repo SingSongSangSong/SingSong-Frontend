@@ -18,11 +18,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import TrackingStore from './src/store/TrackingStore';
+import CodePush from 'react-native-code-push';
 import {navigationRef} from './src/navigations/rootNavigation';
 import TokenStore from './src/store/TokenStore';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification, {Importance} from 'react-native-push-notification';
-// import {checkNotifications} from 'react-native-permissions';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import {
@@ -35,11 +35,8 @@ import {
 import tw from 'twrnc';
 import useDeeplinkStore from './src/store/useDeeplinkStore';
 import useSongStore from './src/store/useSongStore';
-import CodePush from 'react-native-code-push';
 
 function App(): React.JSX.Element {
-  // const [isNavigationReady, setIsNavigationReady] = useState<boolean>(false);
-  // const deepLinkRef = useRef<string | null>(null); // 딥링크 URL 저장
   const setDeeplink = useDeeplinkStore(state => state.setDeeplink);
   const setIsDeepLinkReceived = useDeeplinkStore(
     state => state.setIsDeepLinkReceived,
@@ -51,85 +48,66 @@ function App(): React.JSX.Element {
   const loadingVisible = useSongStore(state => state.loadingVisible);
   const setTrackingStatus = TrackingStore().setTrackingStatus;
   const {getAccessToken} = TokenStore();
-
-  async function onAppBootstrap() {
-    await messaging().registerDeviceForRemoteMessages();
-  }
-
-  const requestNotificationPermissions = async () => {
-    if (Platform.OS === 'android' && Platform.Version >= 33) {
-      // 현재 권한 상태를 확인
-      const notificationPermission = await check(
-        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-      );
-
-      // 이미 허용된 경우 추가 요청하지 않음
-      if (notificationPermission === RESULTS.GRANTED) {
-        console.log('POST_NOTIFICATIONS permission already granted');
-        return;
-      }
-
-      // 거부된 경우에도 요청하지 않음
-      if (notificationPermission === RESULTS.BLOCKED) {
-        console.log(
-          'POST_NOTIFICATIONS permission was denied or blocked. No further requests.',
-        );
-        return;
-      }
-
-      // 처음 요청하는 경우에만 권한 요청
-      const requestResult = await request(
-        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-      );
-      if (requestResult === RESULTS.GRANTED) {
-        console.log('POST_NOTIFICATIONS permission granted');
-      } else {
-        console.log('POST_NOTIFICATIONS permission denied');
-      }
-    }
-  };
+  const appState = useRef<AppStateStatus>(AppState.currentState);
+  const timeoutRef = useRef<number | null>(null);
+  const TIMEOUT_DURATION = 10 * 60 * 1000;
 
   useEffect(() => {
-    requestNotificationPermissions();
-  }, []);
-
-  // const checkNotificationPermission = async () => {
-  //   try {
-  //     const {status} = await checkNotifications();
-  //     console.log('알림 상태 :', status); // granted 또는 denied
-  //     setIsNotificationEnabled(status === 'granted'); // granted면 true, denied면 false
-  //   } catch (error) {
-  //     console.error('알림 권한을 확인하지 못했습니다. :', error);
-  //   }
-  // };
-
-  useEffect(() => {
+    messaging().registerDeviceForRemoteMessages();
     crashlytics().log('App started');
-    onAppBootstrap();
-    requestNotificationPermissions();
+    // messaging().setMessagesDisplaySuppressed(false);
+    // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
 
+  //알림 수신 후 딥링크 처리
   useEffect(() => {
     if (!loadingVisible && deeplink && isDeepLinkReceived) {
-      console.log('deeplink:', deeplink);
       Linking.openURL(deeplink);
       setIsDeepLinkReceived(false);
     }
   }, [loadingVisible, deeplink, isDeepLinkReceived]);
 
-  // 채널 만들기
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  //알림 채널 생성
   PushNotification.createChannel({
-    channelId: 'rn-push-notification-channel-id-4-300', // (required)
-    channelName: 'My channel', // (required)
-    channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-    playSound: false, // (optional) default: true
-    soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+    channelId: 'rn-push-notification-channel-id-4-300',
+    channelName: 'My channel',
+    channelDescription: 'A channel to categorise your notifications',
+    playSound: false,
+    soundName: 'default',
+    importance: Importance.HIGH,
+    vibrate: true,
   });
 
+  // 알림 로컬 클릭 시 딥링크 처리
+  PushNotification.configure({
+    onNotification: function (notification: any) {
+      if (notification.userInteraction && notification?.data?.deepLink) {
+        handleOpenDeepLink(notification.data.deepLink);
+      }
+      notification.finish(PushNotificationIOS.FetchResult.NoData); //알람 삭제
+    },
+  });
+
+  // 딥링크 이동
+  const handleOpenDeepLink = async (deepLink: string) => {
+    console.log('handleOpenDeepLink', deepLink);
+    setDeeplink(deepLink);
+    setIsDeepLinkReceived(true);
+  };
+
+  //딥링크 설정
   const linking = {
-    prefixes: ['singsongsangsong://'], // 딥링크 URL 스킴 설정
+    prefixes: ['singsongsangsong://'],
     config: {
       screens: {
         [appStackNavigations.MAIN]: {
@@ -188,36 +166,105 @@ function App(): React.JSX.Element {
     },
   };
 
-  PushNotification.configure({
-    onNotification: function (notification: any) {
-      if (notification.userInteraction && notification?.data?.deepLink) {
-        handleOpenDeepLink(notification.data.deepLink);
-      }
-      notification.finish(PushNotificationIOS.FetchResult.NoData); //알람 삭제
-    },
-  });
-
-  //알람 수신시 처리하는 함수
+  //foreground 시 알람 표시
   function onMessageReceived(message: any) {
     // 알림 채널을 통해 로컬 알림으로 표시
     PushNotification.localNotification({
-      channelId: 'rn-push-notification-channel-id-4-300', // 생성한 채널 ID
-      title: message.notification?.title, // 메시지의 제목
-      message: message.notification?.body, // 메시지의 내용
+      channelId: 'rn-push-notification-channel-id-4-300',
+      title: message.notification?.title,
+      message: message.notification?.body,
       data: {...message.data, userInteraction: false},
-      playSound: true, // 사운드 재생 여부
-      soundName: 'default', // 사운드 이름
-      importance: 'high', // 중요도
+      playSound: true,
+      soundName: 'default',
+      importance: 'high',
       // autoCancel: true, // 클릭 시 알림을 자동으로 제거
     });
   }
 
-  const handleOpenDeepLink = async (deepLink: string) => {
-    console.log('handleOpenDeepLink', deepLink);
-    setDeeplink(deepLink);
-    setIsDeepLinkReceived(true);
+  // 백그라운드에서 포그라운드로 돌아올 때 타임아웃 검사
+  const handleAppStateChange = (nextAppState: AppStateStatus) => {
+    if (nextAppState === 'background') {
+      // 백그라운드로 전환될 때 시간 기록
+      timeoutRef.current = Date.now();
+    } else if (appState.current === 'background' && nextAppState === 'active') {
+      // 포그라운드로 돌아올 때 즉시 타임아웃 검사
+      const timeDiff = Date.now() - (timeoutRef.current ?? Date.now());
+      if (timeDiff > TIMEOUT_DURATION) {
+        // 타임아웃이 지난 경우 토큰 받기
+        getAccessToken();
+      }
+    }
+    appState.current = nextAppState;
   };
 
+  const requestNotificationPermissions = () => {
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+      // 현재 권한 상태를 확인
+      check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+        .then(notificationPermission => {
+          // 이미 허용된 경우 추가 요청하지 않음
+          if (notificationPermission === RESULTS.GRANTED) {
+            console.log('POST_NOTIFICATIONS permission already granted');
+            return;
+          }
+
+          // 거부된 경우에도 요청하지 않음
+          if (notificationPermission === RESULTS.BLOCKED) {
+            console.log(
+              'POST_NOTIFICATIONS permission was denied or blocked. No further requests.',
+            );
+            return;
+          }
+
+          // 처음 요청하는 경우에만 권한 요청
+          request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+            .then(requestResult => {
+              if (requestResult === RESULTS.GRANTED) {
+                console.log('POST_NOTIFICATIONS permission granted');
+              } else {
+                console.log('POST_NOTIFICATIONS permission denied');
+              }
+            })
+            .catch(error =>
+              console.error('Error requesting permission:', error),
+            );
+        })
+        .catch(error => console.error('Error checking permission:', error));
+    }
+  };
+
+  useEffect(() => {
+    // AppState 이벤트 리스너 추가
+    const listener = AppState.addEventListener('change', status => {
+      if (Platform.OS === 'ios' && status === 'active') {
+        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+          .then(result => {
+            setTrackingStatus(result); // 추적 상태 업데이트 (TrackingStore로 저장)
+            // TrackingStore().setTrackingStatus(result); // 추적 상태 저장
+            return messaging().requestPermission();
+          })
+          .then(authStatus => {
+            const enabled =
+              authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+              authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+            if (enabled) {
+              console.log('Authorization status:', authStatus);
+            }
+          })
+          .catch(error => console.warn(error));
+      } else {
+        requestNotificationPermissions();
+      }
+    });
+
+    // 리스너는 컴포넌트 언마운트 시 제거
+    return () => {
+      listener.remove(); // 리스너 제거
+    };
+  }, []);
+
+  //알람 수신시 처리
   useEffect(() => {
     // 포그라운드에서 메시지 수신 시
     messaging().onMessage(onMessageReceived);
@@ -247,56 +294,10 @@ function App(): React.JSX.Element {
     });
   }, []);
 
-  const appState = useRef<AppStateStatus>(AppState.currentState);
-  const timeoutRef = useRef<number | null>(null);
-  const TIMEOUT_DURATION = 2 * 60 * 1000;
-
-  const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    if (nextAppState === 'background') {
-      // 백그라운드로 전환될 때 시간 기록
-      timeoutRef.current = Date.now();
-    } else if (appState.current === 'background' && nextAppState === 'active') {
-      // 포그라운드로 돌아올 때 즉시 타임아웃 검사
-      const timeDiff = Date.now() - (timeoutRef.current ?? Date.now());
-      if (timeDiff > TIMEOUT_DURATION) {
-        // 타임아웃이 지난 경우 토큰 받기
-        getAccessToken();
-      }
-    }
-    appState.current = nextAppState;
-  };
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange,
-    );
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    // AppState 이벤트 리스너 추가
-    const listener = AppState.addEventListener('change', status => {
-      if (Platform.OS === 'ios' && status === 'active') {
-        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
-          .then(result => {
-            setTrackingStatus(result); // 추적 상태 업데이트 (TrackingStore로 저장)
-          })
-          .catch(error => console.warn(error));
-      }
-    });
-
-    // 리스너는 컴포넌트 언마운트 시 제거
-    return () => {
-      listener.remove(); // 리스너 제거
-    };
-  }, []);
-
+  //fallback component 정의
   const FallBackComponent = () => {
     return (
-      <SafeAreaView style={tw`flex-1`}>
+      <SafeAreaView style={tw`flex-1 justify-center items-center bg-black`}>
         <ActivityIndicator size="large" color="#0000ff" />
       </SafeAreaView>
     );
@@ -305,9 +306,9 @@ function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
+        {/* <SafeAreaView style={{flex: 1}}> */}
         <QueryClientProvider client={queryClient}>
           <NavigationContainer
-            // onReady={() => setIsNavigationReady(true)}
             ref={navigationRef}
             linking={linking}
             fallback={<FallBackComponent />}>
@@ -315,15 +316,14 @@ function App(): React.JSX.Element {
             <CustomToast />
           </NavigationContainer>
         </QueryClientProvider>
+        {/* </SafeAreaView> */}
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
-
 const codePushOptions = {
   checkFrequency: CodePush.CheckFrequency.ON_APP_START, // 앱 시작 시 한 번만 확인
   installMode: CodePush.InstallMode.IMMEDIATE,
 };
 
-// export default App;
 export default CodePush(codePushOptions)(App);

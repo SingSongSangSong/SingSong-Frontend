@@ -141,7 +141,7 @@ const useLogin = ({navigation}: UseLoginProps) => {
 
       const {identityToken} = appleAuthRequestResponse;
       const token = await getToken();
-
+      console.log('token', token);
       const tempData = await postMemberLoginV2(
         token,
         identityToken || '',

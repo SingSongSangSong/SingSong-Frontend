@@ -9,6 +9,7 @@ import {Keyboard, Platform} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
 import {scheduleNotification} from '../utils';
 import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import messaging from '@react-native-firebase/messaging';
 
 type UseTermsProps = {
   // provider: string;
@@ -130,37 +131,34 @@ const useTerms = ({navigation}: UseTermsProps) => {
   const handleOnPressSubmission = async () => {
     if (birthYear !== '' && gender !== '' && birthYear.length === 4) {
       setIsLoggedProcess(true);
-      const data = await postMemberLoginExtra(birthYear, gender); // accessToken 받기, 설정해야됨
-      setIsLoggedProcess(false); // false
+      await postMemberLoginExtra(birthYear, gender); // accessToken 받기, 설정해야됨
       // setSecureValue(ACCESS_TOKEN, data.data.accessToken);
       // setSecureValue(REFRESH_TOKEN, data.data.refreshToken);
 
       try {
-        if (Number(Platform.Version) === 33) {
-          // Android 13 (API 33)
-          const notificationPermission = await check(
-            PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-          );
-
-          if (notificationPermission === RESULTS.GRANTED) {
-            console.log(
-              'canScheduleExactAlarms for Android 13 with granted notification permission',
-            );
-            scheduleNotification(); // 알람 예약
-          } else {
-            console.log('Notification permission not granted on Android 13');
+        if (Platform.OS === 'ios') {
+          const authStatus = await messaging().hasPermission();
+          if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+            scheduleNotification();
           }
-        } else if (Number(Platform.Version) < 33) {
-          console.log('canScheduleExactAlarms for Android 12 and below');
-          scheduleNotification(); // 알람 예약
         } else {
-          console.log('canScheduleExactAlarms for Android 14 and above');
-          // scheduleNotification(); // 알람 예약
+          if (Number(Platform.Version) === 33) {
+            const notificationPermission = await check(
+              PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+            );
+
+            if (notificationPermission === RESULTS.GRANTED) {
+              scheduleNotification(); // 알람 예약
+            }
+          } else if (Number(Platform.Version) < 33) {
+            scheduleNotification(); // 알람 예약
+          }
         }
       } catch (error) {
-        console.log('Error scheduling notification:', error);
+        setIsLoggedProcess(false); // false
+        navigation.replace(appStackNavigations.MAIN); // 메인 화면으로 이동
       }
-
+      setIsLoggedProcess(false); // false
       navigation.replace(appStackNavigations.MAIN); // 메인 화면으로 이동
     } else {
       let message = '모든 정보를 입력해주세요.';

@@ -16,8 +16,6 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-<key>NSUserTrackingUsageDescription</key>
-<string>이 앱은 사용자 경험을 개선하고 맞춤형 광고를 제공하기 위해 일부 활동 데이터를 수집할 수 있습니다. 이를 통해 사용자의 관심사에 맞는 콘텐츠를 제공할 수 있으며, 앱 사용 분석 및 광고 성과 평가에 도움을 줍니다.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
@@ -30,21 +28,18 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao2de29a7b3583418860f9e5705cca20cf</string>
-				<string>fb8358574374255875</string> <!-- Facebook 앱 ID를 대체 -->
+				<string>fb8358574374255875</string>
 			</array>
 		</dict>
 	</array>
-	<key>CodePushDeploymentKey</key>
-<string>${CODEPUSH_KEY}</string>
-	<key>FacebookAppID</key>
-	<string>8358574374255875</string> <!-- Facebook 앱 ID -->
-	<!-- <key>FacebookClientToken</key>
-	<string>e5b2e87f5e450783b5a9e5e43c574c6a</string> -->
-	<key>FacebookDisplayName</key>
-	<string>singsongsangsong</string> <!-- Facebook 앱 이름 -->
-
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>${CODEPUSH_KEY}</string>
+	<key>FacebookAppID</key>
+	<string>8358574374255875</string>
+	<key>FacebookDisplayName</key>
+	<string>singsongsangsong</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>2de29a7b3583418860f9e5705cca20cf</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -54,10 +49,12 @@
 		<string>storykompassauth</string>
 		<string>kakaokompassauth</string>
 		<string>fbapi</string>
-    	<string>fb-messenger-api</string>
-    	<string>fbauth2</string>
-    	<string>fbshareextension</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>12.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -71,6 +68,12 @@
 	<string>We need your permission to sign in with Apple.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>이 앱은 사용자 경험을 개선하고 맞춤형 광고를 제공하기 위해 일부 활동 데이터를 수집할 수 있습니다. 이를 통해 사용자의 관심사에 맞는 콘텐츠를 제공할 수 있으며, 앱 사용 분석 및 광고 성과 평가에 도움을 줍니다.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -87,7 +90,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>LSMinimumSystemVersion</key>
-	<string>12.0</string>
 </dict>
 </plist>
