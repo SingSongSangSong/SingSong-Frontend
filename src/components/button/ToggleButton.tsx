@@ -13,7 +13,7 @@ const ToggleButton = ({toggleSwitch}: ToggleButtonProps) => {
 
   const interpolateBackgroundColor = animationValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['gray', designatedColor.PINK2],
+    outputRange: ['gray', designatedColor.VIOLET],
   });
 
   const interpolateThumbPosition = animationValue.interpolate({
@@ -52,8 +52,8 @@ const ToggleButton = ({toggleSwitch}: ToggleButtonProps) => {
 
 const styles = StyleSheet.create({
   switchContainer: {
-    width: 50,
-    height: 30,
+    width: 42,
+    height: 24,
     justifyContent: 'center',
     position: 'relative',
   },
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   thumb: {
-    width: 26,
-    height: 26,
+    width: 20,
+    height: 20,
     borderRadius: 13,
     backgroundColor: 'white',
     position: 'absolute',

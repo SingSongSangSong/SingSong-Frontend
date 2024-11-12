@@ -26,15 +26,8 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
 
   const {mutateAsync, isLoading} = useMutation({
     mutationFn: async () => {
-      if (!title || !contents || !title.trim() || !contents.trim()) {
-        Toast.show({
-          type: 'selectedToast',
-          text1: '제목과 내용을 입력해주세요.',
-          position: 'bottom',
-          visibilityTime: 2000,
-        });
-        return;
-        // throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
+      if (!title || !contents || title == '' || contents == '') {
+        throw new Error('제목과 내용을 입력해주세요.'); // 오류 발생 시 예외 처리
       }
       const songIds = getPostSongId();
       return postPosts(contents, songIds, title);
@@ -49,6 +42,7 @@ const usePostWrite = ({navigation}: UsePostWriteProps) => {
       });
     },
     onSuccess: () => {
+      console.log('성공적으로 등록되었습니다.');
       removeAllPostSong();
       Toast.show({
         type: 'selectedToast',

@@ -33,9 +33,9 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
   // const {width} = useWindowDimensions();
 
   return (
-    // <InputAccessoryView
-    //   style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full`]}>
-    <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full`]}>
+    <InputAccessoryView
+      style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full`]}>
+      {/* <View style={[tw`bg-[${designatedColor.BACKGROUND_BLACK}] w-full`]}> */}
       <View
         style={tw`flex-row items-center py-4 bg-[${designatedColor.BACKGROUND_BLACK}]`}>
         <TextInput
@@ -58,7 +58,7 @@ export const CommentKeyboard: React.FC<CommentKeyboardProps> = ({
           <IconButton Icon={SendIcon} onPress={handleOnSendPress} size={24} />
         </View>
       </View>
-      {/* </InputAccessoryView> */}
-    </View>
+    </InputAccessoryView>
+    // </View>
   );
 };

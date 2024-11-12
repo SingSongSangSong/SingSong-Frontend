@@ -114,14 +114,7 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
   const {mutateAsync, isLoading} = useMutation({
     mutationFn: async (content: string) => {
       if (content.trim() === '') {
-        Toast.show({
-          type: 'selectedToast',
-          text1: '내용을 입력해주세요.',
-          position: 'bottom',
-          visibilityTime: 2000,
-        });
-        // throw new Error('제목과 내용을 입력해주세요.');
-        return;
+        throw new Error('내용을 입력해주세요.');
       }
       return postPostsComments(
         content,
@@ -168,16 +161,6 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   const {mutateAsync: mutateAsyncPostLike} = useMutation({
     mutationFn: async (postId: number) => {
-      // console.log('postId: ', postId);
-      // if (content.trim() === '') {
-      //   Toast.show({
-      //     type: 'selectedToast',
-      //     text1: '내용을 입력해주세요.',
-      //     position: 'bottom',
-      //     visibilityTime: 2000,
-      //   });
-      //   throw new Error('제목과 내용을 입력해주세요.');
-      // }
       return postPostsLike(postId);
     },
     onError: (error: Error) => {
@@ -208,16 +191,6 @@ const usePostDetail = ({navigation, route}: UsePostDetailProps) => {
 
   const {mutateAsync: mutateAsyncCommentLike} = useMutation({
     mutationFn: async (postCommentId: number) => {
-      // console.log('postCommentId: ', postCommentId);
-      // if (content.trim() === '') {
-      //   Toast.show({
-      //     type: 'selectedToast',
-      //     text1: '내용을 입력해주세요.',
-      //     position: 'bottom',
-      //     visibilityTime: 2000,
-      //   });
-      //   throw new Error('제목과 내용을 입력해주세요.');
-      // }
       return postPostsCommentsLike(postCommentId);
     },
     onError: (error: Error) => {

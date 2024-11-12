@@ -26,6 +26,7 @@ import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import GuestStore from '../../store/GuestStore';
 import TokenStore from '../../store/TokenStore';
 import {logPageView, logTrack} from '../../utils';
+import {ToggleButton} from '../../components/button/ToggleButton';
 
 type SettingScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -173,6 +174,12 @@ function SettingScreen(props: SettingScreenProps) {
           </CustomText>
           <View style={tw`mt-4`}>
             <View style={tw`items-start mb-4`}>
+              {/* <View style={tw`p-2 mb-2`}>
+                <View style={tw`w-full justify-between flex-row items-center`}>
+                  <CustomText style={tw`text-white`}>알림</CustomText>
+                  <ToggleButton toggleSwitch={() => {}} />
+                </View>
+              </View> */}
               <TouchableOpacity
                 style={tw`p-2 mb-2`}
                 activeOpacity={0.8}

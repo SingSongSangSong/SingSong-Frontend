@@ -31,8 +31,7 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
         onPress={onPress}
         style={tw`w-full justify-center items-center`}
         activeOpacity={0.8}>
-        {/* NEW 뱃지 */}
-        {index >= 0 && index < 4 && (
+        {/* {index >= 0 && index < 4 && (
           <View
             style={[
               tw`rounded-sm py-0.2`,
@@ -48,7 +47,7 @@ const TagIconButton = ({tag, index, onPress, Icon}: TagIconButtonProps) => {
               NEW
             </CustomText>
           </View>
-        )}
+        )} */}
 
         {/* 아이콘 */}
         <Icon width={48} height={48} onPress={onPress} />

@@ -33,7 +33,12 @@ import {
 import SettingsIcon from '../../assets/svg/settings.svg';
 // import LogoIcon from '../../assets/svg/logo.svg';
 import LogoIcon from '../../assets/svg/whiteLogo.svg';
-import {logButtonClick, logPageView, logTrack} from '../../utils';
+import {
+  logButtonClick,
+  logPageView,
+  logTrack,
+  scheduleNotificationTest,
+} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -85,6 +90,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     initIsGuest();
     logPageView(props.route.name);
     setFbLogEvent();
+    scheduleNotificationTest();
   }, []);
 
   const initIsGuest = async () => {
@@ -433,7 +439,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             // onPressTotalButton={handleOnPressTotalButton}
           />
           <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={tw`flex-row items-center justify-between bg-[${designatedColor.YELLOW}] mt-6`}
             onPress={() => {
               Linking.openURL('https://forms.gle/TXytjUW6Rfiqu7vw6');
@@ -443,7 +449,7 @@ const HomeScreen = (props: HomeScreenProps) => {
               <BannerIcon width={screen.width * 0.7} height={100} />
             </View>
             <CuImageIcon width={screen.width * 0.25} height={100} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* <AiSongCardModule
             onPressTotalButton={handleOnPressAiTotalButton}

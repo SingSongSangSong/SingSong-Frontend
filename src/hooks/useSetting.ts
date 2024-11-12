@@ -7,7 +7,8 @@ import Toast from 'react-native-toast-message';
 // import {useQuery} from '@tanstack/react-query';
 import {isEmptyObject} from '../utils';
 import useKeepV2Store from '../store/useKeepV2Store';
-import {reset} from '@react-native-firebase/remote-config';
+// import messaging from '@react-native-firebase/messaging';
+// import NotificationStore from '../store/NotificationStore';
 
 const useSetting = () => {
   const memberInfo = useMemberStore(state => state.memberInfo);
@@ -17,6 +18,7 @@ const useSetting = () => {
   const clearProvider = useMemberStore(state => state.clearProvider);
   const resetKeepList = useKeepV2Store(state => state.resetKeepList);
   const setIsInitalized = useKeepV2Store(state => state.setIsInitialized);
+  // const getNotificationStatus = NotificationStore().getNotificationStatus;
 
   // const {
   //   data: tempMemberInfo,
