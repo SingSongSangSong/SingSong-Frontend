@@ -33,12 +33,7 @@ import {
 import SettingsIcon from '../../assets/svg/settings.svg';
 // import LogoIcon from '../../assets/svg/logo.svg';
 import LogoIcon from '../../assets/svg/whiteLogo.svg';
-import {
-  logButtonClick,
-  logPageView,
-  logTrack,
-  scheduleNotificationTest,
-} from '../../utils';
+import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useSongStore from '../../store/useSongStore';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -90,7 +85,6 @@ const HomeScreen = (props: HomeScreenProps) => {
     initIsGuest();
     logPageView(props.route.name);
     setFbLogEvent();
-    scheduleNotificationTest();
   }, []);
 
   const initIsGuest = async () => {

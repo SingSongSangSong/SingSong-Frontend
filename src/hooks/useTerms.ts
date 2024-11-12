@@ -7,7 +7,7 @@ import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
 import {Keyboard, Platform} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
-import {scheduleNotification} from '../utils';
+import {logTrack, scheduleNotification} from '../utils';
 import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 
@@ -139,6 +139,7 @@ const useTerms = ({navigation}: UseTermsProps) => {
         if (Platform.OS === 'ios') {
           const authStatus = await messaging().hasPermission();
           if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+            logTrack('local_notification_permission_granted');
             scheduleNotification();
           }
         } else {
@@ -148,9 +149,11 @@ const useTerms = ({navigation}: UseTermsProps) => {
             );
 
             if (notificationPermission === RESULTS.GRANTED) {
+              logTrack('local_notification_permission_granted');
               scheduleNotification(); // 알람 예약
             }
           } else if (Number(Platform.Version) < 33) {
+            logTrack('local_notification_permission_granted');
             scheduleNotification(); // 알람 예약
           }
         }

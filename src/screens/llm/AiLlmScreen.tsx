@@ -94,10 +94,10 @@ function AiLlmScreen(props: AiLlmScreenProps) {
         <TouchableWithoutFeedback onPress={dismissKeyboardHandler}>
           <ScrollView
             contentContainerStyle={[
-              tw`flex-grow justify-start pb-20`,
+              tw`flex-grow justify-start pb-40`,
               {
                 paddingTop: height * 0.1,
-                paddingBottom: bottomHeight,
+                // paddingBottom: bottomHeight,
               },
             ]}>
             <View style={tw`w-full pl-2 pt-4 pb-10`}>
