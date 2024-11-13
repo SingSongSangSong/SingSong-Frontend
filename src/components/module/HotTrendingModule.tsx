@@ -30,6 +30,7 @@ interface HotTrendingModuleProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   isScrollingHome: RefObject<View>;
   refreshing: boolean;

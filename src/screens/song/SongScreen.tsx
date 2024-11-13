@@ -43,6 +43,7 @@ function SongScreen(props: SongScreenProps) {
     melonLink,
     isMr,
     isLive,
+    lyricsVideoId = null,
   } = props.route?.params || {};
 
   useEffect(() => {
@@ -88,6 +89,7 @@ function SongScreen(props: SongScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('related_song_button_click');
     logButtonClick('related_song_button_click');
@@ -104,6 +106,7 @@ function SongScreen(props: SongScreenProps) {
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       } else if (props.route.name === homeStackNavigations.SONG_DETAIL) {
         (
@@ -117,6 +120,7 @@ function SongScreen(props: SongScreenProps) {
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       } else if (
         props.route.name === searchStackNavigations.SEARCH_SONG_DETAIL
@@ -132,6 +136,7 @@ function SongScreen(props: SongScreenProps) {
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       }
     }
@@ -148,6 +153,7 @@ function SongScreen(props: SongScreenProps) {
         melonLink={melonLink}
         isMr={isMr}
         isLive={isLive}
+        lyricsVideoId={lyricsVideoId || ''}
         handleOnPressComment={_onPressComment}
       />
       {/* <SongAdditionInfo

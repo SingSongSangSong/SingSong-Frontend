@@ -42,6 +42,7 @@ type HomeStackParamList = {
     melonLink: string;
     isMr: boolean;
     isLive: boolean;
+    lyricsVideoId?: string;
   };
   [homeStackNavigations.COMMENT]: {songNumber: number; songId: number};
   [homeStackNavigations.RECOMMENT]: {comment: Comment};
@@ -72,6 +73,7 @@ type KeepStackParamList = {
     melonLink: string;
     isMr: boolean;
     isLive: boolean;
+    lyricsVideoId?: string;
   };
   [keepStackNavigations.KEEP_COMMENT]: {songNumber: number; songId: number};
   [keepStackNavigations.KEEP_RECOMMENT]: {comment: Comment};
@@ -94,6 +96,7 @@ type SearchStackParamList = {
     melonLink: string;
     isMr: boolean;
     isLive: boolean;
+    lyricsVideoId?: string;
   };
   [searchStackNavigations.SEARCH_COMMENT]: {songNumber: number; songId: number};
   [searchStackNavigations.SEARCH_RECOMMENT]: {comment: Comment};

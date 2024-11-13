@@ -33,6 +33,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     logButtonClick('ai_recommendation_song_button_click');
     amplitude.track('ai_recommendation_song_button_click');
@@ -45,6 +46,7 @@ function RcdRecommendationScreen(props: RcdRecommendationScreenProps) {
       melonLink: melonLink,
       isMr: isMr,
       isLive: isLive,
+      lyricsVideoId: lyricsVideoId,
     });
   };
 

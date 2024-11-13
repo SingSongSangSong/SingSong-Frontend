@@ -40,6 +40,7 @@ function RcdHomeScreen(props: RcdHomeScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     logButtonClick('recommendation_song_button_click');
     amplitude.track('recommendation_song_button_click');
@@ -57,6 +58,7 @@ function RcdHomeScreen(props: RcdHomeScreenProps) {
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       } else if (props.route.name === homeStackNavigations.RCD_DETAIL) {
         (
@@ -70,6 +72,7 @@ function RcdHomeScreen(props: RcdHomeScreenProps) {
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       }
     }

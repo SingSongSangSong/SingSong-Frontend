@@ -15,6 +15,7 @@ interface SearchSongsListProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   onKeepAddPress?: (songId: number) => void;
   onKeepRemovePress?: (songId: number) => void;
@@ -50,6 +51,7 @@ const SearchSongsList = ({
             item.melonLink || '',
             item.isMr,
             item.isLive || false,
+            item.lyricsVideoId || '',
           )
         }
         onKeepAddPress={

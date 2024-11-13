@@ -18,6 +18,7 @@ interface RecentCommentSongModuleProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   refreshing: boolean;
 }

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   AppState,
-  Button,
   Dimensions,
   Image,
   Linking,
@@ -40,6 +39,7 @@ type SongInfo2Props = {
   melonLink: string;
   isMr: boolean;
   isLive?: boolean;
+  lyricsVideoId: string;
   handleOnPressComment: (songNumber: number, songId: number) => void;
 };
 const SongInfo2 = ({
@@ -51,9 +51,9 @@ const SongInfo2 = ({
   melonLink,
   isMr,
   isLive = false,
+  lyricsVideoId,
   handleOnPressComment,
 }: SongInfo2Props) => {
-  // console.log('songDefaultInfo');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [songInfo, setSongInfo] = useState<SongInfo>();
   // const setKeepList = useKeepListStore(state => state.setKeepList);
@@ -69,6 +69,8 @@ const SongInfo2 = ({
   const videoHeight = deviceWidth * youtubeAspectRatio; // height based on aspect ratio
   const [playing, setPlaying] = useState<boolean>(false);
   const [appState, setAppState] = useState<string>(AppState.currentState);
+  const [currentYoutubeVideoId, setCurrentYoutubeVideoId] =
+    useState<string>(lyricsVideoId);
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState: string) => {
@@ -95,6 +97,10 @@ const SongInfo2 = ({
     try {
       const tempSongInfo = await getSongs(String(songId));
       setSongInfo(tempSongInfo.data);
+      if (tempSongInfo.data.lyricsVideoId !== '' && lyricsVideoId == '') {
+        setCurrentYoutubeVideoId(tempSongInfo.data.lyricsVideoId!);
+      }
+
       // const hasLyricsLink = tempSongInfo.data.lyricsVideoId !== '';
       // const hasTJLink = tempSongInfo.data.tjVideoId !== '';
 
@@ -202,7 +208,7 @@ const SongInfo2 = ({
                   width={deviceWidth}
                   height={videoHeight}
                   play={playing}
-                  videoId={songInfo.lyricsVideoId}
+                  videoId={currentYoutubeVideoId}
                   onChangeState={() => {}}
                 />
               ) : album != '' ? (

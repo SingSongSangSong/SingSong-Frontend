@@ -19,6 +19,7 @@ interface AiSongCardModuleProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   refreshing: boolean;
   isShowed: boolean;

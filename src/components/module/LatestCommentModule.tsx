@@ -16,6 +16,7 @@ interface LatestCommentModuleProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   refreshing: boolean;
 }
@@ -133,6 +134,7 @@ const LatestCommentModule = ({
                     comment.song.melonLink || '',
                     comment.song.isMr,
                     comment.song.isLive || false,
+                    comment.song.lyricsVideoId || '',
                   );
                 }}
                 nickname={comment.nickname}

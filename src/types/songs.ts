@@ -218,6 +218,7 @@ interface ChartSong {
   songNumber: number;
   totalScore: number;
   melonLink: string;
+  lyricsVideoId?: string;
 }
 
 // interface ChartV2 {
@@ -280,6 +281,7 @@ interface NewSong {
   songNumber: number;
   tjYoutubeLink?: string;
   lyricsYoutubeLink?: string;
+  lyricsVideoId?: string;
 }
 
 interface GetSongsNewResponse {
@@ -310,6 +312,7 @@ interface KeepSongV2 {
   songNumber: number;
   tjYoutubeLink: string;
   lyricsYoutubeLink: string;
+  lyricsVideoId?: string;
 }
 
 interface GetRecentCommentResponse {

@@ -46,6 +46,7 @@ function KeepScreen(props: KeepScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     logButtonClick('keep_song_button_click');
     amplitude.track('keep_song_button_click');
@@ -58,6 +59,7 @@ function KeepScreen(props: KeepScreenProps) {
       melonLink: melonLink,
       isMr: isMr,
       isLive: isLive,
+      lyricsVideoId: lyricsVideoId || '',
     });
   };
 
@@ -76,6 +78,7 @@ function KeepScreen(props: KeepScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('preview_song_button_click');
     logButtonClick('preview_song_button_click');
@@ -91,6 +94,7 @@ function KeepScreen(props: KeepScreenProps) {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId || '',
       },
     });
   };

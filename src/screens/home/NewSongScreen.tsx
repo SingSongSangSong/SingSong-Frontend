@@ -33,6 +33,7 @@ function NewSongScreen(props: NewSongScreenProps) {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     logButtonClick('new_song_button_click');
     amplitude.track('new_song_button_click');
@@ -45,6 +46,7 @@ function NewSongScreen(props: NewSongScreenProps) {
       melonLink: melonLink,
       isMr: isMr,
       isLive: isLive,
+      lyricsVideoId: lyricsVideoId || '',
     });
   };
 

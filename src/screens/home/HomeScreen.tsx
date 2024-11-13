@@ -175,6 +175,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('preview_song_button_click');
     logButtonClick('preview_song_button_click');
@@ -190,6 +191,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId,
       },
     });
   };
@@ -203,6 +205,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('comment_song_button_click');
     logButtonClick('comment_song_button_click');
@@ -218,6 +221,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId,
       },
     });
   };
@@ -251,6 +255,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('hot_trending_song_button_click');
     logButtonClick('hot_trending_song_button_click');
@@ -266,6 +271,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId,
       },
     });
   };
@@ -279,6 +285,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('recent_keep_song_button_click');
     logButtonClick('recent_keep_song_button_click');
@@ -294,6 +301,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId,
       },
     });
   };
@@ -307,6 +315,7 @@ const HomeScreen = (props: HomeScreenProps) => {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('recent_comment_song_button_click');
     logButtonClick('recent_comment_song_button_click');
@@ -322,6 +331,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         melonLink: melonLink,
         isMr: isMr,
         isLive: isLive,
+        lyricsVideoId: lyricsVideoId,
       },
     });
   };

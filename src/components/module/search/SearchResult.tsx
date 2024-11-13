@@ -54,6 +54,7 @@ const SearchResult = ({
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     logButtonClick('search_result_song_button_click');
     amplitude.track('search_result_song_button_click');
@@ -66,6 +67,7 @@ const SearchResult = ({
       melonLink: melonLink,
       isMr: isMr,
       isLive: isLive,
+      lyricsVideoId: lyricsVideoId,
     });
   };
 

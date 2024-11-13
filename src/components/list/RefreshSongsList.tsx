@@ -19,6 +19,7 @@ interface RefreshSongsListProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   onKeepAddPress: (songId: number) => void;
   onKeepRemovePress: (songId: number) => void;
@@ -64,6 +65,7 @@ const RenderItem = memo(
           item.melonLink,
           item.isMr,
           item.isLive,
+          item.lyricsVideoId,
         );
       }}
       onKeepAddPress={() => onKeepAddPress(item.songId)}

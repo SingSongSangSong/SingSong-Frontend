@@ -17,6 +17,7 @@ type NewSongCardListProps = {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
 };
 
@@ -54,6 +55,7 @@ const NewSongCardList = ({
                   song.melonLink || '',
                   song.isMr,
                   song.isLive || false,
+                  song.lyricsVideoId || '',
                 )
               }
               album={song.album}

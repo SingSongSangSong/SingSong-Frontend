@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {designatedColor} from '../../../constants';
 import tw from 'twrnc';
 import {Relatedlist} from '../../list/Relatedlist';
@@ -9,7 +9,6 @@ import {logButtonClick, logRefresh} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import Toast from 'react-native-toast-message';
 import postKeep from '../../../api/keep/postKeep';
-import useKeepListStore from '../../../store/useKeepStore';
 import deleteKeep from '../../../api/keep/deleteKeep';
 import CustomText from '../../text/CustomText';
 import getKeepV2 from '../../../api/keep/getKeepV2';
@@ -26,6 +25,7 @@ type SongRelatedProps = {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
 };
 const SongRelated = ({songId, onSongPress}: SongRelatedProps) => {

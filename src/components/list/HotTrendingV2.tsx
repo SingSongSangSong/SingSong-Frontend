@@ -17,6 +17,7 @@ interface HotTrendingV2Props {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   isScrollingHome: RefObject<View>;
 }
@@ -179,6 +180,7 @@ const HotTrendingV2 = ({
                             item.melonLink,
                             item.isMr,
                             item.isLive,
+                            item.lyricsVideoId || '',
                           );
                         }}
                         isScrollingHome={isScrollingHome}

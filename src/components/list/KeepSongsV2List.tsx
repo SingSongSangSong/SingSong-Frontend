@@ -16,6 +16,7 @@ interface KeepSongsV2ListProps {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   handleRefreshKeep: () => void;
   onRefresh: () => void;
@@ -60,6 +61,7 @@ const KeepSongsV2List = ({
             item.melonLink || '',
             item.isMr,
             item.isLive || false,
+            item.lyricsVideoId || '',
           )
         }
       />

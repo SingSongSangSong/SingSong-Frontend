@@ -19,6 +19,7 @@ type AiSongCardListProps = {
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => void;
   isShowed: boolean;
 };
@@ -92,6 +93,7 @@ const AiSongCardList = ({
                     song.melonLink || '',
                     song.isMr,
                     song.isLive || false,
+                    song.lyricsVideoId || '',
                   )
                 }
                 album={song.album}

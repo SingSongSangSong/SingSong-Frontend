@@ -55,6 +55,7 @@ const useAiLlmResult = ({
     melonLink: string,
     isMr: boolean,
     isLive: boolean,
+    lyricsVideoId: string,
   ) => {
     amplitude.track('llm_song_button_click');
     logButtonClick('llm_song_button_click');
@@ -71,6 +72,7 @@ const useAiLlmResult = ({
           melonLink: melonLink,
           isMr: isMr,
           isLive: isLive,
+          lyricsVideoId: lyricsVideoId || '',
         });
       } else if (routeName === homeStackNavigations.AI_LLM_RESULT) {
         (navigation as StackScreenProps<HomeStackParamList>['navigation']).push(
@@ -84,6 +86,7 @@ const useAiLlmResult = ({
             melonLink: melonLink,
             isMr: isMr,
             isLive: isLive,
+            lyricsVideoId: lyricsVideoId || '',
           },
         );
       }
