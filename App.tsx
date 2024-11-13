@@ -4,7 +4,7 @@ import {QueryClientProvider} from '@tanstack/react-query';
 import AppStackNavigator from './src/navigations/stack/AppStackNavigator';
 import {CustomToast} from './src/components';
 import queryClient from './src/api/queryClient';
-import crashlytics from '@react-native-firebase/crashlytics';
+// import crashlytics from '@react-native-firebase/crashlytics';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -54,7 +54,7 @@ function App(): React.JSX.Element {
 
   useEffect(() => {
     messaging().registerDeviceForRemoteMessages();
-    crashlytics().log('App started');
+    // crashlytics().log('App started');
     // messaging().setMessagesDisplaySuppressed(false);
     // messaging().setAutomaticDataCollectionEnabled(true);
   }, []);
