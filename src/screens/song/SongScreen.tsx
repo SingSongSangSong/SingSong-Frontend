@@ -44,14 +44,6 @@ function SongScreen(props: SongScreenProps) {
     isMr,
     isLive,
   } = props.route?.params || {};
-  console.log('songId', songId);
-  console.log('songNumber', songNumber);
-  console.log('songName', songName);
-  console.log('singerName', singerName);
-  console.log('album', album);
-  console.log('melonLink', melonLink);
-  console.log('isMr', isMr);
-  console.log('isLive', isLive);
 
   useEffect(() => {
     logPageView(props.route.name);
@@ -97,7 +89,6 @@ function SongScreen(props: SongScreenProps) {
     isMr: boolean,
     isLive: boolean,
   ) => {
-    // console.log('related_song_button_click');
     amplitude.track('related_song_button_click');
     logButtonClick('related_song_button_click');
     if ('navigate' in props.navigation) {

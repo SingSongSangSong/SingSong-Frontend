@@ -36,6 +36,8 @@ interface Song {
   melonLink?: string;
   tjYoutubeLink?: string;
   lyricsYoutubeLink?: string;
+  lyricsVideoId?: string;
+  tjVideoId?: string;
 }
 
 interface LlmSongResponse {
@@ -157,6 +159,8 @@ interface SongInfo {
   melonLink?: string;
   tjYoutubeLink?: string;
   lyricsYoutubeLink?: string;
+  lyricsVideoId?: string;
+  tjVideoId?: string;
 }
 
 interface SongInfoResponse {
@@ -304,8 +308,8 @@ interface KeepSongV2 {
   songId: number;
   songName: string;
   songNumber: number;
-  tjYoutubeLink?: string;
-  lyricsYoutubeLink?: string;
+  tjYoutubeLink: string;
+  lyricsYoutubeLink: string;
 }
 
 interface GetRecentCommentResponse {

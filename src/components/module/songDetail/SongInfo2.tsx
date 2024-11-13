@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Linking, TouchableOpacity, View} from 'react-native';
+import {
+  AppState,
+  Button,
+  Dimensions,
+  Image,
+  Linking,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import {CommonTag} from '../../tag/CommonTag';
@@ -14,13 +22,14 @@ import {logButtonClick, logTrack, showToast} from '../../../utils';
 import deleteKeep from '../../../api/keep/deleteKeep';
 import getKeepV2 from '../../../api/keep/getKeepV2';
 import postKeep from '../../../api/keep/postKeep';
-import YoutubeIcon from '../../../assets/svg/youtube.svg';
+import MelonIcon from '../../../assets/svg/melon.svg';
 import TjIcon from '../../../assets/svg/tj.svg';
 import KeepCountIcon from '../../../assets/svg/keepGray.svg';
 import CommentCountIcon from '../../../assets/svg/commentGray.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../../assets/svg/keepIcon.svg';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 type SongInfo2Props = {
   songId: number;
@@ -55,12 +64,55 @@ const SongInfo2 = ({
   const setLastCursor = useKeepV2Store(state => state.setLastCursor);
   const setIsEnded = useKeepV2Store(state => state.setIsEnded);
   const selectedFilter = useKeepV2Store(state => state.selectedFilter);
+  const deviceWidth = Dimensions.get('window').width;
+  const youtubeAspectRatio = 9 / 16; // 16:9 aspect ratio
+  const videoHeight = deviceWidth * youtubeAspectRatio; // height based on aspect ratio
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [appState, setAppState] = useState<string>(AppState.currentState);
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: string) => {
+      if (nextAppState === 'background' || nextAppState === 'inactive') {
+        setPlaying(false);
+      } else if (nextAppState === 'active') {
+        setPlaying(false);
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const setInitSongAdditionInfo = async (songId: number) => {
     // console.log('setInitSongAdditionInfo');
     try {
       const tempSongInfo = await getSongs(String(songId));
       setSongInfo(tempSongInfo.data);
+      // const hasLyricsLink = tempSongInfo.data.lyricsVideoId !== '';
+      // const hasTJLink = tempSongInfo.data.tjVideoId !== '';
+
+      // if (hasLyricsLink && hasTJLink) {
+      //   setCurrentYoutubeVideoName('가사'); // 기본적으로 가사로 설정
+      //   setCurrentYoutubeVideoId(tempSongInfo.data.lyricsVideoId);
+      //   setIsToggleEnabled(true); // 둘 다 있을 경우 토글 활성화
+      // } else if (hasLyricsLink) {
+      //   setCurrentYoutubeVideoName('가사');
+      //   setIsToggleEnabled(false); // 하나만 있을 경우 토글 비활성화
+      // } else if (hasTJLink) {
+      //   setCurrentYoutubeVideoName('TJ');
+      //   setIsToggleEnabled(false); // 하나만 있을 경우 토글 비활성화
+      // } else {
+      //   setCurrentYoutubeVideoName('album');
+      //   setIsToggleEnabled(false); // 둘 다 없을 경우 토글 비활성화
+      // }
+
       setCommentCount(tempSongInfo.data.commentCount);
     } catch (error) {
       console.error('Error fetching song addition info:', error);
@@ -131,48 +183,60 @@ const SongInfo2 = ({
     handleOnPressComment(songNumber, songId);
   };
 
+  // const handleOnToggleSwitch = () => {
+  //   if (isToggleEnabled) {
+  //     // 토글이 활성화된 경우에만 작동
+  //     setCurrentYoutubeVideoId(prev => (prev === '가사' ? 'TJ' : '가사'));
+  //   } else {
+  //     showToast(`현재 곡은 ${currentYoutubeVideoId} 유튜브만 제공합니다.`);
+  //   }
+  // };
   return (
     <View>
       <View style={tw`justify-center items-center overflow-hidden`}>
-        <View style={tw`w-full h-40 bg-[${designatedColor.GRAY5}]`} />
-        <View
-          style={tw`w-full h-30 bg-[${designatedColor.BACKGROUND_BLACK}]`}
-        />
-        {/*
-        <View
-          style={tw`absolute w-50 h-50 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`}>
-          <WhiteLogoIcon width={108} height={76} />
-        </View> */}
-
-        {!album || album == '' ? (
-          // <View
-          //   style={tw`absolute w-50 h-50 bg-[${designatedColor.GRAY4}] rounded-lg justify-center items-center`}>
-          //   <MusicIcon width={64} height={64} />
-          // </View>
-          <View
-            style={tw`absolute w-50 h-50 bg-[${designatedColor.BLACK}] rounded-lg justify-center items-center`}>
-            <WhiteLogoIcon width={108} height={76} />
-          </View>
-        ) : (
-          <TouchableOpacity
-            onPress={() => {
-              setIsModalVisible(true);
-            }}
-            style={tw`absolute w-50 h-50 rounded-lg justify-center items-center`}
-            activeOpacity={1.0}>
-            <Image
-              source={{uri: album}}
-              style={tw`w-50 h-50 rounded-md`}
-              resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
-            />
-          </TouchableOpacity>
-        )}
-        {/* <View
-          style={tw`absolute w-50 h-50 bg-[${designatedColor.BACKGROUND_GRAY}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY5}]`}>
-          <WhiteLogoIcon width={108} height={76} />
-        </View> */}
+        <View style={{height: videoHeight}}>
+          {songInfo && (
+            <>
+              {songInfo.lyricsVideoId!.length > 0 ? (
+                <YoutubePlayer
+                  width={deviceWidth}
+                  height={videoHeight}
+                  play={playing}
+                  videoId={songInfo.lyricsVideoId}
+                  onChangeState={() => {}}
+                />
+              ) : album != '' ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsModalVisible(true);
+                  }}
+                  style={tw`mt-5 rounded-lg justify-center items-center`}
+                  activeOpacity={1.0}>
+                  <Image
+                    source={{uri: album}}
+                    style={tw`w-50 h-50 rounded-md`}
+                    resizeMode="cover" // 이미지가 크기에 맞게 잘리도록 조정
+                  />
+                </TouchableOpacity>
+              ) : (
+                <View
+                  style={tw`mt-5 w-50 h-50 bg-[${designatedColor.BLACK}] rounded-lg justify-center items-center border border-[${designatedColor.GRAY4}]`}>
+                  <WhiteLogoIcon width={108} height={76} />
+                </View>
+              )}
+              <View />
+            </>
+          )}
+        </View>
       </View>
-      <View style={tw`px-3 `}>
+      {/* <View style={tw`flex-row justify-end py-3 pr-4 items-center`}>
+        <ToggleButton toggleSwitch={handleOnToggleSwitch} />
+        <CustomText
+          style={tw`text-[16px] text-[${designatedColor.WHITE}] pl-2`}>
+          {currentYoutubeVideoId}
+        </CustomText>
+      </View> */}
+      <View style={tw`px-3 pt-3`}>
         <View style={tw`flex-row items-center mx-1`}>
           <View style={tw`items-center`}>
             {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
@@ -274,7 +338,7 @@ const SongInfo2 = ({
         <View style={tw`flex-row justify-between px-3 pb-3 pt-5 items-center`}>
           <View style={tw`flex-row items-center`}>
             <TouchableOpacity
-              style={tw` flex-row items-center rounded-full py-0.5 px-2 mx-1 border border-[${designatedColor.TJORANGE}] bg-[${designatedColor.BLACK}]`}
+              style={tw` flex-row items-center rounded-full py-1.5 px-3 mx-1 border border-[${designatedColor.TJORANGE}] bg-[${designatedColor.BLACK}]`}
               activeOpacity={0.8}
               onPress={() => {
                 logTrack('song_tj_button_click');
@@ -284,29 +348,29 @@ const SongInfo2 = ({
                   showToast('곧 업데이트 될 예정입니다.');
                 }
               }}>
-              <TjIcon width={28} height={28} />
+              <TjIcon width={22} height={22} />
 
               <CustomText
-                style={tw`text-[${designatedColor.TJORANGE}] text-[12px] pr-1`}>
+                style={tw`text-[${designatedColor.TJORANGE}] text-[12px] pl-1`}>
                 TJ
               </CustomText>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw` flex-row items-center rounded-full py-1 px-3 mx-1 border border-[${designatedColor.GRAY1}] bg-[${designatedColor.BLACK}]`}
+              style={tw` flex-row items-center rounded-full py-1.5 px-3 mx-1 border border-[${designatedColor.GRAY1}] bg-[${designatedColor.BLACK}]`}
               activeOpacity={0.8}
               onPress={() => {
                 logTrack('song_youtube_button_click');
-                if (songInfo && songInfo.lyricsYoutubeLink) {
-                  Linking.openURL(songInfo.lyricsYoutubeLink);
+                if (songInfo && songInfo.album && songInfo.melonLink) {
+                  Linking.openURL(songInfo.melonLink);
                 } else {
                   showToast('곧 업데이트 될 예정입니다.');
                 }
               }}>
-              <YoutubeIcon width={24} height={24} />
+              <MelonIcon width={22} height={22} />
 
               <CustomText
                 style={tw`text-[${designatedColor.TEXT_WHITE}] text-[12px] pl-1`}>
-                Youtube
+                Melon
               </CustomText>
             </TouchableOpacity>
           </View>
