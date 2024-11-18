@@ -1,11 +1,12 @@
 import React from 'react';
-import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Image, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import {CommonTag} from '..';
 import CustomText from '../text/CustomText';
 // import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import WhiteLogoIcon from '../../assets/svg/whiteLogo.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type SongCardProps = {
   songName: string;
