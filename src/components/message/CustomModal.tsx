@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View, Text, Modal, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, Modal, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
