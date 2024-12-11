@@ -7,10 +7,14 @@ import VersionStore from '../store/VersionStore';
 
 const useInit = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isCheckModalVisible, setIsCheckModalVisible] =
+    useState<boolean>(false);
   const [isForced, setIsForced] = useState<boolean>(false);
   const [updateUrl, setUpdateUrl] = useState<string>('');
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
   const setCurrentVersion = VersionStore(state => state.setCurrentVersion);
+  const [isStopCheck, setIsStopCheck] = useState<boolean>(false);
+  const [stopDuration, setStopDuration] = useState<string>('');
 
   const forceUpdateMessage = {
     title: '업데이트 필요',
@@ -33,6 +37,8 @@ const useInit = () => {
       forceUpdateVersion: '1.0.0',
       latestVersionForIOS: '1.0.0',
       forceUpdateVersionForIOS: '1.0.0',
+      stopCheck: '0',
+      stopDuration: '~12.28(토)',
       updateUrl:
         'https://play.google.com/store/apps/details?id=com.example.app',
       updateUrlForIOS: 'https://apps.apple.com/kr/app/id1234567890',
@@ -40,8 +46,9 @@ const useInit = () => {
 
     // Remote Config 설정
     await remoteConfig().setConfigSettings({
-      minimumFetchIntervalMillis: 86400000, // 1시간
-      fetchTimeMillis: 3000,
+      // minimumFetchIntervalMillis: 86400000, // 1시간
+      // fetchTimeMillis: 3000,
+      minimumFetchIntervalMillis: 0,
     });
   };
 
@@ -107,12 +114,40 @@ const useInit = () => {
     }
   };
 
+  const stopCheck = async () => {
+    try {
+      let isCheck;
+      let tempStopDuration;
+      await Promise.race([
+        remoteConfig().fetchAndActivate(),
+        new Promise(resolve => setTimeout(() => resolve(true), 1500)), // 2초 후에 true 반환
+      ]);
+
+      isCheck = remoteConfig().getString('stopCheck');
+      tempStopDuration = remoteConfig().getString('stopDuration');
+
+      setStopDuration(tempStopDuration);
+
+      console.log('isCheck:', isCheck);
+      if (isCheck == '1') {
+        setIsStopCheck(true);
+        return true;
+      } else {
+        setIsStopCheck(false);
+        return false;
+      }
+    } catch (error) {
+      console.error('stop 체크 중 오류가 발생했습니다:', error);
+      return true;
+    }
+  };
+
   const handleOnConfirmButton = () => {
     Linking.openURL(updateUrl);
   };
 
   const handleOnCancelButton = () => {
-    if (isForced) {
+    if (isForced || isStopCheck) {
       BackHandler.exitApp();
       return;
     }
@@ -123,6 +158,7 @@ const useInit = () => {
   return {
     getIsValidToken,
     versionCheck,
+    stopCheck,
     forceUpdateMessage,
     optionalUpdateMessage,
     isForced,
@@ -132,6 +168,9 @@ const useInit = () => {
     setShouldStartAnimation,
     isModalVisible,
     setIsModalVisible,
+    isCheckModalVisible,
+    setIsCheckModalVisible,
+    stopDuration,
   };
 };
 

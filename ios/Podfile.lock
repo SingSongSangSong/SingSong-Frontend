@@ -1446,6 +1446,27 @@ PODS:
     - Yoga
   - react-native-tracking-transparency (0.1.2):
     - React
+  - react-native-webview (13.12.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - React-nativeconfig (0.75.2)
   - React-NativeModulesApple (0.75.2):
     - glog
@@ -1977,6 +1998,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-tracking-transparency (from `../node_modules/react-native-tracking-transparency`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2157,6 +2179,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-tracking-transparency:
     :path: "../node_modules/react-native-tracking-transparency"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -2333,6 +2357,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: ab8f4a3d8180913bd78ae75dd599c94cce3d5e9a
   react-native-slider: 7573f654cac3496c26663a55628e5e8fde3325e8
   react-native-tracking-transparency: 25ff1ff866e338c137c818bdec20526bb05ffcc1
+  react-native-webview: d9a8bad8f501ca1b282165123ff7b3c16cd970df
   React-nativeconfig: 5fc2b05a590eb704128f5a4fc8ea6fa7b847e6e8
   React-NativeModulesApple: 88313414ddffd1758f76042733e8f0297acfd502
   React-perflogger: 8a360ccf603de6ddbe9ff8f54383146d26e6c936

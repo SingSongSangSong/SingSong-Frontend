@@ -3,7 +3,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {View, Animated, Dimensions, Image} from 'react-native';
 import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
-import {CustomModal} from '../../components';
+import {CustomModal, InfoModal} from '../../components';
 import useInit from '../../hooks/useInit';
 import {AppStackParamList} from '../../types';
 
@@ -37,6 +37,11 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
             // 업데이트가 필요한 경우, 모달을 표시하여 사용자가 업데이트를 진행하도록 유도
             initHandler.setIsModalVisible(true);
             return; // 업데이트가 필요하면 더 이상 진행하지 않음
+          }
+          const shouldStop = await initHandler.stopCheck();
+          if (shouldStop) {
+            initHandler.setIsCheckModalVisible(true);
+            return;
           }
           // 버전 체크 통과 시 메인 화면으로 이동
           setTimeout(() => {
@@ -132,6 +137,13 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
               ? initHandler.forceUpdateMessage.buttonNegative
               : initHandler.optionalUpdateMessage.buttonNegative
           }
+        />
+        <InfoModal
+          visible={initHandler.isCheckModalVisible}
+          message={initHandler.stopDuration}
+          onClose={() => {
+            initHandler.handleOnCancelButton();
+          }}
         />
         <Animated.View
           style={{flex: 1, position: 'relative', alignItems: 'center'}}>
