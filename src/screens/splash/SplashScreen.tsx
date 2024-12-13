@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {View, Animated, Dimensions, Image} from 'react-native';
+import {View, Animated, Dimensions, Image, Platform} from 'react-native';
 import tw from 'twrnc';
 import {appStackNavigations, designatedColor} from '../../constants';
 import {CustomModal, InfoModal} from '../../components';
@@ -141,6 +141,7 @@ export default function SplashScreen({navigation}: SplashScreenProps) {
         <InfoModal
           visible={initHandler.isCheckModalVisible}
           message={initHandler.stopDuration}
+          isIos={Platform.OS === 'ios'}
           onClose={() => {
             initHandler.handleOnCancelButton();
           }}

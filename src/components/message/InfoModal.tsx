@@ -3,14 +3,16 @@ import {View, Modal, TouchableOpacity} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
+import WarningIcon from '../../assets/svg/warning.svg';
 
 type InfoModalProps = {
   visible: boolean;
   onClose: () => void;
   message: string;
+  isIos: boolean;
 };
 
-const InfoModal = ({visible, onClose, message}: InfoModalProps) => {
+const InfoModal = ({visible, onClose, message, isIos}: InfoModalProps) => {
   return (
     <Modal
       transparent={true}
@@ -19,11 +21,13 @@ const InfoModal = ({visible, onClose, message}: InfoModalProps) => {
       onRequestClose={onClose}>
       <View
         style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
-        <View style={tw`bg-white w-4/5 justify-between pt-10`}>
+        <View
+          style={tw`bg-white w-4/5 justify-between pt-10 justify-center items-center`}>
           <View />
+          <WarningIcon width={56} height={56} />
           <CustomText
             style={[
-              tw`text-black text-[17px] mb-4 mx-6 text-center text-center`,
+              tw`text-black text-[17px] mb-4 mx-6 text-center text-center mt-4`,
               {lineHeight: 24},
             ]}>
             안녕하세요, 고객님
@@ -61,13 +65,15 @@ const InfoModal = ({visible, onClose, message}: InfoModalProps) => {
             ]}>
             점검 기간: {message}
           </CustomText>
-          <View style={tw`flex-row`}>
-            <TouchableOpacity
-              style={tw`flex-1 bg-[${designatedColor.VIOLET}] py-3`}
-              onPress={onClose}>
-              <CustomText style={tw`text-white text-center`}>확인</CustomText>
-            </TouchableOpacity>
-          </View>
+          {!isIos && (
+            <View style={tw`flex-row`}>
+              <TouchableOpacity
+                style={tw`flex-1 bg-[${designatedColor.VIOLET}] py-3`}
+                onPress={onClose}>
+                <CustomText style={tw`text-white text-center`}>확인</CustomText>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </Modal>
