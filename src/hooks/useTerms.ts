@@ -8,7 +8,12 @@ import {RadioButtonProps} from 'react-native-radio-buttons-group';
 import {Keyboard, Platform} from 'react-native';
 import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
 import {logTrack, scheduleNotification} from '../utils';
-import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {
+  canScheduleExactAlarms,
+  check,
+  PERMISSIONS,
+  RESULTS,
+} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 
 type UseTermsProps = {
@@ -143,19 +148,23 @@ const useTerms = ({navigation}: UseTermsProps) => {
             scheduleNotification();
           }
         } else {
-          if (Number(Platform.Version) === 33) {
-            const notificationPermission = await check(
-              PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-            );
-
-            if (notificationPermission === RESULTS.GRANTED) {
-              logTrack('local_notification_permission_granted');
-              scheduleNotification(); // 알람 예약
-            }
-          } else if (Number(Platform.Version) < 33) {
-            logTrack('local_notification_permission_granted');
-            scheduleNotification(); // 알람 예약
+          const isScheduled = await canScheduleExactAlarms();
+          if (isScheduled) {
+            scheduleNotification();
           }
+          // if (Number(Platform.Version) === 33) {
+          //   const notificationPermission = await check(
+          //     PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+          //   );
+
+          //   if (notificationPermission === RESULTS.GRANTED) {
+          //     logTrack('local_notification_permission_granted');
+          //     scheduleNotification(); // 알람 예약
+          //   }
+          // } else if (Number(Platform.Version) < 33) {
+          //   logTrack('local_notification_permission_granted');
+          //   scheduleNotification(); // 알람 예약
+          // }
         }
       } catch (error) {
         setIsLoggedProcess(false); // false

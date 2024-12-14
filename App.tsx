@@ -8,7 +8,14 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-reanimated'; // 꼭 추가하세요.
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {request, PERMISSIONS, RESULTS, check} from 'react-native-permissions';
+import {
+  request,
+  PERMISSIONS,
+  RESULTS,
+  check,
+  requestNotifications,
+  checkNotifications,
+} from 'react-native-permissions';
 import {
   ActivityIndicator,
   AppState,
@@ -197,41 +204,82 @@ function App(): React.JSX.Element {
     appState.current = nextAppState;
   };
 
+  let isPermissionRequested = false;
+
   const requestNotificationPermissions = () => {
-    if (Platform.OS === 'android' && Platform.Version >= 33) {
-      // 현재 권한 상태를 확인
-      check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
-        .then(notificationPermission => {
-          // 이미 허용된 경우 추가 요청하지 않음
-          if (notificationPermission === RESULTS.GRANTED) {
-            console.log('POST_NOTIFICATIONS permission already granted');
-            return;
-          }
-
-          // 거부된 경우에도 요청하지 않음
-          if (notificationPermission === RESULTS.BLOCKED) {
-            console.log(
-              'POST_NOTIFICATIONS permission was denied or blocked. No further requests.',
-            );
-            return;
-          }
-
-          // 처음 요청하는 경우에만 권한 요청
-          request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
-            .then(requestResult => {
-              if (requestResult === RESULTS.GRANTED) {
-                console.log('POST_NOTIFICATIONS permission granted');
-              } else {
-                console.log('POST_NOTIFICATIONS permission denied');
-              }
-            })
-            .catch(error =>
-              console.error('Error requesting permission:', error),
-            );
-        })
-        .catch(error => console.error('Error checking permission:', error));
+    if (isPermissionRequested) {
+      return; // 이미 요청 중이면 추가 요청 방지
     }
+
+    isPermissionRequested = true;
+
+    // 현재 권한 상태 확인
+    checkNotifications()
+      .then(({status}) => {
+        if (status === 'granted') {
+          isPermissionRequested = false; // 요청 상태 초기화
+          return;
+        }
+
+        if (status === 'blocked') {
+          return;
+        }
+
+        console.log('알림 권한 요청 중...');
+        // 알림 권한 요청
+        requestNotifications(['alert', 'sound', 'badge'])
+          .then(({status: requestStatus}) => {
+            if (requestStatus === 'granted') {
+              console.log('알림 권한이 허용되었습니다.');
+            } else {
+              console.log('알림 권한 요청이 거부되었습니다.');
+            }
+            isPermissionRequested = false; // 요청 상태 초기화
+          })
+          .catch(error => {
+            console.error('알림 권한 요청 중 에러 발생:', error);
+            isPermissionRequested = false; // 요청 상태 초기화
+          });
+      })
+      .catch(error => {
+        console.error('알림 권한 상태 확인 중 에러 발생:', error);
+        isPermissionRequested = false; // 요청 상태 초기화
+      });
   };
+
+  // const requestNotificationPermissions = () => {
+  //   if (Platform.OS === 'android' && Platform.Version >= 33) {
+  //     // 현재 권한 상태를 확인
+  //     // check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+  //     //   .then(notificationPermission => {
+  //     //     // 이미 허용된 경우 추가 요청하지 않음
+  //     //     if (notificationPermission === RESULTS.GRANTED) {
+  //     //       console.log('POST_NOTIFICATIONS permission already granted');
+  //     //       return;
+  //     //     }
+  //     //     // 거부된 경우에도 요청하지 않음
+  //     //     if (notificationPermission === RESULTS.BLOCKED) {
+  //     //       console.log(
+  //     //         'POST_NOTIFICATIONS permission was denied or blocked. No further requests.',
+  //     //       );
+  //     //       return;
+  //     //     }
+  //     //     // 처음 요청하는 경우에만 권한 요청
+  //     //     request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+  //     //       .then(requestResult => {
+  //     //         if (requestResult === RESULTS.GRANTED) {
+  //     //           console.log('POST_NOTIFICATIONS permission granted');
+  //     //         } else {
+  //     //           console.log('POST_NOTIFICATIONS permission denied');
+  //     //         }
+  //     //       })
+  //     //       .catch(error =>
+  //     //         console.error('Error requesting permission:', error),
+  //     //       );
+  //     //   })
+  //     //   .catch(error => console.error('Error checking permission:', error));
+  //   }
+  // };
 
   useEffect(() => {
     // AppState 이벤트 리스너 추가
