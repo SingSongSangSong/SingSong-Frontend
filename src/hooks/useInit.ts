@@ -38,6 +38,7 @@ const useInit = () => {
       latestVersionForIOS: '1.0.0',
       forceUpdateVersionForIOS: '1.0.0',
       stopCheck: '0',
+      stopCheckForAndroid: '0',
       stopDuration: '~12.28(토)',
       updateUrl:
         'https://play.google.com/store/apps/details?id=com.example.app',
@@ -123,12 +124,16 @@ const useInit = () => {
         new Promise(resolve => setTimeout(() => resolve(true), 1500)), // 2초 후에 true 반환
       ]);
 
-      isCheck = remoteConfig().getString('stopCheck');
+      if (Platform.OS == 'ios') {
+        isCheck = remoteConfig().getString('stopCheck');
+      } else {
+        isCheck = remoteConfig().getString('stopCheckForAndroid');
+      }
+
       tempStopDuration = remoteConfig().getString('stopDuration');
 
       setStopDuration(tempStopDuration);
 
-      console.log('isCheck:', isCheck);
       if (isCheck == '1') {
         setIsStopCheck(true);
         return true;

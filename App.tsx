@@ -100,7 +100,7 @@ function App(): React.JSX.Element {
 
   // 딥링크 이동
   const handleOpenDeepLink = async (deepLink: string) => {
-    console.log('handleOpenDeepLink', deepLink);
+    // console.log('handleOpenDeepLink', deepLink);
     setDeeplink(deepLink);
     setIsDeepLinkReceived(true);
   };
