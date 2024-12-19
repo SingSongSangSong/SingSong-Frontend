@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
-import RNFS from 'react-native-fs'; // 파일 시스템 접근
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
@@ -16,6 +15,7 @@ const useRecord = () => {
     playTime: '00:00:00',
     duration: '00:00:00',
   });
+
   // 녹음 시작
   const handleStartRecord = async () => {
     if (audioRecorderPlayer) {
@@ -44,11 +44,10 @@ const useRecord = () => {
       setRecording(false);
       const result = await audioRecorderPlayer.stopRecorder(); // 파일 경로 반환
       console.log('Recording saved at:', result); // 파일 경로 출력
+      // convertToMp3(result);
       audioRecorderPlayer.removeRecordBackListener();
       setRecordDuration({...recordDuration, recordSecs: 0});
     }
-    // audioRecorderPlayer.removeRecordBackListener();
-    // setRecordDuration({...recordDuration, recordSecs: 0});
   };
 
   // 음성 재생

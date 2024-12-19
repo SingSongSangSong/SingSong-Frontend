@@ -29,6 +29,7 @@ import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
 import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import RecordIcon from '../../../assets/svg/record.svg';
 
 type SongInfo2Props = {
   songId: number;
@@ -243,20 +244,43 @@ const SongInfo2 = ({
         </CustomText>
       </View> */}
       <View style={tw`px-3 pt-3`}>
-        <View style={tw`flex-row items-center mx-1`}>
-          <View style={tw`items-center`}>
-            {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
-          </View>
-          <View style={tw`items-center`}>
-            {isLive && <CommonTag name="LIVE" color={designatedColor.ORANGE} />}
+        <View style={tw`justify-between flex-row mx-1`}>
+          <View style={tw`flex-1 flex-row items-center`}>
+            <View style={tw`items-center`}>
+              {isMr && <CommonTag name="MR" color={designatedColor.PURPLE} />}
+            </View>
+            <View style={tw`items-center`}>
+              {isLive && (
+                <CommonTag name="LIVE" color={designatedColor.ORANGE} />
+              )}
+            </View>
+
+            <CustomText
+              style={tw`flex-1 text-white text-2xl font-bold`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {songName}
+            </CustomText>
           </View>
 
-          <CustomText
-            style={tw`flex-1 text-white text-2xl font-bold`}
-            numberOfLines={1}
-            ellipsizeMode="tail">
-            {songName}
-          </CustomText>
+          <TouchableOpacity
+            style={tw` flex-row items-center rounded-full py-1.5 px-3 mx-1 border border-[${designatedColor.VIOLET2}] bg-[${designatedColor.BLACK}]`}
+            activeOpacity={0.8}
+            onPress={() => {
+              logTrack('song_tj_button_click');
+              if (songInfo && songInfo.tjYoutubeLink) {
+                Linking.openURL(songInfo.tjYoutubeLink);
+              } else {
+                showToast('곧 업데이트 될 예정입니다.');
+              }
+            }}>
+            <RecordIcon width={22} height={22} />
+
+            <CustomText
+              style={tw`text-[${designatedColor.VIOLET2}] text-[12px] pl-1`}>
+              녹음하기
+            </CustomText>
+          </TouchableOpacity>
         </View>
 
         <View style={tw`flex-row items-center mt-2`}>

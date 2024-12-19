@@ -450,7 +450,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         )}
       </View>
       <View style={tw`flex-1`}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={recordHandler.handleStartRecord}
           style={tw`bg-white py-4`}>
           <CustomText>녹음 시작</CustomText>
@@ -464,7 +464,7 @@ const HomeScreen = (props: HomeScreenProps) => {
           onPress={recordHandler.soundStart}
           style={tw`bg-white py-4`}>
           <CustomText>녹음 재생</CustomText>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <ScrollView
           contentContainerStyle={tw`w-full flex-grow`}
