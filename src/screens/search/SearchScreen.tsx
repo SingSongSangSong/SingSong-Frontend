@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import tw from 'twrnc';
 import {SearchStackParamList} from '../../types';
@@ -15,7 +15,7 @@ import CustomText from '../../components/text/CustomText';
 import SearchIcon from '../../assets/svg/search.svg';
 import {Icon} from 'react-native-elements';
 import AiSangsongIcon from '../../assets/svg/aiSangsong.svg';
-import ArrowRightIcon from '../../assets/svg/arrowRightGray.svg';
+// import ArrowRightIcon from '../../assets/svg/arrowRightGray.svg';
 import {ExploreTagList, SearchRecentKeyword} from '../../components';
 // import { useFocusEffect } from '@react-navigation/native';
 
@@ -88,7 +88,7 @@ function SearchScreen(props: SearchScreenProps) {
             onPressRecentKeyword={handleOnPressRecentKeyword}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={tw`flex-row m-2 bg-[${designatedColor.GRAY5}] rounded-xl py-2`}
           activeOpacity={1.0}
           onPress={() => {
@@ -108,7 +108,7 @@ function SearchScreen(props: SearchScreenProps) {
               <ArrowRightIcon width={20} height={20} />
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <ExploreTagList handleOnTagButton={handleOnTagButton} />
         <View style={{height: 100}} />
       </ScrollView>

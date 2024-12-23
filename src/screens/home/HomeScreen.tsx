@@ -11,14 +11,12 @@ import {
   Dimensions,
   TouchableOpacity,
   RefreshControl,
-  Linking,
 } from 'react-native';
 import tw from 'twrnc';
 import {
   HotTrendingModule,
   IconButton,
   LatestCommentModule,
-  LlmModule,
   NewSongModule,
   RecentCommentSongModule,
   RecentKeepModule,
@@ -48,8 +46,8 @@ import {AppEventsLogger} from 'react-native-fbsdk-next';
 // import {getTrackingStatus} from 'react-native-tracking-transparency';
 import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
-import CuImageIcon from '../../assets/svg/cuImage.svg';
-import BannerIcon from '../../assets/svg/banner.svg';
+// import CuImageIcon from '../../assets/svg/cuImage.svg';
+// import BannerIcon from '../../assets/svg/banner.svg';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -345,10 +343,10 @@ const HomeScreen = (props: HomeScreenProps) => {
   //   props.navigation.navigate(homeStackNavigations.SEARCH);
   // };
 
-  const handleOnPressLlm = () => {
-    logButtonClick('llm_button_click');
-    props.navigation.navigate(homeStackNavigations.AI_LLM);
-  };
+  // const handleOnPressLlm = () => {
+  //   logButtonClick('llm_button_click');
+  //   props.navigation.navigate(homeStackNavigations.AI_LLM);
+  // };
 
   // const handleOnPressTotalButton = useCallback(() => {
   //   navigation.navigate(homeStackNavigations.TAG_DETAIL);
@@ -442,7 +440,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             onPressTagButton={handleOnTagPress}
             // onPressTotalButton={handleOnPressTotalButton}
           />
-          <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} />
+          {/* <LlmModule onPressSearch={handleOnPressLlm} refreshing={refreshing} /> */}
           {/* <TouchableOpacity
             style={tw`flex-row items-center justify-between bg-[${designatedColor.YELLOW}] mt-6`}
             onPress={() => {
