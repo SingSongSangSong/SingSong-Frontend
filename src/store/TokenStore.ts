@@ -88,7 +88,6 @@ const TokenStore = () => {
   const getIsValidToken = async (): Promise<boolean> => {
     const accessToken = await getSecureValue(ACCESS_TOKEN);
     const refreshToken = await getSecureValue(REFRESH_TOKEN);
-    // console.log(accessToken, refreshToken);
 
     // 토큰이 없는지 검사
     if (!accessToken || !refreshToken) {
@@ -104,10 +103,22 @@ const TokenStore = () => {
 
     // accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
-      const reissueData = await postMemberReissue(accessToken, refreshToken);
-      setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
-      setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
-      return true;
+      try {
+        const reissueData = await postMemberReissue(accessToken, refreshToken);
+        setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
+        setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
+        return true;
+      } catch (error) {
+        console.error('Error in postMemberReissue:', error);
+        // 에러 발생 시 토큰 제거
+        removeSecureValue(ACCESS_TOKEN);
+        removeSecureValue(REFRESH_TOKEN);
+        return false;
+      }
+      // const reissueData = await postMemberReissue(accessToken, refreshToken);
+      // setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
+      // setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
+      // return true;
     }
 
     return true;

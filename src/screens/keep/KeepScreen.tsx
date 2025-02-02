@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import {
   AddTextButton,
-  AiSongCardModule,
+  // AiSongCardModule,
   KeepSongsV2List,
 } from '../../components';
 import tw from 'twrnc';
 import {KeepStackParamList} from '../../types';
 import {designatedColor, keepStackNavigations} from '../../constants';
 import useKeep from '../../hooks/useKeep';
-import {logButtonClick, logPageView, logTrack} from '../../utils';
+import {logButtonClick, logPageView} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomText from '../../components/text/CustomText';
@@ -63,41 +63,41 @@ function KeepScreen(props: KeepScreenProps) {
     });
   };
 
-  const handleOnPressAiTotalButton = () => {
-    logTrack('ai_recommendation_total_button_click');
-    props.navigation.navigate(keepStackNavigations.KEEP_AI_RECOMMENDATION);
-    // console.log('AI 추천 전체보기 버튼 클릭');
-  };
+  // const handleOnPressAiTotalButton = () => {
+  //   logTrack('ai_recommendation_total_button_click');
+  //   props.navigation.navigate(keepStackNavigations.KEEP_AI_RECOMMENDATION);
+  //   // console.log('AI 추천 전체보기 버튼 클릭');
+  // };
 
-  const handleOnSongPress = (
-    songId: number,
-    songNumber: number,
-    songName: string,
-    singerName: string,
-    album: string,
-    melonLink: string,
-    isMr: boolean,
-    isLive: boolean,
-    lyricsVideoId: string,
-  ) => {
-    amplitude.track('preview_song_button_click');
-    logButtonClick('preview_song_button_click');
-    props.navigation.navigate({
-      key: 'MyUniqueKeyForSongDetail',
-      name: keepStackNavigations.KEEP_SONG_DETAIL,
-      params: {
-        songId: songId,
-        songNumber: songNumber,
-        songName: songName,
-        singerName: singerName,
-        album: album || '',
-        melonLink: melonLink,
-        isMr: isMr,
-        isLive: isLive,
-        lyricsVideoId: lyricsVideoId || '',
-      },
-    });
-  };
+  // const handleOnSongPress = (
+  //   songId: number,
+  //   songNumber: number,
+  //   songName: string,
+  //   singerName: string,
+  //   album: string,
+  //   melonLink: string,
+  //   isMr: boolean,
+  //   isLive: boolean,
+  //   lyricsVideoId: string,
+  // ) => {
+  //   amplitude.track('preview_song_button_click');
+  //   logButtonClick('preview_song_button_click');
+  //   props.navigation.navigate({
+  //     key: 'MyUniqueKeyForSongDetail',
+  //     name: keepStackNavigations.KEEP_SONG_DETAIL,
+  //     params: {
+  //       songId: songId,
+  //       songNumber: songNumber,
+  //       songName: songName,
+  //       singerName: singerName,
+  //       album: album || '',
+  //       melonLink: melonLink,
+  //       isMr: isMr,
+  //       isLive: isLive,
+  //       lyricsVideoId: lyricsVideoId || '',
+  //     },
+  //   });
+  // };
 
   const insets = useSafeAreaInsets();
   const screen = Dimensions.get('window');
@@ -117,12 +117,13 @@ function KeepScreen(props: KeepScreenProps) {
 
   const renderHeader = () => {
     return (
-      <AiSongCardModule
-        onPressTotalButton={handleOnPressAiTotalButton}
-        onPressSongButton={handleOnSongPress}
-        refreshing={keepHandler.refreshing}
-        isShowed={false}
-      />
+      // <AiSongCardModule
+      //   onPressTotalButton={handleOnPressAiTotalButton}
+      //   onPressSongButton={handleOnSongPress}
+      //   refreshing={keepHandler.refreshing}
+      //   isShowed={false}
+      // />
+      <View />
     );
   };
 
@@ -196,14 +197,14 @@ function KeepScreen(props: KeepScreenProps) {
           //     </View>
           //   )}
           // </View>
-          <View style={tw`flex-1 h-full w-full items-center`}>
-            <AiSongCardModule
+          <View style={tw`flex-1 h-full w-full items-center justify-center`}>
+            {/* <AiSongCardModule
               onPressTotalButton={handleOnPressAiTotalButton}
               onPressSongButton={handleOnSongPress}
               refreshing={keepHandler.refreshing}
               isShowed={true}
-            />
-            <View style={tw`w-full items-center py-10`}>
+            /> */}
+            <View style={tw`w-full items-center justify-center`}>
               <CustomText
                 style={tw`text-[${designatedColor.VIOLET2}] font-bold text-[18px] py-2`}>
                 보관함이 비어있어요
