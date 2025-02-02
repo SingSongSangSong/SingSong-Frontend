@@ -42,7 +42,7 @@ import ArrowRightIcon from '../../assets/svg/arrowRight.svg';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../constants';
 import TokenStore from '../../store/TokenStore';
 import useMemberStore from '../../store/useMemberStore';
-import {AppEventsLogger} from 'react-native-fbsdk-next';
+// import {AppEventsLogger} from 'react-native-fbsdk-next';
 // import {getTrackingStatus} from 'react-native-tracking-transparency';
 import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
@@ -107,9 +107,9 @@ const HomeScreen = (props: HomeScreenProps) => {
       (trackingStatus === RESULTS.GRANTED ||
         trackingStatus === RESULTS.UNAVAILABLE)
     ) {
-      AppEventsLogger.logEvent('page_view', {
-        screen: 'Home',
-      });
+      // AppEventsLogger.logEvent('page_view', {
+      //   screen: 'Home',
+      // });
     }
     // else {
     //   console.warn('Tracking not authorized or unavailable');
