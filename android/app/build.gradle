@@ -84,8 +84,8 @@ android {
         applicationId "com.singsongsangsong_frontend"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 25
-        versionName "1.5.6"
+        versionCode 26
+        versionName "1.5.7"
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
 
@@ -160,6 +160,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-inappmessaging-display")
     implementation("com.google.firebase:firebase-messaging:20.4.0")
+    implementation project(':react-native-audio-recorder-player')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

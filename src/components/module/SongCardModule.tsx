@@ -6,9 +6,9 @@ import {SongCardList} from '../list/SongCardList';
 import {isEmptyObject} from '../../utils';
 import {designatedColor} from '../../constants';
 import {useQuery} from '@tanstack/react-query';
-import postRcdHome from '../../api/recommendation/postRcdHome';
 import {RcdHomeSongWithTags} from '../../types';
 import CustomText from '../text/CustomText';
+import {postRcdHome} from '../../api/song-api';
 
 interface SongCardModuleProps {
   onPressTotalButton: (tag: string) => void;

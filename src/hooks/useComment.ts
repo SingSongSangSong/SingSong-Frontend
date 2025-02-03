@@ -1,14 +1,18 @@
 import {useEffect, useState} from 'react';
-import getComment from '../api/comment/getComment';
+
 // import {useKeyboard} from '@react-native-community/hooks';
-import postComment from '../api/comment/postComment';
-import postCommentLike from '../api/comment/postCommentLike';
+
 import useCommentStore from '../store/useCommentStore';
-import postBlacklist from '../api/comment/postBlacklist';
 import Toast from 'react-native-toast-message';
 import {logTrack, showToast} from '../utils';
 import {useMutation} from '@tanstack/react-query';
-import deleteComment from '../api/comment/deleteComment';
+import {
+  deleteComment,
+  getComment,
+  postComment,
+  postCommentLike,
+} from '../api/comment-api';
+import {postBlacklist} from '../api/member-api';
 
 const useComment = (songNumber: number, songId: number) => {
   // const [comments, setComments] = useState<Comment[]>();

@@ -11,10 +11,12 @@ import {
 import tw from 'twrnc';
 import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
-import getSearchArtistName from '../../../api/search/getSearchArtistName';
-import getSearchSongNumber from '../../../api/search/getSearchSongNumber';
-import getSearchSongName from '../../../api/search/getSearchSongName';
 import CustomText from '../../text/CustomText';
+import {
+  getSearchArtistName,
+  getSearchSongName,
+  getSearchSongNumber,
+} from '../../../api/search-api';
 
 type SearchResultProps = {
   inputText: string;

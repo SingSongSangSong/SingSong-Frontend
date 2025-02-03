@@ -11,7 +11,7 @@ import CustomText from '../text/CustomText';
 import {CustomModal, PostRecommentItem} from '..';
 import Popover from 'react-native-popover-view';
 import {useMutation} from '@tanstack/react-query';
-import deletePostComment from '../../api/post/deletePostComment';
+import {deletePostComment} from '../../api/post-api';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 // import postBlacklist from '../../api/comment/postBlacklist';
 

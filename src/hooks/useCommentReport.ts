@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {PlaygroundStackParamList} from '../types';
 import {playgroundStackNavigations} from '../constants';
-import postPostsCommentsReport from '../api/post/postPostsCommentsReport';
+import {postPostsCommentsReport} from '../api/post-api';
 
 type UsePostReportProps = {
   navigation: StackNavigationProp<

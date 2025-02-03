@@ -12,15 +12,14 @@ import {
   View,
 } from 'react-native';
 import {SearchInput, SearchRecent, SearchResult} from '../../components';
-import getSearch from '../../api/search/getSearch';
+
 import useSearchRecentStore from '../../store/useSearchRecentStore';
 import {logButtonClick, logPageView, logTrack} from '../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import Toast from 'react-native-toast-message';
-import deleteKeep from '../../api/keep/deleteKeep';
-import getKeepV2 from '../../api/keep/getKeepV2';
 import useKeepV2Store from '../../store/useKeepV2Store';
-import postKeep from '../../api/keep/postKeep';
+import {getSearch} from '../../api/search-api';
+import {deleteKeep, getKeepV2, postKeep} from '../../api/keep-api';
 // import {useFocusEffect} from '@react-navigation/native';
 
 type SearchFocusScreenProps = StackScreenProps<

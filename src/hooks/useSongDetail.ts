@@ -1,16 +1,17 @@
 import {useEffect, useState} from 'react';
-import getSongs from '../api/songs/getSongs';
 import {Song, SongInfo, SongInfoReview, SongParams} from '../types';
 import {designatedColor} from '../constants';
-import postKeep from '../api/keep/postKeep';
-import deleteKeep from '../api/keep/deleteKeep';
 import useKeepListStore from '../store/useKeepStore';
-import getSongsReviews from '../api/songs/getSongsReviews';
-import putSongReviews from '../api/songs/putSongsReviews';
-import deleteSongsReviews from '../api/songs/deleteSongsReviews';
-import getSongsRelated from '../api/songs/getSongsRelated';
 import {logButtonClick} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
+import {
+  deleteSongsReviews,
+  getSongs,
+  getSongsRelated,
+  getSongsReviews,
+  putSongReviews,
+} from '../api/song-api';
+import {deleteKeep, postKeep} from '../api/keep-api';
 
 const useSongDetail = ({
   songId,

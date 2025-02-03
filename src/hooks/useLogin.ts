@@ -10,10 +10,10 @@ import useMemberStore from '../store/useMemberStore';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList} from '../types';
 import GuestStore from '../store/GuestStore';
-import postMemberLoginV2 from '../api/member/postMemberLoginV2';
 import {logTrack} from '../utils';
 import useKeepV2Store from '../store/useKeepV2Store';
 import messaging from '@react-native-firebase/messaging';
+import {postMemberLoginV2} from '../api/member-api';
 
 type UseLoginProps = {
   navigation: StackNavigationProp<

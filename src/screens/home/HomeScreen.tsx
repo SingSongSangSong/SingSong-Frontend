@@ -11,6 +11,8 @@ import {
   Dimensions,
   TouchableOpacity,
   RefreshControl,
+  Linking,
+  PermissionsAndroid,
 } from 'react-native';
 import tw from 'twrnc';
 import {
@@ -48,6 +50,7 @@ import {RESULTS} from 'react-native-permissions';
 import TrackingStore from '../../store/TrackingStore';
 // import CuImageIcon from '../../assets/svg/cuImage.svg';
 // import BannerIcon from '../../assets/svg/banner.svg';
+import useRecord from '../../hooks/useRecord';
 
 type HomeScreenProps = StackScreenProps<
   HomeStackParamList,
@@ -67,6 +70,40 @@ const HomeScreen = (props: HomeScreenProps) => {
   const clearMemberInfo = useMemberStore(state => state.clearMemberInfo);
   const clearProvider = useMemberStore(state => state.clearProvider);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const recordHandler = useRecord();
+
+  // useEffect(() => {
+  //   const requestPermissions = async () => {
+  //     if (Platform.OS === 'android') {
+  //       try {
+  //         const grants = await PermissionsAndroid.requestMultiple([
+  //           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  //           PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  //           PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+  //         ]);
+
+  //         console.log('write external storage', grants);
+
+  //         if (
+  //           grants['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+  //             PermissionsAndroid.RESULTS.GRANTED &&
+  //           grants['android.permission.READ_EXTERNAL_STORAGE'] ===
+  //             PermissionsAndroid.RESULTS.GRANTED &&
+  //           grants['android.permission.RECORD_AUDIO'] ===
+  //             PermissionsAndroid.RESULTS.GRANTED
+  //         ) {
+  //           console.log('Permissions granted');
+  //         } else {
+  //           console.log('All required permissions not granted');
+  //         }
+  //       } catch (err) {
+  //         console.warn(err);
+  //       }
+  //     }
+  //   };
+
+  //   requestPermissions(); // 권한 요청 함수 실행
+  // }, []); // 컴포넌트가 처음 마운트될 때만 실행됨
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -412,6 +449,22 @@ const HomeScreen = (props: HomeScreenProps) => {
         )}
       </View>
       <View style={tw`flex-1`}>
+        {/* <TouchableOpacity
+          onPress={recordHandler.handleStartRecord}
+          style={tw`bg-white py-4`}>
+          <CustomText>녹음 시작</CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={recordHandler.handleStopRecord}
+          style={tw`bg-white py-4`}>
+          <CustomText>녹음 정지 및 MP3 변환</CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={recordHandler.soundStart}
+          style={tw`bg-white py-4`}>
+          <CustomText>녹음 재생</CustomText>
+        </TouchableOpacity> */}
+
         <ScrollView
           contentContainerStyle={tw`w-full flex-grow`}
           // onScrollBeginDrag={() => setIsScrollingHome(true)} // 스크롤이 시작될 때

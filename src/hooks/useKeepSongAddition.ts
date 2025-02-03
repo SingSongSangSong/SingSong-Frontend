@@ -5,10 +5,9 @@ import {keepStackNavigations} from '../constants';
 import {Keyboard} from 'react-native';
 import useKeepAdditionSongStore from '../store/useKeepAdditionSongStore';
 import {useMutation} from '@tanstack/react-query';
-import postKeep from '../api/keep/postKeep';
 import Toast from 'react-native-toast-message';
 import useKeepV2Store from '../store/useKeepV2Store';
-import getKeepV2 from '../api/keep/getKeepV2';
+import {getKeepV2, postKeep} from '../api/keep-api';
 
 type UseKeepSongAdditionProps = {
   navigation: StackNavigationProp<

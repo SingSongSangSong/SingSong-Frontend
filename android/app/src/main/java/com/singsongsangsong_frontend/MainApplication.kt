@@ -11,6 +11,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
 import com.microsoft.codepush.react.CodePush;
+import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 // import com.facebook.FacebookSdk;
 // import com.facebook.appevents.AppEventsLogger;
 // import com.lugg.RNCConfig.RNCConfigPackage;
@@ -26,6 +27,7 @@ class MainApplication : Application(), ReactApplication {
               // Packages that cannot be autolinked yet can be added manually here, for example:
               // add(MyReactNativePackage())
               // add(RNCConfigPackage())
+              // add(new RNAudioRecorderPlayerPackage())
             }
 
         override fun getJSMainModuleName(): String = "index"

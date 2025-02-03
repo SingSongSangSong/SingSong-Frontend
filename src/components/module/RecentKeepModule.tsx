@@ -5,8 +5,8 @@ import {useQuery} from '@tanstack/react-query';
 import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
 import {Song} from '../../types';
-import getRecentKeep from '../../api/recent/getRecentKeep';
 import {RecentKeepSongCardList} from '..';
+import {getRecentKeep} from '../../api/keep-api';
 
 interface RecentKeepModuleProps {
   onPressRecentKeepSong: (

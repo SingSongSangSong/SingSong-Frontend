@@ -1,10 +1,10 @@
 import {useEffect, useRef, useState} from 'react';
 import {TextInput} from 'react-native';
 import Toast from 'react-native-toast-message';
-import postPostsReport from '../api/post/postPostsReports';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {PlaygroundStackParamList} from '../types';
 import {playgroundStackNavigations} from '../constants';
+import {postPostsReport} from '../api/post-api';
 
 type UsePostReportProps = {
   navigation: StackNavigationProp<

@@ -4,8 +4,9 @@ import {PlaygroundStackParamList, Post} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {playgroundStackNavigations} from '../constants';
 import {useQuery} from '@tanstack/react-query';
-import getPosts from '../api/post/getPosts';
+
 import usePostStore from '../store/usePostStore';
+import {getPosts} from '../api/post-api';
 
 type UsePlaygroundProps = {
   navigation: StackNavigationProp<

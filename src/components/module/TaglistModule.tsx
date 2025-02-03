@@ -5,7 +5,7 @@ import {Taglist} from '..';
 import {designatedColor} from '../../constants';
 import useSongStore from '../../store/useSongStore';
 import {useQuery} from '@tanstack/react-query';
-import getTags from '../../api/tags/getTags';
+import {getTags} from '../../api/song-api';
 
 interface TaglistModuleProps {
   // onPressTotalButton: () => void;

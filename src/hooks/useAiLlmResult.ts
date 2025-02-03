@@ -4,11 +4,9 @@ import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {homeStackNavigations, searchStackNavigations} from '../constants';
 import * as amplitude from '@amplitude/analytics-react-native';
 import {logButtonClick} from '../utils';
-import postKeep from '../api/keep/postKeep';
-import deleteKeep from '../api/keep/deleteKeep';
 import Toast from 'react-native-toast-message';
-import getKeepV2 from '../api/keep/getKeepV2';
 import useKeepV2Store from '../store/useKeepV2Store';
+import {deleteKeep, getKeepV2, postKeep} from '../api/keep-api';
 
 type UseAiLlmResultProps = {
   navigation:

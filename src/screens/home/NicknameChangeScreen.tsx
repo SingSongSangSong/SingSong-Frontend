@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import tw from 'twrnc';
 import CustomText from '../../components/text/CustomText';
-import patchMemberNickname from '../../api/member/patchMemberNickname';
 import useMemberStore from '../../store/useMemberStore';
 import Toast from 'react-native-toast-message';
 import {logPageView} from '../../utils';
+import {patchMemberNickname} from '../../api/member-api';
 
 type NicknameChangeScreenProps = StackScreenProps<
   HomeStackParamList,

@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react';
-import getBlacklist from '../api/comment/getBlacklist';
+
 import {Blacklist} from '../types';
-import deleteBlacklist from '../api/comment/deleteBlacklist';
-import {Alert} from 'react-native';
 import Toast from 'react-native-toast-message';
+import {deleteBlacklist, getBlacklist} from '../api/member-api';
 
 const useBlacklist = () => {
   const [blacklist, setBlacklist] = useState<Blacklist[]>();

@@ -37,7 +37,7 @@ const formatDateComment = (createdAt: string) => {
     if (isCurrentYear) {
       return `${month}/${day}`;
     } else {
-      return `${year}/${month}/${day}}`;
+      return `${year}/${month}/${day}`;
     }
   }
 };

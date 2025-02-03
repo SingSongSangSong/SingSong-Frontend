@@ -9,10 +9,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import tw from 'twrnc';
-import getSearchArtistName from '../../../api/search/getSearchArtistName';
-import getSearchSongNumber from '../../../api/search/getSearchSongNumber';
-import getSearchSongName from '../../../api/search/getSearchSongName';
+
 import CustomText from '../../text/CustomText';
+import {
+  getSearchArtistName,
+  getSearchSongName,
+  getSearchSongNumber,
+} from '../../../api/search-api';
 
 type SearchResultForKeepSongProps = {
   inputText: string;
