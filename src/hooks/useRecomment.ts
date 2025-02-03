@@ -1,13 +1,15 @@
 import {useState} from 'react';
-import postComment from '../api/comment/postComment';
-import postCommentLike from '../api/comment/postCommentLike';
 import useCommentStore from '../store/useCommentStore';
-import postBlacklist from '../api/comment/postBlacklist';
-import getComment from '../api/comment/getComment';
 import Toast from 'react-native-toast-message';
 import {logTrack, showToast} from '../utils';
 import {useMutation} from '@tanstack/react-query';
-import deleteComment from '../api/comment/deleteComment';
+import {
+  deleteComment,
+  getComment,
+  postComment,
+  postCommentLike,
+} from '../api/comment-api';
+import {postBlacklist} from '../api/member-api';
 
 const useRecomment = (commentId: number) => {
   const [isModalVisible, setIsModalVisible] = useState(false);

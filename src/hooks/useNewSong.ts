@@ -1,14 +1,13 @@
 import {useState} from 'react';
-import postKeep from '../api/keep/postKeep';
-import deleteKeep from '../api/keep/deleteKeep';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import useKeepListStore from '../store/useKeepStore';
 import {NewSong} from '../types';
-import getSongsNew from '../api/newSong/getSongsNew';
+
 import useKeepV2Store from '../store/useKeepV2Store';
-import getKeepV2 from '../api/keep/getKeepV2';
+import {getSongsNew} from '../api/song-api';
+import {deleteKeep, getKeepV2, postKeep} from '../api/keep-api';
 
 // type UseAiSongProps = {
 //   navigation: StackNavigationProp<

@@ -14,12 +14,12 @@ import {HotTrendingV2} from '..';
 import {EmptyHotTrending} from '..';
 import {useQuery} from '@tanstack/react-query';
 // import getChart from '../../api/songs/getChart';
-import getV2Chart from '../../api/songs/getV2Chart';
 import useChartV2Store from '../../store/useChartV2Store';
 import ArrowBottomIcon from '../../assets/svg/arrowBottom.svg';
 // import CheckIcon from '../../assets/svg/check.svg';
 import CheckFilled2Icon from '../../assets/svg/CheckFilled2.svg';
 import CustomText from '../text/CustomText';
+import {getV2Chart} from '../../api/song-api';
 interface HotTrendingModuleProps {
   onPressSongButton: (
     songId: number,

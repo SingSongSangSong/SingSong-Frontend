@@ -15,13 +15,13 @@ import CustomText from '../../components/text/CustomText';
 import {logPageView, logTrack} from '../../utils';
 import usePostSongAddition from '../../hooks/usePostSongAddition';
 import useSearchRecentStore from '../../store/useSearchRecentStore';
-import getSearch from '../../api/search/getSearch';
 import {
   SearchInputForPostSong,
   SearchKeep,
   SearchResultForPostSong,
 } from '../../components';
 import Toast from 'react-native-toast-message';
+import {getSearch} from '../../api/search-api';
 
 // const screenHeight = Dimensions.get('window').height;
 

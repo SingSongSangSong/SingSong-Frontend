@@ -38,7 +38,6 @@
     "appcenter-analytics": "5.0.2",
     "appcenter-crashes": "5.0.2",
     "axios": "^1.7.2",
-    "ffmpeg-kit-react-native": "^6.0.2",
     "fs": "^0.0.1-security",
     "jwt-decode": "^4.0.0",
     "react": "18.2.0",
@@ -73,10 +72,10 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@react-native-community/cli": "latest",
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native-community/cli": "latest",
     "@react-native/babel-preset": "0.74.84",
     "@react-native/eslint-config": "0.74.84",
     "@react-native/metro-config": "0.74.84",

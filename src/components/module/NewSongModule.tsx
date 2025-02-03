@@ -4,12 +4,13 @@ import tw from 'twrnc';
 import {useQuery} from '@tanstack/react-query';
 import useSongStore from '../../store/useSongStore';
 import {designatedColor} from '../../constants';
-import getSongsNew from '../../api/newSong/getSongsNew';
+
 import CustomText from '../text/CustomText';
 import {NewSongCardList} from '..';
 import {Tooltip} from 'react-native-elements';
 import InfoIcon from '../../assets/svg/Info.svg';
 import {NewSong} from '../../types';
+import {getSongsNew} from '../../api/song-api';
 
 interface NewSongModuleProps {
   onPressTotalButton: () => void;

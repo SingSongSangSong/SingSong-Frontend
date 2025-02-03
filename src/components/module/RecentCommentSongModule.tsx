@@ -6,7 +6,7 @@ import {designatedColor} from '../../constants';
 import CustomText from '../text/CustomText';
 import {Song} from '../../types';
 import {RecentKeepSongCardList} from '..';
-import getRecentComment from '../../api/recent/getRecentComment';
+import {getRecentComment} from '../../api/comment-api';
 
 interface RecentCommentSongModuleProps {
   onPressRecentCommentSong: (

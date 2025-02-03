@@ -6,7 +6,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList, TermItem} from '../types';
 import {RadioButtonProps} from 'react-native-radio-buttons-group';
 import {Keyboard, Platform} from 'react-native';
-import postMemberLoginExtra from '../api/member/postMemberLoginExtra';
 import {logTrack, scheduleNotification} from '../utils';
 import {
   canScheduleExactAlarms,
@@ -15,6 +14,7 @@ import {
   RESULTS,
 } from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
+import {postMemberLoginExtra} from '../api/member-api';
 
 type UseTermsProps = {
   // provider: string;

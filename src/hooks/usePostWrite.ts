@@ -5,10 +5,10 @@ import {PlaygroundStackParamList} from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {playgroundStackNavigations} from '../constants';
 import Toast from 'react-native-toast-message';
-import postPosts from '../api/post/postPosts';
 import {useMutation} from '@tanstack/react-query';
 import {Keyboard} from 'react-native';
 import usePostSongStore from '../store/usePostSongStore';
+import {postPosts} from '../api/post-api';
 
 type UsePostWriteProps = {
   navigation: StackNavigationProp<

@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
-import getSongsReviews from '../../../api/songs/getSongsReviews';
-import deleteSongsReviews from '../../../api/songs/deleteSongsReviews';
 import {SongInfoReview} from '../../../types';
 import {designatedColor} from '../../../constants';
-import putSongReviews from '../../../api/songs/putSongsReviews';
 import {logButtonClick} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import MusicIcon from '../../../assets/svg/music.svg';
@@ -15,6 +12,11 @@ import FilledLikeIcon from '../../../assets/svg/FilledLikeViolet.svg';
 import DislikeIcon from '../../../assets/svg/dislike.svg';
 import FilledDislikeIcon from '../../../assets/svg/FilledDislikeViolet.svg';
 import CustomText from '../../text/CustomText';
+import {
+  deleteSongsReviews,
+  getSongsReviews,
+  putSongReviews,
+} from '../../../api/song-api';
 
 type SongReviewProps = {
   songId: number;

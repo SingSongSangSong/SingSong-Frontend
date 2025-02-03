@@ -1,15 +1,13 @@
 import {useState} from 'react';
 // import postRcdRefresh from '../api/recommendation/postRcdRefresh';
-import postKeep from '../api/keep/postKeep';
-import deleteKeep from '../api/keep/deleteKeep';
 import {Song} from '../types';
 import Toast from 'react-native-toast-message';
 import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 // import useKeepListStore from '../store/useKeepStore';
-import postRcdRefreshV2 from '../api/recommendation/postRcdRefreshV2';
-import getKeepV2 from '../api/keep/getKeepV2';
 import useKeepV2Store from '../store/useKeepV2Store';
+import {postRcdRefreshV2} from '../api/song-api';
+import {deleteKeep, getKeepV2, postKeep} from '../api/keep-api';
 
 type UseSongProps = {
   initTag: string;

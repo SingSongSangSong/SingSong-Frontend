@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
-import postCommentReport from '../api/comment/postCommentReport';
 import {TextInput} from 'react-native';
 import Toast from 'react-native-toast-message';
+import {postCommentReport} from '../api/comment-api';
 
 const useReport = (commentId: number, subjectMemberId: number) => {
   const [text, setText] = useState<string>('');

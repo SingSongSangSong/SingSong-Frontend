@@ -1,12 +1,15 @@
 import {useEffect} from 'react';
-import getMember from '../api/member/getMember';
+
 import useMemberStore from '../store/useMemberStore';
-import postMemberLogout from '../api/member/postMemberLogout';
-import postMemberWithdraw from '../api/member/postMemberWithdraw';
 import Toast from 'react-native-toast-message';
 // import {useQuery} from '@tanstack/react-query';
 import {isEmptyObject} from '../utils';
 import useKeepV2Store from '../store/useKeepV2Store';
+import {
+  getMember,
+  postMemberLogout,
+  postMemberWithdraw,
+} from '../api/member-api';
 // import messaging from '@react-native-firebase/messaging';
 // import NotificationStore from '../store/NotificationStore';
 

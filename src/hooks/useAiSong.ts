@@ -1,6 +1,4 @@
 import {useState} from 'react';
-import postKeep from '../api/keep/postKeep';
-import deleteKeep from '../api/keep/deleteKeep';
 import {Song} from '../types';
 // import {StackNavigationProp} from '@react-navigation/stack';
 // import {homeStackNavigations} from '../constants';
@@ -9,8 +7,8 @@ import {logButtonClick, logRefresh} from '../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 // import useKeepListStore from '../store/useKeepStore';
 import getRcdRecommendation from '../api/recommendation/getRcdRecommendation';
-import getKeepV2 from '../api/keep/getKeepV2';
 import useKeepV2Store from '../store/useKeepV2Store';
+import {deleteKeep, getKeepV2, postKeep} from '../api/keep-api';
 
 // type UseAiSongProps = {
 //   navigation: StackNavigationProp<

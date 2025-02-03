@@ -48,6 +48,13 @@ const AiSongCardModule = ({
   });
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingVisible(false); // 로딩 false로 변경
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     // 5초 타이머 설정
     const timer = setTimeout(() => {
       setIsTimeoutReached(true); // 5초 후 타임아웃 도달을 표시

@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
-import postMemberReissue from '../api/member/postmemberReissue';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 import {navigateToLogin} from '../navigations/rootNavigation';
 import {showToast} from '../utils';
+import {postMemberReissue} from '../api/member-api';
 // import useMemberStore from './useMemberStore';
 // import useKeepV2Store from './useKeepV2Store';
 
@@ -67,7 +67,7 @@ const TokenStore = () => {
     // accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
       try {
-        const reissueData = await postMemberReissue(accessToken, refreshToken);
+        const reissueData = await postMemberReissue();
         setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
         setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
         return reissueData.data.accessToken;
@@ -104,7 +104,7 @@ const TokenStore = () => {
     // accessToken이 만료된 경우
     if (isExpiredToken(accessToken)) {
       try {
-        const reissueData = await postMemberReissue(accessToken, refreshToken);
+        const reissueData = await postMemberReissue();
         setSecureValue(ACCESS_TOKEN, reissueData.data.accessToken);
         setSecureValue(REFRESH_TOKEN, reissueData.data.refreshToken);
         return true;

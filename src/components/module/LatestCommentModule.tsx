@@ -2,9 +2,9 @@ import {useQuery} from '@tanstack/react-query';
 import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import tw from 'twrnc';
-import getCommentLatest from '../../api/comment/getCommentLatest';
 import {CommentLatest} from '../../types';
 import {CommentInfoItem} from '..';
+import {getCommentLatest} from '../../api/comment-api';
 
 interface LatestCommentModuleProps {
   onPressCommentButton: (

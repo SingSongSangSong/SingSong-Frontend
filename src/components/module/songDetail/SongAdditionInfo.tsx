@@ -3,12 +3,9 @@ import {Linking, TouchableOpacity, View} from 'react-native';
 import tw from 'twrnc';
 import {designatedColor} from '../../../constants';
 import {SongInfo} from '../../../types';
-import getSongs from '../../../api/songs/getSongs';
 import KeepCountIcon from '../../../assets/svg/keepGray.svg';
 import CommentCountIcon from '../../../assets/svg/commentGray.svg';
 // import useKeepListStore from '../../../store/useKeepStore';
-import deleteKeep from '../../../api/keep/deleteKeep';
-import postKeep from '../../../api/keep/postKeep';
 import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import OutlineKeepIcon from '../../../assets/svg/outlineKeep.svg';
@@ -18,9 +15,10 @@ import {logButtonClick, logTrack, showToast} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import CustomText from '../../text/CustomText';
 import useKeepV2Store from '../../../store/useKeepV2Store';
-import getKeepV2 from '../../../api/keep/getKeepV2';
 import YoutubeIcon from '../../../assets/svg/youtube.svg';
 import TjIcon from '../../../assets/svg/tj.svg';
+import {deleteKeep, getKeepV2, postKeep} from '../../../api/keep-api';
+import {getSongs} from '../../../api/song-api';
 
 type SongAdditionInfoProps = {
   songId: number;

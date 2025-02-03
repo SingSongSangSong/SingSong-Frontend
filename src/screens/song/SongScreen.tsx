@@ -169,7 +169,7 @@ function SongScreen(props: SongScreenProps) {
         <SongReview songId={songId} />
         <SongComment
           handleOnPressComment={() => {
-            _onPressComment(songNumber, songId);
+            _onPressComment(songNumber || 0, songId);
           }}
         />
       </View>

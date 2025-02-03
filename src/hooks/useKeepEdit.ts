@@ -1,9 +1,8 @@
 import {useState} from 'react';
 import {Alert} from 'react-native';
-import deleteKeep from '../api/keep/deleteKeep';
 import Toast from 'react-native-toast-message';
 import useKeepV2Store from '../store/useKeepV2Store';
-import getKeepV2 from '../api/keep/getKeepV2';
+import {deleteKeep, getKeepV2} from '../api/keep-api';
 
 const useKeepEdit = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);

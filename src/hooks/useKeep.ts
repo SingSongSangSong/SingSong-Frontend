@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 // import {KeepSongV2} from '../types';
-import getKeepV2 from '../api/keep/getKeepV2';
 import {logRefresh} from '../utils';
 import {useQuery} from '@tanstack/react-query';
 import useKeepV2Store from '../store/useKeepV2Store';
+import {getKeepV2} from '../api/keep-api';
 
 const useKeep = () => {
   // const [isKeepLoading, setIsKeepLoading] = useState(false);

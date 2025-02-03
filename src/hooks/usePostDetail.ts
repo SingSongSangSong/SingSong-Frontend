@@ -2,21 +2,24 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {PlaygroundStackParamList, PostComments, PostDetailed} from '../types';
 import {playgroundStackNavigations} from '../constants';
 import {useMutation, useQuery} from '@tanstack/react-query';
-import getPostsDetailed from '../api/post/getPostsDetailed';
 import {RouteProp} from '@react-navigation/native';
 import {useEffect, useRef, useState} from 'react';
-import postPostsComments from '../api/post/postPostsComments';
 import Toast from 'react-native-toast-message';
-import getPostsComments from '../api/post/getPostsComments';
-import postPostsLike from '../api/post/postPostsLike';
-import postPostsCommentsLike from '../api/post/postPostsCommentsLike';
 import {Keyboard, TextInput} from 'react-native';
-import getPostsCommentsRecomments from '../api/post/getPostsCommentsRecomments';
-import deletePosts from '../api/post/deletePosts';
+
 import usePostStore from '../store/usePostStore';
-import postBlacklist from '../api/comment/postBlacklist';
 import {logRefresh, logTrack, showToast} from '../utils';
-import deletePostComment from '../api/post/deletePostComment';
+import {
+  deletePostComment,
+  deletePosts,
+  getPostsComments,
+  getPostsCommentsRecomments,
+  getPostsDetailed,
+  postPostsComments,
+  postPostsCommentsLike,
+  postPostsLike,
+} from '../api/post-api';
+import {postBlacklist} from '../api/member-api';
 
 type UsePostDetailProps = {
   navigation: StackNavigationProp<

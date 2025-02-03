@@ -4,15 +4,13 @@ import {designatedColor} from '../../../constants';
 import tw from 'twrnc';
 import {Relatedlist} from '../../list/Relatedlist';
 import {Song} from '../../../types';
-import getSongsRelated from '../../../api/songs/getSongsRelated';
 import {logButtonClick, logRefresh} from '../../../utils';
 import * as amplitude from '@amplitude/analytics-react-native';
 import Toast from 'react-native-toast-message';
-import postKeep from '../../../api/keep/postKeep';
-import deleteKeep from '../../../api/keep/deleteKeep';
 import CustomText from '../../text/CustomText';
-import getKeepV2 from '../../../api/keep/getKeepV2';
 import useKeepV2Store from '../../../store/useKeepV2Store';
+import {getSongsRelated} from '../../../api/song-api';
+import {deleteKeep, getKeepV2, postKeep} from '../../../api/keep-api';
 
 type SongRelatedProps = {
   songId: number;

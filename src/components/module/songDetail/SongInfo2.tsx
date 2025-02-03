@@ -16,11 +16,7 @@ import WhiteLogoIcon from '../../../assets/svg/whiteLogo.svg';
 import {SongInfo} from '../../../types';
 import useCommentStore from '../../../store/useCommentStore';
 import useKeepV2Store from '../../../store/useKeepV2Store';
-import getSongs from '../../../api/songs/getSongs';
 import {logButtonClick, logTrack, showToast} from '../../../utils';
-import deleteKeep from '../../../api/keep/deleteKeep';
-import getKeepV2 from '../../../api/keep/getKeepV2';
-import postKeep from '../../../api/keep/postKeep';
 import MelonIcon from '../../../assets/svg/melon.svg';
 import TjIcon from '../../../assets/svg/tj.svg';
 import KeepCountIcon from '../../../assets/svg/keepGray.svg';
@@ -30,6 +26,8 @@ import KeepFilledIcon from '../../../assets/svg/keepFilledIcon.svg';
 import KeepIcon from '../../../assets/svg/keepIcon.svg';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import RecordIcon from '../../../assets/svg/record.svg';
+import {deleteKeep, getKeepV2, postKeep} from '../../../api/keep-api';
+import {getSongs} from '../../../api/song-api';
 
 type SongInfo2Props = {
   songId: number;
@@ -263,7 +261,7 @@ const SongInfo2 = ({
             </CustomText>
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={tw` flex-row items-center rounded-full py-1.5 px-3 mx-1 border border-[${designatedColor.VIOLET2}] bg-[${designatedColor.BLACK}]`}
             activeOpacity={0.8}
             onPress={() => {
@@ -280,7 +278,7 @@ const SongInfo2 = ({
               style={tw`text-[${designatedColor.VIOLET2}] text-[12px] pl-1`}>
               녹음하기
             </CustomText>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View style={tw`flex-row items-center mt-2`}>
