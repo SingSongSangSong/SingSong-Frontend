@@ -17,13 +17,13 @@
 싱송생송은 노래방에서의 다양한 상황과 장르에 맞는 최적의 곡을 쉽게 찾을 수 있도록 태그 기반 탐색 기능을 제공합니다. 다른 사용자들의 선곡과 평가를 확인할 수 있으며, 노래에 대한 다양한 정보를 제공하여 노래 선곡에 도움을 줍니다. 싱송생송은 이를 통해 사용자들은 빠르고 쉽게 자신에게 딱 맞는 노래를 찾을 수 있으며, 노래방 문화에 새로운 기준을 제시하고자 합니다.
 
 ## 개발 일정
-### 4 ~ 6 월 : 프로젝트 기획 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process)
-### 6 ~ 7월 : 프로젝트 개발 및 개선 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process)
-### 7 ~ 8월 : 1차 MVP 출시 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process)
-### 9 ~ 11월 : 프로젝트 기능 고도화 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process)
+### 4 ~ 6 월 : 프로젝트 기획
+### 6 ~ 7월 : 프로젝트 개발 및 개선
+### 7 ~ 8월 : 1차 MVP 출시
+### 9 ~ 11월 : 프로젝트 기능 고도화
 
 ## 주요 기능
-> UI/UX 별 상세 설명 보러 가기 👉 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process)
+> UI/UX 별 상세 설명 보러 가기 👉 [상세보기 wiki 페이지](https://github.com/SingSongSangSong/SingSong-Frontend/wiki/Process#uiux)
 ### **⭐️ 노래방 특화 태그 기반 노래 탐색 및 검색**
 - 일반적인 장르 기반 탐색 대신, 노래방의 분위기나 상황에 맞춘 태그를 통해 노래를 분류하여 사용자가 원하는 노래를 더욱 쉽게 찾을 수 있도록 도움. 지속적인 모니터링을 통해 자주 검색되는 태그를 추가.
   
