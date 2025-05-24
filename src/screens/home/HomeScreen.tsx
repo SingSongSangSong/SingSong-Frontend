@@ -19,6 +19,7 @@ import {
   HotTrendingModule,
   IconButton,
   LatestCommentModule,
+  LlmModule,
   NewSongModule,
   RecentCommentSongModule,
   RecentKeepModule,
@@ -380,10 +381,10 @@ const HomeScreen = (props: HomeScreenProps) => {
   //   props.navigation.navigate(homeStackNavigations.SEARCH);
   // };
 
-  // const handleOnPressLlm = () => {
-  //   logButtonClick('llm_button_click');
-  //   props.navigation.navigate(homeStackNavigations.AI_LLM);
-  // };
+  const handleOnPressLlm = () => {
+    logButtonClick('llm_button_click');
+    props.navigation.navigate(homeStackNavigations.AI_LLM);
+  };
 
   // const handleOnPressTotalButton = useCallback(() => {
   //   navigation.navigate(homeStackNavigations.TAG_DETAIL);
