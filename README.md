@@ -56,4 +56,14 @@
 <br/>
 [앱스토어 다운로드 링크](https://apps.apple.com/app/%EC%8B%B1%EC%86%A1%EC%83%9D%EC%86%A1/id6670430245)
 
+## 이슈
+- [이슈 1 : react native 버전 업데이트](https://velog.io/@shhyunn/React-Native-%EB%B2%84%EC%A0%84-0.74-0.76-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%95%98%EB%A9%B0-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)
+- [이슈 2 : FCM 알람](https://velog.io/@shhyunn/React-Native-FCM-%EC%95%8C%EB%9E%8C-%EA%B8%B0%EB%8A%A5-%EC%B6%94%EA%B0%80%ED%95%98%EB%A9%B0-%EC%83%9D%EA%B8%B4-%EC%9D%BC-1)
+- [이슈 3 : 앱 디자인](https://velog.io/@shhyunn/%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EB%8F%84%EC%A0%84%EA%B8%B0-1-%EC%95%B1-%EB%94%94%EC%9E%90%EC%9D%B8%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%98%EB%82%98%EC%9A%94-1adgo60z)
+- [이슈 3 : 터치 사용성](https://velog.io/@shhyunn/React-Native-TouchableOpacity-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%ED%81%B4%EB%A6%AD%EC%9D%B4-%EC%9E%98-%EC%95%88%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C)
+- [이슈 4 : Android/iOS 기종별 GIF 처리](https://velog.io/@shhyunn/React-Native-react-native%EC%97%90%EC%84%9C-gif-%ED%91%9C%EC%8B%9C%ED%95%98%EA%B8%B0-for-android)
+- [이슈 5 : Facebook SDK 적용](https://velog.io/@shhyunn/React-Native-facebook-sdk-%EC%A0%81%EC%9A%A9%ED%95%98%EC%97%AC-%EA%B4%91%EA%B3%A0-%EC%B6%94%EC%A0%81-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%ED%95%98%EA%B8%B0)
+- [이슈 6 : 애니메이션 적용](https://velog.io/@shhyunn/React-Native-react-native-gesture-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EC%8A%A4%EC%99%80%EC%9D%B4%ED%94%84-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+- [이슈 7 : Android 빌드 오류](https://velog.io/@shhyunn/React-Native-%EB%B2%84%EC%A0%84-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%9B%84-android-%EB%B9%8C%EB%93%9C%EC%8B%9C-auto-linking-%EC%97%90%EB%9F%AC)
+- [이슈 8 : iOS 빌드 오류](https://velog.io/@shhyunn/React-Native-4.-%ED%94%84%EB%A1%9C%EB%B9%84%EC%A0%80%EB%8B%9D-%ED%94%84%EB%A1%9C%ED%95%84%EC%97%90%EC%84%9C-%EC%9D%B8%EC%A6%9D%EC%84%9C%EA%B0%80-%ED%8F%AC%ED%95%A8%EB%90%98%EC%A7%80-%EC%95%8A%EB%8A%94%EB%8B%A4%EB%8A%94-%EC%97%90%EB%9F%AC)
 
